@@ -1,4 +1,4 @@
-function [ SQs_Ps, SQs_P ] = PlotSQs( SQs, downsample, invert_colours, colours, plot_fig )
+function [ SQs_Ps, P ] = PlotSQs( SQs, downsample, invert_colours, colours, plot_fig )
     if ~exist('downsample','var')
        downsample = 10000; 
     end
@@ -33,13 +33,13 @@ function [ SQs_Ps, SQs_P ] = PlotSQs( SQs, downsample, invert_colours, colours, 
             colours = fliplr(colours);
         end
     end
-    SQs_Ps = cell(1,size(SQs,1));
-    SQs_P.v = [];
-    SQs_P.n = [];
+    SQs_Ps = cell(1,size(SQs,1));    
     if plot_fig
         hold on;
         axis equal;
     end
+    P.v = [];
+    P.n = [];
     for i=1:size(SQs,1)
         [P.v,P.n] = UniformSQSampling3D(SQs(i,:),1,downsample);
         P.segms{1} = P;
