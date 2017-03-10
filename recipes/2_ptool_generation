@@ -1,0 +1,13 @@
+# Written by Paulo Abelha (p.abelha@abdn.ac.uk)
+# Recipe for p-tool extraction
+
+ Dependencies: Matlab
+ Input: a folder with segmented point clouds
+ Output: a file pTools.txt with the extracted pTools
+
+1)  Follow recipe 1_segmentation
+
+2)  Run the filtering matlab script segmentation/FilterAutoSegmentationByFreeSQFitting.m to filter out bad segmentations (this is based on the idea that good segmentations correspond to segments being "geon-like" (good superquadric fit score))
+
+3)  Run enzymes/pTools/getPToolsFromFolder.m to generate a file with one p-tool for every possible usage of the pointcloud for a given task
+

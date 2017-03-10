@@ -1,0 +1,36 @@
+
+term1(a1,eta,omega,e1,e2):= a1*(cos(eta)^e1)*cos(omega)^e2;
+term2(a2,eta,omega,e1,e2):= a2*(cos(eta)^e1)*sin(omega)^e2;
+term1_diff: diff(term1(a1,eta,omega,e1,e2),omega);
+term2_diff: diff(term2(a2,eta,omega,e1,e2),omega);
+term0: term1_diff^2+term2_diff^2;
+
+
+term1_tor(a1,a4,eta,omega,e1,e2):= a1*(a4+cos(eta)^e1)*cos(omega)^e2;
+term2_tor(a2,a4,eta,omega,e1,e2):= a2*(a4+cos(eta)^e1)*sin(omega)^e2;
+term1_diff_tor: diff(term1_tor(a1,a4,eta,omega,e1,e2),omega);
+term2_diff_tor: diff(term2_tor(a2,a4,eta,omega,e1,e2),omega);
+term0_tor: term1_diff_tor^2+term2_diff_tor^2;
+
+term0: ratsimp(sqrt(1/term0));
+term0_tor: ratsimp(sqrt(1/term0_tor));
+
+subst(1,cos(eta),term0);
+subst(1,cos(eta),term0_tor);
+
+
+
+term1(a1,omega,e1,e2):= a1*cos(omega)^e2;
+term2(a2,omega,e1,e2):= a2*sin(omega)^e2;
+term1_diff: diff(term1(a1,omega,e1,e2),omega);
+term2_diff: diff(term2(a2,omega,e1,e2),omega);
+term0: term1_diff^2+term2_diff^2;
+term0: ratsimp(sqrt(1/term0));
+
+
+term1_tor(a1,a4,omega,e1,e2):= a1*(a4)*cos(omega)^e2;
+term2_tor(a2,a4,omega,e1,e2):= a2*(a4)*sin(omega)^e2;
+term1_diff_tor: diff(term1_tor(a1,a4,omega,e1,e2),omega);
+term2_diff_tor: diff(term2_tor(a2,a4,omega,e1,e2),omega);
+term0_tor: term1_diff_tor^2+term2_diff_tor^2;
+term0_tor: ratsimp(sqrt(1/term0_tor));

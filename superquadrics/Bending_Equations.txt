@@ -1,0 +1,82 @@
+
+% s is a cell with matrices as elements
+for i=0:2 s{i+1} = magic(3)+i; end
+dets = cellfun(@(x) det(x), s,'UniformOutput',0);
+invs = cellfun(@(x) inv(x), s,'UniformOutput',0);
+transps = cellfun(@(x) transpose(x), invs,'UniformOutput',0);
+
+depends(beta,[x,y]);
+beta(x,y):= atan(y/x);
+depends(r,[x,y,aplha]);
+r(x,y,alpha):= sqrt(x^2+y^2)*cos(alpha-beta(x,y));
+depends(gamma_f,[z,k]);
+gamma_f(z,k):= z/k;
+depends(R,[x,y,z,k,alpha]);
+R(x,y,z,k,alpha):= (1/k) - ((1/k)-r(x,y,alpha))*cos(gamma_f(z,k));
+depends(X,[x,y,z,k,alpha]);
+X(x,y,z,k,alpha):= x + (R(x,y,z,k,alpha)-r(x,y,alpha))*cos(alpha);
+depends(Y,[x,y,z,k,alpha]);
+Y(x,y,z,k,alpha):= y + (R(x,y,z,k,alpha)-r(x,y,alpha))*sin(alpha);
+depends(Z,[x,y,z,k,alpha]);
+Z(x,y,z,k,alpha):= ((1/k)-r(x,y,alpha))*sin(gamma_f(z,k));
+
+r_prime_x = trigsimp(trigexpand(diff(r(x,y,alpha),x)));
+R_prime_x = trigsimp(trigexpand(diff(R(x,y,z,k,alpha),x)));
+r_prime_y = trigsimp(trigexpand(diff(r(x,y,alpha),y)));
+R_prime_y = trigsimp(trigexpand(diff(R(x,y,z,k,alpha),y)));
+r_prime_z = trigsimp(trigexpand(diff(r(x,y,alpha),z)));
+% this rat expansion + trig simplification gives a more elegant simplification where it is
+% clear to see where R depends on r
+R_prime_z = ratsimp(ratexpand(diff(R(x,y,z,k,alpha),z)));
+
+depends(r_prime_x,[x,alpha]);
+r_prime_x(x,alpha):= cos(alpha)*abs(X)/X;
+depends(R_prime_x,[x,y,z,k,alpha]);
+R_prime_x(x,y,z,k,alpha):= r_prime_x(x,alpha)*cos(z/k);
+depends(r_prime_y,[y,alpha]);
+r_prime_y(y,alpha):= sin(alpha)*abs(y)/y;
+depends(R_prime_y,[x,y,z,k,alpha]);
+R_prime_y(x,y,z,k,alpha):= r_prime_y(x,alpha)*cos(z/k);
+depends(r_prime_z,[z,alpha]);
+r_prime_z(z,alpha):= 0;
+depends(R_prime_z,[x,y,z,k,alpha]);
+R_prime_z(x,y,z,k,alpha):= (k*r(x,y,alpha)-1)*sin(z/k)/k^2;
+
+X_prime_x: trigsimp(trigexpand(diff(X(x,y,z,k,alpha),x)));
+X_prime_y: trigsimp(trigexpand(diff(X(x,y,z,k,alpha),y)));
+X_prime_z: trigsimp(trigexpand(diff(X(x,y,z,k,alpha),z)));
+
+Y_prime_x: trigsimp(trigexpand(diff(Y(x,y,z,k,alpha),x)));
+Y_prime_y: trigsimp(trigexpand(diff(Y(x,y,z,k,alpha),y)));
+Y_prime_z: trigsimp(trigexpand(diff(Y(x,y,z,k,alpha),z)));
+
+Z_prime_x: trigsimp(trigexpand(diff(Z(x,y,z,k,alpha),x)));
+Z_prime_y: trigsimp(trigexpand(diff(Z(x,y,z,k,alpha),y)));
+Z_prime_z: trigsimp(trigexpand(diff(Z(x,y,z,k,alpha),z)));
+
+J_bend: matrix([X_prime_x, X_prime_y, X_prime_z],[Y_prime_x, Y_prime_y, Y_prime_z],[Z_prime_x, Z_prime_y, Z_prime_z]);
+J_bend: matrix([1 + (cg-1)*rpx*ca, (cg-1)*rpy*ca, Rpz*ca],[(cg-1)*rpx*sa, 1 + (cg-1)*rpy*sa, Rpz*ca],[-rpx*sg, -rpy*sg, (cg*(1-k*r))/k^2]);
+J_bend_inv: trigsimp(trigexpand(invert(J_bend)));
+J_bend_inv_transp:  trigsimp(trigexpand(transpose(J_bend_inv)));
+det_J_bend: trigsimp(trigexpand(determinant(J_bend)));
+T_bend: det_J_bend*J_bend_inv_transp;
+T_bend: trigsimp(trigexpand(T_bend));
+
+
+% tapering
+% number solving
+depends(F_x,[Kx,a3,z]); F_x(Kx,a3,z):= (Kx/a3)*z + 1;
+depends(F_y,[Ky,a3,z]); F_y(Ky,a3,z):= (Ky/a3)*z + 1;
+F_x_prime: diff(F_x(Kx,a3,z),z);
+F_y_prime: diff(F_y(Ky,a3,z),z);
+J_tap: matrix([F_x(Kx,a3,z), 0, F_x_prime*x],[0, F_y(Ky,a3,z), F_y_prime*y], [0, 0, 1]);
+J_tap_inv: invert(J_tap);
+J_tap_inv_transp: transpose(J_tap_inv);
+T_tap: determinant(J_tap)*J_tap_inv_transp;
+% symbolic solving
+F_x_prime: diff(F_x,z);
+F_y_prime: diff(F_y,z);
+J_tap: matrix([F_x, 0, F_x_prime*x],[0, F_y, F_y_prime*y], [0, 0, 1]);
+J_tap_inv: invert(J_tap);
+J_tap_inv_transp: transpose(J_tap_inv);
+T_tap: determinant(J_tap)*J_tap_inv_transp;

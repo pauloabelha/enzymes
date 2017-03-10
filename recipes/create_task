@@ -1,0 +1,8 @@
+# Written by Paulo Abelha (p.abelha@abdn.ac.uk)
+# Recipe for creating a new task
+
+# In order to add a task for pTool generation :
+
+1) Modify getTaskOrientationParams(task) in order to give the good orientation vectors used in rotateSQs function
+
+2) modify getToolPosition used in pToolVec2Sim to get the right tool positioning during simulation in Gazebo.

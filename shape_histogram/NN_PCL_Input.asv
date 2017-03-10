@@ -1,0 +1,11 @@
+function [nnInput] = NN_PCL_Input(pcl,normals)
+%NN_PCL_INPUT Takes a pointcloud as input, builds a SH,
+%applies PCA on the SH, normalises SH values and returns the SH 
+%which can be fed to the NN
+
+%currently the NN was trained with 10000
+SH = CalculateSH(pcl,normals,10000);
+
+
+end
+

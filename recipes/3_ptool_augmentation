@@ -1,0 +1,15 @@
+# Written by Paulo Abelha (p.abelha@abdn.ac.uk)
+#
+# Follow these steps to generate N estimated pTools from a given set of M pTools (useful for augmenting your dataset of pTools)
+# 
+ Dependencies: Matlab
+ Input: a matrix Mx18 containing a list of M pTools
+ Output: a matrix Nx18 containing a list of N pTools sampled using BridgeSampling
+
+1) Follow the ptool_generation recipe to get the Mx18 pTools matrix
+
+2) Run enzymes/machine_learning/BridgeSampling.m on the Mx18 ptools
+	(Choose the n_connections input - I use 10)
+
+
+

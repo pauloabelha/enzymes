@@ -1,0 +1,30 @@
+# Written by Paulo Abelha (p.abelha@abdn.ac.uk)
+# Recipe for segmenting a set of pointclouds
+ 
+ Dependencies: Matlab, PCL Llibrary
+ Input: a folder with point clouds
+ Output: n-folders with the segmented pointclouds (where n is the number of chosen cores to use in the machine)
+
+PCL library: you will need to install the pcl library 
+	1) Run enzymes/scripts/compile_pcl_lib.sh to compile the PCL library from source (this will take a while and install a lot of subdependencies)
+		1.1) It will compile it in your home directory
+	2) If it doesn't work, check the website: https://larrylisky.com/2014/03/03/installing-pcl-on-ubuntu/ (I based my script entirely on this website - and I'm very thankful for it)
+
+1) Copy the file
+	enzymes/segmentation/example_cpc_segmentation.cpp
+	to
+	~/pcl/examples/segmentation/example_cpc_segmentation.cpp
+	(you will overwrite the original cpp file with mine that contains the brute-force segmentation code)
+
+2) Recompile the pcl library
+	2.1) Go to ~/pcl/release/
+	2.2) Run: sudo make -j 4 install (I recommend the '-j 4' to use your 4 cores to compile faster)
+
+3) Run: bash enzymes/script/auto_segmentation_mult_core.sh N_CORES PCL_FOLDER -fast (where N_CORES is the number of cores you want to use to run the segmentation in parallel; PCL_FOLDER is the folder containing all your point clouds; and '-fast' is recommended to run the segmentation in a reasonable amount of time)
+	3.1) Example run: bash enzymes/script/auto_segmentation_mult_core.sh 4 ~/my_pcl_dataset/ -fast
+	3.2) This will create N_CORES folders under PCL_FOLDER named 'autosegmentation_core_N', each with a subset from partitioning the pcls in PCL_FOLDER)
+		Obs: You should get a lot of outputs detailing the segmentation each core is doing and the percentage completed
+	3.3) The segmented pcls will be in the .pcd format
+
+4) Convert the .pcd pcls to .ply by running enzymes/pcd2ply_mult.m
+

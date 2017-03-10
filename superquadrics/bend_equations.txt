@@ -1,0 +1,3 @@
+\frac{\partial \:}{\partial \:\:x}\left(x+\left(b-sqrt\left(x^2+y^2\right)cos\left(a-atan\left(\frac{y}{x}\right)\right)\right)\cdot \:cos\left(a\right)\right)
+
+\frac{\partial \:}{\partial \:\:x}\left(y+\left(b-sqrt\left(x^2+y^2\right)cos\left(a-atan\left(\frac{y}{x}\right)\right)\right)\cdot \:sin\left(a\right)\right)

@@ -1,0 +1,21 @@
+# Written by Paulo Abelha (p.abelha@abdn.ac.uk)
+# Recipe for learning a task function given a point cloud dataset
+#
+# Follow these steps to generate a Gaussian process regression model that represents a task function for assessing p-tools
+# 
+ Required: a learning folder with ply files
+
+1) Follow the recipe ptool_augmentation
+
+2) Run the function pToolVec2Sim with the desire ammount of ptools (for instance subsampling part of the augmented ptools above)
+	e.g. writing the Gazebo-ready tools in ~/.gazebo/gazebo_models/hammering_training/training
+
+3) Run the script simulation/Training.sh with the appropriate inputs for your Gazebo installation (depends on your gazebo folder structure)
+	e.g. ~/.gazebo/gazebo_models/hammering_training/training folder for training;
+	check Simulation.sh --help for directions
+
+4) Run the script simulation/GetModeOutputTask.m on the output file from the Training.sh script to obtain the simulation labels as sim_output.txt
+	e.g. ~/.gazebo/gazebo_models/hammering_training/output_training.txt
+
+5) Run the function machine_learning/FitGPR with X being the training ptools and  and Y being the obtained labels obtained above
+	

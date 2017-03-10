@@ -1,0 +1,5861 @@
+task hammering_nail
+n_trials 3
+tool 3dwh_calibration/breadknife_w5s_3dwh_3
+ptool 1
+start_trial
+0.00688393
+0.00553327
+0.00567086
+end_trial
+ptool 2
+start_trial
+0.001065
+0.000979002
+0.000964203
+end_trial
+ptool 3
+start_trial
+1.12424e-05
+0.00483403
+0.00759904
+end_trial
+ptool 4
+start_trial
+0.00105604
+0.00253384
+0.00380255
+end_trial
+ptool 5
+start_trial
+0.000543662
+0.0026982
+0.000874075
+end_trial
+ptool 6
+start_trial
+0.00104979
+0.00319178
+0.00321763
+end_trial
+ptool 7
+start_trial
+0.00257432
+0.00263718
+0.0044743
+end_trial
+ptool 8
+start_trial
+0.00196594
+0.00428491
+0.00283832
+end_trial
+ptool 9
+start_trial
+0.00141462
+0.000553349
+0.00375601
+end_trial
+ptool 10
+start_trial
+0.00167058
+0.00453599
+0.00325314
+end_trial
+ptool 11
+start_trial
+-0.0614134
+-0.0341424
+0.00244456
+end_trial
+ptool 12
+start_trial
+0.0023885
+0.00141535
+-0.0482542
+end_trial
+tool 3dwh_calibration/chineseknife_p2s_3dwh_1
+ptool 1
+start_trial
+0.00888888
+0.00169474
+0.00377604
+end_trial
+ptool 2
+start_trial
+0.00301897
+0.0010809
+0.00311371
+end_trial
+ptool 3
+start_trial
+-6.58597e-06
+0.00428447
+0.00758344
+end_trial
+ptool 4
+start_trial
+0.00349852
+0.00115984
+0.0079614
+end_trial
+ptool 5
+start_trial
+0.00275624
+0.00591293
+0.00236916
+end_trial
+ptool 6
+start_trial
+0.00310051
+0.00304923
+end_trial
+ptool 7
+start_trial
+0.00493525
+0.00328137
+0.00363092
+end_trial
+ptool 8
+start_trial
+0.000816877
+0.00114095
+0.004341
+end_trial
+ptool 9
+start_trial
+0.00169649
+0.00413016
+0.00244086
+end_trial
+ptool 10
+start_trial
+0.000981857
+0.00434248
+0.00434245
+end_trial
+ptool 11
+start_trial
+0.00201886
+0.00202327
+0.00202359
+end_trial
+ptool 12
+start_trial
+0.00201907
+0.00201863
+0.00201918
+end_trial
+tool 3dwh_calibration/chineseknife_p3s_3dwh_1
+ptool 1
+start_trial
+0.00644909
+0.00434193
+0.00183287
+end_trial
+ptool 2
+start_trial
+0.00567272
+-1.17882e-06
+0.00620257
+end_trial
+ptool 3
+start_trial
+0.00305171
+0.00277357
+0.00514904
+end_trial
+ptool 4
+start_trial
+-0.000142824
+-0.000154314
+0.00141698
+end_trial
+ptool 5
+start_trial
+1.83929e-06
+0.00289643
+0.00423902
+end_trial
+ptool 6
+start_trial
+0.00132316
+0.00248929
+0.00286219
+end_trial
+ptool 7
+start_trial
+0.000749278
+0.00061809
+0.00409002
+end_trial
+ptool 8
+start_trial
+0.0033512
+0.0038545
+0.00420405
+end_trial
+ptool 9
+start_trial
+0.00324048
+0.00123283
+0.00224135
+end_trial
+ptool 10
+start_trial
+0.00491591
+0.00172825
+0.00390255
+end_trial
+ptool 11
+start_trial
+0.00508412
+0.00109083
+0.00277299
+end_trial
+ptool 12
+start_trial
+0.00716296
+0.00511987
+0.00312329
+end_trial
+tool 3dwh_calibration/fryingpan_p1a_3dwh_1
+ptool 1
+start_trial
+0.0104016
+0.0109924
+0.00903507
+end_trial
+ptool 2
+start_trial
+0.002635
+0.00268764
+0.00513719
+end_trial
+ptool 3
+start_trial
+0.0109606
+0.0109531
+0.0102409
+end_trial
+ptool 4
+start_trial
+0.00711102
+0.00706031
+0.0164208
+end_trial
+ptool 5
+start_trial
+0.00544506
+0.00593235
+0.00290125
+end_trial
+ptool 6
+start_trial
+0.0059198
+0.00521347
+0.0060036
+end_trial
+ptool 7
+start_trial
+-0.00369211
+0.00629146
+-9.60606e-05
+end_trial
+ptool 8
+start_trial
+0.00266159
+0.0110549
+0.0100609
+end_trial
+ptool 9
+start_trial
+0.00268805
+0.00268244
+0.00268382
+end_trial
+ptool 10
+start_trial
+0.0100003
+0.00279929
+0.0104632
+end_trial
+ptool 11
+start_trial
+0.00596992
+0.0111819
+0.0104977
+end_trial
+ptool 12
+start_trial
+0.00660781
+0.00581532
+0.0109662
+end_trial
+tool 3dwh_calibration/fryingpan_p1a_3dwh_2
+ptool 1
+start_trial
+0.0127483
+0.00214192
+0.00916885
+end_trial
+ptool 2
+start_trial
+0.00701418
+0.00742453
+0.00621834
+end_trial
+ptool 3
+start_trial
+0.00908025
+0.00908198
+0.00796384
+end_trial
+ptool 4
+start_trial
+0.00408727
+0.00245652
+0.0079149
+end_trial
+ptool 5
+start_trial
+0.00252934
+0.00825151
+0.00998973
+end_trial
+ptool 6
+start_trial
+0.0101434
+0.0104382
+0.00836361
+end_trial
+ptool 7
+start_trial
+0.00776841
+0.00584505
+0.00819447
+end_trial
+ptool 8
+start_trial
+0.0142246
+0.019731
+0.0142412
+end_trial
+ptool 9
+start_trial
+0.00743038
+0.00694057
+0.00731515
+end_trial
+ptool 10
+start_trial
+0.00783135
+0.00814507
+0.00427806
+end_trial
+ptool 11
+start_trial
+0.0199946
+1.71216e-05
+0.00662621
+end_trial
+ptool 12
+start_trial
+0.0199914
+0.00302956
+0.00303501
+end_trial
+tool 3dwh_calibration/fryingpan_p2a_3dwh_1
+ptool 1
+start_trial
+0.0174364
+0.0191044
+0.019036
+end_trial
+ptool 2
+start_trial
+0.00952109
+0.00952173
+0.00546845
+end_trial
+ptool 3
+start_trial
+0.0191063
+0.00769313
+0.00527509
+end_trial
+ptool 4
+start_trial
+0.00361776
+0.00952016
+0.00843966
+end_trial
+ptool 5
+start_trial
+0.00596593
+0.0188248
+0.00568336
+end_trial
+ptool 6
+start_trial
+0.00551805
+0.0050971
+0.00385852
+end_trial
+ptool 7
+start_trial
+5.88075e-05
+-0.000211589
+-0.00522725
+end_trial
+ptool 8
+start_trial
+2.84355e-06
+-0.0240804
+-0.0198017
+end_trial
+ptool 9
+start_trial
+-0.00482979
+-0.00373522
+-0.000767373
+end_trial
+ptool 10
+start_trial
+-0.0224479
+0.00245408
+-0.0195461
+end_trial
+ptool 11
+start_trial
+0.00734876
+0.00690125
+0.00319115
+end_trial
+ptool 12
+start_trial
+0.00667195
+0.00316626
+0.00396695
+end_trial
+tool 3dwh_calibration/fryingpan_p2a_3dwh_2
+ptool 1
+start_trial
+0.0027919
+0.00295884
+-0.00127964
+end_trial
+ptool 2
+start_trial
+0.00383461
+-0.0113926
+-0.000840765
+end_trial
+ptool 3
+start_trial
+-0.00272639
+-0.00233581
+0.00297768
+end_trial
+ptool 4
+start_trial
+0.00735595
+0.00525231
+0.00748657
+end_trial
+ptool 5
+start_trial
+0.00415751
+0.00925574
+0.00465399
+end_trial
+ptool 6
+start_trial
+0.0125383
+0.00248044
+0.00410035
+end_trial
+ptool 7
+start_trial
+0.0196039
+0.00773422
+0.0065587
+end_trial
+ptool 8
+start_trial
+0.0133234
+0.0132601
+0.0133198
+end_trial
+ptool 9
+start_trial
+0.00852964
+0.00866198
+0.00953035
+end_trial
+ptool 10
+start_trial
+0.0133251
+0.0133235
+0.0133195
+end_trial
+ptool 11
+start_trial
+0.00529749
+0.00470286
+0.00496925
+end_trial
+ptool 12
+start_trial
+0.00502412
+0.00498872
+0.00557512
+end_trial
+tool 3dwh_calibration/fryingpan_p3a_3dwh_1
+ptool 1
+start_trial
+0.00764772
+0.00813053
+0.0090117
+end_trial
+ptool 2
+start_trial
+0.000984122
+-0.00591913
+0.00542763
+end_trial
+ptool 3
+start_trial
+0.00927841
+0.0092955
+0.00871902
+end_trial
+ptool 4
+start_trial
+0.00181444
+0.00062628
+0.00394997
+end_trial
+ptool 5
+start_trial
+0.000598992
+0.000884086
+0.00256765
+end_trial
+ptool 6
+start_trial
+0.00482623
+0.00396777
+0.00445
+end_trial
+ptool 7
+start_trial
+0.0045631
+0.0109648
+0.00638086
+end_trial
+ptool 8
+start_trial
+0.000137249
+0.00109623
+0.0013864
+end_trial
+ptool 9
+start_trial
+0.00633846
+0.00436168
+0.00614912
+end_trial
+ptool 10
+start_trial
+0.000501185
+2.6747e-05
+-4.49136e-06
+end_trial
+ptool 11
+start_trial
+0.00180705
+0.00368027
+0.0013628
+end_trial
+ptool 12
+start_trial
+0.00265264
+0.00454692
+0.00340411
+end_trial
+tool 3dwh_calibration/hammer_p3s_3dwh_1
+ptool 1
+start_trial
+-1
+-1
+-1
+end_trial
+ptool 2
+start_trial
+0.0143912
+0.0132316
+0.00707642
+end_trial
+ptool 3
+start_trial
+-1
+-1
+-1
+end_trial
+ptool 4
+start_trial
+0.0121923
+0.00743018
+0.0133199
+end_trial
+ptool 5
+start_trial
+0.00762555
+0.00774314
+0.00558913
+end_trial
+ptool 6
+start_trial
+0.013354
+0.00560202
+0.0055641
+end_trial
+ptool 7
+start_trial
+0.00766277
+0.00850083
+0.00789478
+end_trial
+ptool 8
+start_trial
+0.00334586
+0.00443004
+0.0118013
+end_trial
+ptool 9
+start_trial
+0.00539484
+0.0140996
+0.0133955
+end_trial
+ptool 10
+start_trial
+0.00449906
+0.00311202
+0.00143715
+end_trial
+ptool 11
+start_trial
+0.00691663
+0.00473629
+0.00455774
+end_trial
+ptool 12
+start_trial
+0.0070039
+0.00596577
+0.00522182
+end_trial
+tool 3dwh_calibration/hammer_p4s_3dwh_1
+ptool 1
+start_trial
+0.00201889
+0.00131801
+0.00223284
+end_trial
+ptool 2
+start_trial
+0.00633103
+0.00606052
+0.00399401
+end_trial
+ptool 3
+start_trial
+0.00201591
+0.00225281
+0.00314894
+end_trial
+ptool 4
+start_trial
+0.00670344
+-0.00550077
+0.00708338
+end_trial
+ptool 5
+start_trial
+0.0168909
+0.0154119
+0.0162767
+end_trial
+ptool 6
+start_trial
+0.00683798
+-3.54599e-06
+0.0045026
+end_trial
+ptool 7
+start_trial
+0.00167804
+0.00463831
+0.00469403
+end_trial
+ptool 8
+start_trial
+0.00310064
+0.0148623
+0.0158976
+end_trial
+ptool 9
+start_trial
+0.00463809
+0.00464374
+0.00452569
+end_trial
+ptool 10
+start_trial
+0.00502387
+0.00660778
+0.00469154
+end_trial
+ptool 11
+start_trial
+0.00480309
+0.0143271
+0.00498889
+end_trial
+ptool 12
+start_trial
+0.0143228
+0.00558617
+0.0143212
+end_trial
+tool 3dwh_calibration/hammer_p6s_3dwh_1
+ptool 1
+start_trial
+0.00487342
+0.00455203
+0.00616141
+end_trial
+ptool 2
+start_trial
+0.0117274
+0.00472191
+0.00401048
+end_trial
+ptool 3
+start_trial
+0.00498506
+0.00369633
+0.00209279
+end_trial
+ptool 4
+start_trial
+0.00715509
+0.00462334
+0.00976309
+end_trial
+ptool 5
+start_trial
+0.0083477
+0.00833173
+0.0105445
+end_trial
+ptool 6
+start_trial
+0.00971941
+0.00977876
+0.00120297
+end_trial
+ptool 7
+start_trial
+-0.0014349
+0.00454671
+-0.00151676
+end_trial
+ptool 8
+start_trial
+0.0122008
+0.0134117
+0.00218336
+end_trial
+ptool 9
+start_trial
+0.00411888
+-0.0018946
+-0.00176011
+end_trial
+ptool 10
+start_trial
+0.00289398
+0.00223196
+0.00327852
+end_trial
+ptool 11
+start_trial
+0.00424593
+0.0104578
+0.00316854
+end_trial
+ptool 12
+start_trial
+0.00306279
+0.00660839
+0.0065817
+end_trial
+tool 3dwh_calibration/hammer_w4s_3dwh_1
+ptool 1
+start_trial
+0.00574714
+0.0165253
+0.00536744
+end_trial
+ptool 2
+start_trial
+0.00278071
+0.00243839
+0.00269422
+end_trial
+ptool 3
+start_trial
+0.00652211
+0.00482316
+0.0165399
+end_trial
+ptool 4
+start_trial
+0.00462693
+0.00315432
+0.00185222
+end_trial
+ptool 5
+start_trial
+0.0152602
+0.00495964
+0.00526173
+end_trial
+ptool 6
+start_trial
+0.00583148
+0.0152602
+0.0152602
+end_trial
+ptool 7
+start_trial
+0.00282974
+0.00385714
+0.00283091
+end_trial
+ptool 8
+start_trial
+0.00127707
+0.00282871
+0.00294833
+end_trial
+tool 3dwh_calibration/hammer_w4s_3dwh_2
+ptool 1
+start_trial
+-0.00300838
+-0.00302631
+-0.000333771
+end_trial
+ptool 2
+start_trial
+0.00629142
+0.00645843
+0.00908036
+end_trial
+ptool 3
+start_trial
+-0.000334412
+-0.002485
+-0.0031325
+end_trial
+ptool 4
+start_trial
+0.00834992
+0.00452858
+0.00633424
+end_trial
+ptool 5
+start_trial
+0.00903239
+0.0066272
+0.00893997
+end_trial
+ptool 6
+start_trial
+0.00890613
+0.00722789
+0.00665191
+end_trial
+ptool 7
+start_trial
+0.00756541
+0.00758997
+-0.00296917
+end_trial
+ptool 8
+start_trial
+-1
+-1
+-1
+end_trial
+ptool 9
+start_trial
+0.00302099
+0.00996479
+0.00991179
+end_trial
+ptool 10
+start_trial
+-1
+-1
+-1
+end_trial
+ptool 11
+start_trial
+-1
+-1
+-1
+end_trial
+ptool 12
+start_trial
+-1
+-1
+-1
+end_trial
+ptool 13
+start_trial
+0.00603418
+0.00397292
+0.00593467
+end_trial
+ptool 14
+start_trial
+0.00615751
+0.00567023
+0.00560997
+end_trial
+ptool 15
+start_trial
+0.00399357
+0.00227126
+0.00429766
+end_trial
+ptool 16
+start_trial
+0.00575128
+0.00566625
+0.00564756
+end_trial
+ptool 17
+start_trial
+0.00421133
+0.0020628
+0.00334204
+end_trial
+ptool 18
+start_trial
+0.00321346
+0.00261916
+0.00473705
+end_trial
+ptool 19
+start_trial
+0.00465751
+0.00457162
+1.74759e-05
+end_trial
+ptool 20
+start_trial
+0.0032963
+4.83213e-06
+0.0024404
+end_trial
+ptool 21
+start_trial
+0.00434485
+0.00416815
+0.00373385
+end_trial
+ptool 22
+start_trial
+0.00208249
+0.00179016
+0.00250107
+end_trial
+ptool 23
+start_trial
+0
+-0.00141195
+0.00068449
+end_trial
+ptool 24
+start_trial
+0.00238111
+0.000350723
+-1.29123e-05
+end_trial
+ptool 25
+start_trial
+-0.00111907
+0.00301974
+0.00433664
+end_trial
+ptool 26
+start_trial
+0.0133148
+0.00512533
+0.0152104
+end_trial
+ptool 27
+start_trial
+0.00349081
+2.10285e-07
+1.20302e-05
+end_trial
+ptool 28
+start_trial
+0.0176769
+0.0173191
+0.00297533
+end_trial
+ptool 29
+start_trial
+0.0100351
+0.00329902
+0.00412345
+end_trial
+ptool 30
+start_trial
+0.0100213
+0.00380423
+0.0100227
+end_trial
+ptool 31
+start_trial
+0.00954234
+0.0102804
+0.00150558
+end_trial
+ptool 32
+start_trial
+0.00761359
+0.0130405
+0.0130389
+end_trial
+ptool 33
+start_trial
+0.00345445
+0.0106158
+0.00954371
+end_trial
+ptool 34
+start_trial
+0.00851385
+0.0130404
+0.0130387
+end_trial
+ptool 35
+start_trial
+0.0100044
+0.00998391
+0.00479157
+end_trial
+ptool 36
+start_trial
+0.00168507
+0.00829495
+0.0100072
+end_trial
+tool 3dwh_calibration/hammer_w5s_3dwh_1
+ptool 1
+start_trial
+0.00594071
+0.00679598
+0.00638144
+end_trial
+ptool 2
+start_trial
+0.0107317
+0.0019086
+0.0107089
+end_trial
+ptool 3
+start_trial
+0.0048966
+0.0165786
+-8.90814e-06
+end_trial
+ptool 4
+start_trial
+0.00217164
+0.00215636
+0.0106742
+end_trial
+ptool 5
+start_trial
+0.00430895
+0.00425296
+0.00350085
+end_trial
+ptool 6
+start_trial
+0.0052309
+0.00449603
+0.00491665
+end_trial
+ptool 7
+start_trial
+-1
+-1
+-1
+end_trial
+ptool 8
+start_trial
+0.00401267
+0.00385773
+0.00354995
+end_trial
+ptool 9
+start_trial
+-1
+-1
+-1
+end_trial
+ptool 10
+start_trial
+0.00341035
+0.00375533
+0.00406957
+end_trial
+ptool 11
+start_trial
+0.00429988
+0.00868991
+0.00377504
+end_trial
+ptool 12
+start_trial
+0.00524755
+0.00336284
+0.00506465
+end_trial
+tool 3dwh_calibration/hammer_w6s_3dwh_1
+ptool 1
+start_trial
+0.00696923
+0.00605685
+0.00708992
+end_trial
+ptool 2
+start_trial
+-1
+-1
+-1
+end_trial
+ptool 3
+start_trial
+0.00769042
+0.00738011
+0.00763939
+end_trial
+ptool 4
+start_trial
+-1
+-1
+-1
+end_trial
+ptool 5
+start_trial
+-1
+-1
+-1
+end_trial
+ptool 6
+start_trial
+-1
+-1
+-1
+end_trial
+ptool 7
+start_trial
+0.00577685
+0.00502929
+0.00790335
+end_trial
+ptool 8
+start_trial
+0.0118944
+0.0118502
+0.0138391
+end_trial
+ptool 9
+start_trial
+0.00727525
+0.00617166
+0.00383448
+end_trial
+ptool 10
+start_trial
+0.0138875
+0.0139743
+0.0139
+end_trial
+ptool 11
+start_trial
+0.00226703
+0.0123226
+0.00259689
+end_trial
+ptool 12
+start_trial
+0.00211549
+0.0117564
+0.00229473
+end_trial
+tool 3dwh_calibration/hammer_w6s_3dwh_2
+ptool 1
+start_trial
+0.00888788
+0.00771272
+0.00623928
+end_trial
+ptool 2
+start_trial
+0.00566898
+0.0150299
+0.00352093
+end_trial
+ptool 3
+start_trial
+0.0114539
+0.00222333
+0.00530137
+end_trial
+ptool 4
+start_trial
+0.00743187
+0.00279975
+0.0032296
+end_trial
+ptool 5
+start_trial
+0.0152127
+0.0135821
+0.00452425
+end_trial
+ptool 6
+start_trial
+0.0153485
+0.0144689
+0.00467792
+end_trial
+ptool 7
+start_trial
+0.013817
+0.00437144
+0.00395209
+end_trial
+ptool 8
+start_trial
+0.00509539
+0.00211144
+0.00507257
+end_trial
+ptool 9
+start_trial
+0.00697497
+0.00703568
+0.00544413
+end_trial
+ptool 10
+start_trial
+0.00187327
+0.00152792
+0.00216305
+end_trial
+ptool 11
+start_trial
+0.00220575
+0.00345745
+0.0023286
+end_trial
+ptool 12
+start_trial
+0.00464028
+0.00360888
+0.00246312
+end_trial
+tool 3dwh_calibration/hammer_w6s_3dwh_3
+ptool 1
+start_trial
+0.017753
+0.0177593
+0.0110673
+end_trial
+ptool 2
+start_trial
+0.00540809
+0.00543575
+0.0156425
+end_trial
+ptool 3
+start_trial
+0.0177543
+0.017753
+0.0177531
+end_trial
+ptool 4
+start_trial
+0.0045056
+0.0153546
+0.0143671
+end_trial
+ptool 5
+start_trial
+-1
+-1
+-1
+end_trial
+ptool 6
+start_trial
+-1
+-1
+-1
+end_trial
+ptool 7
+start_trial
+0.0198127
+0.0158713
+0.0198131
+end_trial
+ptool 8
+start_trial
+-1
+-1
+-1
+end_trial
+ptool 9
+start_trial
+0.0198082
+0.0160168
+0.0198114
+end_trial
+ptool 10
+start_trial
+-1
+-1
+-1
+end_trial
+ptool 11
+start_trial
+0.00337094
+0.00717214
+0.0207462
+end_trial
+ptool 12
+start_trial
+0.0207456
+0.020744
+0.0207466
+end_trial
+ptool 13
+start_trial
+0.0115402
+0.0114895
+0.0114862
+end_trial
+ptool 14
+start_trial
+0.00654388
+0.0196525
+0.00677557
+end_trial
+ptool 15
+start_trial
+0.0114907
+0.0114906
+0.011494
+end_trial
+ptool 16
+start_trial
+0.00848903
+0.0120618
+0.0196515
+end_trial
+ptool 17
+start_trial
+0.0193291
+0.0193229
+0.0193322
+end_trial
+ptool 18
+start_trial
+0.0193254
+0.0193277
+0.0193267
+end_trial
+ptool 19
+start_trial
+0.00957786
+0.00698777
+0.00511086
+end_trial
+ptool 20
+start_trial
+0.0124246
+0.0124156
+0.0124195
+end_trial
+ptool 21
+start_trial
+0.0196867
+0.0196866
+0.00768721
+end_trial
+ptool 22
+start_trial
+0.0124092
+0.0123976
+0.0124173
+end_trial
+ptool 23
+start_trial
+0.0195242
+0.016738
+0.0195216
+end_trial
+ptool 24
+start_trial
+0.0168267
+0.00894531
+0.0195218
+end_trial
+ptool 25
+start_trial
+0.0195545
+0.0195566
+0.0195557
+end_trial
+ptool 26
+start_trial
+-0.0369077
+-0.000538823
+-0.000535685
+end_trial
+ptool 27
+start_trial
+0.0195526
+0.0195512
+0.0195501
+end_trial
+ptool 28
+start_trial
+-0.0353746
+-0.0377567
+-0.0358239
+end_trial
+ptool 29
+start_trial
+0.00844844
+0.00881131
+0.0204359
+end_trial
+ptool 30
+start_trial
+0.0113547
+0.0204345
+0.0204376
+end_trial
+ptool 31
+start_trial
+0.0140331
+0.01402
+0.0140199
+end_trial
+ptool 32
+start_trial
+0.00790843
+0.0079821
+0.0194043
+end_trial
+ptool 33
+start_trial
+0.0140335
+0.0140342
+0.0140366
+end_trial
+ptool 34
+start_trial
+0.00773082
+0.0194041
+0.00918329
+end_trial
+ptool 35
+start_trial
+0.0191963
+0.0192062
+0.0191976
+end_trial
+ptool 36
+start_trial
+0.0191985
+0.0176748
+0.0192024
+end_trial
+ptool 37
+start_trial
+0.0193738
+0.019376
+0.0193779
+end_trial
+ptool 38
+start_trial
+0.0107015
+0.0214928
+0.0214989
+end_trial
+ptool 39
+start_trial
+0.019374
+0.0193742
+0.0193767
+end_trial
+ptool 40
+start_trial
+0.0215026
+0.0214888
+0.0214984
+end_trial
+ptool 41
+start_trial
+0.0150819
+0.0150767
+0.0150415
+end_trial
+ptool 42
+start_trial
+0.01502
+0.0149589
+0.0193648
+end_trial
+ptool 43
+start_trial
+0.0073617
+0.00751023
+0.00581535
+end_trial
+ptool 44
+start_trial
+-1
+-1
+0.00128903
+end_trial
+ptool 45
+start_trial
+0.006901
+0.00428679
+0.00692126
+end_trial
+ptool 46
+start_trial
+-1
+-1
+-1
+end_trial
+ptool 47
+start_trial
+0.0184353
+0.0184326
+0.00751081
+end_trial
+ptool 48
+start_trial
+0.00754548
+0.0070199
+0.00753684
+end_trial
+ptool 49
+start_trial
+0.0177211
+0.0177259
+0.0177243
+end_trial
+ptool 50
+start_trial
+0.0194209
+0.0194209
+0.0194226
+end_trial
+ptool 51
+start_trial
+0.017735
+0.0177242
+0.0177353
+end_trial
+ptool 52
+start_trial
+0.0194285
+0.0194212
+0.0194339
+end_trial
+ptool 53
+start_trial
+0.0194403
+0.019436
+0.0194381
+end_trial
+ptool 54
+start_trial
+0.0194405
+0.0194368
+0.0194354
+end_trial
+ptool 55
+start_trial
+0.00494022
+0.00672283
+0.00445578
+end_trial
+ptool 56
+start_trial
+0.0024095
+0.00217316
+0.00470062
+end_trial
+ptool 57
+start_trial
+0.00421549
+0.00487761
+0.00388124
+end_trial
+ptool 58
+start_trial
+0.0120204
+0.00253552
+0.00240132
+end_trial
+ptool 59
+start_trial
+0.0138047
+0.0143192
+0.00662351
+end_trial
+ptool 60
+start_trial
+0.0160125
+0.014015
+0.00326166
+end_trial
+ptool 61
+start_trial
+0.00712148
+0.00615425
+0.00548681
+end_trial
+ptool 62
+start_trial
+0.00581218
+0.00640148
+0.0177034
+end_trial
+ptool 63
+start_trial
+0.00577676
+0.0047802
+0.00923085
+end_trial
+ptool 64
+start_trial
+0.0174919
+0.00538807
+0.0183492
+end_trial
+ptool 65
+start_trial
+0.00780179
+0.00779407
+0.00270108
+end_trial
+ptool 66
+start_trial
+0.0077943
+0.00779406
+0.00779522
+end_trial
+ptool 67
+start_trial
+0.0148065
+0.0154688
+0.0135837
+end_trial
+ptool 68
+start_trial
+0.00813094
+0.00812861
+0.00812789
+end_trial
+ptool 69
+start_trial
+0.0135941
+0.00235872
+0.0163513
+end_trial
+ptool 70
+start_trial
+0.00812843
+0.00299506
+0.0082333
+end_trial
+ptool 71
+start_trial
+0.0125118
+0.0154378
+0.013588
+end_trial
+ptool 72
+start_trial
+0.015253
+0.00703842
+0.00690487
+end_trial
+tool 3dwh_calibration/kitchenknife_w3s_3dwh_1
+ptool 1
+start_trial
+0.00105378
+0.00158091
+0.00555039
+end_trial
+ptool 2
+start_trial
+0.00837797
+0.0034309
+0.00252873
+end_trial
+ptool 3
+start_trial
+0.0048673
+0.0018779
+0.0068777
+end_trial
+ptool 4
+start_trial
+0.00401846
+0.00416394
+0.0047359
+end_trial
+ptool 5
+start_trial
+0.0047819
+0.00495437
+0.00269737
+end_trial
+ptool 6
+start_trial
+0.0055282
+0.00475399
+0.00280604
+end_trial
+ptool 7
+start_trial
+0.0053754
+0.00180692
+0.00508831
+end_trial
+ptool 8
+start_trial
+-0.00223517
+-0.00178226
+-0.000766959
+end_trial
+ptool 9
+start_trial
+0.00562693
+0.00603276
+0.00219959
+end_trial
+ptool 10
+start_trial
+-0.000772345
+-0.000763054
+-0.00200429
+end_trial
+ptool 11
+start_trial
+0.00637345
+0.0065388
+-0.000979665
+end_trial
+ptool 12
+start_trial
+-0.0252561
+-0.0113643
+-0.00421885
+end_trial
+tool 3dwh_calibration/kitchenknife_w4s_3dwh_1
+ptool 1
+start_trial
+0.0026382
+0.00169362
+0.00434604
+end_trial
+ptool 2
+start_trial
+-0.000502096
+0.00295574
+0.000219559
+end_trial
+ptool 3
+start_trial
+0.00145168
+0.00158695
+0.00347711
+end_trial
+ptool 4
+start_trial
+-0.000606745
+0.000526704
+0.000722642
+end_trial
+ptool 5
+start_trial
+-0.0205316
+-0.048279
+0.000899849
+end_trial
+ptool 6
+start_trial
+-0.0557333
+-0.0349273
+0.00332088
+end_trial
+ptool 7
+start_trial
+0.00352683
+0.00160709
+0.00463467
+end_trial
+ptool 8
+start_trial
+-0.00199705
+-0.00228474
+-0.00228864
+end_trial
+ptool 9
+start_trial
+0.000402542
+0.00354924
+0.000493403
+end_trial
+ptool 10
+start_trial
+-0.00228213
+-0.00226265
+-0.00228305
+end_trial
+ptool 11
+start_trial
+-0.000201761
+0.00012681
+-0.000234489
+end_trial
+ptool 12
+start_trial
+0.000198546
+-0.0247102
+0.00110471
+end_trial
+tool 3dwh_calibration/kitchenknife_w5s_3dwh_1
+ptool 1
+start_trial
+-0.00266967
+-0.00254594
+-0.00418506
+end_trial
+ptool 2
+start_trial
+0.000912413
+0.0030878
+0.00458676
+end_trial
+ptool 3
+start_trial
+-0.00369947
+-0.00210107
+-0.00256486
+end_trial
+ptool 4
+start_trial
+-0.0421107
+0.00391247
+-0.0225354
+end_trial
+ptool 5
+start_trial
+0.00178607
+0.00160916
+-0.00468499
+end_trial
+ptool 6
+start_trial
+-0.000887006
+-0.0103144
+-0.00654106
+end_trial
+ptool 7
+start_trial
+3.09703e-06
+0.000406791
+-4.67338e-07
+end_trial
+ptool 8
+start_trial
+0.00260493
+0.00104301
+0.00049332
+end_trial
+ptool 9
+start_trial
+3.08899e-06
+3.07406e-06
+1.67795e-06
+end_trial
+ptool 10
+start_trial
+0.00137442
+-0.000131702
+0.000185984
+end_trial
+ptool 11
+start_trial
+0.00298088
+-0.00140576
+0.00299393
+end_trial
+ptool 12
+start_trial
+0.000515308
+0.000981295
+0.0025208
+end_trial
+tool 3dwh_calibration/kitchenknife_w5s_3dwh_2
+ptool 1
+start_trial
+0.00199191
+0.000961135
+0.000971393
+end_trial
+ptool 2
+start_trial
+0.00563544
+0.00398527
+0.00395801
+end_trial
+ptool 3
+start_trial
+0.00110024
+0.000822094
+-0.000395265
+end_trial
+ptool 4
+start_trial
+0.00549567
+0.00090551
+0.00545029
+end_trial
+ptool 5
+start_trial
+0.00045269
+-0.0168939
+0.00438577
+end_trial
+ptool 6
+start_trial
+0.000388836
+0.00346734
+0.000877321
+end_trial
+ptool 7
+start_trial
+0.00618145
+0.00411348
+0.0072022
+end_trial
+ptool 8
+start_trial
+0.00412802
+0.000534407
+0.0015421
+end_trial
+ptool 9
+start_trial
+0.00579007
+0.00745937
+0.00724941
+end_trial
+ptool 10
+start_trial
+0.00412327
+0.00170298
+0.00214773
+end_trial
+ptool 11
+start_trial
+0.00525784
+-7.27616e-07
+0.00517548
+end_trial
+ptool 12
+start_trial
+0.00560526
+0.00358534
+0.00134409
+end_trial
+tool 3dwh_calibration/kitchenknife_w5s_3dwh_4
+ptool 1
+start_trial
+0.0037706
+0.00446341
+0.00363021
+end_trial
+ptool 2
+start_trial
+0.000643419
+0.00185049
+-0.0461652
+end_trial
+ptool 3
+start_trial
+0.00317724
+0.002838
+0.00220603
+end_trial
+ptool 4
+start_trial
+0.000368902
+0.00173453
+0.00237039
+end_trial
+ptool 5
+start_trial
+-0.00365424
+0.000655167
+0.00138898
+end_trial
+ptool 6
+start_trial
+-0.00215565
+-0.000608674
+0.00300713
+end_trial
+ptool 7
+start_trial
+-0.0812624
+0.00305502
+-0.000100444
+end_trial
+ptool 8
+start_trial
+-0.00242662
+-0.00240446
+-0.00228843
+end_trial
+ptool 9
+start_trial
+-0.000140108
+0.0010341
+-0.00190317
+end_trial
+ptool 10
+start_trial
+-0.00278336
+-0.00337673
+-0.00240887
+end_trial
+ptool 11
+start_trial
+0.0023686
+-0.00054941
+-0.00358603
+end_trial
+ptool 12
+start_trial
+0.000454542
+0.000654019
+-5.93724e-05
+end_trial
+tool 3dwh_calibration/ladle_p_3dwh_1
+ptool 1
+start_trial
+0.00096975
+0.00539101
+0.00277474
+end_trial
+ptool 2
+start_trial
+-1
+-0.00530445
+-0.00831779
+end_trial
+ptool 3
+start_trial
+0.00447196
+0.00378201
+0.00399034
+end_trial
+ptool 4
+start_trial
+-0.00924226
+-1
+-1
+end_trial
+ptool 5
+start_trial
+0.00461746
+0.00162147
+0.00203522
+end_trial
+ptool 6
+start_trial
+0.00366356
+0.0027098
+0.00379225
+end_trial
+ptool 7
+start_trial
+0.00229416
+0.00271381
+0.00253981
+end_trial
+ptool 8
+start_trial
+0.000976791
+0.00389662
+0.00181327
+end_trial
+ptool 9
+start_trial
+0.0027818
+0.00286889
+0.00224578
+end_trial
+ptool 10
+start_trial
+0.00513081
+0.00588784
+0.00377962
+end_trial
+ptool 11
+start_trial
+0.00446214
+0.00303276
+0.00559802
+end_trial
+ptool 12
+start_trial
+0.00364824
+0.00823799
+0.00475195
+end_trial
+tool 3dwh_calibration/mallet_w_3dwh_1
+ptool 1
+start_trial
+0.010582
+0.010634
+0.0105955
+end_trial
+ptool 2
+start_trial
+0.00542242
+0.00624045
+0.00626382
+end_trial
+ptool 3
+start_trial
+0.00403798
+0.00543637
+0.0105729
+end_trial
+ptool 4
+start_trial
+0.00492588
+0.00507445
+0.00504831
+end_trial
+ptool 5
+start_trial
+0.0178291
+0.00291346
+0.00965563
+end_trial
+ptool 6
+start_trial
+0.00292193
+-0.0192341
+0.00956701
+end_trial
+ptool 7
+start_trial
+-0.00283051
+-0.00189592
+-0.00277235
+end_trial
+ptool 8
+start_trial
+0.00671629
+0.00611806
+0.00551821
+end_trial
+ptool 9
+start_trial
+-0.00195597
+-0.00269148
+7.08762e-05
+end_trial
+ptool 10
+start_trial
+0.00549546
+0.00716371
+0.0129573
+end_trial
+ptool 11
+start_trial
+0.00779731
+0.00976273
+0.0039301
+end_trial
+ptool 12
+start_trial
+0.00923308
+0.00908061
+-2.37156e-06
+end_trial
+tool 3dwh_calibration/meshspatula_m_3dwh_1
+ptool 1
+start_trial
+-0.00175322
+-0.00261724
+-0.0013778
+end_trial
+ptool 2
+start_trial
+0.00577474
+0.00125372
+0.00394453
+end_trial
+ptool 3
+start_trial
+-0.000459616
+0.00433165
+0.00795574
+end_trial
+ptool 4
+start_trial
+0.00522103
+0.00391671
+0.00531129
+end_trial
+ptool 5
+start_trial
+0.00517895
+0.00187442
+0.00136713
+end_trial
+ptool 6
+start_trial
+0.00414258
+0.00299599
+0.00121245
+end_trial
+ptool 7
+start_trial
+0.00343277
+0.00427067
+0.00318838
+end_trial
+ptool 8
+start_trial
+-0.00201209
+-0.00234387
+-0.00207186
+end_trial
+ptool 9
+start_trial
+0.0037685
+0.000949911
+0.00276911
+end_trial
+ptool 10
+start_trial
+-0.00234514
+-0.00234148
+-0.00234038
+end_trial
+ptool 11
+start_trial
+0.00265206
+0.00351316
+0.00637218
+end_trial
+ptool 12
+start_trial
+0.00264402
+2.3691e-05
+2.36652e-05
+end_trial
+tool 3dwh_calibration/meshspatula_p_3dwh_1
+ptool 1
+start_trial
+7.63985e-08
+1.35213e-07
+7.64177e-08
+end_trial
+ptool 2
+start_trial
+-6.98744e-06
+-0.000912945
+-0.00383006
+end_trial
+ptool 3
+start_trial
+6.26765e-08
+4.28911e-08
+6.2612e-08
+end_trial
+ptool 4
+start_trial
+-0.000121419
+-0.00164652
+-0.00193731
+end_trial
+ptool 5
+start_trial
+-1
+-1
+0
+end_trial
+ptool 6
+start_trial
+-1
+0
+-1
+end_trial
+ptool 7
+start_trial
+0.00173369
+-4.52472e-06
+-0.00146816
+end_trial
+ptool 8
+start_trial
+-4.17677e-06
+-3.34181e-06
+9.3115e-05
+end_trial
+ptool 9
+start_trial
+-0.000854928
+-0.000146432
+-0.000141445
+end_trial
+ptool 10
+start_trial
+-1.05061e-06
+-1.93213e-07
+-3.10763e-06
+end_trial
+ptool 11
+start_trial
+0.000450725
+-0.0442766
+-7.95246e-05
+end_trial
+ptool 12
+start_trial
+-0.0541588
+0.00187807
+-0.0537073
+end_trial
+ptool 13
+start_trial
+-0.00290786
+-0.00295929
+-0.00318041
+end_trial
+ptool 14
+start_trial
+4.35079e-05
+0.000271967
+-0.00176657
+end_trial
+ptool 15
+start_trial
+-0.00426261
+-0.00354123
+-0.00323217
+end_trial
+ptool 16
+start_trial
+0.0011533
+-0.00175621
+4.22469e-05
+end_trial
+ptool 17
+start_trial
+-0.00106709
+3.49254e-05
+-3.06423e-05
+end_trial
+ptool 18
+start_trial
+0.00031842
+-1.80687e-05
+-2.3348e-05
+end_trial
+ptool 19
+start_trial
+1.12453e-06
+1.2233e-06
+-3.35105e-07
+end_trial
+ptool 20
+start_trial
+-0.00465302
+-0.00551077
+-0.00325443
+end_trial
+ptool 21
+start_trial
+1.2233e-06
+-0.0377096
+-0.063469
+end_trial
+ptool 22
+start_trial
+-0.00306015
+-0.00549938
+-0.00535476
+end_trial
+ptool 23
+start_trial
+0.00215918
+0.0016161
+-0.00701262
+end_trial
+ptool 24
+start_trial
+-1.63086e-07
+-0.00189401
+0.000788478
+end_trial
+ptool 25
+start_trial
+0.00243985
+0.00255799
+9.08152e-05
+end_trial
+ptool 26
+start_trial
+-1
+-1
+-1
+end_trial
+ptool 27
+start_trial
+0.00187417
+-0.0129319
+0.00106623
+end_trial
+ptool 28
+start_trial
+-1
+-1
+-1
+end_trial
+ptool 29
+start_trial
+-1
+-1
+-1
+end_trial
+ptool 30
+start_trial
+-1
+-1
+-1
+end_trial
+ptool 31
+start_trial
+0.00158427
+0.00170704
+0.00189144
+end_trial
+ptool 32
+start_trial
+-1
+-1
+-1
+end_trial
+ptool 33
+start_trial
+0.0021103
+-0.00338969
+-0.0397496
+end_trial
+ptool 34
+start_trial
+-1
+-1
+-1
+end_trial
+ptool 35
+start_trial
+-1
+-1
+-1
+end_trial
+ptool 36
+start_trial
+-1
+-1
+-1
+end_trial
+tool 3dwh_calibration/mug_p_3dwh_2
+ptool 1
+start_trial
+-1
+-1
+-1
+end_trial
+ptool 2
+start_trial
+-1
+-1
+-1
+end_trial
+ptool 3
+start_trial
+-1
+-1
+-1
+end_trial
+ptool 4
+start_trial
+0.00158251
+0.00650069
+0.00363706
+end_trial
+ptool 5
+start_trial
+-1
+-1
+-1
+end_trial
+ptool 6
+start_trial
+0.00394423
+0.000378203
+0.00320543
+end_trial
+ptool 7
+start_trial
+0.0117951
+7.28309e-05
+0.01179
+end_trial
+ptool 8
+start_trial
+9.42755e-05
+0.000908319
+3.86879e-05
+end_trial
+tool 3dwh_calibration/mug_p_3dwh_3
+ptool 1
+start_trial
+0.00322162
+0.00148086
+0.00124402
+end_trial
+ptool 2
+start_trial
+0.00116147
+-9.31212e-07
+0.00113974
+end_trial
+ptool 3
+start_trial
+0.00181046
+0.000356886
+0.00175531
+end_trial
+ptool 4
+start_trial
+-3.91497e-07
+0.000440866
+1.66033e-06
+end_trial
+ptool 5
+start_trial
+-1
+-1
+-1
+end_trial
+ptool 6
+start_trial
+-1
+-1
+-1
+end_trial
+ptool 7
+start_trial
+0.000699908
+0.0030565
+0.00356677
+end_trial
+ptool 8
+start_trial
+0.00394921
+0.00466977
+0.00194294
+end_trial
+ptool 9
+start_trial
+0.000547699
+3.03401e-05
+0.00215217
+end_trial
+ptool 10
+start_trial
+0.00188031
+0.00294277
+0.00278756
+end_trial
+ptool 11
+start_trial
+7.30396e-05
+0.00175278
+-2.24433e-07
+end_trial
+ptool 12
+start_trial
+0.00306708
+0.00113901
+2.40084e-06
+end_trial
+tool 3dwh_calibration/mug_p_3dwh_4
+ptool 1
+start_trial
+0.00391064
+0.000728865
+0.00428481
+end_trial
+ptool 2
+start_trial
+-0.000578721
+0.00476376
+0.00187138
+end_trial
+ptool 3
+start_trial
+0.00334362
+0.00308792
+0.00266012
+end_trial
+ptool 4
+start_trial
+0.00210954
+-4.44066e-07
+8.8148e-05
+end_trial
+ptool 5
+start_trial
+-0.00116867
+0.000465441
+0.00438763
+end_trial
+ptool 6
+start_trial
+-0.000852882
+0.000978588
+0.00400475
+end_trial
+ptool 7
+start_trial
+-0.0285944
+-0.0407903
+-0.0160041
+end_trial
+ptool 8
+start_trial
+0.00184548
+1.02342e-06
+0.00256226
+end_trial
+ptool 9
+start_trial
+-0.0432942
+-0.0025296
+-0.0173452
+end_trial
+ptool 10
+start_trial
+9.88094e-07
+0.00413448
+1.09731e-06
+end_trial
+ptool 11
+start_trial
+0.00217054
+0.0029397
+0.00354951
+end_trial
+ptool 12
+start_trial
+0.00331666
+0.00242984
+0.00331486
+end_trial
+tool 3dwh_calibration/mug_p_3dwh_5
+ptool 1
+start_trial
+-1
+-1
+-1
+end_trial
+ptool 2
+start_trial
+4.61349e-06
+-0.0159703
+0.000866011
+end_trial
+ptool 3
+start_trial
+-1
+-1
+-1
+end_trial
+ptool 4
+start_trial
+0.00422017
+-0.0191428
+-1.17528e-06
+end_trial
+ptool 5
+start_trial
+0.000647001
+0.00068421
+0.000924535
+end_trial
+ptool 6
+start_trial
+0.00174824
+0.000988055
+0.0026278
+end_trial
+ptool 7
+start_trial
+-1
+-1
+-0.00940842
+end_trial
+ptool 8
+start_trial
+0.000960135
+0.000955498
+0.00195759
+end_trial
+ptool 9
+start_trial
+-0.0116848
+-0.0142652
+-1
+end_trial
+ptool 10
+start_trial
+0.00253588
+0.00319606
+0.00274431
+end_trial
+ptool 11
+start_trial
+0.00353761
+0.000821949
+0.00131424
+end_trial
+ptool 12
+start_trial
+0.00386359
+0.00154311
+0.00351179
+end_trial
+tool 3dwh_calibration/mug_p_3dwh_7
+ptool 1
+start_trial
+0.000621734
+0.00167844
+0.00284435
+end_trial
+ptool 2
+start_trial
+0.00140785
+0.0037227
+0.00289298
+end_trial
+ptool 3
+start_trial
+0.00345366
+0.00280694
+0.00335414
+end_trial
+ptool 4
+start_trial
+0.00370158
+0.00219988
+0.000310809
+end_trial
+ptool 5
+start_trial
+-1
+-1
+-1
+end_trial
+ptool 6
+start_trial
+-1
+-1
+-1
+end_trial
+ptool 7
+start_trial
+-1
+-1
+-1
+end_trial
+ptool 8
+start_trial
+0.00219835
+0.00466332
+0.00187654
+end_trial
+ptool 9
+start_trial
+-1
+-1
+-1
+end_trial
+ptool 10
+start_trial
+0.000716452
+0.00458121
+0.00190689
+end_trial
+ptool 11
+start_trial
+0.0023457
+0.00305499
+0.00521451
+end_trial
+ptool 12
+start_trial
+0.00610643
+0.00395457
+0.00531674
+end_trial
+tool 3dwh_calibration/pencil_w_3dwh_1
+ptool 1
+start_trial
+-0.00298194
+-5.60248e-07
+-0.000951848
+end_trial
+ptool 2
+start_trial
+-0.0125438
+-0.000805405
+0.000306572
+end_trial
+ptool 3
+start_trial
+-0.0109356
+-4.11955e-07
+8.27828e-05
+end_trial
+ptool 4
+start_trial
+-0.00417578
+-0.0163167
+-0.00418387
+end_trial
+ptool 5
+start_trial
+-0.0104933
+0.00024967
+-0.00802697
+end_trial
+ptool 6
+start_trial
+0.0002272
+-0.00757774
+-0.00261405
+end_trial
+ptool 7
+start_trial
+-0.00295523
+0.000251346
+-1.05199e-05
+end_trial
+ptool 8
+start_trial
+0.0001856
+0.000177639
+0.000172111
+end_trial
+ptool 9
+start_trial
+0.000218494
+0.00065384
+0.000333568
+end_trial
+ptool 10
+start_trial
+-0.0174129
+-0.000764785
+-0.00542925
+end_trial
+ptool 11
+start_trial
+-0.0637364
+-0.0611763
+-0.00487413
+end_trial
+ptool 12
+start_trial
+-0.0171153
+-1.04845e-07
+-0.0054604
+end_trial
+tool 3dwh_calibration/pencil_w_3dwh_2
+ptool 1
+start_trial
+-0.00843759
+-0.0299638
+-0.0117931
+end_trial
+ptool 2
+start_trial
+-0.0228906
+-0.00110567
+1.44127e-07
+end_trial
+ptool 3
+start_trial
+-0.0087876
+-0.00698451
+-2.98653e-05
+end_trial
+ptool 4
+start_trial
+-0.000972709
+-0.0288305
+-0.019244
+end_trial
+ptool 5
+start_trial
+0.000222875
+-0.00447157
+-0.00595135
+end_trial
+ptool 6
+start_trial
+-0.0159307
+-0.000613359
+-0.000316193
+end_trial
+ptool 7
+start_trial
+-1.05968e-05
+-0.0440051
+-0.0271058
+end_trial
+ptool 8
+start_trial
+0.000184954
+-0.00274911
+-0.00213135
+end_trial
+ptool 9
+start_trial
+-0.0128486
+-1.05927e-05
+-1.02293e-06
+end_trial
+ptool 10
+start_trial
+-0.00425894
+-0.000656559
+-0.0128836
+end_trial
+ptool 11
+start_trial
+-0.000337821
+-0.0048167
+-0.00459006
+end_trial
+ptool 12
+start_trial
+-0.0078857
+-0.00623333
+0.000192254
+end_trial
+tool 3dwh_calibration/pen_p_3dwh_1
+ptool 1
+start_trial
+7.5807e-05
+0.000236136
+-0.000119833
+end_trial
+ptool 2
+start_trial
+0.000176044
+-0.0154171
+-0.00519154
+end_trial
+ptool 3
+start_trial
+7.74557e-05
+7.90048e-05
+-0.0335452
+end_trial
+ptool 4
+start_trial
+-0.00127162
+0.000187193
+-0.000795941
+end_trial
+ptool 5
+start_trial
+-0.00930005
+-0.0154991
+-0.029036
+end_trial
+ptool 6
+start_trial
+-0.0106779
+-0.00652877
+-0.0153016
+end_trial
+ptool 7
+start_trial
+-0.00805026
+-0.00669985
+7.66383e-05
+end_trial
+ptool 8
+start_trial
+0.000188895
+-0.0580463
+0.000225474
+end_trial
+ptool 9
+start_trial
+-2.06181e-05
+0.000101299
+1.30742e-05
+end_trial
+ptool 10
+start_trial
+-0.0241601
+-0.0136416
+0.000202448
+end_trial
+ptool 11
+start_trial
+-0.0127552
+-0.0149727
+-0.00594287
+end_trial
+ptool 12
+start_trial
+-0.0221251
+0.000183838
+-0.0107492
+end_trial
+tool 3dwh_calibration/rollingpin_w_3dwh_1
+ptool 1
+start_trial
+-1
+-1
+-1
+end_trial
+ptool 2
+start_trial
+-1
+-1
+-1
+end_trial
+ptool 3
+start_trial
+0.00597865
+0.00334638
+0.00814782
+end_trial
+ptool 4
+start_trial
+0.00601913
+0.0052719
+0.00616264
+end_trial
+ptool 5
+start_trial
+0.008536
+0.00851886
+0.00820878
+end_trial
+ptool 6
+start_trial
+0.00324152
+0.00442641
+0.00333124
+end_trial
+ptool 7
+start_trial
+0.0102001
+0.00297782
+0.00662902
+end_trial
+ptool 8
+start_trial
+0.0080666
+0.00598975
+0.00554519
+end_trial
+ptool 9
+start_trial
+0.00632415
+0.0108925
+0.0102447
+end_trial
+ptool 10
+start_trial
+0.00288111
+0.00408546
+0.00286584
+end_trial
+ptool 11
+start_trial
+0.00882222
+0.00511942
+0.00929204
+end_trial
+ptool 12
+start_trial
+0.00468735
+0.00453114
+0.00638012
+end_trial
+ptool 13
+start_trial
+0.00265988
+-0.0118656
+0.00126778
+end_trial
+ptool 14
+start_trial
+0.00243545
+0.00149023
+-0.0115131
+end_trial
+ptool 15
+start_trial
+0.00432656
+0.0105628
+0.00442306
+end_trial
+ptool 16
+start_trial
+0.00507899
+0.00374945
+0.00855218
+end_trial
+ptool 17
+start_trial
+0.00818857
+0.00887004
+0.00506071
+end_trial
+ptool 18
+start_trial
+0.00768227
+0.00539043
+0.00429738
+end_trial
+ptool 19
+start_trial
+0.00522778
+0.00504109
+0.00472401
+end_trial
+ptool 20
+start_trial
+0.00265132
+0.0043719
+0.00414287
+end_trial
+ptool 21
+start_trial
+0.00328519
+0.00809254
+0.00851171
+end_trial
+ptool 22
+start_trial
+0.00827895
+0.00593056
+0.00409711
+end_trial
+ptool 23
+start_trial
+0.011132
+0.00419216
+0.00430389
+end_trial
+ptool 24
+start_trial
+0.00525507
+0.00731703
+0.0029942
+end_trial
+ptool 25
+start_trial
+0.00618431
+0.00388982
+0.00196479
+end_trial
+ptool 26
+start_trial
+0.00400128
+0.00801972
+0.00583174
+end_trial
+ptool 27
+start_trial
+-1
+-1
+-1
+end_trial
+ptool 28
+start_trial
+-1
+-1
+-1
+end_trial
+tool 3dwh_calibration/rollingpin_w_3dwh_2
+ptool 1
+start_trial
+-1
+-1
+-1
+end_trial
+ptool 2
+start_trial
+-1
+-1
+-1
+end_trial
+ptool 3
+start_trial
+0.00679952
+0.0083455
+0.00736245
+end_trial
+ptool 4
+start_trial
+0.00492793
+0.00682937
+0.00342547
+end_trial
+ptool 5
+start_trial
+0.00652739
+0.00445104
+0.00546096
+end_trial
+ptool 6
+start_trial
+0.00518198
+0.00343641
+0.00511936
+end_trial
+ptool 7
+start_trial
+0.00335912
+0.00527133
+0.00522185
+end_trial
+ptool 8
+start_trial
+0.00554834
+0.00401822
+0.00571474
+end_trial
+ptool 9
+start_trial
+0.00840582
+0.00834155
+0.00983102
+end_trial
+ptool 10
+start_trial
+0.00909493
+0.00908317
+0.00210472
+end_trial
+ptool 11
+start_trial
+-1
+-1
+-1
+end_trial
+ptool 12
+start_trial
+-1
+-1
+-1
+end_trial
+tool 3dwh_calibration/rollingpin_w_3dwh_3
+ptool 1
+start_trial
+-1
+-1
+-1
+end_trial
+ptool 2
+start_trial
+-1
+-1
+-1
+end_trial
+ptool 3
+start_trial
+0.00134158
+0.00133835
+0.00433371
+end_trial
+ptool 4
+start_trial
+0.00260933
+0.00326042
+0.00385851
+end_trial
+ptool 5
+start_trial
+-0.00037257
+-0.0035176
+-0.00154658
+end_trial
+ptool 6
+start_trial
+-0.00737811
+-0.00430089
+-0.00418329
+end_trial
+ptool 7
+start_trial
+0.00254204
+0.00506758
+0.00437755
+end_trial
+ptool 8
+start_trial
+0.00190912
+0.00263785
+0.00517464
+end_trial
+ptool 9
+start_trial
+-0.00317384
+-0.00240592
+-0.00312601
+end_trial
+ptool 10
+start_trial
+-0.00201126
+-0.00528183
+-0.00208029
+end_trial
+ptool 11
+start_trial
+-1
+-1
+-1
+end_trial
+ptool 12
+start_trial
+-1
+-1
+-1
+end_trial
+tool 3dwh_calibration/rollingpin_w_3dwh_4
+ptool 1
+start_trial
+-1
+-1
+-1
+end_trial
+ptool 2
+start_trial
+-1
+-1
+-1
+end_trial
+ptool 3
+start_trial
+0.00448025
+0.00699613
+0.00823376
+end_trial
+ptool 4
+start_trial
+0.00509282
+0.00192962
+0.00286566
+end_trial
+ptool 5
+start_trial
+0.00463029
+0.00363978
+0.00518006
+end_trial
+ptool 6
+start_trial
+0.00441019
+0.00219705
+0.00218706
+end_trial
+ptool 7
+start_trial
+0.00572914
+0.00407296
+0.00247998
+end_trial
+ptool 8
+start_trial
+0.00239256
+0.00368364
+0.00293433
+end_trial
+ptool 9
+start_trial
+0.00547058
+0.00745446
+0.00265492
+end_trial
+ptool 10
+start_trial
+0.00359069
+-0.0139681
+0.00169667
+end_trial
+ptool 11
+start_trial
+0.00451906
+0.00444743
+0.00385099
+end_trial
+ptool 12
+start_trial
+0.00167342
+0.0012244
+0.0038839
+end_trial
+ptool 13
+start_trial
+0.000288274
+0.0028143
+0.0012809
+end_trial
+ptool 14
+start_trial
+0.00451298
+-0.00470019
+0.002283
+end_trial
+ptool 15
+start_trial
+0.00775608
+0.00338957
+0.00602097
+end_trial
+ptool 16
+start_trial
+-0.0480075
+-0.0810079
+0.00274064
+end_trial
+ptool 17
+start_trial
+0.00295533
+0.00488706
+0.00393692
+end_trial
+ptool 18
+start_trial
+-0.0522479
+-0.0132682
+0.0020727
+end_trial
+ptool 19
+start_trial
+-0.00153914
+-0.0469308
+2.47581e-06
+end_trial
+ptool 20
+start_trial
+0.000953161
+0.000926189
+-0.0799738
+end_trial
+ptool 21
+start_trial
+0.00486448
+0.0046376
+0.00506512
+end_trial
+ptool 22
+start_trial
+0.00260589
+0.00322438
+0.0063849
+end_trial
+ptool 23
+start_trial
+0.00477577
+0.00732655
+0.00589006
+end_trial
+ptool 24
+start_trial
+0.00667368
+0.00155884
+0.00256148
+end_trial
+ptool 25
+start_trial
+0.00146077
+0.000991976
+0.00453654
+end_trial
+ptool 26
+start_trial
+0.00263454
+0.00492548
+0.00493626
+end_trial
+ptool 27
+start_trial
+-1
+-1
+-1
+end_trial
+ptool 28
+start_trial
+-1
+-1
+-1
+end_trial
+tool 3dwh_calibration/rollingpin_w_3dwh_5
+ptool 1
+start_trial
+-1
+-1
+-1
+end_trial
+ptool 2
+start_trial
+0.00631807
+0.00363942
+0.00407535
+end_trial
+ptool 3
+start_trial
+-1
+-1
+-1
+end_trial
+ptool 4
+start_trial
+0.0048513
+0.00646294
+0.00290806
+end_trial
+ptool 5
+start_trial
+0.00351033
+0.00396803
+0.00646964
+end_trial
+ptool 6
+start_trial
+0.00170266
+0.00398114
+0.00175539
+end_trial
+ptool 7
+start_trial
+0.00454426
+0.00610221
+0.0010142
+end_trial
+ptool 8
+start_trial
+0.0027266
+0.00360621
+0.000518758
+end_trial
+ptool 9
+start_trial
+0.00283503
+0.00610408
+0.00553443
+end_trial
+ptool 10
+start_trial
+0.00378203
+0.00746897
+0.00168128
+end_trial
+ptool 11
+start_trial
+0.00355165
+0.00613002
+0.00156378
+end_trial
+ptool 12
+start_trial
+0.00432398
+0.00455615
+0.00126782
+end_trial
+ptool 13
+start_trial
+0.00633294
+0.00655415
+0.00524931
+end_trial
+ptool 14
+start_trial
+0.00177382
+2.41082e-06
+0.00121678
+end_trial
+ptool 15
+start_trial
+0.0019287
+0.00782326
+0.00312385
+end_trial
+ptool 16
+start_trial
+2.34791e-06
+0.00191657
+0.00115071
+end_trial
+ptool 17
+start_trial
+-0.00168438
+0.00366104
+0.00410245
+end_trial
+ptool 18
+start_trial
+0.001148
+0.00182786
+0.00114349
+end_trial
+ptool 19
+start_trial
+0.00493863
+0.00604888
+0.0047178
+end_trial
+ptool 20
+start_trial
+0.00355678
+0.00384828
+0.00269725
+end_trial
+ptool 21
+start_trial
+0.00300664
+0.00322622
+0.00618918
+end_trial
+ptool 22
+start_trial
+0.00154752
+-0.0183097
+0.00254578
+end_trial
+ptool 23
+start_trial
+0.00281826
+0.00281027
+0.00549307
+end_trial
+ptool 24
+start_trial
+0.00550618
+0.00274597
+0.00415516
+end_trial
+ptool 25
+start_trial
+0.00554611
+0.00226883
+0.0016694
+end_trial
+ptool 26
+start_trial
+0.00351414
+0.00303834
+0.00516843
+end_trial
+ptool 27
+start_trial
+0.00531364
+0.00427906
+0.00446983
+end_trial
+ptool 28
+start_trial
+0.00293448
+0.00353174
+0.00327623
+end_trial
+ptool 29
+start_trial
+0.00184747
+0.00393012
+0.00413584
+end_trial
+ptool 30
+start_trial
+0.00564227
+0.00603478
+0.0047153
+end_trial
+ptool 31
+start_trial
+-1
+-1
+-1
+end_trial
+ptool 32
+start_trial
+0.00519766
+0.00312403
+0.00484135
+end_trial
+ptool 33
+start_trial
+-1
+-1
+-1
+end_trial
+ptool 34
+start_trial
+0.00333515
+0.00474447
+0.00336497
+end_trial
+ptool 35
+start_trial
+0.00914882
+0.00323781
+0.00353404
+end_trial
+ptool 36
+start_trial
+0.0029607
+0.00200576
+0.00175857
+end_trial
+tool 3dwh_calibration/skillet_p1a_3dwh_1
+ptool 1
+start_trial
+0.00152699
+0.00408133
+0.0058419
+end_trial
+ptool 2
+start_trial
+0.00265574
+0.0052333
+0.00555958
+end_trial
+ptool 3
+start_trial
+0.00147793
+0.00518797
+0.00136678
+end_trial
+ptool 4
+start_trial
+0.0116461
+0.00486096
+0.00662527
+end_trial
+ptool 5
+start_trial
+0.00570206
+0.00853637
+0.00658676
+end_trial
+ptool 6
+start_trial
+0.00369889
+0.00285448
+0.00932456
+end_trial
+ptool 7
+start_trial
+0.0193507
+0.0193622
+0.0193507
+end_trial
+ptool 8
+start_trial
+0.00613725
+0.00602535
+0.000970573
+end_trial
+ptool 9
+start_trial
+0.0193559
+0.00500883
+0.0193505
+end_trial
+ptool 10
+start_trial
+0.00728444
+0.0061336
+0.00615305
+end_trial
+ptool 11
+start_trial
+0.00472443
+0.0199608
+0.0199603
+end_trial
+ptool 12
+start_trial
+0.00825792
+0.0188614
+0.0199594
+end_trial
+tool 3dwh_calibration/skillet_p1a_3dwh_2
+ptool 1
+start_trial
+-0.00623265
+-0.0040331
+-0.00618981
+end_trial
+ptool 2
+start_trial
+-0.00735739
+-0.00650116
+-0.00669779
+end_trial
+ptool 3
+start_trial
+0.0112691
+0.0108191
+0.0133683
+end_trial
+ptool 4
+start_trial
+0.0104177
+0.0111933
+0.0102439
+end_trial
+ptool 5
+start_trial
+0.0194238
+0.0194234
+0.0127473
+end_trial
+ptool 6
+start_trial
+0.00346438
+0.00547613
+3.14972e-05
+end_trial
+ptool 7
+start_trial
+0.00806647
+0.0194276
+0.0124019
+end_trial
+ptool 8
+start_trial
+0.000453694
+0.00282826
+0.00359713
+end_trial
+ptool 9
+start_trial
+0.00462405
+0.00552677
+0.00599272
+end_trial
+ptool 10
+start_trial
+0.0054786
+0.00669125
+0.00567274
+end_trial
+tool 3dwh_calibration/skillet_p2a_3dwh_1
+ptool 1
+start_trial
+0.00451264
+0.0175242
+0.00343691
+end_trial
+ptool 2
+start_trial
+0.005144
+0.00714168
+0.0077329
+end_trial
+ptool 3
+start_trial
+0.00310488
+0.00969323
+0.00318525
+end_trial
+ptool 4
+start_trial
+0.00657205
+0.00432252
+0.0136441
+end_trial
+ptool 5
+start_trial
+0.00605196
+0.0057757
+0.00469317
+end_trial
+ptool 6
+start_trial
+0.00476185
+0.00581994
+0.00592211
+end_trial
+ptool 7
+start_trial
+0.0114893
+0.00458071
+0.00597046
+end_trial
+ptool 8
+start_trial
+0.00751558
+0.0156158
+0.0156105
+end_trial
+ptool 9
+start_trial
+0.00857738
+0.00430076
+0.00764467
+end_trial
+ptool 10
+start_trial
+0.0156364
+0.0156154
+0.015637
+end_trial
+ptool 11
+start_trial
+0.00556985
+0.00555161
+0.00567748
+end_trial
+ptool 12
+start_trial
+0.00530131
+0.0200244
+0.00531442
+end_trial
+tool 3dwh_calibration/spatula_p_3dwh_1
+ptool 1
+start_trial
+0.00517656
+0.00494857
+0.000971137
+end_trial
+ptool 2
+start_trial
+2.80196e-05
+-8.01864e-06
+-7.85592e-06
+end_trial
+ptool 3
+start_trial
+0.00364613
+0.00197112
+0.00509091
+end_trial
+ptool 4
+start_trial
+0.00540651
+2.82162e-05
+2.82157e-05
+end_trial
+ptool 5
+start_trial
+0.00528676
+0.00309993
+0.00522177
+end_trial
+ptool 6
+start_trial
+0.00136522
+0.00172942
+0.00400133
+end_trial
+ptool 7
+start_trial
+8.92557e-05
+0.00119341
+0.00094387
+end_trial
+ptool 8
+start_trial
+0.000217182
+0.00504056
+0.00609378
+end_trial
+ptool 9
+start_trial
+0.000224666
+0.00323563
+0.000516021
+end_trial
+ptool 10
+start_trial
+0.00322419
+0.00681816
+0.00580728
+end_trial
+ptool 11
+start_trial
+-0.0170544
+0.000549072
+0.00114224
+end_trial
+ptool 12
+start_trial
+-0.00177788
+0.00021101
+6.41261e-06
+end_trial
+tool 3dwh_calibration/spatula_w3a_3dwh_1
+ptool 1
+start_trial
+0.00557827
+0.00753333
+0.00640878
+end_trial
+ptool 2
+start_trial
+0.00113967
+0.00340855
+-0.0339833
+end_trial
+ptool 3
+start_trial
+0.00409644
+0.00405906
+0.00674624
+end_trial
+ptool 4
+start_trial
+0.00121017
+-0.0427586
+0.00021071
+end_trial
+ptool 5
+start_trial
+0.00190119
+-0.0926497
+0.00222057
+end_trial
+ptool 6
+start_trial
+0.00347614
+0.000534573
+0.000740872
+end_trial
+ptool 7
+start_trial
+0.00215098
+0.00621971
+0.00308553
+end_trial
+ptool 8
+start_trial
+-0.00486434
+-0.00232372
+-0.00192592
+end_trial
+ptool 9
+start_trial
+0.0037948
+0.00204659
+0.00587158
+end_trial
+ptool 10
+start_trial
+-0.00233147
+-0.00261098
+-0.0518855
+end_trial
+ptool 11
+start_trial
+-1
+-0.006926
+-1
+end_trial
+ptool 12
+start_trial
+-1
+-1
+-1
+end_trial
+tool 3dwh_calibration/spoon_a_3dwh1
+ptool 1
+start_trial
+-0.00496517
+0.000208739
+-0.0230976
+end_trial
+ptool 2
+start_trial
+-7.95839e-08
+-0.00997566
+0.000217201
+end_trial
+ptool 3
+start_trial
+0.000292067
+0.000117742
+0.000152333
+end_trial
+ptool 4
+start_trial
+-0.0105514
+-0.0162797
+0.000420214
+end_trial
+ptool 5
+start_trial
+-0.0107668
+-0.00942179
+0.000294644
+end_trial
+ptool 6
+start_trial
+-0.0149715
+-0.00405269
+-0.00938864
+end_trial
+ptool 7
+start_trial
+-0.00456473
+-0.0026513
+-0.00222834
+end_trial
+ptool 8
+start_trial
+0.000494936
+-0.0171407
+0.000524905
+end_trial
+ptool 9
+start_trial
+-0.00202018
+-0.00083476
+-0.001247
+end_trial
+ptool 10
+start_trial
+-0.0434219
+-0.0957311
+0.00054108
+end_trial
+ptool 11
+start_trial
+-0.00459996
+-0.0160258
+-0.00542934
+end_trial
+ptool 12
+start_trial
+-0.0129147
+-0.00652101
+-0.00628587
+end_trial
+tool 3dwh_calibration/spoon_p_3dwh_1
+ptool 1
+start_trial
+0
+-1.96314e-05
+-1.11635e-05
+end_trial
+ptool 2
+start_trial
+0.000222074
+-0.00111346
+-0.069231
+end_trial
+ptool 3
+start_trial
+0.000152955
+-0.00320891
+-2.02228e-07
+end_trial
+ptool 4
+start_trial
+0.000397712
+-0.00646762
+-1.03909e-07
+end_trial
+ptool 5
+start_trial
+-0.00375983
+-0.103519
+-0.00330866
+end_trial
+ptool 6
+start_trial
+-0.0100199
+-0.0120569
+-0.00610407
+end_trial
+ptool 7
+start_trial
+0.000104558
+0.000259028
+0.000247799
+end_trial
+ptool 8
+start_trial
+4.65524e-07
+-1.61253e-07
+4.6802e-07
+end_trial
+ptool 9
+start_trial
+0.000262857
+-0.0017605
+0.000258214
+end_trial
+ptool 10
+start_trial
+-1.37516e-07
+0.000614457
+-0.012188
+end_trial
+ptool 11
+start_trial
+4.48008e-07
+-0.0131768
+6.07177e-07
+end_trial
+ptool 12
+start_trial
+0.000244624
+-0.013618
+-0.0133529
+end_trial
+tool 3dwh_calibration/spoon_p_3dwh_2
+ptool 1
+start_trial
+-0.000823386
+-8.24886e-06
+-0.0013299
+end_trial
+ptool 2
+start_trial
+-1
+-1
+-1
+end_trial
+ptool 3
+start_trial
+-0.000838253
+0.000292053
+-0.00414878
+end_trial
+ptool 4
+start_trial
+-1
+-7.66621e-05
+-1
+end_trial
+ptool 5
+start_trial
+0.000268326
+0.000243294
+6.7539e-06
+end_trial
+ptool 6
+start_trial
+-2.00406e-06
+-1.58724e-07
+-1.48156e-07
+end_trial
+ptool 7
+start_trial
+-0.146899
+-1.6552e-07
+-0.116878
+end_trial
+ptool 8
+start_trial
+-9.90989e-08
+-0.014398
+0.000223889
+end_trial
+ptool 9
+start_trial
+-1.76929e-07
+0.000194191
+0.00019058
+end_trial
+ptool 10
+start_trial
+-0.00742793
+-1.04331e-07
+-0.0144909
+end_trial
+ptool 11
+start_trial
+-0.000660061
+-4.08201e-09
+-1.85179e-07
+end_trial
+ptool 12
+start_trial
+-0.0100792
+8.40943e-07
+-1.91571e-07
+end_trial
+tool 3dwh_calibration/spoon_p_3dwh_3
+ptool 1
+start_trial
+-6.45805e-09
+0.000106389
+0.000108048
+end_trial
+ptool 2
+start_trial
+-0.00426941
+-0.00340214
+0.000144662
+end_trial
+ptool 3
+start_trial
+-0.00108115
+-3.66938e-07
+-1.35961e-06
+end_trial
+ptool 4
+start_trial
+0.000246918
+8.91003e-05
+-0.00572685
+end_trial
+ptool 5
+start_trial
+-0.0087854
+-0.0100738
+0.0128415
+end_trial
+ptool 6
+start_trial
+-0.0122055
+0.000249332
+-0.00167192
+end_trial
+ptool 7
+start_trial
+0.000425798
+0.000255901
+0.000407903
+end_trial
+ptool 8
+start_trial
+-0.000121244
+2.09261e-06
+-0.0189399
+end_trial
+ptool 9
+start_trial
+0.000413261
+0.000467806
+-0.0203161
+end_trial
+ptool 10
+start_trial
+0.000451928
+0.000443874
+0.000481826
+end_trial
+ptool 11
+start_trial
+-0.0113157
+0.000426238
+0.000425085
+end_trial
+ptool 12
+start_trial
+-0.00101301
+-0.000660965
+-0.00404113
+end_trial
+tool 3dwh_calibration/spoon_p_3dwh_4
+ptool 1
+start_trial
+5.25065e-05
+0.000155966
+-0.110123
+end_trial
+ptool 2
+start_trial
+3.66888e-07
+-0.000103977
+-0.0172588
+end_trial
+ptool 3
+start_trial
+-0.00239757
+0.000170574
+0.000176207
+end_trial
+ptool 4
+start_trial
+3.25476e-07
+-0.00776837
+0.000859954
+end_trial
+ptool 5
+start_trial
+0.000148779
+0.000159173
+0.000187256
+end_trial
+ptool 6
+start_trial
+-0.00157828
+0.000119371
+-0.00137824
+end_trial
+ptool 7
+start_trial
+0.00032977
+0.000380647
+-0.0113395
+end_trial
+ptool 8
+start_trial
+0.000337245
+-0.0919986
+-0.000982774
+end_trial
+ptool 9
+start_trial
+0.000376279
+-0.00682603
+0.000318553
+end_trial
+ptool 10
+start_trial
+0.000349638
+0.000325152
+-0.00103807
+end_trial
+ptool 11
+start_trial
+-0.00137284
+7.60883e-07
+-2.01566e-07
+end_trial
+ptool 12
+start_trial
+-0.00790064
+-0.00443004
+-0.00465379
+end_trial
+tool 3dwh_calibration/spoon_s_3dwh_1
+ptool 1
+start_trial
+-0.00314776
+0.000232904
+-0.0034364
+end_trial
+ptool 2
+start_trial
+0.000199294
+0.000193215
+-0.0135711
+end_trial
+ptool 3
+start_trial
+-0.0256206
+-0.00649869
+-0.000175217
+end_trial
+ptool 4
+start_trial
+-1.62871e-07
+-0.00684889
+-0.00135086
+end_trial
+ptool 5
+start_trial
+-0.00740679
+-6.33051e-08
+-0.00703009
+end_trial
+ptool 6
+start_trial
+-0.000145161
+-0.00748083
+-0.000319731
+end_trial
+ptool 7
+start_trial
+-0.00206157
+0.000663963
+0.000605591
+end_trial
+ptool 8
+start_trial
+0.000258735
+-0.0161342
+-0.00491608
+end_trial
+ptool 9
+start_trial
+0.000654688
+0.000649153
+0.000671911
+end_trial
+ptool 10
+start_trial
+0.00018298
+-0.0211835
+0.000437951
+end_trial
+ptool 11
+start_trial
+0.000409225
+-0.00903353
+-0.00842341
+end_trial
+ptool 12
+start_trial
+0.000416814
+-0.00834498
+0.000342414
+end_trial
+tool 3dwh_calibration/spoon_s_3dwh_2
+ptool 1
+start_trial
+0.000427621
+0.000468195
+0.0173944
+end_trial
+ptool 2
+start_trial
+-0.00265308
+-0.00131975
+-0.00129168
+end_trial
+ptool 3
+start_trial
+0.000406676
+0.000477104
+0.000575088
+end_trial
+ptool 4
+start_trial
+-1.10101e-06
+-0.0457228
+-0.00179085
+end_trial
+ptool 5
+start_trial
+-1
+-1
+-1
+end_trial
+ptool 6
+start_trial
+-1
+-1
+-1
+end_trial
+ptool 7
+start_trial
+1.46436e-05
+0.000283008
+-0.0572116
+end_trial
+ptool 8
+start_trial
+-4.4754e-05
+-9.89093e-08
+-1.54191e-05
+end_trial
+ptool 9
+start_trial
+-0.00105477
+-0.01326
+-0.0981664
+end_trial
+ptool 10
+start_trial
+0.00889847
+-1
+6.36468e-05
+end_trial
+ptool 11
+start_trial
+2.70965e-05
+-0.0125184
+3.10853e-05
+end_trial
+ptool 12
+start_trial
+-8.74678e-05
+0.000408366
+-0.0058772
+end_trial
+tool 3dwh_calibration/spoon_s_3dwh_3
+ptool 1
+start_trial
+-0.0844933
+-0.0392388
+0.000305587
+end_trial
+ptool 2
+start_trial
+1.91686e-05
+0.00019375
+7.44402e-07
+end_trial
+ptool 3
+start_trial
+-0.0757965
+-0.0133623
+-0.0405703
+end_trial
+ptool 4
+start_trial
+-0.00048326
+-1.76313e-07
+8.05661e-07
+end_trial
+ptool 5
+start_trial
+0.0005883
+0.000480179
+-6.5365e-05
+end_trial
+ptool 6
+start_trial
+0.000388803
+-0.00745606
+0.000515403
+end_trial
+ptool 7
+start_trial
+-7.51727e-08
+-7.65043e-08
+-6.32965e-08
+end_trial
+ptool 8
+start_trial
+-0.0548717
+-0.0515553
+0.000149757
+end_trial
+ptool 9
+start_trial
+-6.67402e-06
+-6.67424e-06
+-0.00218276
+end_trial
+ptool 10
+start_trial
+0.000144418
+-1.55998e-07
+0.000120533
+end_trial
+ptool 11
+start_trial
+-0.00926511
+9.43276e-05
+9.04571e-05
+end_trial
+ptool 12
+start_trial
+-0.00296076
+9.2492e-05
+-0.00946148
+end_trial
+tool 3dwh_calibration/spoon_s_3dwh_4
+ptool 1
+start_trial
+-0.0128511
+-0.00633201
+0.000459378
+end_trial
+ptool 2
+start_trial
+-0.0724878
+0.000403219
+-0.0144492
+end_trial
+ptool 3
+start_trial
+-0.00411975
+-0.0135482
+0.000402556
+end_trial
+ptool 4
+start_trial
+0.000381698
+0.000402672
+-0.000920662
+end_trial
+ptool 5
+start_trial
+0.000468123
+0.000405974
+-0.020166
+end_trial
+ptool 6
+start_trial
+-0.0259978
+0.000483936
+-0.0242518
+end_trial
+ptool 7
+start_trial
+9.15917e-05
+5.67217e-08
+4.50645e-05
+end_trial
+ptool 8
+start_trial
+-0.00399457
+-0.00195174
+-0.00126053
+end_trial
+ptool 9
+start_trial
+0.00031813
+9.15917e-05
+-2.39042e-05
+end_trial
+ptool 10
+start_trial
+-0.117437
+7.14991e-05
+-0.11141
+end_trial
+ptool 11
+start_trial
+-0.00218244
+-0.000146872
+-9.69189e-05
+end_trial
+ptool 12
+start_trial
+-0.00189117
+-4.31792e-05
+-0.00993454
+end_trial
+tool 3dwh_calibration/spoon_w_3dwh_1
+ptool 1
+start_trial
+0.000141173
+0.000154873
+0.000130082
+end_trial
+ptool 2
+start_trial
+-6.79588e-08
+-0.00196702
+-0.00769952
+end_trial
+ptool 3
+start_trial
+0.000126044
+-0.0124365
+0.000140264
+end_trial
+ptool 4
+start_trial
+-0.00497116
+0.000355552
+-5.83945e-08
+end_trial
+ptool 5
+start_trial
+-0.0198851
+-0.0130874
+-0.0175655
+end_trial
+ptool 6
+start_trial
+-0.0122258
+-0.0186859
+0.000281644
+end_trial
+ptool 7
+start_trial
+0.000431086
+0.000242434
+-0.0048486
+end_trial
+ptool 8
+start_trial
+-0.000160126
+-0.000871343
+-0.000161017
+end_trial
+ptool 9
+start_trial
+0.000240717
+-0.00841602
+0.000243876
+end_trial
+ptool 10
+start_trial
+-9.46056e-08
+-0.010487
+0.000394278
+end_trial
+ptool 11
+start_trial
+-0.0184115
+-1.6721e-07
+-0.00104736
+end_trial
+ptool 12
+start_trial
+-1.24537e-07
+-0.000806828
+-0.00781605
+end_trial
+tool 3dwh_calibration/spoon_w_3dwh_2
+ptool 1
+start_trial
+-0.118948
+-0.0750274
+-0.119022
+end_trial
+ptool 2
+start_trial
+-2.28175e-05
+6.04329e-07
+-0.0223213
+end_trial
+ptool 3
+start_trial
+-0.0197372
+-0.0160014
+0.000356534
+end_trial
+ptool 4
+start_trial
+-8.71913e-06
+-1.516e-07
+-1.89868e-05
+end_trial
+ptool 5
+start_trial
+-0.0365463
+-0.00643776
+0.000328148
+end_trial
+ptool 6
+start_trial
+-0.000702326
+-0.000594143
+0.00017602
+end_trial
+ptool 7
+start_trial
+-0.00272089
+-6.05497e-08
+0
+end_trial
+ptool 8
+start_trial
+-0.0126549
+-0.126595
+3.34095e-05
+end_trial
+ptool 9
+start_trial
+-6.91182e-08
+0
+1.97826e-07
+end_trial
+ptool 10
+start_trial
+-0.0887514
+0.000116043
+-0.00195882
+end_trial
+ptool 11
+start_trial
+9.31824e-05
+7.83125e-05
+0.00011733
+end_trial
+ptool 12
+start_trial
+-0.017145
+-0.0113349
+9.42081e-05
+end_trial
+tool 3dwh_calibration/spoon_w_3dwh_3
+ptool 1
+start_trial
+0.000212399
+0.000203024
+-0.111405
+end_trial
+ptool 2
+start_trial
+0.000547403
+-1.05912e-07
+-0.0294723
+end_trial
+ptool 3
+start_trial
+0.000210627
+0.000223646
+0.000213746
+end_trial
+ptool 4
+start_trial
+-1.03357e-07
+3.9701e-07
+-0.0510514
+end_trial
+ptool 5
+start_trial
+-0.0158629
+-0.0084661
+0.000303329
+end_trial
+ptool 6
+start_trial
+0.000168748
+-0.00297267
+-0.00729958
+end_trial
+ptool 7
+start_trial
+-1.53095e-07
+0
+0
+end_trial
+ptool 8
+start_trial
+0.000313231
+-0.00864318
+0.000295373
+end_trial
+ptool 9
+start_trial
+5.16288e-07
+-2.59384e-05
+-1.60262e-07
+end_trial
+ptool 10
+start_trial
+0.000284758
+0.000126258
+0.000275612
+end_trial
+ptool 11
+start_trial
+-0.0139157
+0.000326873
+0.000309662
+end_trial
+ptool 12
+start_trial
+0.000304992
+0.000319209
+-0.00213191
+end_trial
+tool 3dwh_calibration/squeegee_p_3dwh_1
+ptool 1
+start_trial
+0.00153734
+0.00132846
+0.00340827
+end_trial
+ptool 2
+start_trial
+-0.0024404
+0.00126392
+-0.00245762
+end_trial
+ptool 3
+start_trial
+0.000454727
+0.00393605
+0.00290241
+end_trial
+ptool 4
+start_trial
+0.000119396
+0.000970656
+0.000590754
+end_trial
+ptool 5
+start_trial
+0.00397267
+0.00371296
+0.0035366
+end_trial
+ptool 6
+start_trial
+0.00339042
+-0.00255897
+0.00132401
+end_trial
+ptool 7
+start_trial
+-1
+-1
+-1
+end_trial
+ptool 8
+start_trial
+-1
+-1
+-1
+end_trial
+tool 3dwh_calibration/squeegee_p_3dwh_2
+ptool 1
+start_trial
+-0.00415427
+-0.00338665
+-0.00543805
+end_trial
+ptool 2
+start_trial
+-0.00323984
+-0.003994
+-0.00538613
+end_trial
+ptool 3
+start_trial
+0.00366059
+0.00378638
+0.000118929
+end_trial
+ptool 4
+start_trial
+5.00576e-07
+0.00255862
+0.000681163
+end_trial
+ptool 5
+start_trial
+0.000907897
+0.00175104
+0.00227006
+end_trial
+ptool 6
+start_trial
+0.00154922
+-0.000816064
+-0.000410828
+end_trial
+ptool 7
+start_trial
+0.00213201
+0.00158763
+0.00211641
+end_trial
+ptool 8
+start_trial
+0.00108927
+-0.00579769
+0.000452591
+end_trial
+ptool 9
+start_trial
+0.00076017
+2.15307e-07
+6.56936e-07
+end_trial
+tool 3dwh_calibration/tablefork_p2s_3dwh_1
+ptool 1
+start_trial
+-0.0127152
+-0.0126947
+-0.0124278
+end_trial
+ptool 2
+start_trial
+-0.0147781
+0.00031119
+-0.0164312
+end_trial
+ptool 3
+start_trial
+-0.0100842
+0.000568607
+-0.0116071
+end_trial
+ptool 4
+start_trial
+0.000330023
+-0.0507413
+0.000307061
+end_trial
+ptool 5
+start_trial
+-0.000127502
+-0.00679742
+-0.0021874
+end_trial
+ptool 6
+start_trial
+-0.00566865
+-0.00892291
+-0.00550066
+end_trial
+ptool 7
+start_trial
+-0.0049082
+1.61939e-06
+1.61939e-06
+end_trial
+ptool 8
+start_trial
+1.74349e-07
+0.00175864
+-2.16311e-08
+end_trial
+ptool 9
+start_trial
+-1.12659e-07
+1.61939e-06
+-4.75874e-07
+end_trial
+ptool 10
+start_trial
+5.78842e-08
+-1.84412e-09
+1.86829e-07
+end_trial
+ptool 11
+start_trial
+-0.00113482
+-0.00666639
+-0.00222288
+end_trial
+ptool 12
+start_trial
+0.000137668
+-0.000955495
+-0.018112
+end_trial
+tool 3dwh_calibration/tablefork_p2s_3dwh_2
+ptool 1
+start_trial
+4.27968e-07
+0.00160574
+end_trial
+ptool 2
+start_trial
+9.76266e-06
+1.98212e-08
+-0.104876
+end_trial
+ptool 3
+start_trial
+0.00234238
+0.00296771
+-5.32568e-07
+end_trial
+ptool 4
+start_trial
+9.28126e-06
+-4.90272e-09
+1.64789e-08
+end_trial
+ptool 5
+start_trial
+-1.96757e-10
+-1.98154e-09
+-0.00941146
+end_trial
+ptool 6
+start_trial
+-2.49345e-10
+-3.69874e-09
+-5.58065e-12
+end_trial
+ptool 7
+start_trial
+8.41897e-06
+9.9073e-06
+end_trial
+ptool 8
+start_trial
+0.00195621
+-4.95962e-07
+-1.83483e-06
+end_trial
+ptool 9
+start_trial
+9.87779e-06
+9.87041e-06
+-0.00312688
+end_trial
+ptool 10
+start_trial
+2.85441e-05
+4.14105e-07
+8.37671e-05
+end_trial
+ptool 11
+start_trial
+2.9197e-06
+-0.000281651
+-3.86745e-07
+end_trial
+ptool 12
+start_trial
+-4.48543e-06
+-0.00429906
+-4.55599e-06
+end_trial
+tool 3dwh_calibration/tablefork_p3s_3dwh_1
+ptool 1
+start_trial
+-0.053223
+0.00017617
+end_trial
+ptool 2
+start_trial
+0.000255735
+0.0113284
+0.00103996
+end_trial
+ptool 3
+start_trial
+-0.0504736
+8.73565e-05
+-0.093153
+end_trial
+ptool 4
+start_trial
+0.000309557
+0.0001895
+0.00308936
+end_trial
+ptool 5
+start_trial
+-0.0694588
+-0.00308182
+-0.0818714
+end_trial
+ptool 6
+start_trial
+-0.00213431
+0.00158425
+-0.00145956
+end_trial
+ptool 7
+start_trial
+0.0023254
+0.00146673
+0.000639123
+end_trial
+ptool 8
+start_trial
+0.00539839
+0.00205022
+0.000530206
+end_trial
+ptool 9
+start_trial
+0.000482384
+0.000737236
+0.00465556
+end_trial
+ptool 10
+start_trial
+0.0033676
+0.000957722
+0.00192211
+end_trial
+ptool 11
+start_trial
+0.00217196
+0.00387022
+0.000666073
+end_trial
+ptool 12
+start_trial
+-0.0211202
+0.0034636
+0.00470954
+end_trial
+tool 3dwh_calibration/tablefork_p4s_3dwh_1
+ptool 1
+start_trial
+1.81726e-06
+0.00285917
+-5.21096e-07
+end_trial
+ptool 2
+start_trial
+1.13623e-07
+0.00014039
+6.16397e-05
+end_trial
+ptool 3
+start_trial
+0.0018148
+3.63564e-05
+end_trial
+ptool 4
+start_trial
+-0.000463977
+-0.00861613
+end_trial
+ptool 5
+start_trial
+-0.0268747
+7.80584e-08
+5.35949e-05
+end_trial
+ptool 6
+start_trial
+-2.10246e-08
+-0.090935
+-1.74325e-08
+end_trial
+ptool 7
+start_trial
+3.64928e-07
+3.64928e-07
+-1.08435e-07
+end_trial
+ptool 8
+start_trial
+-0.0121219
+-2.07052e-08
+-0.00996603
+end_trial
+ptool 9
+start_trial
+-0.000385285
+-0.000527006
+3.64928e-07
+end_trial
+ptool 10
+start_trial
+-0.00378462
+1.20429e-07
+-0.00128461
+end_trial
+ptool 11
+start_trial
+-1
+-1
+-8.12627e-05
+end_trial
+ptool 12
+start_trial
+-1
+-1
+end_trial
+tool 3dwh_calibration/tablefork_s_3dwh_2
+ptool 1
+start_trial
+-0.00197079
+-0.00246213
+-0.00936337
+end_trial
+ptool 2
+start_trial
+-0.00358386
+-0.00284088
+end_trial
+ptool 3
+start_trial
+-0.00268181
+-0.00268192
+-0.00905539
+end_trial
+ptool 4
+start_trial
+0.000204588
+-0.00284822
+-0.00293629
+end_trial
+ptool 5
+start_trial
+8.7671e-06
+8.76765e-06
+-0.00370495
+end_trial
+ptool 6
+start_trial
+-0.00182148
+1.49425e-07
+1.47797e-07
+end_trial
+ptool 7
+start_trial
+0.000636488
+-0.0207808
+-0.00813053
+end_trial
+ptool 8
+start_trial
+-0.00172787
+0.000309596
+-0.0219574
+end_trial
+ptool 9
+start_trial
+-0.0241605
+-0.0230221
+-3.09631e-07
+end_trial
+ptool 10
+start_trial
+0.00032958
+0.000360535
+0.000361216
+end_trial
+ptool 11
+start_trial
+-0.00245442
+0.00180507
+1.996e-08
+end_trial
+ptool 12
+start_trial
+-0.000333455
+-0.0143003
+-0.0112672
+end_trial
+tool 3dwh_calibration/tablefork_s_3dwh_3
+ptool 1
+start_trial
+0.00149044
+0.00219361
+-0.0111075
+end_trial
+ptool 2
+start_trial
+-0.0650765
+-0.0632193
+-0.0178127
+end_trial
+ptool 3
+start_trial
+0.000391851
+-0.0101859
+0.00058431
+end_trial
+ptool 4
+start_trial
+-0.000490427
+-2.43727e-06
+-0.0161697
+end_trial
+ptool 5
+start_trial
+-0.0472339
+0.000461889
+end_trial
+ptool 6
+start_trial
+-0.00510733
+-0.000800816
+-0.01542
+end_trial
+ptool 7
+start_trial
+-0.0112391
+-0.0110514
+-0.00632077
+end_trial
+ptool 8
+start_trial
+-0.00232441
+-0.00245318
+-1
+end_trial
+ptool 9
+start_trial
+-0.0128177
+-0.0100009
+-5.2605e-08
+end_trial
+ptool 10
+start_trial
+-1
+-0.00390887
+-1
+end_trial
+ptool 11
+start_trial
+0.000250995
+0.000320848
+6.81999e-07
+end_trial
+ptool 12
+start_trial
+-1.56651e-07
+4.8126e-07
+0.000313339
+end_trial
+tool 3dwh_calibration/tablefork_w4s_3dwh_1
+ptool 1
+start_trial
+-0.0231073
+-0.0310209
+-0.0310561
+end_trial
+ptool 2
+start_trial
+-2.12981e-07
+6.93362e-06
+0.000303743
+end_trial
+ptool 3
+start_trial
+-0.00296016
+-0.00616005
+0.000253961
+end_trial
+ptool 4
+start_trial
+-2.12981e-07
+-2.12981e-07
+1.40617e-05
+end_trial
+ptool 5
+start_trial
+-0.00105397
+-0.0754765
+end_trial
+ptool 6
+start_trial
+1.05775e-05
+-0.0768605
+0.000441565
+end_trial
+ptool 7
+start_trial
+0.00310198
+0.000193402
+0.00113082
+end_trial
+ptool 8
+start_trial
+0.000345395
+0.000438635
+-0.000440218
+end_trial
+ptool 9
+start_trial
+-1.06424e-07
+8.84309e-07
+end_trial
+ptool 10
+start_trial
+0.000376201
+0.0012887
+3.82851e-05
+end_trial
+ptool 11
+start_trial
+-0.00224863
+7.02709e-08
+9.04025e-05
+end_trial
+ptool 12
+start_trial
+-0.00240092
+7.0311e-08
+9.65894e-05
+end_trial
+tool 3dwh_calibration/tablefork_w_3dwh_2
+ptool 1
+start_trial
+-0.0027193
+-0.00127251
+-0.00118937
+end_trial
+ptool 2
+start_trial
+-0.00609924
+0.000817542
+0.000590013
+end_trial
+ptool 3
+start_trial
+-0.0888907
+-0.059136
+1.09881e-06
+end_trial
+ptool 4
+start_trial
+0.000826205
+0.000818751
+-3.05183e-05
+end_trial
+ptool 5
+start_trial
+-0.0123822
+-0.0118762
+-0.0127342
+end_trial
+ptool 6
+start_trial
+-6.10782e-05
+0.000916812
+end_trial
+ptool 7
+start_trial
+-1
+-1
+-1
+end_trial
+ptool 8
+start_trial
+-1
+-1
+-1
+end_trial
+ptool 9
+start_trial
+-1
+-1
+-1
+end_trial
+ptool 10
+start_trial
+-1
+-1
+end_trial
+ptool 11
+start_trial
+-1
+-1
+-1
+end_trial
+ptool 12
+start_trial
+-1
+-1
+-1
+end_trial
+tool 3dwh_calibration/tableknife_s_3dwh_1
+ptool 1
+start_trial
+-1.33648e-07
+-7.29744e-06
+1.45307e-06
+end_trial
+ptool 2
+start_trial
+-2.65527e-05
+-2.63887e-05
+-0.0194038
+end_trial
+ptool 3
+start_trial
+0.000496645
+-4.2877e-07
+0.00293641
+end_trial
+ptool 4
+start_trial
+-3.27113e-05
+-0.107175
+-0.00274341
+end_trial
+ptool 5
+start_trial
+-0.000477189
+-0.00156732
+-3.84818e-05
+end_trial
+ptool 6
+start_trial
+-0.0698383
+3.12026e-05
+-0.00809018
+end_trial
+ptool 7
+start_trial
+-1.62959e-08
+-1.45434e-05
+-0.0103029
+end_trial
+ptool 8
+start_trial
+-0.0290192
+2.17658e-07
+2.17658e-07
+end_trial
+ptool 9
+start_trial
+-7.51668e-07
+-6.70675e-05
+-0.0491449
+end_trial
+ptool 10
+start_trial
+1.55168e-06
+1.55168e-06
+-4.58113e-07
+end_trial
+ptool 11
+start_trial
+-0.012957
+0.000329844
+0.000330885
+end_trial
+ptool 12
+start_trial
+0.000159383
+0.000128244
+-0.00815753
+end_trial
+tool 3dwh_calibration/tableknife_w6s_3dwh_1
+ptool 1
+start_trial
+0.00193761
+7.98524e-05
+1.23425e-06
+end_trial
+ptool 2
+start_trial
+3.30526e-05
+9.63325e-05
+-0.0329681
+end_trial
+ptool 3
+start_trial
+-9.86146e-08
+-1.26846e-07
+-3.58883e-07
+end_trial
+ptool 4
+start_trial
+-0.0281235
+-0.00196494
+0.000615057
+end_trial
+ptool 5
+start_trial
+1.62459e-07
+0.00102002
+-6.97178e-05
+end_trial
+ptool 6
+start_trial
+0.00205864
+0.000126524
+0.000876879
+end_trial
+ptool 7
+start_trial
+0.00050685
+-0.00493591
+0.000506585
+end_trial
+ptool 8
+start_trial
+0.00140429
+0.000782493
+-7.88609e-05
+end_trial
+ptool 9
+start_trial
+-0.0129491
+0.000648944
+0.000627741
+end_trial
+ptool 10
+start_trial
+0.000701222
+-1.81258e-06
+0.000644788
+end_trial
+ptool 11
+start_trial
+-0.00116246
+-0.0147906
+-0.0521015
+end_trial
+ptool 12
+start_trial
+-0.050132
+-0.000891549
+-0.0297356
+end_trial
+tool 3dwh_calibration/winebottle_g_3dwh_1
+ptool 1
+start_trial
+0.00229162
+0.00697025
+0.00229664
+end_trial
+ptool 2
+start_trial
+0.000698335
+0.00200822
+0.00205268
+end_trial
+ptool 3
+start_trial
+0.00133126
+0.00223887
+0.00101244
+end_trial
+ptool 4
+start_trial
+6.54367e-05
+0.00291803
+0.000107937
+end_trial
+end_calibration

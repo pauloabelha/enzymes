@@ -1,0 +1,41 @@
+#!/bin/bash
+
+if [ "$1" == "--help" ]; then
+	echo "This script will use meshlabserver to open every file in a folder and apply a meshlab script"
+	echo "Structure: bash ApplyMeshlabScriptInFolder.sh ROOT_FOLDER INPUT_FILEEXT OUTPUT_FILEEXT MESHLABSCRIPT_PATH OPTIONS" 
+	echo ""	
+	echo "Example: bash ApplyMeshlabScriptInFolder.sh ~/my_pcl_dataset/ dae ply ~/my_scripts/meshlabscript1.mlsx vf vn"
+	echo "This example will open every collada (dae) file in the root folder and apply the script with the options for vertex flags and normals, saving as ply"
+	echo ""
+	echo "Example: bash ApplyMeshlabScriptInFolder.sh ~/my_pcl_dataset/ ply ply ~/my_scripts/meshlabscript2.mlsx vn fn"
+	echo "This example will open every ply file in the root folder and apply the script with the options for vertex normals and face normals, saving as ply again" 
+	echo ""
+	echo "ATTENTION: please provide all paths with a final slash (e.g. ~/my_pcl_dataset/)"
+  	exit 0
+fi
+
+ROOT_FOLDER=$1
+
+if [ "$2" == "--noscript" ]; then
+	for P in `ls -vd $ROOT_FOLDER*.ply`;
+	do 
+		meshlabserver -i $P -o ${P:0:${#P}-4}.ply -om vc vf vq vn vt fc ff fq			
+	done
+	exit 0
+fi
+
+INPUT_FILEEXT=$2
+OUTPUT_FILEEXT=$3
+
+MESHLABSCRIPT_PATH=$4
+
+OPTION1=$5
+OPTION2=$6
+OPTION3=$7
+OPTION4=$8
+
+
+for P in `ls -vd $ROOT_FOLDER*.$INPUT_FILEEXT`;
+do 
+	 meshlabserver -i $P -o ${P:0:${#P}-4}.$OUTPUT_FILEEXT -s $MESHLABSCRIPT_PATH -om $OPTION1 $OPTION2 $OPTION3 $OPTION4 $OPTION5 $OPTION6 $OPTION7 $OPTION8		
+done
