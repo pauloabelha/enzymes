@@ -24,7 +24,7 @@ function [ params, positioning_function ] = TaskPositioningParams( task_name )
         case 'scooping_grains'
             %  Grain Box lower corner pos, approaching angle (radians), arm_length
             box_pos = [0.4 0 0.775];    
-            box_size = [0.45, 0.25, 0.2];
+            box_size = [0.2, 0.25, 0.1];
             box_thickness = 0.01;
             params = {box_pos, box_size, box_thickness, 110*(pi/180), arm_length};
             positioning_function = 'scooping_positioning';

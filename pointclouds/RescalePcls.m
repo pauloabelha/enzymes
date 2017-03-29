@@ -100,9 +100,6 @@ function [max_size, rescale_noise] = ToolMaxSize( tool_category )
         case 'chopstick'
             max_size = 0.2;
             return;        
-        case 'chopstick'
-            max_size = 0.2;
-            return;
         case 'knifechinese'
             max_size = 0.35;
             return; 
@@ -122,7 +119,7 @@ function [max_size, rescale_noise] = ToolMaxSize( tool_category )
             max_size = 0.25;
             return;
         case 'ladle'
-            max_size = 0.3;
+            max_size = 0.15;
             return;
         case 'mallet'
             max_size = 0.4;

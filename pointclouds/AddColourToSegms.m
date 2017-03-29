@@ -15,12 +15,12 @@ function [ P ] = AddColourToSegms( P, colours )
         colour_segms = [];
         ix_c=1;
         for j=1:size(P.segms,2)
-            if size(P.segms{j}.v,1) > .01*size(P.v,1)
+%             if size(P.segms{j}.v,1) > .01*size(P.v,1)
                 colour_segms(end+1,:) = colours(ix_c,:);
                 ix_c = min(size(colours,1),ix_c+1);
-            else
-                colour_segms(end+1,:) = [0 0 0];
-            end
+%             else
+%                 colour_segms(end+1,:) = [0 0 0];
+%             end
         end
         unique_segms = unique(P.u);
         if size(unique_segms,1) ~= size(P.segms,2)

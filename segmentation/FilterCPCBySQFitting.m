@@ -4,7 +4,7 @@ function [ SQs, TOT_ERRORS, E_SEGMS, E1_SQs, E2_SQs, Ps ] = FilterCPCBySQFitting
     else
         MIN_SEGM_ERROR = 300;
     end
-    pcl_filenames = FindAllFilesOfType( {'pcd'}, root_folder );
+    pcl_filenames = FindAllFilesOfType( {'ply'}, root_folder );
     n_pcls = numel(pcl_filenames);
     Ps = cell(1,n_pcls);
     SQs = cell(1,n_pcls);
@@ -27,7 +27,7 @@ function [ SQs, TOT_ERRORS, E_SEGMS, E1_SQs, E2_SQs, Ps ] = FilterCPCBySQFitting
             if all(ixs_good_segms)
                 system(['cp ' root_folder pcl_filenames{i} ' ' root_folder good_segm_folder pcl_filenames{i}]);
                 ConvertPointCloud([root_folder good_segm_folder], pcl_filenames{i}, 'ply');
-                system(['rm ' root_folder good_segm_folder pcl_filenames{i}]);
+                %system(['rm ' root_folder good_segm_folder pcl_filenames{i}]);
             else
                 ConvertPointCloud(root_folder, pcl_filenames{i}, 'ply');
             end

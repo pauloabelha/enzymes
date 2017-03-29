@@ -17,6 +17,13 @@ function [ pcls, cut_point_slices, cut_belief ] = CutPCLDemocritus2( pcl, slice_
     min_range = slice_size*0.8;
     dim = 1;
     [slices, ranges] = SlicePointCloud(pcl, dim, slice_size);
+    % if std of ranges is too slow, don't even bother segmenting
+%     if std(ranges(:,1)) < 0.001
+%         pcls = {pcl};
+%         cut_point_slices = {};
+%         cut_belief = Inf;
+%         return;
+%     end
     % if there is less than two slices, return
     if numel(slices) < 2
         pcls = {pcl};
@@ -32,16 +39,16 @@ function [ pcls, cut_point_slices, cut_belief ] = CutPCLDemocritus2( pcl, slice_
     end
     % chec if there are empty slices;
     % if so, segm pcl at those points
-    cut_ixs = [];
-    cut_ixs_belief = [];
-    found_empty_slice = 0;
-    for i=1:numel(slices)
-        if isempty(slices{i}) || size(slices{i},1) < 5
-            found_empty_slice = 1;
-            cut_ixs(end+1) = i;
-            cut_ixs_belief(end+1) = Inf;
-        end
-    end
+%     cut_ixs = [];
+%     cut_ixs_belief = [];
+%     found_empty_slice = 0;
+%     for i=1:numel(slices)
+%         if isempty(slices{i}) || size(slices{i},1) < 5
+%             found_empty_slice = 1;
+%             cut_ixs(end+1) = i;
+%             cut_ixs_belief(end+1) = Inf;
+%         end
+%     end
     diffs = ones(size(diff(ranges,2),1),1);
     for i=1:3
         if i ~= dim

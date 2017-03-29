@@ -18,7 +18,8 @@ function [ final_pcl, final_normals, omegas, etas] = UniformSQSampling3D( SQ, ca
     MIN_PROP_SCALE_FOR_3D = 0.04;
     [sorted_scale,sorted_scale_ixs] = sort(SQ(1:3));
     if sorted_scale(1)/sorted_scale(2) < MIN_PROP_SCALE_FOR_3D || sorted_scale(1)/sorted_scale(3) < MIN_PROP_SCALE_FOR_3D        
-        if sorted_scale_ixs(1) < 3
+        [~,min_scale_ix] = min(SQ(1:3));
+        if min_scale_ix == 3
             shape_ix = 5;
         else
             shape_ix = 4;

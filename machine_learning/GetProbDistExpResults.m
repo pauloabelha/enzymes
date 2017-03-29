@@ -14,18 +14,23 @@
 %   entropy - Average Shanon information content (in the chosen log base)
 %
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-function [ P_mass, P_bins ] = GetProbDistExpResults( P, MAX_MEM )
+function [ P_mass, P_bins ] = GetProbDistExpResults( P, BIN_RES, MAX_MEM )
+    CheckNumericArraySize(P,[1 Inf]);    
     %% max memory to be used (in GB) in order to choose bin resolution
     if exist('MAX_MEM','var')
         CheckIsScalar(MAX_MEM);
     else
         MAX_MEM = .001; 
-    end       
-    CheckNumericArraySize(P,[1 Inf]);
-    bin_range = [min(P) max(P)];
+    end  
     % MATLAB's float is 32 bit and we need to store two big vectors
     MAX_N_ELEMS = MAX_MEM*8e9/(32*2);
-    BIN_RES = size(P,1)/MAX_N_ELEMS; 
+    %% bin resolution
+    if exist('BIN_RES','var')
+        CheckIsScalar(BIN_RES);
+    else    
+        BIN_RES = size(P,1)/MAX_N_ELEMS;    
+    end
+    bin_range = [min(P) max(P)];     
     [P_hist, P_bins] = HistogramCustom( P, BIN_RES, bin_range );
     P_mass = P_hist/sum(P_hist(P_hist>0));
 end

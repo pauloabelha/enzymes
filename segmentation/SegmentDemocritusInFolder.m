@@ -1,10 +1,10 @@
-function [ pcl_filenames, pcl_cut_beliefs ] = SegmentDemocritusInFolder( root_folder, output_folder, slice_size )
+function [ pcl_filenames, pcl_cut_beliefs ] = SegmentDemocritusInFolder( root_folder, slice_size  )
     CheckIsChar(root_folder);
     if ~exist('ext','var')
         exts = {'ply'};
     end
     if ~exist('output_folder','var')
-        output_folder = '';
+        output_folder = ['segmented_' num2str(slice_size) '/'];
     end
     system(['mkdir ' root_folder output_folder]);
     pcl_filenames = FindAllFilesOfType(exts,root_folder);

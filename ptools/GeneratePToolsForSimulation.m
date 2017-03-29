@@ -24,7 +24,7 @@ function GeneratePToolsForSimulation( simulation_folder, ptools, task, P_orig, p
     MIN_INERTIA = gazebo_params.MIN_INERTIA;
     exist_pcl_orig = exist('P_orig','var');
     n_ptools = size(ptools,1);
-    parfor i=1:n_ptools
+    for i=1:n_ptools
         disp(i);
         % rotate ptools for task
         % rotate given pcl if it exists         
@@ -55,8 +55,8 @@ function GeneratePToolsForSimulation( simulation_folder, ptools, task, P_orig, p
             end
         end
         % write gazebo folder
-        tool_name = ['ptool',num2str(i),'/'];
-        %tool_name = ['tool_' task '/']
+        %tool_name = ['ptool',num2str(i),'/'];
+        tool_name = ['tool_' task '/']
         CreateGazeboModelFolderStructure(simulation_folder, tool_name, elbow_pos, tool_relative_pos, tool_rot, action_tracker_pos, P, ptools(i,:), inertial(1:3), inertial(4:6), task, WRITE_INERTIA,SIMPLIFY_MESH);
     end
 end

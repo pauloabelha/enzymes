@@ -109,6 +109,7 @@ function [ P ] = FuseSegmIntoOthers( P, segm_to_fuse_label, verbose )
         found_pt = 0;
         curr_min_dist = 1e10;
         curr_min_dist_ix = 0;
+        
         for k=1:size(P.v,1)
             curr_dist = pdist([P.v(j,:);P.v(k,:)]);
             if curr_dist < curr_min_dist && P.u(k) ~= segm_to_fuse_label
@@ -123,7 +124,9 @@ function [ P ] = FuseSegmIntoOthers( P, segm_to_fuse_label, verbose )
         if curr_min_dist <= MAX_DIST
             ix_segm = eq_labels(2,eq_labels(1,:)==P.u(k));
             P.segms{ix_segm}.v(end+1,:) = P.v(j,:);
-            P.segms{ix_segm}.n(end+1,:) = P.n(j,:);
+            if isfield(P.segms{ix_segm},'n') && ~isempty(P.segms{ix_segm}.n)
+                P.segms{ix_segm}.n(end+1,:) = P.n(j,:);
+            end
             P.u(j) = P.u(k);
             if isfield(P,'c') && ~isempty(P.c)
                 P.c(j,:) = P.c(k,:);

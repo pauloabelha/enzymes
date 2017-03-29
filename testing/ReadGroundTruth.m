@@ -19,7 +19,7 @@ function [ tool_names, task_groundtruth ] = ReadGroundTruth( filepath )
         if ~strcmp(csv_groundtruth{i,4},'')
             task_groundtruth(i) = str2double(csv_groundtruth{i,4});
         end
-        tool_names{end+1} = csv_groundtruth{i,1};
+        tool_names{end+1} = csv_groundtruth{i,2};
     end
 end
 

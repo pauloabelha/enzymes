@@ -51,11 +51,9 @@ switch(task)
         isCorrect = @(dot_prod) dot_prod>=0;
         
     case 'scooping_grains'
-        new_action_orientation_vector = [0;1;0];
+        new_action_orientation_vector = [0;0;1];
         new_centers_orientation_vector = [1;0;0];
         isCorrect = @(dot_prod) dot_prod<=0;
-        
-        
         
    otherwise
         error(['Task ''' task ''' does not exist']);
