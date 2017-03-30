@@ -15,6 +15,8 @@ function P = ReadPointCloud( filepath, min_n_pts_segm )
                 P = read_ply( filepath, min_n_pts_segm);
             case 'obj'
                 P = read_obj( filepath );
+            case 'off'
+                P = read_off( filepath );
             case 'png'
                 % read RGB-D as image then construct a point cloud from depth map
                 P = read_png_as_pcl( filepath );           

@@ -135,10 +135,11 @@ there_is_prop_colour = there_is_prop_red && there_is_prop_green && there_is_prop
 P.u  =[];
 if there_is_prop_segm
     P.u = M(:,start_segm); 
-end
-% if there is no segme prop, but there are colours, segment by colour
-if there_is_prop_colour && ~there_is_prop_segm
-    P.u = GetSegmLabelsFromColour(M(:,start_colour:start_colour+2));
+elseif there_is_prop_colour && ~there_is_prop_segm
+    % if there is no segme prop, but there are colours, segment by colour    
+        P.u = GetSegmLabelsFromColour(M(:,start_colour:start_colour+2));
+else
+    P.u = ones(size(P.v,1),1);
 end
 
 P.segms = GetSegmsFromVU(P.v,P.n,P.u);
