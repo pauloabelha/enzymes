@@ -8,7 +8,7 @@ function PlotPCLSegments( P, colour_segm_ix, downsample )
     if ~exist('downsample','var')
         downsample = 0;
     end
-    colours = {'.r' '.g' '.b' '.y' '.m' '.c'};    
+    colours = {'.r' '.g' '.b' '.y' '.m' '.c' '.r' '.g' '.b' '.y' '.m' '.c'};    
     figure;
     hold on;
     for i=1:size(P.segms,2)
