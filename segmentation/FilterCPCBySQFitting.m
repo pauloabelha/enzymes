@@ -21,6 +21,7 @@ function [ SQs, TOT_ERRORS, E_SEGMS, E1_SQs, E2_SQs, Ps ] = FilterCPCBySQFitting
         if ~isempty(k)
             tic;
             P = ReadPointCloud([root_folder pcl_filenames{i}]);
+            
             Ps{i} = P;
             [ SQs{i}, TOT_ERRORS(i), E_SEGM, E1_SQ, E2_SQ ] = PCL2SQ( P, 2, 0, 0, [1 1 1 0 1] );   
             ixs_good_segms = E_SEGM <= MIN_SEGM_ERROR; 

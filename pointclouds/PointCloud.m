@@ -36,7 +36,14 @@ function [ P ] = PointCloud( V, N, F, U, C, segms )
     else
         P.c = [];
     end
-    if exist('segms','var') && ~isempty(segms)
+    if ~exist('segms','var')
+        [P.u, n_labels] = GetEquivalentSegmLabels(P.u);
+        segms = cell(1,n_labels);
+        for i=1:n_labels
+            segms{i}.v = P.v(P.u==i,:);
+        end   
+        P.segms = segms;
+    elseif exist('segms','var') && ~isempty(segms)
         if ~iscell(segms)
             error('Variable segms should be a cell array of pcls or structs cointaining .v and .n fields');
         end

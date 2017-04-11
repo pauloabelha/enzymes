@@ -22,20 +22,17 @@ function [ SQs_alt, ERRORS, ORIG_ERRORS ] = GetRotationSQFits( SQs, Ps, fit_thre
     ORIG_ERRORS = zeros(1,numel(SQs));
     ERRORS = zeros(6,size(SQs,2));
     SQs_alt = cell(6,size(SQs,2));
-    %% get the alternative SQs    
+    %% get the alternative SQs
+    % get pcl points in a matrix
+    if isstruct(P)
+    P_v = Ps{i}.v;
     for i=1:numel(SQs)        
-        %% get pcl points in a matrix
-        if isstruct(Ps{i})
-            P_v = Ps{i}.v;
-        else
-            P_v = P.v;
-        end
         % downsample the pcl for fit error comparison
-        P_v = DownsamplePCL( P_v, N_POINTS, 1 );
+        Ps{i} = DownsamplePCL( Ps{i}.v, N_POINTS, 1 );
         % get the pointcloud for the SQ
         SQ_pcl = UniformSQSampling3D(SQs{i},0,N_POINTS);
         % get the error between orig SQ and the pcl
-        E_orig = PCLDist( SQ_pcl, P_v );
+        E_orig = PCLDist( SQ_pcl, Ps{i}.v );
         ORIG_ERRORS(i) = E_orig;
         %% get the 5 alternative SQs, accumulate if the fit is good
         % define SQ ix 
@@ -50,7 +47,7 @@ function [ SQs_alt, ERRORS, ORIG_ERRORS ] = GetRotationSQFits( SQs, Ps, fit_thre
                 alt_SQ(3) = SQs{i}(1);
             end
             alt_SQ = RotateSQWithRotMtx(alt_SQ,GetEulRotMtx(SQs{i}(6:8))); 
-            alt_SQ_pcl = UniformSQSampling3D(alt_SQ,0,size(P_v,1));
+            alt_SQ_pcl = UniformSQSampling3D(alt_SQ,0,size(Ps{i}.v,1));
             E = PCLDist( alt_SQ_pcl,Ps{i}.v );
             ERRORS(j,i) = E;
             % if fit is good, accumulate SQ
@@ -71,8 +68,8 @@ function [ SQs_alt, ERRORS, ORIG_ERRORS ] = GetRotationSQFits( SQs, Ps, fit_thre
             alt_SQ(2) = SQs{i}(3);
             alt_SQ(3) = SQs{i}(2);
             alt_SQ = RotateSQWithRotMtx(alt_SQ,GetEulRotMtx(SQs{i}(6:8)));
-            alt_SQ_pcl = UniformSQSampling3D(alt_SQ,0,size(P_v,1));
-            E = PCLDist( alt_SQ_pcl,P_v );
+            alt_SQ_pcl = UniformSQSampling3D(alt_SQ,0,size(Ps{i}.v,1));
+            E = PCLDist( alt_SQ_pcl,Ps{i}.v );
             ERRORS(j,i) = E;
             % if fit is good, accumulate SQ
             if E <= fit_threshold || E <= (E_orig*PROP_THRESHOLD_ORIG_ERROR)
