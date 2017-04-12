@@ -8,6 +8,7 @@ function [tools_gt, tool_names] = GetToolsGT(dataset_folder, task, tools)
            tool_names{end+1} = tools{i}.name;
        end        
     end
+    [ tool_names, tool_masses ] = ReadGroundTruth([root_folder 'groundtruth_hammering_nail.csv']);
     GT = ReadCSVGeneric([dataset_folder 'groundtruth_' task '.csv']);
     gt_scores = cell2mat(GT(:,4));
     tools_gt = zeros(1,numel(tool_names));

@@ -14,6 +14,9 @@ function [ category ] = TaskCategorisation( simulation_scores, task_name )
         case 'cutting_lasagna'
             category = TaskCategorisationCuttingLasagna(simulation_scores,eps);
             return;
+        case 'scooping_grains'
+            category = TaskCategorisationScoopingGrains(simulation_scores,eps);
+            return;
     end
     error(['Could not get category score of unknown task: ' task_name]);
 end
