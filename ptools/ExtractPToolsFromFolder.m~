@@ -22,28 +22,32 @@ function [ ptools, ptools_maps, Ps, pcl_filenames ] = ExtractPToolsFromFolder( r
         end
     end 
     tot_toc = 0;
-    Ps = cell(1,numel(pcl_filenames));
-    ptools = cell(1,numel(pcl_filenames));
-    ptools_maps = cell(1,numel(pcl_filenames));
+    Ps = {};
+    ptools = {};
+    ptools_maps = {};
     tot_n_ptools = 0;
+    pcl_with_errors = {};
+    pcl_Es = {};
     for i=1:numel(pcl_filenames)
         try
             tic;
-            Ps{i} = ReadPointCloud([root_folder pcl_filenames{i}]);
-            SQs = PCL2SQ( Ps{i}, 4, 0, 0, [1 1 1 0 1] );
+            Ps{end+1} = ReadPointCloud([root_folder pcl_filenames{i}]);
+            SQs = PCL2SQ( Ps{end}, 4, 0, 0, [1 1 1 0 1] );
             if numel(SQs) == 1
-                [ ptools{i}, ptools_maps{i}(1:3), ptools_maps{i}(4:6) ] = ExtractPTool(SQs{1},SQs{1},tool_masses(i));
+                [ ptools{end+1}, ptools_maps{end+1} ] = ExtractPTool(SQs{1},SQs{1},tool_masses(i));
             else
-                SQs_alt = GetRotationSQFits( SQs, Ps{i}.segms );
-                [ ptools{i}, ptools_maps{i} ] = ExtractPToolsAltSQs(SQs_alt, tool_masses(i));
+                SQs_alt = GetRotationSQFits( SQs, Ps{end}.segms );
+                [ ptools{end+1}, ptools_maps{end+1} ] = ExtractPToolsAltSQs(SQs_alt, tool_masses(i));
             end
-            n_ptools = size(ptools{i},1);
+            n_ptools = size(ptools{end},1);
             tot_n_ptools = tot_n_ptools + n_ptools;
             disp(['Extracted #' num2str(i) ' pcl ' pcl_filenames{i} ' (#ptools ' num2str(n_ptools) ') Tot # ' num2str(tot_n_ptools) ' Avg # ' num2str(floor(tot_n_ptools/i))]);
             tot_toc = DisplayEstimatedTimeOfLoop(tot_toc+toc,i,numel(pcl_filenames));    
         catch E
-            disp(['ERROR in pcl: ' pcl_filenames{i}]);
-            warning(E.message);
+            disp(['ERROR in pcl: ' pcl_filenames{i} ' - Saving it to variable']); 
+            disp(E.
+            pcl_with_errors{end+1} = pcl_filenames{i};
+            pcl_Es{end+1} = E;
         end
     end
     backup_filepath = [root_folder 'extracted_ptools_' date '.mat'];

@@ -1,5 +1,7 @@
-% create one simulation-ready folder for each ptool for a given task
-function GeneratePToolsForSimulation( simulation_folder, ptools, task, P_orig, ptool_maps )  
+function GeneratePCLsWPToolsForSim( simulation_folder, ptools, task, P_orig, ptool_maps, DEBUG_MODE )  
+    if ~exist('DEBUG_MODE','var')
+        DEBUG_MODE = 0;
+    end
     % flag for whether to write inertia to Gazebo folder
     WRITE_INERTIA = 0;
     % flag whether to run cluster decimation and simplify the pcl mesh
@@ -22,23 +24,18 @@ function GeneratePToolsForSimulation( simulation_folder, ptools, task, P_orig, p
     %% for each ptool: position, calculate inertia and write gazebo folder
 %     exist_pcl = exist('P','var');
     MIN_INERTIA = gazebo_params.MIN_INERTIA;
-    exist_pcl_orig = exist('P_orig','var');
     n_ptools = size(ptools,1);
     for i=1:n_ptools
         disp(i);
         % rotate ptools for task
         % rotate given pcl if it exists         
-%         if exist_pcl_orig            
-%             [SQ_grasp,SQ_action] = AlignPToolWithPCL( ptools(i,:), P_orig, ptool_maps(i,:) );            
-%             [ transf_list ] = GetTrasnfsSQsTask( SQ_grasp, SQ_action, task, SQ_grasp(end-2:end) );
-%             P = Apply3DTransfPCL(P_orig,transf_list);      
-%             SQs = {SQ_grasp,SQ_action};
-%             SQs = ApplyTransfSQs(SQs,transf_list);
-%         else
-            P = PTool2PCL(ptools(i,:),task);
-            [SQ_grasp,SQ_action] = GetPToolsSQs(ptools(i,:),task);   
-            SQs = {SQ_grasp,SQ_action};
-%         end       
+         
+        [SQ_grasp,SQ_action] = AlignPToolWithPCL( ptools(i,:), P_orig, ptool_maps(i,:) );            
+        [ transf_list ] = GetTrasnfsSQsTask( SQ_grasp, SQ_action, task, SQ_grasp(end-2:end) );
+        P = Apply3DTransfPCL(P_orig,transf_list);      
+        SQs = {SQ_grasp,SQ_action};
+        SQs = ApplyTransfSQs(SQs,transf_list);
+    
         ptools(i,:) = CheckPToolMass(ptools(i,:));
         % position ptools for the task
         [ task_params, positioning_function ] = TaskPositioningParams( task );
@@ -55,8 +52,12 @@ function GeneratePToolsForSimulation( simulation_folder, ptools, task, P_orig, p
             end
         end
         % write gazebo folder
-        %tool_name = ['ptool',num2str(i),'/'];
-        tool_name = ['tool_' task '/']
+        if DEBUG_MODE
+            tool_name = ['tool_' task '/']
+        else
+            tool_name = ['ptool',num2str(i),'/'];
+        end
         CreateGazeboModelFolderStructure(simulation_folder, tool_name, elbow_pos, tool_relative_pos, tool_rot, action_tracker_pos, P, ptools(i,:), inertial(1:3), inertial(4:6), task, WRITE_INERTIA,SIMPLIFY_MESH);
     end
 end
+

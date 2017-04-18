@@ -1,7 +1,7 @@
 % convert a ptool to a pcl
 function [ P_out, transf_lists ] = PTool2PCL( ptools, task )
     % define resolution of each segment (grasp and action)
-    N_POINTS = 2000;
+    N_POINTS = 5000;
     % if a task is given, rotate the pcl at the end
     if ~exist('task','var')
         task = '';

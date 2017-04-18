@@ -3,20 +3,14 @@
 % Generates a parametrizable square box for Gazebo
 % I use it to generate the box that holds the grains for my
 %   'scooping_grains' task
-% This was very useful when I was extensively
-%   experimenting with different boxes
+% This was very useful when I was extensibvely experimenting with different
+% boxes
 %
 % task_folder is the folder with the .world, tool(s) and task code
 %   (e.g. '~/.gazebo/gazebo_models/scooping_grains/')
-% box_name - the name to put in the sdf (be creative!)
 %
-% bottom_pose - 1x3 array with the x,y,z pose of the box centre
-% width (as in gazebo's y axis)
-% length (as in gazebo's x axis)
-% height (I leave it as an exercise to guess this variable)
-% thickness (thickness of each wall)
-% description (last chance to be creative)
-function GenerateBoxSDF( task_folder, box_name, bottom_pose, width, length, height, thickness, description )
+
+function GenerateBoxSDF( task_folder, box_name, bottom_pose, width, length_box, height, thickness, description )
 
     sdf_version = '1.6';
     author_name = 'Paulo Abelha';
@@ -45,11 +39,11 @@ function GenerateBoxSDF( task_folder, box_name, bottom_pose, width, length, heig
     fprintf(fid,'\n');
     
     pos_0 = [0 0 thickness/2];
-    size_0 = [length, width, thickness];
+    size_0 = [length_box, width, thickness];
     GenerateLinkTag(fid, [box_name '_' num2str(0)], pos_0, size_0, 2000, 2000, 'WoodFloor');
     fprintf(fid,'\n');
     fprintf(fid,'\n');    
-    pos_1 = [(-length/2)+thickness/2, 0, thickness + (height/2)];  
+    pos_1 = [(-length_box/2)+thickness/2, 0, thickness + (height/2)];  
     size_1 = [thickness, width - (2*thickness), height];
     GenerateLinkTag(fid, [box_name '_' num2str(1)], pos_1, size_1, 2000, 2000, 'WoodFloor');
     fprintf(fid,'\n');
@@ -61,7 +55,7 @@ function GenerateBoxSDF( task_folder, box_name, bottom_pose, width, length, heig
     fprintf(fid,'\n');
     fprintf(fid,'\n');
     pos_3 = [0, (-width/2)+thickness/2, thickness + (height/2)];  
-    size_3 = [length, thickness, height];
+    size_3 = [length_box, thickness, height];
     GenerateLinkTag(fid, [box_name '_' num2str(3)], pos_3, size_3, 2000, 2000, 'WoodFloor');
     fprintf(fid,'\n');
     fprintf(fid,'\n');

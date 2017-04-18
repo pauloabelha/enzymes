@@ -47,7 +47,10 @@ function [ SQs_Ps, P ] = PlotSQs( SQs, downsample, invert_colours, colours, plot
         P.f = P.f - 1;        
         SQs_Ps{i} = P;
         if plot_fig
-            scatter3(P.v(:,1),P.v(:,2),P.v(:,3),200,colours{min(size(colours,2),i)});        
+            scatter3(P.v(:,1),P.v(:,2),P.v(:,3),200,colours{min(size(colours,2),i)});   
+            xlabel('X');
+            ylabel('Y');
+            zlabel('Z');
         end
     end
     if size(SQs,1) == 1

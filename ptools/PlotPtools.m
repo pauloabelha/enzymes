@@ -22,6 +22,9 @@ function [ pcl_grasp, pcl_action ] = PlotPtools( ptools, task_name, plot_faces )
         else
             PlotPCLSegments(P);
         end
+        xlabel('X');
+        ylabel('Y');
+        zlabel('Z');
         Ps{i} = P;
     end    
 end

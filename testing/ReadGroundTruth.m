@@ -18,7 +18,9 @@ function [ tool_names, tool_masses, task_groundtruth ] = ReadGroundTruth( filepa
     for i=1:size(csv_groundtruth,1)
         tool_names{i} = csv_groundtruth{i,1};
         tool_masses(i) = str2double(csv_groundtruth{i,2});
-        task_groundtruth(i) = str2double(csv_groundtruth{i,3});
+        if size(csv_groundtruth,2) > 2
+            task_groundtruth(i) = str2double(csv_groundtruth{i,3});
+        end
     end
 end
 
