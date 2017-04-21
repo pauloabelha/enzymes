@@ -1,4 +1,4 @@
-function [ tool_scores, task, failed_tool_ptool_ixs, all_tool_scores, best_ptool_scores, best_ptools_ixs ] = ReadClusterCalibrationResults( root_folder, task )
+function [ task, tools, failed_tool_ptool_ixs, all_tool_scores, best_ptool_scores, best_ptools_ixs ] = ReadClusterCalibrationResults( root_folder, task, dataset_folder, extracted_ptools_filename )
     FILE_PREFIX='output_cluster_training';
     res_folder = [root_folder task '/'];
     filenames = FindAllFilesOfPrefix( FILE_PREFIX, res_folder );
@@ -71,11 +71,17 @@ function [ tool_scores, task, failed_tool_ptool_ixs, all_tool_scores, best_ptool
             line_first = get_tool_name(line,EOF_INIDICATOR);
         end
     end
-    
-    
-     
     perc_failed_simulations = num2str(round(100*n_failed_sim/tot_n_sim));
     disp(['Failed simulations: ' num2str(n_failed_sim) '/' num2str(tot_n_sim) ' (' perc_failed_simulations ' %)']);
+    disp('Merging calibration into one structure of list of tools');
+    backup_filepath = [dataset_folder 'calib_res_' task '_' date '.mat'];
+    disp(['Saving calibration results to: ' backup_filepath]);
+    save(backup_filepath);    
+    tools = MergeCalibrationResultsPtoolData( dataset_folder, extracted_ptools_filename, backup_filepath );
+    load([dataset_folder extracted_ptools_filename]);
+    backup_filepath = [dataset_folder 'calib_res_' task '_' date '.mat'];
+    disp(['Re-Saving (after merging) calibration results to: ' backup_filepath]);
+    save(backup_filepath);
 end
 
 % sorts up to 99 files
@@ -143,5 +149,57 @@ function tool_name = get_tool_name(line,EOF_INIDICATOR)
         disp(line);
         error('Line does not contain a tool name (e.g. it should be ''tool 3dwh_calibration/breadknife1'')');
     end
+end
+
+function [ tools, tool_scores ] = MergeCalibrationResultsPtoolData( dataset_folder, extracted_ptools_filename, backup_filepath )
+    %% load ptool data file
+    load(backup_filepath);
+    load([dataset_folder extracted_ptools_filename]);
+    tools = cell(numel(pcl_filenames),1);
+    tool_scores = reshape(tool_scores,numel(tool_scores),1);
+    tot_toc = 0;
+    %% get swap indexes
+    swap_ixs = zeros(numel(pcl_filenames),1);
+    for i=1:numel(pcl_filenames)
+        pcl_shortname = GetPCLShortName(pcl_filenames{i});
+        for j=1:numel(tool_scores)
+            tool_shortname = tool_scores{j}.name;            
+            if strcmp(tool_shortname,pcl_shortname)
+                swap_ixs(i) = j;
+                break;
+            end
+        end
+    end      
+    tool_scores_copy = tool_scores;
+    %% swap tools
+    for i=1:numel(tool_scores)
+       tool_scores{i} = tool_scores_copy{swap_ixs(i)};
+       tools{i}.name = tool_scores{i}.name;
+       tools{i}.ptool_scores = tool_scores{i}.ptool_scores;
+       tools{i}.ptool_median_scores = tool_scores{i}.ptool_median_scores;
+       tools{i}.ptools = ptools{i};
+       tools{i}.ptools_maps = ptools_maps{i};
+       tools{i}.P = Ps{i};       
+    end
+%     for i=1:numel(tool_scores)
+%         tools{i}.name = tool_scores{i}.name;
+%         tools{i}.tool_scores = tool_scores{i};
+%         tools{i}.ptools = ptools{i};
+%         tools{i}.ptools_maps = ptools_maps{i};
+%         tools{i}.P = Ps{i};        
+%     end
+    clear tool_scores_copy;
+    clear tools_copy; 
+    clear i;
+    clear j;
+    clear P;
+    clear pcl_filenames;
+    clear Ps;
+    clear ptool_data_filename;
+    clear ptools;
+    clear ptools_maps;
+    clear tool_name;
+    disp('Saving data file...');
+    save([root_folder task '_tools_ptools_calibration.mat']);
 end
 

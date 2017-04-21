@@ -1,6 +1,6 @@
 % By Paulo Abelha
 %
-% Generates a parametrizable square box for Gazebo
+% Generates a parametrizable rectangular box for Gazebo
 % I use it to generate the box that holds the grains for my
 %   'scooping_grains' task
 % This was very useful when I was extensively

@@ -1,6 +1,12 @@
-function GeneratePCLsWPToolsForSim( simulation_folder, ptools, task, P_orig, ptool_maps, DEBUG_MODE )  
+function GeneratePCLsWPToolsForSim( simulation_folder, ptools, task, P_orig, ptool_maps, DEBUG_MODE, tool_debug_folder, tool_debug_suffix )  
     if ~exist('DEBUG_MODE','var')
         DEBUG_MODE = 0;
+    end
+    if ~exist('tool_debug_folder','var')
+        tool_debug_folder = '';
+    end
+    if ~exist('tool_debug_suffix','var')
+        tool_debug_suffix = '';
     end
     % flag for whether to write inertia to Gazebo folder
     WRITE_INERTIA = 0;
@@ -53,7 +59,11 @@ function GeneratePCLsWPToolsForSim( simulation_folder, ptools, task, P_orig, pto
         end
         % write gazebo folder
         if DEBUG_MODE
-            tool_name = ['tool_' task '/']
+            if isempty(tool_debug_folder)
+                tool_name = ['tool_' task '/'];
+            else
+                tool_name = [tool_debug_folder 'ptool_' tool_debug_suffix '/'];
+            end
         else
             tool_name = ['ptool',num2str(i),'/'];
         end

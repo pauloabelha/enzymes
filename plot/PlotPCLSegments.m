@@ -24,6 +24,9 @@ function PlotPCLSegments( P, colour_segm_ix, downsample )
         end
     end
     axis equal;
+    xlabel('X');
+    ylabel('Y');
+    zlabel('Z');
     hold off;
 end
 

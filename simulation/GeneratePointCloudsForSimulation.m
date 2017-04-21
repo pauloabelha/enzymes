@@ -7,18 +7,11 @@ function [ ptools, ptools_maps, Ps, pcl_filenames ] = GeneratePointCloudsForSimu
     end
     task = task_; 
     n_iter = numel(pcl_filenames);
-    for i=1:n_iter
-        try
-            simulation_folder = [simulation_rootfolder GetPCLShortName(pcl_filenames{i}) '/'];
-            GeneratePCLsWPToolsForSim( simulation_folder, ptools{i}, task, Ps{i}, ptools_maps{i} );
-        catch E
-            a = 0;
-        end
+    parfor i=1:n_iter
+        simulation_folder = [simulation_rootfolder GetPCLShortName(pcl_filenames{i}) '/'];
+        GeneratePCLsWPToolsForSim( simulation_folder, ptools{i}, task, Ps{i}, ptools_maps{i} );
     end
     backup_filepath = [root_folder 'ptool_generation_data_' date '.mat'];
     disp(['Saving generated ptools to: ' backup_filepath]);
     save(backup_filepath);
 end
-
-
-
