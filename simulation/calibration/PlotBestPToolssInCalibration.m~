@@ -8,12 +8,12 @@ function [ max_tools, max_tools_ixs, max_ptool_ixs, max_scores ] = PlotBestPTool
     max_tools_ixs = a_123(ixs);
     max_tools = tools(ixs);
     max_ptool_ixs = zeros(1,numel(max_tools));
-    max_scores = zeros(1,numel(max_tools));
+    max_scores
     for i=1:numel(max_tools)
         [max_scores(i), max_ptool_ixs(i)] = max(max_tools{i}.ptool_median_scores);
         P = RotatePCLsWithPtoolsForTask( max_tools{i}.P, max_tools{i}.ptools(max_ptool_ixs(i),:), max_tools{i}.ptools_maps(max_ptool_ixs(i),:), task );
         PlotPCLSegments(P{1});
-        title([max_tools{i}.name '-' num2str(max_tools_ixs(i)) '-' num2str(max_ptool_ixs(i)) '-' num2str(max_scores(i))]);
+        title([max_tools{i}.name num2str(max_tools_ixs(i)) '-' num2str(max_ptool_ixs(i)) '-' num2str(max_score)]);
 %         PlotPtools(max_tools{i}.ptools(max_ptool_ix,:),task);
     end
 end

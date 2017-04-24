@@ -77,7 +77,7 @@ function [ task, tools, failed_tool_ptool_ixs, all_tool_scores, best_ptool_score
     backup_filepath = [dataset_folder 'calib_res_' task '_' date '.mat'];
     disp(['Saving calibration results to: ' backup_filepath]);
     save(backup_filepath);    
-    tools = MergeCalibrationResultsPtoolData( dataset_folder, extracted_ptools_filename, backup_filepath );
+    [tools, tool_scores, best_ptool_scores] = MergeCalibrationResultsPtoolData( dataset_folder, extracted_ptools_filename, backup_filepath );
     load([dataset_folder extracted_ptools_filename]);
     backup_filepath = [dataset_folder 'calib_res_' task '_' date '.mat'];
     disp(['Re-Saving (after merging) calibration results to: ' backup_filepath]);
@@ -151,7 +151,7 @@ function tool_name = get_tool_name(line,EOF_INIDICATOR)
     end
 end
 
-function [ tools, tool_scores ] = MergeCalibrationResultsPtoolData( dataset_folder, extracted_ptools_filename, backup_filepath )
+function [ tools, tool_scores, best_ptool_scores ] = MergeCalibrationResultsPtoolData( dataset_folder, extracted_ptools_filename, backup_filepath )
     %% load ptool data file
     load(backup_filepath);
     load([dataset_folder extracted_ptools_filename]);
@@ -171,15 +171,17 @@ function [ tools, tool_scores ] = MergeCalibrationResultsPtoolData( dataset_fold
         end
     end      
     tool_scores_copy = tool_scores;
+    best_ptool_scores_copy = best_ptool_scores;
     %% swap tools
     for i=1:numel(tool_scores)
-       tool_scores{i} = tool_scores_copy{swap_ixs(i)};
-       tools{i}.name = tool_scores{i}.name;
-       tools{i}.ptool_scores = tool_scores{i}.ptool_scores;
-       tools{i}.ptool_median_scores = tool_scores{i}.ptool_median_scores;
-       tools{i}.ptools = ptools{i};
-       tools{i}.ptools_maps = ptools_maps{i};
-       tools{i}.P = Ps{i};       
+        best_ptool_scores(i) = best_ptool_scores_copy(swap_ixs(i));
+        tool_scores{i} = tool_scores_copy{swap_ixs(i)};
+        tools{i}.name = tool_scores{i}.name;
+        tools{i}.ptool_scores = tool_scores{i}.ptool_scores;
+        tools{i}.ptool_median_scores = tool_scores{i}.ptool_median_scores;
+        tools{i}.ptools = ptools{i};
+        tools{i}.ptools_maps = ptools_maps{i};
+        tools{i}.P = Ps{i};       
     end
 %     for i=1:numel(tool_scores)
 %         tools{i}.name = tool_scores{i}.name;
