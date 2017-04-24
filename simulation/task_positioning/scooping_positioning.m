@@ -14,6 +14,6 @@ function [ elbow_pos, tool_relative_pos, tool_rot, action_tracker_pos ] = scoopi
     xi =  box_pos(1) - box_size(2)/2 + box_thickness + safe_dist(1) - min(P.v(:,3));
     zf = box_pos(3) + box_thickness + safe_dist(3) + max(P.v(:,1)) -min(P.v(:,3)) + min_grasp_dist_x(1);
     elbow_pos = [xi 0 zf];
-    action_tracker_pos = elbow_pos + tool_relative_pos + vec_centres + [0 0 min(P.v(:,3))];
+    action_tracker_pos = elbow_pos + tool_relative_pos + vec_centres + [0 0 -SQ_action(3)];
 end
 

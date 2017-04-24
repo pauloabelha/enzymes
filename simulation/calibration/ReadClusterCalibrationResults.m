@@ -1,4 +1,7 @@
-function [ task, tools, failed_tool_ptool_ixs, all_tool_scores, best_ptool_scores, best_ptools_ixs ] = ReadClusterCalibrationResults( root_folder, task, dataset_folder, extracted_ptools_filename )
+function [ task, tools, failed_tool_ptool_ixs, all_tool_scores, best_ptool_scores, best_ptools_ixs ] = ReadClusterCalibrationResults( root_folder, task, dataset_folder, extracted_ptools_filename, backup_file_suffix )
+    if ~exist('backup_file_suffix','var')
+        backup_file_suffix = '';
+    end    
     FILE_PREFIX='output_cluster_training';
     res_folder = [root_folder task '/'];
     filenames = FindAllFilesOfPrefix( FILE_PREFIX, res_folder );
@@ -74,12 +77,13 @@ function [ task, tools, failed_tool_ptool_ixs, all_tool_scores, best_ptool_score
     perc_failed_simulations = num2str(round(100*n_failed_sim/tot_n_sim));
     disp(['Failed simulations: ' num2str(n_failed_sim) '/' num2str(tot_n_sim) ' (' perc_failed_simulations ' %)']);
     disp('Merging calibration into one structure of list of tools');
-    backup_filepath = [dataset_folder 'calib_res_' task '_' date '.mat'];
+    backup_filepath = [dataset_folder 'calib_res_' task backup_file_suffix '_' date '.mat'];
     disp(['Saving calibration results to: ' backup_filepath]);
     save(backup_filepath);    
     [tools, tool_scores, best_ptool_scores] = MergeCalibrationResultsPtoolData( dataset_folder, extracted_ptools_filename, backup_filepath );
+    backup_filepath_=backup_filepath;
     load([dataset_folder extracted_ptools_filename]);
-    backup_filepath = [dataset_folder 'calib_res_' task '_' date '.mat'];
+    backup_filepath=backup_filepath_;
     disp(['Re-Saving (after merging) calibration results to: ' backup_filepath]);
     save(backup_filepath);
 end
