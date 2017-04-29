@@ -31,21 +31,23 @@ function GeneratePCLsWPToolsForSim( simulation_folder, ptools, task, P_orig, pto
 %     exist_pcl = exist('P','var');
     MIN_INERTIA = gazebo_params.MIN_INERTIA;
     n_ptools = size(ptools,1);
-    if completing
+    if completing && ~DEBUG_MODE
        ptool_folders = FindAllFolders( ['~/.gazebo/gazebo_models/' task '/' simulation_folder] ); 
     end
     for i=1:n_ptools
-        ptool_already_processed = 0;
-        for j=1:numel(ptool_folders)
-            split_folder_name = strsplit(ptool_folders{j},'/');
-            if strcmp(split_folder_name{1}(end),num2str(i))
-                ptool_already_processed = 1;
-                break;
+        if completing && ~DEBUG_MODE
+            ptool_already_processed = 0;
+            for j=1:numel(ptool_folders)
+                split_folder_name = strsplit(ptool_folders{j},'/');
+                if strcmp(split_folder_name{1}(end),num2str(i))
+                    ptool_already_processed = 1;
+                    break;
+                end
             end
-        end
-        if ptool_already_processed
-            disp([simulation_folder ptool_folders{j} ': Ptool already processed']);
-            continue;
+            if ptool_already_processed
+                disp([simulation_folder ptool_folders{j} ': Ptool already processed']);
+                continue;
+            end
         end
         disp(i);
         % rotate ptools for task
