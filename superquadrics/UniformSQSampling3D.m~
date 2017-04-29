@@ -161,8 +161,8 @@ function [ final_pcl, final_normals, omegas, etas] = UniformSQSampling3D( SQ, ca
     end
     % use magic number to estimate D_theta
     magic_num = max(0.005,0.1-max(0.95,abs(min(1.9,min(e1,e2))-1))/10);
-    D_theta = max(0.005,max(magic_num,log(approx_vol)*0.012));
-    D_theta = 0.002;
+    D_theta = max(0.012,max(magic_num,log(approx_vol)*0.012));
+%       D_theta = 0.0012;
     % sample etas
     max_iter = 1e5;
     if recursive_sampling
@@ -241,17 +241,6 @@ function [ final_pcl, final_normals, omegas, etas] = UniformSQSampling3D( SQ, ca
                 ones_size_omegas = ones(size(omegas,2),1);
                 z = a3.*ones_size_omegas*i*signedpow(sin_k_etas,e1); 
                 pcl = [x(:) y(:) z(:)];
-                if calc_normals                    
-                    x_y_norm_factor = signedpow(cos(etas),2);
-                    x_normals = signedpow(cos(omegas),2)'*x_y_norm_factor;
-                    x_normals = (1./pcl(:,1)).*x_normals(:);
-                    y_normals = signedpow(sin(omegas),2)'*x_y_norm_factor;
-                    y_normals = (1./pcl(:,2)).*y_normals(:);
-                    z_normals = ones_size_omegas*signedpow(sin(etas),2);
-                    z_normals = (1./pcl(:,3)).*z_normals(:); 
-                    normals = [x_normals(:) y_normals(:) z_normals(:)];
-                    normals = normr(normals);
-                end
                 % apply tapering
                 if Kx || Ky
                     f_x_ofz = ((Kx.*pcl(:,3))/a3) + 1; 
@@ -261,12 +250,36 @@ function [ final_pcl, final_normals, omegas, etas] = UniformSQSampling3D( SQ, ca
                 end
                 % apply bending
                 if k_bend
+                    beta = atan(pcl(:,2)./pcl(:,1));
+                    beta(isnan(beta)) = 0;
+%                     r = sqrt(pcl(:,1).^2+pcl(:,2).^2).*cos(alpha-beta);
+%                     gamma = pcl(:,3)/k_bend;
+%                     gamma(isnan(gamma)) = 0;
+%                     R = (1/k_bend)-((1/k_bend)-r).*cos(gamma);                    
+%                     pcl(:,1) = pcl(:,1) + (R - r).*cos(alpha);
+%                     pcl(:,2) = pcl(:,2) + (R - r).*sin(alpha);
+%                     pcl(:,3) = ((1/k_bend)-r).*sin(gamma);
+%                     R = sqrt((pcl(:,1).^2)+(pcl(:,2).^2)).*cos(alpha - beta);
+%                     gamma = atan(pcl(:,3)./((1/k_bend)-R));
+%                     gamma(isnan(gamma)) = 0;
+%                     r = (1/k_bend)-sqrt((pcl(:,3).^2)+(((1/k_bend)-R).^2));
+%                     pcl(:,1) = pcl(:,1) - (R - r)*cos(alpha);
+%                     pcl(:,2) = pcl(:,2) - (R - r)*sin(alpha);
+%                     pcl(:,3) = gamma./k_bend;
                     pcl(:,1) = pcl(:,1) + (k_bend - sqrt(k_bend^2 - pcl(:,3).^2));
                 end
                 % get current pcl into final_pcl
                 final_pcl((ix*n_sampled_angles)+1:((ix+1)*n_sampled_angles),:) = pcl;
                 % calculate normals
-                if calc_normals           
+                if calc_normals                    
+                    x_y_norm_factor = signedpow(cos(etas),2);
+                    x_normals = signedpow(cos(omegas),2)'*x_y_norm_factor;
+                    x_normals = (1./pcl(:,1)).*x_normals(:);
+                    y_normals = signedpow(sin(omegas),2)'*x_y_norm_factor;
+                    y_normals = (1./pcl(:,2)).*y_normals(:);
+                    z_normals = ones_size_omegas*signedpow(sin(etas),2);
+                    z_normals = (1./pcl(:,3)).*z_normals(:); 
+                    normals = [x_normals(:) y_normals(:) z_normals(:)];
                     % apply tapering transformation to the normals
                     if Kx || Ky
                         f_prime_x_ofz = (Kx/a3).*x(:);
@@ -281,7 +294,7 @@ function [ final_pcl, final_normals, omegas, etas] = UniformSQSampling3D( SQ, ca
                     % apply bending transformation to the normals
                     if k_bend
                         bend_j = -(pcl(:,3)./sqrt(k_bend^2 - pcl(:,3).^2));
-                        normals(:,3) = normals(:,3) + bend_j.*normals(:,1);
+                        normals(:,3) = normals_z + bend_j.*normals(:,3);
                     end
                     final_normals((ix*n_sampled_angles)+1:((ix+1)*n_sampled_angles),:) = normr(normals);
                 end

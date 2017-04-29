@@ -42,13 +42,13 @@ function [ SQ_ok ] = CheckSQParams( SQ )
             error([EROR_SQ_WRONG_VALUE_RANGE num2str(i) ' (tapering): ' num2str(SQ(i))]);
         end
     end
-    if SQ(bend_alpha_ix) < -pi || SQ(bend_alpha_ix) > pi
+    if SQ(bend_alpha_ix) < 0 || SQ(bend_alpha_ix) > 100
         SQ_ok = 0;
-        error([EROR_SQ_WRONG_VALUE_RANGE num2str(11) ' (bending): ' num2str(SQ(11))]);
+        error([EROR_SQ_WRONG_VALUE_RANGE num2str(11) ' (bending): ' num2str(SQ(bend_alpha_ix))]);
     end
-    if SQ(bend_k_ix) < 0 || SQ(bend_k_ix) > 100
+    if SQ(bend_k_ix) > 0 && SQ(bend_k_ix) < SQ(3)
         SQ_ok = 0;
-        error([EROR_SQ_WRONG_VALUE_RANGE num2str(12) ' (bending): ' num2str(SQ(12))]);
+        error([EROR_SQ_WRONG_VALUE_RANGE num2str(12) ' (bending): ' num2str(SQ(bend_k_ix))]);
     end
 end
 
