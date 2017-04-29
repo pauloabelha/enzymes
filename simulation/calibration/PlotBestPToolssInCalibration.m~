@@ -1,5 +1,5 @@
 function [ max_tools, max_tools_ixs, max_ptool_ixs, max_scores ] = PlotBestPToolssInCalibration( calib_res_path )
-    MAX_N_TOOLS_PLOT = 40;
+    MAX_N_TOOLS_PLOT = 10;
     load(calib_res_path);
     ixs = best_ptool_scores > 0 & best_ptool_scores < 50;
     a_123 = 1:numel(tools);
@@ -14,16 +14,11 @@ function [ max_tools, max_tools_ixs, max_ptool_ixs, max_scores ] = PlotBestPTool
         Ps{i} = P{1};
     end
     [max_scores_sorted, sort_ixs] = sort(max_scores,'descend');
-    max_tools_sorted = max_tools(sort_ixs);
-    max_tools_ixs_sorted = max_tools_ixs(sort_ixs);
-    max_ptool_ixs_sorted = max_ptool_ixs(sort_ixs);
+    max_ptool_ixs_sorted = max_ptool_ixs(
     Ps = Ps(sort_ixs);
-    for i=1:numel(max_tools)
-       if i > MAX_N_TOOLS_PLOT
-           break;
-       end
+    for i=1:MAX_N_TOOLS_PLOT
        PlotPCLSegments(Ps{i});
-       title([max_tools_sorted{i}.name '-' num2str(max_tools_ixs_sorted(i)) '-' num2str(max_ptool_ixs_sorted(i)) '-' num2str(max_scores_sorted(i))]);
+       title([max_tools{i}.name '-' num2str(max_tools_ixs(i)) '-' num2str(max_ptool_ixs(i)) '-' num2str(max_scores_sorted(i))]);
     end
 end
 
