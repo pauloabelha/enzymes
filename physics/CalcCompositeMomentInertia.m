@@ -1,6 +1,6 @@
 %% Calculates the MOI by fitting SQs to the pcl
-% If SQs is a path or a struct it will be considered a pcl param
-%   and the function will fit SQs to the function
+% If SQs is a path or a struct it will be considered a pcl path or P struct
+%   and the function will fit SQs to the this pcl
 % If SQs is a cell array it will be considered as a list of SQs
 %
 % The outputs are:
