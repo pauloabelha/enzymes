@@ -150,11 +150,12 @@ function [ final_pcl, final_normals, omegas, etas] = UniformSQSampling3D( SQ, ca
         %warning('Superquadric has volume smaller than 1. Rescaling superquadric to estimate D_theta.');
         rescaling_happened = 1;
         rescaling_factor = 2;
-        orig_as = [a1 a2 a3];
+        orig_as = [a1 a2 a3 k_bend];
         while approx_vol < 1
             a1 = orig_as(1)*rescaling_factor;
             a2 = orig_as(2)*rescaling_factor;
             a3 = orig_as(3)*rescaling_factor;
+            k_bend = orig_as(4)*rescaling_factor;
             rescaling_factor = rescaling_factor*2;
             approx_vol = a1*a2*a3;
         end        
@@ -162,7 +163,7 @@ function [ final_pcl, final_normals, omegas, etas] = UniformSQSampling3D( SQ, ca
     % use magic number to estimate D_theta
     magic_num = max(0.005,0.1-max(0.95,abs(min(1.9,min(e1,e2))-1))/10);
     D_theta = max(0.005,max(magic_num,log(approx_vol)*0.012));
-    D_theta = 0.002;
+%     D_theta = 0.002;
     % sample etas
     max_iter = 1e5;
     if recursive_sampling

@@ -32,11 +32,13 @@ function [SQ,F,E,E_pcl_SQ, E_SQ_pcl ] = FitSQtoPCL_Bending(pcl,pcl_scale,ix,opt_
         scale_options = {[pi -pi/2 0], [0 pi/2 0], [pi -pi/2 0], [pi -pi/2 0]};
         x(6:8) = scale_options{mod(ix,4)+1};
         % get random initial bending
-        x(11) = (randi(30)/100)+0.05;
-        x(3) = x(3).*(1+x(11));
+%         x(11) = (randi(30)/100)+0.05;
+        x(11) = ix*x(3);
+%         x(3) = x(3).*(1+x(11));
         % get initial bending plane according to PCA
-        bend_options =  [0 pi/2 pi 3*pi/4];
-        x(12) = bend_options(mod(ix,4)+1);        
+%         bend_options =  [0 pi/2 pi 3*pi/4];
+%         x(12) = bend_options(mod(ix,4)+1);  
+        x(12) = 0;
         % set inital lambda
         initial_lambda = x;
         pcl_scale = calculatePCLSegScale(pcl);
