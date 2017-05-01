@@ -60,7 +60,7 @@ function [ task, tools, failed_tool_ptool_ixs, all_tool_scores, best_ptool_score
                     scores = 0;
                 end
                 tool_scores{end}.ptool_scores{end+1} = scores;
-                tool_scores{end}.ptool_median_scores(end+1) = median(tool_scores{end}.ptool_scores{end});
+                tool_scores{end}.ptool_median_scores(end+1) = floor(median(tool_scores{end}.ptool_scores{end}));
                 all_tool_scores(end+1) = tool_scores{end}.ptool_median_scores(end);
                 if tool_scores{end}.ptool_median_scores(end) <= 0
                     n_failed_sim = n_failed_sim + 1;

@@ -3,11 +3,10 @@
 %   and the function will fit SQs to the function
 % If SQs is a cell array it will be considered as a list of SQs
 %
-% The outputs are:
+% The outputs are
 %   centre of mass
 %   The I inertial matrix)
-%   inertial (6x1 array) holding both centre of mass and inertia diagonal
-%   the read pcl P is SQs was a path to a pcl file or a P struct 
+
 %% By Paulo Abelha
 function [ centre_mass, I, inertial, P ] = CalcCompositeMomentInertia( SQs, mass)
     %% deal with SQs param

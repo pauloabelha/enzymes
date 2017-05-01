@@ -8,15 +8,15 @@ function [ category ] = TaskCategorisationScoopingGrains( simulation_scores, eps
             category(i) = -1;
             continue;
         end
-        if simulation_scores(i) < 4.875
+        if simulation_scores(i) < 1 || simulation_scores(i) > 50
             category(i) = 1;
             continue;
         end
-        if simulation_scores(i) < 5.822
+        if simulation_scores(i) < 3
             category(i) = 2;
             continue;
         end
-        if simulation_scores(i) < 6.413
+        if simulation_scores(i) < 5
             category(i) = 3;
             continue;
         end

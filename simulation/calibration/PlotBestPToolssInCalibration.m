@@ -1,7 +1,7 @@
 function [ max_tools, max_tools_ixs, max_ptool_ixs, max_scores ] = PlotBestPToolssInCalibration( calib_res_path )
     MAX_N_TOOLS_PLOT = 40;
     load(calib_res_path);
-    ixs = best_ptool_scores > 0 & best_ptool_scores < 50;
+    ixs = best_ptool_scores > 1 & best_ptool_scores < 50;
     a_123 = 1:numel(tools);
     max_tools_ixs = a_123(ixs);
     max_tools = tools(ixs);
