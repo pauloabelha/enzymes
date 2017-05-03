@@ -1,0 +1,30 @@
+% By Paulo Abelha
+% based on the paper: https://academic.oup.com/comjnl/article/32/3/281/331557/Short-NoteA-Fast-Iterative-Algorithm-for
+%
+% Generates all partiions of a given set (input as a list)
+%
+% B is the set of all partitions (B for Bell number)
+% https://en.wikipedia.org/wiki/Bell_number
+function [ B ] = AllPartitions( S )
+    P = PartitionRecur(S);
+end
+
+function R = PartitionRecur(S)
+    if isempty(S)
+        R = {{[]}};
+        return;
+    end
+    elem = S(end);
+    S = ;
+    P = PartitionRecur(S);
+    R = {};
+    for i=1:numel(P)
+        list_of_set = P{i};
+        new_set = [list_of_set elem];
+        R{end+1} = {new_set};
+        for j=1:numel(P{i})
+            
+        end
+    end
+    return;
+end
