@@ -12,9 +12,9 @@ function [SQ,F,E,E_pcl_SQ, E_SQ_pcl ] = FitSQtoPCL_normal(pcl,pcl_scale,ix,opt_o
                 error(['SQ FItting: Normal. Point cloud has one or more dimensions that are too small: ' num2str(pcl_scale)]);            
             end
             pcl_scale = pcl_scale./2;
-            min_scale = pcl_scale*0.9;
+            min_scale = pcl_scale*0.95;
             initial_scale = pcl_scale;
-            max_scale = pcl_scale;
+            max_scale = pcl_scale*1.05;
             min_pos = min(pcl);
             [~,initial_pos] = kmeans(pcl,1);
             max_pos = max(pcl);
