@@ -1,5 +1,8 @@
 % extract a list of ptools from a given folder
-function [ ptools, ptools_maps, Ps, pcl_filenames ] = ExtractPToolsFromFolder( root_folder )
+function [ ptools, ptools_maps, Ps, pcl_filenames ] = ExtractPToolsFromFolder( root_folder, suffix_bkp_file )
+    if ~exist('suffix_bkp_file','var')
+        suffix_bkp_file = '';
+    end
     %% read groundtruth csv file (from hammering nail, but it just to get mass)
     [ tool_names, tool_masses ] = ReadGroundTruth([root_folder 'groundtruth_mass.csv']);
     CheckIsChar(root_folder);
@@ -40,13 +43,16 @@ function [ ptools, ptools_maps, Ps, pcl_filenames ] = ExtractPToolsFromFolder( r
             n_ptools = size(ptools{i},1);
             tot_n_ptools = tot_n_ptools + n_ptools;
             disp(['Extracted #' num2str(i) ' pcl ' pcl_filenames{i} ' (#ptools ' num2str(n_ptools) ') Tot # ' num2str(tot_n_ptools) ' Avg # ' num2str(floor(tot_n_ptools/i))]);
-            tot_toc = DisplayEstimatedTimeOfLoop(tot_toc+toc,i,numel(pcl_filenames));    
+            backup_filepath = [root_folder 'extracted_ptools_' date suffix_bkp_file '.mat'];
+            disp(['Saving extracted ptools to: ' backup_filepath]);
+            save(backup_filepath);
+            tot_toc = DisplayEstimatedTimeOfLoop(tot_toc+toc,i,numel(pcl_filenames));                
         catch E
             disp(['ERROR in pcl: ' pcl_filenames{i}]);
             warning(E.message);
         end
     end
-    backup_filepath = [root_folder 'extracted_ptools_' date '.mat'];
+    backup_filepath = [root_folder 'extracted_ptools_' date suffix_bkp_file '.mat'];
     disp(['Saving extracted ptools to: ' backup_filepath]);
     save(backup_filepath);
 end

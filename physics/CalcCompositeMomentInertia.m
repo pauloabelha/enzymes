@@ -24,8 +24,8 @@ function [ centre_mass, I, inertial, P ] = CalcCompositeMomentInertia( SQs, mass
         SQs = PCL2SQ( P, 4, 0, 0, [1 1 1 0 1] );         
     end
 
-    if size(mass,2) == 21
-        mass = mass(21);
+    if size(mass,2) == 25
+        mass = mass(25);
     end
     % initialise moment of inertia
     I=zeros(3,3);

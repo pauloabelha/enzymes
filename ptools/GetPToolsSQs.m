@@ -4,15 +4,15 @@ function [ SQs_grasp, SQs_action ] = GetPToolsSQs( ptools, task )
     if ~exist('task','var')
         task='';
     end      
-    % check if the ptools matrix is Nx21
-    if size(ptools,2) ~= 21
+    % check if the ptools matrix is Nx25
+    if size(ptools,2) ~= 25
        error(['The p-tool(s) should have 21 elements and it has ' num2str(size(ptools,2))]); 
     end
     SQs_grasp = zeros(1,15);
     SQs_action = zeros(1,15);
     for i=1:size(ptools,1)
-        SQ_grasp = [ptools(i,1:5) 0 0 0 ptools(i,6:7) 0 0 0 0 0];
-        SQ_action = [ptools(i,8:12) ptools(i,18:20) ptools(i,13:14) 0 0 ptools(i,15:17)]; 
+        SQ_grasp = [ptools(i,1:5) 0 0 0 ptools(i,6:7) ptools(i,8:9) 0 0 0];
+        SQ_action = [ptools(i,10:14) ptools(i,22:24) ptools(i,15:16) ptools(i,17:18) ptools(i,19:21)]; 
         transf_list = GetTrasnfsSQsTask( SQ_grasp, SQ_action, task );
         SQs = ApplyTransfSQs({SQ_grasp,SQ_action},transf_list);
         SQs_grasp(i,:) = SQs{1};

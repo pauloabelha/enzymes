@@ -8,9 +8,9 @@ function GeneratePToolsForSimulation( simulation_folder, ptools, task, P_orig, p
     % if ptools is a cell array, transform it to a N x 21 matrix
     if iscell(ptools)
        ptools = flatten_cell(ptools);
-       new_ptools = zeros(numel(ptools),21);
+       new_ptools = zeros(numel(ptools),25);
        for i=1:numel(ptools)
-           if numel(ptools{i}) ~= 21
+           if numel(ptools{i}) ~= 22
                error(['One of the p-tools (#' num2str(i) ') is not a 1x21 array']);
            end
            new_ptools(i,:) = ptools{i};
@@ -24,8 +24,7 @@ function GeneratePToolsForSimulation( simulation_folder, ptools, task, P_orig, p
     MIN_INERTIA = gazebo_params.MIN_INERTIA;
     exist_pcl_orig = exist('P_orig','var');
     n_ptools = size(ptools,1);
-    for i=1:n_ptools
-        disp(i);
+    parfor i=1:n_ptools
         % rotate ptools for task
         % rotate given pcl if it exists         
 %         if exist_pcl_orig            
@@ -46,7 +45,6 @@ function GeneratePToolsForSimulation( simulation_folder, ptools, task, P_orig, p
         % rotate the MOI param
         % add inertial params 
         [ ~, ~, inertial ] = CalcCompositeMomentInertia(SQs,ptools(i,:));        
-        disp(inertial);
         % check if ptool inertia is larger than minimum  
         if inertial(4) < MIN_INERTIA || inertial(5) < MIN_INERTIA || inertial(6) < MIN_INERTIA
             warning(['Calculated inertia for p-tool is smaller than ' num2str(MIN_INERTIA) ' Setting inertia to Gazebo minimum']); 
@@ -55,8 +53,8 @@ function GeneratePToolsForSimulation( simulation_folder, ptools, task, P_orig, p
             end
         end
         % write gazebo folder
-        %tool_name = ['ptool',num2str(i),'/'];
-        tool_name = ['tool_' task '/']
+        tool_name = ['ptool',num2str(i),'/'];
+%         tool_name = ['tool_' task '/']
         CreateGazeboModelFolderStructure(simulation_folder, tool_name, elbow_pos, tool_relative_pos, tool_rot, action_tracker_pos, P, ptools(i,:), inertial(1:3), inertial(4:6), task, WRITE_INERTIA,SIMPLIFY_MESH);
     end
 end

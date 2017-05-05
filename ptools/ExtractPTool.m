@@ -24,8 +24,8 @@ function [ptool,orig_grasp_centre,orig_vec_grasp] = ExtractPTool(SQ_grasp,SQ_act
     orig_grasp_centre = SQ_grasp(end-2:end);
     SQ_grasp(end-2:end) = [0 0 0];
     SQ_action(end-2:end) = vec_centres;
-    %% construct the 21-dimensional ptool vector
-    ptool_grasp = [SQ_grasp(1:5) SQ_grasp(9:10)];
-    ptool_action = [SQ_action(1:5) SQ_action(9:10)];
+    %% construct the 25-dimensional ptool vector
+    ptool_grasp = [SQ_grasp(1:5) SQ_grasp(9:10) SQ_grasp(11:12)];
+    ptool_action = [SQ_action(1:5) SQ_action(9:10) SQ_grasp(11:12)];
     ptool = [ptool_grasp ptool_action vec_centres' SQ_action(6:8) mass];
 end

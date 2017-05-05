@@ -1,5 +1,6 @@
 function [ elbow_pos, tool_relative_pos, tool_rot, action_tracker_pos ] = hammering_positioning( ptool, params, P )
     action_tracker_pos = [0 0 0];
+    tool_rot = [0 0 0];
     
     planar_hitting_pos = params{1};
     arm_length = params{2};

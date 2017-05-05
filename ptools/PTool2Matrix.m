@@ -14,8 +14,8 @@ function [ ptools ] = PTool2Matrix( ptools )
        end   
        ptools = new_ptools;
     end
-    % check if the ptools matrix is Nx21
-    if size(ptools,2) ~= 21
+    % check if the ptools matrix is Nx25
+    if size(ptools,2) ~= 25
        error('The p-tool(s) should have 21 elements'); 
     end
 
