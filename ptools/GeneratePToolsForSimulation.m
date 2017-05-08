@@ -1,5 +1,8 @@
 % create one simulation-ready folder for each ptool for a given task
-function GeneratePToolsForSimulation( simulation_folder, ptools, task, P_orig, ptool_maps )  
+function GeneratePToolsForSimulation( simulation_folder, ptools, task, completing ) 
+    if ~exist('completing','var')
+        completing = 0;
+    end
     % flag for whether to write inertia to Gazebo folder
     WRITE_INERTIA = 0;
     % flag whether to run cluster decimation and simplify the pcl mesh
@@ -22,22 +25,28 @@ function GeneratePToolsForSimulation( simulation_folder, ptools, task, P_orig, p
     %% for each ptool: position, calculate inertia and write gazebo folder
 %     exist_pcl = exist('P','var');
     MIN_INERTIA = gazebo_params.MIN_INERTIA;
-    exist_pcl_orig = exist('P_orig','var');
     n_ptools = size(ptools,1);
-    parfor i=1:n_ptools
-        % rotate ptools for task
-        % rotate given pcl if it exists         
-%         if exist_pcl_orig            
-%             [SQ_grasp,SQ_action] = AlignPToolWithPCL( ptools(i,:), P_orig, ptool_maps(i,:) );            
-%             [ transf_list ] = GetTrasnfsSQsTask( SQ_grasp, SQ_action, task, SQ_grasp(end-2:end) );
-%             P = Apply3DTransfPCL(P_orig,transf_list);      
-%             SQs = {SQ_grasp,SQ_action};
-%             SQs = ApplyTransfSQs(SQs,transf_list);
-%         else
-            P = PTool2PCL(ptools(i,:),task);
-            [SQ_grasp,SQ_action] = GetPToolsSQs(ptools(i,:),task);   
-            SQs = {SQ_grasp,SQ_action};
-%         end       
+    if completing
+       ptool_folders = FindAllFolders( ['~/.gazebo/gazebo_models/' task '/' simulation_folder] ); 
+    end
+    for i=1:n_ptools        
+        if completing
+            ptool_already_processed = 0;
+            for j=1:numel(ptool_folders)
+                split_folder_name = strsplit(ptool_folders{j},'/');
+                if strcmp(split_folder_name{1}(end),num2str(i))
+                    ptool_already_processed = 1;
+                    break;
+                end
+            end
+            if ptool_already_processed
+                disp([simulation_folder ptool_folders{j} ': Ptool already processed']);
+                continue;
+            end
+        end
+        P = PTool2PCL(ptools(i,:),task);
+        [SQ_grasp,SQ_action] = GetPToolsSQs(ptools(i,:),task);   
+        SQs = {SQ_grasp,SQ_action};
         ptools(i,:) = CheckPToolMass(ptools(i,:));
         % position ptools for the task
         [ task_params, positioning_function ] = TaskPositioningParams( task );
