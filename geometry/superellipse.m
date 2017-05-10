@@ -1,6 +1,6 @@
 % By Paulo Abelha
 % returns or plots a superellipse
-function [ pcl ] = superellipse( a, b, eps1, plot_fig, not_unif )
+function [ pcl, thetas ] = superellipse( a, b, eps1, plot_fig, not_unif )
     if ~exist('plot_fig','var')
         plot_fig = 0;
     end
@@ -35,7 +35,7 @@ end
 
 function thetas = unif_sample_theta(a, b, eps1, N)
     max_iter = 10^6;
-    D = (max(a,b)/min(a,b))*0.00125;
+    D = 0.002;
     thetas = zeros(1,N);
     theta_increasing = 1;
     ix_eta = 1;
@@ -59,7 +59,7 @@ end
 % 
 % Update theta based on the combinations of models in the paper
 function [ R ] = update_theta( a, b, epsilon, theta, D )
-    theta_eps = 1e-3;
+    theta_eps = 1e-1;
     if theta <= theta_eps
         % equation (8)
         R = power(abs((D/b)+power(theta,epsilon)),1/epsilon)-theta;

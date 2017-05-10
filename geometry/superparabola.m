@@ -1,6 +1,6 @@
 % By Paulo Abelha
 % returns or plots a superellipse
-function [ pcl ] = superparabola( a, b, eps1, plot_fig, not_unif )
+function [ pcl, us ] = superparabola( a, b, eps1, plot_fig, not_unif )
     if ~exist('plot_fig','var')
         plot_fig = 0;
     end
