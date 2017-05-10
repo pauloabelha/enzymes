@@ -1,0 +1,59 @@
+% By Paulo Abelha
+% returns or plots a superellipse
+function [ pcl ] = superellipse( a, b, e, plot_fig, not_unif )
+    if ~exist('plot_fig','var')
+        plot_fig = 0;
+    end
+    if ~exist('not_unif','var')
+        not_unif = 0;
+    end
+    theta = -pi:1e-4:pi;
+    X = a*signedpow(cos(theta),e);
+    Y = b*signedpow(sin(theta),e);
+    pcl = [X' Y'];
+    if plot_fig
+       scatter(X,Y,1); axis equal; 
+    end
+end
+
+function thetas = unif_sample_theta(a, b, eps1, N)
+    D = 1e-2;
+    thetas = zeros(1,N);
+    theta_increasing = 1;
+    ix_eta = 1;
+    while (thetas(ix_eta) > -eps(1))
+        if ix_eta > max_iter
+            disp(['Angle eta sampling reach the maximum number of iterations ' num2str(max_iter)]);
+            error(num2str(SQ));
+        end
+        % if theta got close enough to pi/2 start decreasing it down to 0        
+        if (thetas(ix_eta)  > pi/2 - eps(1))
+          thetas(ix_eta)  = max(pi/2 - thetas(ix_eta) , 0);
+          theta_increasing = -1;
+        end             
+        % update angle
+        thetas(ix_eta+1) = thetas(ix_eta) + theta_increasing*update_theta(a, b, eps1, thetas(ix_eta), D);    
+        ix_eta = ix_eta +1;
+    end    
+end
+
+% By Paulo Abelha (p.abelha at abdn ac uk )
+% based on [PiluFisher95] Pilu, Maurizio, and Robert B. Fisher. �Equal-distance sampling of superellipse models.� DAI RESEARCH PAPER (1995)
+% 
+% Update theta based on the combinations of models in the paper
+function [ R ] = update_theta( a, b, epsilon, theta, D )
+    if theta <= 1e-2
+        % equation (8)
+        R = power(abs((D/b)+power(theta,epsilon)),1/epsilon)-theta;
+    else
+        if (pi/2 - 1e-2) <= theta || theta >= (pi/2 + 1e-2)
+            % equation (9)
+            R = power((D/a)+power(pi/2-theta,epsilon),1/epsilon)-(pi/2-theta);            
+        else
+            % equation (5)
+            %R = D_ * 1/((a^2+b^2)*abs(epsilon)*sqrt(sin(theta)^(2*epsilon-2))*abs(cos(theta)));
+            R = (D / (epsilon) * cos (theta) * sin (theta) * sqrt (1/ (a^2  * power(cos(theta), 2*epsilon) * power(sin(theta), 4.) + b^2 * power(sin(theta), 2*epsilon) * power(cos(theta), 4.)));
+        end
+    end
+end
+

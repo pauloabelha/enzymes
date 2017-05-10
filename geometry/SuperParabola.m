@@ -1,7 +1,7 @@
 function [ Y ] = SuperParabola( X, a, b, p, plot_fig )
     
     if ~exist('plot_fig','var')
-        plot_fig = 0;
+        plot_fig = 1;
     end
     
     Y = b.*((X/a).^2 ).^p;

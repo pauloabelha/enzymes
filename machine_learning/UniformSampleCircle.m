@@ -28,6 +28,7 @@ function [ sampled_points ] = UniformSampleCircle( p, r, n_samples, uniform )
     end
     
     sampled_points = ss .* repmat(y,1,3);
-
+    scatter(sampled_points(:,1),sampled_points(:,2),'.k');
+    axis equal;
 end
 
