@@ -13,7 +13,9 @@ function [ pcl ] = superparabola( a, b, eps1, plot_fig, not_unif )
         us = unif_sample_u(b, eps1, N);       
     end  
     X = a*us; 
+    X = [X -X];
     Y = b*((us.^2).^(1/eps1));
+    Y = [Y Y];
     pcl = [X' Y'];
     if plot_fig
        scatter(X,Y,1); axis equal; 
