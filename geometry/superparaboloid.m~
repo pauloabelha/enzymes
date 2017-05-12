@@ -22,29 +22,33 @@ function [ pcl, us, omegas ] = superparaboloid( lambda, plot_fig )
     eps1 = lambda(4);
     eps2 = lambda(5);
     %% uniformly sample a superparabola and a superellipse
-    [ ~, us ] = superparabola( 1, a3, eps1);
-    [ ~, omegas ] = superellipse( a1, a2, eps2);  
+    % arclength constant
+    D = 0.05;
+    [ ~, us ] = superparabola( 1, a3, eps1, D);
+    [ ~, omegas ] = superellipse( a1, a2, eps2, D);  
     %% downsample the us or omegas
-    MAX_N_SAMPLES = 1e3;
+    MAX_N_SAMPLES = 1e5;
     n_samples = min(max(numel(us),numel(omegas)),MAX_N_SAMPLES);
     us = us(randsample(numel(us),min(numel(us),n_samples)));
     omegas = omegas(randsample(numel(omegas),min(numel(omegas),n_samples)));
     %% get the points with the superparaboloid parametric equation
-    X = a1*us'*cos(omegas).^eps2;
+    X = a1*us'*signedpow(cos(omegas),eps2);
     X = [X(:); X(:); -X(:); -X(:);];
-    Y = a2*us'*sin(omegas).^eps2;
-    Y = [Y(:); -Y(:)];
+    Y = a2*us'*signedpow(sin(omegas),eps2);
+    Y = [Y(:); -Y(:); Y(:); -Y(:)];
     Z = a3*((us.^2).^(1/eps1) - 1)'*ones(1,size(omegas,2));
-    Z = [Z(:); Z(:)];
+    Z = [Z(:); Z(:); Z(:); Z(:)];
     %% get the pcl
     pcl = [X(:) Y(:) Z(:)];
-    
     clear X; clear Y; clear Z;
+    normalc_x = (1/pcl(:,1)).*cos(omegas).^2;
+    normal_vec_x = (1/pcl(:,1)).*cos(omegas).^2;
+    normal_vec_x = (1/pcl(:,1)).*cos(omegas).^2;
+    MAX_N_PTS = 1e6;
+    pcl = pcl(randsample(1:size(pcl,1),min(size(pcl,1),MAX_N_PTS)),:);  
     %% plot
-    if plot_fig
-        MAX_N_PTS = 1e6;
-        pcl = pcl(randsample(1:size(pcl,1),min(size(pcl,1),MAX_N_PTS)),:);
-        scatter3(pcl(:,1),pcl(:,2),pcl(:,3)); axis equal;   
+    if plot_fig        
+        scatter3(pcl(:,1),pcl(:,2),pcl(:,3),10,'.k'); axis equal;   
     end
 end
 

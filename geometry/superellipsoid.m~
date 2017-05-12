@@ -1,6 +1,6 @@
 % By Paulo Abelha
 %
-% Uniformly samples a superparaboloid
+% Uniformly samples a superellipsoid
 %
 % Inputs:
 %   lambda: 1x5 array with the parameters [a1,a2,a3,eps1,eps2]
@@ -8,9 +8,9 @@
 %
 % Outputs:
 %   pcl: Nx3 array with the uniform point cloud
-%   us: the u parameters for the superparabola
+%   etas: the u parameters for the superparabola
 %   omegas: the omega parameters for the superellipse
-function [ pcl, normals, us, omegas ] = superparaboloid( lambda, plot_fig )
+function [ pcl, normals, etas, omegas ] = superellipsoid( lambda, plot_fig )
     %% check whether to plot
     if ~exist('plot_fig','var')
         plot_fig = 0;
@@ -24,23 +24,35 @@ function [ pcl, normals, us, omegas ] = superparaboloid( lambda, plot_fig )
     %% uniformly sample a superparabola and a superellipse
     % arclength constant
     D = 0.01;
-    [ ~, us ] = superparabola( 1, a3, eps1, D);
+    [ ~, etas ] = superellipse( 1, a3, eps1, D);
     [ ~, omegas ] = superellipse( a1, a2, eps2, D);  
-    %% downsample the us or omegas
-    MAX_N_SAMPLES = 1e5;
-    n_samples = min(max(numel(us),numel(omegas)),MAX_N_SAMPLES);
-    us = us(randsample(numel(us),min(numel(us),n_samples)));
-    omegas = omegas(randsample(numel(omegas),min(numel(omegas),n_samples)));
+    %% downsample the etas or omegas
+%     MAX_N_SAMPLES = 1e5;
+%     n_samples = min(max(numel(etas),numel(omegas)),MAX_N_SAMPLES);
+%     etas = etas(randsample(numel(etas),min(numel(etas),n_samples)));
+%     omegas = omegas(randsample(numel(omegas),min(numel(omegas),n_samples)));
     %% get the points with the superparaboloid parametric equation
-    X = a1*us'*signedpow(cos(omegas),eps2);
-    X = X(:);
-    Y = a2*us'*signedpow(sin(omegas),eps2);
-    Y = Y(:);
-    Z = a3*((us.^2).^(1/eps1) - 1)'*ones(1,size(omegas,2));
-    Z = Z(:);
-    a = (us'*cos(omegas).^2); a = a(:);
-    b = (us'*sin(omegas).^2); b = b(:);
-    c = (eps1/2)*((us.^((2/eps1)))'*ones(1,size(omegas,2))); c = c(:);
+    pcl = [];
+    normals = [];
+    for i=-1:2:1
+        for j=-1:2:1
+            for k=-1:2:1
+                cos_j_omegas = cos(j*omegas);
+                sin_j_omegas = sin(j*omegas);
+                cos_k_etas = cos(k*etas);
+                sin_k_etas = sin(k*etas);
+                X = a1*i*signedpow(cos_k_etas,eps1)'*signedpow(cos_j_omegas,eps2); X=X(:);
+                Y = a2*i*signedpow(sin_j_omegas,eps2)'*signedpow(cos_k_etas,eps1); Y=Y(:);             
+                Z = a3*i*ones(size(omegas,2),1)*signedpow(sin_k_etas,eps1); Z=Z(:);
+                pcl = [pcl; [X Y Z]];
+                a = (cos_k_etas.^2)'*cos(omegas).^2; a = a(:);
+                b = (cos_k_etas.^2)'*sin(omegas).^2; b = b(:);
+                c = ones(size(etas,2),1)*sin(etas).^2; c = c(:);
+                pcl = [pcl; [X Y Z]];
+            end
+        end
+    end
+    
     normals_x = (1./X).*a;
     normals_y = (1./Y).*b;
     normals_z = -(1./Z).*c;
