@@ -27,7 +27,7 @@ function [ pcl, normals, etas, omegas ] = superellipsoid( lambda, plot_fig, colo
     eps2 = lambda(5);
     %% uniformly sample a superparabola and a superellipse
     % arclength constant
-    D = 0.05;
+    D = 0.035;
     [ ~, etas ] = superellipse( 1, a3, eps1, D);
     [ ~, omegas ] = superellipse( a1, a2, eps2, D);  
     %% downsample the etas or omegas

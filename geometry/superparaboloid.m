@@ -10,10 +10,14 @@
 %   pcl: Nx3 array with the uniform point cloud
 %   us: the u parameters for the superparabola
 %   omegas: the omega parameters for the superellipse
-function [ pcl, normals, us, omegas ] = superparaboloid( lambda, plot_fig )
+function [ pcl, normals, us, omegas ] = superparaboloid( lambda, plot_fig, colour )
     %% check whether to plot
     if ~exist('plot_fig','var')
         plot_fig = 0;
+    end
+    %% check plot colour (default is black)
+    if ~exist('colour','var')
+        colour = '.k';
     end
     %% get parameters
     a1 = lambda(1);
@@ -23,7 +27,7 @@ function [ pcl, normals, us, omegas ] = superparaboloid( lambda, plot_fig )
     eps2 = lambda(5);
     %% uniformly sample a superparabola and a superellipse
     % arclength constant
-    D = 0.01;
+    D = 0.03;
     [ ~, us ] = superparabola( 1, a3, eps1, D);
     [ ~, omegas ] = superellipse( a1, a2, eps2, D);  
     %% downsample the us or omegas
@@ -58,9 +62,16 @@ function [ pcl, normals, us, omegas ] = superparaboloid( lambda, plot_fig )
     ixs = randsample(1:size(pcl,1),min(size(pcl,1),MAX_N_PTS));
     pcl = pcl(ixs,:);  
     normals = normals(ixs,:);
+    %% get transformations
+    rot_mtx = GetEulRotMtx(lambda(6:8));    
+    T = [[rot_mtx lambda(end-2:end)']; lambda(end-2:end) 1];
+    %% transform points and normals
+    pcl = [T*[pcl'; ones(1,size(pcl,1))]]';
+    pcl = pcl(:,1:3);
+    normals = normals*rot_mtx;
     %% plot
     if plot_fig        
-        scatter3(pcl(:,1),pcl(:,2),pcl(:,3),10,'.k'); axis equal;   
+        scatter3(pcl(:,1),pcl(:,2),pcl(:,3),10,colour); axis equal;   
     end
 end
 

@@ -65,7 +65,7 @@ end
 % 
 % Update u based on the combinations of models in the paper
 function [ theta_next ] = update_theta( a, b, eps1, theta_prev, D, increasing )
-    theta_eps = 1e-10;
+    theta_eps = 1e-2;
     if theta_prev <= theta_eps
         % equation (8)
         theta_next = power(abs((D/b)+power(theta_prev,eps1)),1/eps1)-theta_prev;
