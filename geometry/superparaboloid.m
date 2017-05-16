@@ -25,9 +25,11 @@ function [ pcl, normals, us, omegas ] = superparaboloid( lambda, plot_fig, colou
     a3 = lambda(3);
     eps1 = lambda(4);
     eps2 = lambda(5);
+    Kx = lambda(9);
+    Ky = lambda(10);
     %% uniformly sample a superparabola and a superellipse
     % arclength constant
-    D = 0.03;
+    D = 0.005;
     [ ~, us ] = superparabola( 1, a3, eps1, D);
     [ ~, omegas ] = superellipse( a1, a2, eps2, D);  
     %% downsample the us or omegas
@@ -40,7 +42,7 @@ function [ pcl, normals, us, omegas ] = superparaboloid( lambda, plot_fig, colou
     X = X(:);
     Y = a2*us'*signedpow(sin(omegas),eps2);
     Y = Y(:);
-    Z = a3*((us.^2).^(1/eps1) - 1)'*ones(1,size(omegas,2));
+    Z = 2*a3*((us.^2).^(1/eps1) - 1/2)'*ones(1,size(omegas,2));
     Z = Z(:);
     a = (us'*cos(omegas).^2); a = a(:);
     b = (us'*sin(omegas).^2); b = b(:);
@@ -52,9 +54,16 @@ function [ pcl, normals, us, omegas ] = superparaboloid( lambda, plot_fig, colou
     normals_y = [normals_y(:); -normals_y(:); normals_y(:); -normals_y(:);];
     normals_z = [normals_z(:); normals_z(:); normals_z(:); normals_z(:);];
     normals = normr([normals_x normals_y normals_z]);
-    X = [X(:); X(:); -X(:); -X(:);];
-    Y = [Y(:); -Y(:); Y(:); -Y(:)];
+    X = [X(:); -X(:); X(:); -X(:);];
+    Y = [Y(:); Y(:); -Y(:); -Y(:)];
     Z = [Z(:); Z(:); Z(:); Z(:)];
+    % apply tapering
+    if Kx || Ky
+        f_x_ofz = ((Kx.*Z)/a3) + 1; 
+        X = X.*f_x_ofz;
+        f_y_ofz = ((Ky.*Z)/a3) + 1;
+        Y = Y.*f_y_ofz; 
+    end    
     %% get the pcl
     pcl = [X(:) Y(:) Z(:)];
     clear X; clear Y; clear Z;    

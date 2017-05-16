@@ -13,6 +13,7 @@
 function [ dists_closest, ixs_closest, norm_points ] = GetDistsToClosestPoint( points, normalise, MAX_EXTRA_MEM )
     CheckNumericArraySize(points,[Inf Inf]);
     n_points = size(points,1);
+    norm_points = [];
     if exist('normalise','var') && normalise
         norm_points = NormaliseData(points);
         points = norm_points;

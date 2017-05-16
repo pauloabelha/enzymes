@@ -1,7 +1,7 @@
 % By Paulo Abelha (p.abelha at abdn ac uk )
 % based on [PiluFisher95] Pilu, Maurizio, and Robert B. Fisher. �Equal-distance sampling of superellipse models.� DAI RESEARCH PAPER (1995)
 function [ final_pcl, final_normals, omegas, etas] = UniformSQSampling3D( SQ, calc_normals_in, downsample_in, plot_in, recursive_sampling_in  )
-    %% if is a paraboloid, revert to paraboloid2pcl funciton
+    %% if SQ is a paraboloid, revert to paraboloid2pcl funciton
     if SQ(5) < 0
         if ~exist('plot_in','var')
             plot_in = 0;

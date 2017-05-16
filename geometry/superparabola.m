@@ -16,9 +16,9 @@ function [ pcl, us ] = superparabola( a, b, eps1, D, plot_fig, not_unif )
         us = unif_sample_u(b, eps1, D);       
     end  
     X = a*us; 
-    X = [X -X];
+    X = [fliplr(-X(2:end)) X];
     Y = b*((us.^2).^(1/eps1));
-    Y = [Y Y];
+    Y = [fliplr(Y(2:end)) Y];
     pcl = [X' Y'];
     if plot_fig
        scatter(X,Y,1); axis equal; 
@@ -43,7 +43,6 @@ end
 % 
 % Update u based on the combinations of models in the paper
 function [ u_next ] = update_u( b, eps1, u_prev, D )
-%     u_next = ((D*eps1)/(2*b)) * 1/sqrt( (4*b^2*(u_prev^((4/eps1) - 2)) ) + 1);
     u_next = D / ( sqrt( ((4*b^2)/eps1^2)*u_prev^((4/eps1)-2) + 1 ) );
 end
 

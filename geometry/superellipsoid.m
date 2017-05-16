@@ -25,6 +25,8 @@ function [ pcl, normals, etas, omegas ] = superellipsoid( lambda, plot_fig, colo
     a3 = lambda(3);
     eps1 = lambda(4);
     eps2 = lambda(5);
+    Kx = lambda(9);
+    Ky = lambda(10);
     %% uniformly sample a superparabola and a superellipse
     % arclength constant
     D = 0.035;
@@ -46,10 +48,17 @@ function [ pcl, normals, etas, omegas ] = superellipsoid( lambda, plot_fig, colo
                 sin_j_omegas = sin(j*omegas);
                 cos_k_etas = cos(k*etas);
                 sin_k_etas = sin(k*etas);
-                % get points
+                %% get points
                 X = a1*i*signedpow(cos_j_omegas,eps2)'*signedpow(cos_k_etas,eps1); X=X(:);
                 Y = a2*i*signedpow(sin_j_omegas,eps2)'*signedpow(cos_k_etas,eps1); Y=Y(:);             
                 Z = a3*i*ones(size(omegas,2),1)*signedpow(sin_k_etas,eps1); Z=Z(:);
+                % apply tapering
+                if Kx || Ky
+                    f_x_ofz = ((Kx.*Z)/a3) + 1; 
+                    X = X.*f_x_ofz;
+                    f_y_ofz = ((Ky.*Z)/a3) + 1;
+                    Y = Y.*f_y_ofz; 
+                end
                 pcl = [pcl; [X Y Z]];
                 % get normals
                 nx = (cos_j_omegas.^2)'*cos_k_etas.^2; nx = nx(:);

@@ -17,19 +17,13 @@ function [ pcl, thetas ] = superellipse( a, b, eps1, D, plot_fig, not_unif )
         Y = b*signedpow(sin(thetas),eps1);
     else
         thetas = unif_sample_theta(a, b, eps1, D);
-        X = zeros(1,size(thetas,2)*4);
-        Y = X;
-        ix = 1;
-        i=1;
-        for i=-1:2:1
-            for j=-1:2:1
-                X(ix:ix+size(thetas,2)-1) = i*a*signedpow(cos(j*thetas),eps1);
-                Y(ix:ix+size(thetas,2)-1) = i*b*signedpow(sin(j*thetas),eps1);
-                ix=ix+size(thetas,2);
-            end
-        end
-    end
-    
+        thetas(thetas>pi/2) = pi/2;
+        thetas(thetas<0) = 0;
+        X = a*signedpow(cos(thetas),eps1);
+        X = [X -X X -X];
+        Y = b*signedpow(sin(thetas),eps1);
+        Y = [Y Y -Y -Y];
+    end    
     pcl = [X' Y'];
     if plot_fig
        scatter(X,Y,1); axis equal; 
@@ -49,7 +43,6 @@ function thetas = unif_sample_theta(a, b, eps1, D)
         thetas(end+1) = new_theta;
         i = i +1;
     end
-%     thetas = [thetas pi/2-fliplr(thetas)];
     thetas(end+1) = pi/2;
     while (thetas(end) > 0)
         if i > max_iter
@@ -68,7 +61,7 @@ function [ theta_next ] = update_theta( a, b, eps1, theta_prev, D, increasing )
     theta_eps = 1e-2;
     if theta_prev <= theta_eps
         % equation (8)
-        theta_next = power(abs((D/b)+power(theta_prev,eps1)),1/eps1)-theta_prev;
+        theta_next = power(abs((D/a)+power(theta_prev,eps1)),1/eps1)-theta_prev;
 %         ns(1) = ns(1) + 1;
     else
         if abs(theta_prev-pi/2) < theta_eps
