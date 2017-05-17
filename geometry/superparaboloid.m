@@ -27,6 +27,7 @@ function [ pcl, normals, us, omegas ] = superparaboloid( lambda, plot_fig, colou
     eps2 = lambda(5);
     Kx = lambda(9);
     Ky = lambda(10);
+    k_bend = lambda(11);
     %% uniformly sample a superparabola and a superellipse
     % arclength constant
     D = 0.005;
@@ -64,10 +65,14 @@ function [ pcl, normals, us, omegas ] = superparaboloid( lambda, plot_fig, colou
         f_y_ofz = ((Ky.*Z)/a3) + 1;
         Y = Y.*f_y_ofz; 
     end    
+    % apply bending
+    if k_bend
+        X = X + (k_bend - sqrt(k_bend^2 - Z.^2));
+    end
     %% get the pcl
     pcl = [X(:) Y(:) Z(:)];
     clear X; clear Y; clear Z;    
-    MAX_N_PTS = 1e6;
+    MAX_N_PTS = 1e4;
     ixs = randsample(1:size(pcl,1),min(size(pcl,1),MAX_N_PTS));
     pcl = pcl(ixs,:);  
     normals = normals(ixs,:);

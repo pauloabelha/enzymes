@@ -27,6 +27,7 @@ function [ pcl, normals, etas, omegas ] = superellipsoid( lambda, plot_fig, colo
     eps2 = lambda(5);
     Kx = lambda(9);
     Ky = lambda(10);
+    k_bend = lambda(11);
     %% uniformly sample a superparabola and a superellipse
     % arclength constant
     D = 0.035;
@@ -58,6 +59,10 @@ function [ pcl, normals, etas, omegas ] = superellipsoid( lambda, plot_fig, colo
                     X = X.*f_x_ofz;
                     f_y_ofz = ((Ky.*Z)/a3) + 1;
                     Y = Y.*f_y_ofz; 
+                end
+                % apply bending
+                if k_bend
+                    X = X + (k_bend + sqrt(k_bend^2 + Z.^2));
                 end
                 pcl = [pcl; [X Y Z]];
                 % get normals

@@ -1,0 +1,63 @@
+function [ ref_titles ] = ExtractReferences( filepath )
+    %% convert file
+    if strcmp(filepath(end-2:end),'pdf')
+        system(['pdftotext ' filepath ' ' filepath(1:end-3) 'txt']);
+        filepath = [filepath(1:end-3) 'txt'];
+    end
+    %% get references
+    fid = fopen(filepath);
+    if fid == -1
+        error(['Could not open file ' filepath ' - are you mising the extension in the filename?']);
+    end
+    str = '';
+    lines_b4_abstract = {};
+    found_abstract = 0;
+    while ~feof(fid)
+        line = fgetl(fid);       
+        disp(line);
+        close_bracket = findstr(']', line);
+        if~isempty(close_bracket)
+            break;
+        end
+        if~isempty(
+    end
+    str = [str line(close_bracket+1:end)];
+    ref_strs = {};
+    last_one_ix = 0;
+    i = 0;
+    while ~feof(fid)  
+        i = i + 1;
+        line = fgetl(fid);
+        close_bracket = findstr(']', line);
+        open_bracket = findstr('[', line);
+        ix_start = 1;
+        if ~isempty(close_bracket)
+            ix_start = close_bracket+1;
+        end
+        if ~isempty(open_bracket)
+            str = [str line(1:open_bracket-1)];
+            ref_strs{end+1} = str;
+            str = line(open_bracket+3:end);
+        else
+            str = [str line];
+        end
+        if~isempty(findstr('[1]', line))
+            last_one_ix = i;
+        end
+    end
+    ref_titles = {};
+    for i=1:numel(ref_strs)
+        bracket_split = strsplit(ref_strs{i},'“');
+        if numel(bracket_split) > 1
+           bracket_split2 = strsplit(bracket_split{2},'”');
+           ref_titles{end+1} = bracket_split2{1}(1:end-1);;
+        end
+        %disp(ref_strs{i});
+    end
+    ref_titles = lower(ref_titles);
+    for i=1:numel(ref_titles)
+        ref_titles{i} = replace(ref_titles{i},' ','');
+        disp(ref_titles{i});
+    end
+end
+
