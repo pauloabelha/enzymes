@@ -97,7 +97,11 @@ function [ ref_titles, ref_strs ] = ExtractTitleAndReferences( root_folder, file
             if numel(bracket_split) > 1
                 bracket_split2 = strsplit(bracket_split{1},'.');
                 if numel(bracket_split2{end-1}) >= MIN_TITLE_LENGTH && numel(bracket_split2{end-1}) <= MAX_TITLE_LENGTH
-                    ref_titles{end+1} = bracket_split2{end-1}(2:end);
+                    ix_start = 1;
+                    if bracket_split2{end-1}(1) == ' '
+                        ix_start=2;
+                    end
+                    ref_titles{end+1} = bracket_split2{end-1}(ix_start:end);
                 end
             end
         end
