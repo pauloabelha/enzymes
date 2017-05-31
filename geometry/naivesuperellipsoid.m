@@ -10,7 +10,7 @@
 %   pcl: Nx3 array with the uniform point cloud
 %   etas: the u parameters for the superparabola
 %   omegas: the omega parameters for the superellipse
-function [ pcl, normals, etas, omegas ] = superellipsoid( lambda, plot_fig, colour )
+function [ pcl, normals, etas, omegas ] = naivesuperellipsoid( lambda, plot_fig, colour )
     %% check whether to plot
     if ~exist('plot_fig','var')
         plot_fig = 0;
@@ -18,7 +18,6 @@ function [ pcl, normals, etas, omegas ] = superellipsoid( lambda, plot_fig, colo
     %% check plot colour (default is black)
     if ~exist('colour','var')
         colour = '.k';
-    end
     %% get parameters
     a1 = lambda(1);
     a2 = lambda(2);
@@ -31,8 +30,8 @@ function [ pcl, normals, etas, omegas ] = superellipsoid( lambda, plot_fig, colo
     %% uniformly sample a superparabola and a superellipse
     % arclength constant
     D = 0.035;
-    [ ~, etas ] = superellipse( 1, a3, eps1, D);
-    [ ~, omegas ] = superellipse( a1, a2, eps2, D);  
+    etas = -pi:0.05:pi;
+    omegas = etas;  
     %% downsample the etas or omegas
 %     MAX_N_SAMPLES = 1e5;
 %     n_samples = min(max(numel(etas),numel(omegas)),MAX_N_SAMPLES);
@@ -74,7 +73,7 @@ function [ pcl, normals, etas, omegas ] = superellipsoid( lambda, plot_fig, colo
         end
     end   
     %% get final points and normals
-    MAX_N_PTS = 1e5;
+    MAX_N_PTS = 1e6;
     ixs = randsample(1:size(pcl,1),min(size(pcl,1),MAX_N_PTS));
     pcl = pcl(ixs,:);  
     normals = normals(ixs,:);

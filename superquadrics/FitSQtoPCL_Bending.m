@@ -46,8 +46,8 @@ function [SQ,F,E,E_pcl_SQ, E_SQ_pcl ] = FitSQtoPCL_Bending(pcl,pcl_scale,ix,opt_
             warning(['SQ Fitting: Bending. Point cloud has one or more dimensions that are too small: ' num2str(pcl_scale)]);
             return;
         end
-        lower_lambda = [x(1:3)*0.9 .1 .1 -pi -pi -pi 0 0 .1 0 min(pcl)];
-        upper_lambda = [x(1:3)*1.2 1  1  pi pi pi 0 0 pi 0.3 max(pcl)];
+        lower_lambda = [x(1:3)*0.9 .1 .1 -pi -pi -pi 0 0 (x(3)*1.2)+0.01 0 min(pcl)];
+        upper_lambda = [x(1:3)*1.2 1  1  pi pi pi 0 0 pi x(3)*10 max(pcl)];
         [~, initial_error ] = RankSQ(pcl, initial_lambda );
         [SQ,~,~,~,~] = lsqnonlin(@(x) SQFunction(x, pcl), initial_lambda, lower_lambda,upper_lambda, opt_options);
         [~, E ] = RankSQ(pcl, SQ );

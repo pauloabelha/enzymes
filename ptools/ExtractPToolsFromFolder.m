@@ -1,5 +1,5 @@
 % extract a list of ptools from a given folder
-function [ ptools, ptools_maps, Ps, pcl_filenames ] = ExtractPToolsFromFolder( root_folder, suffix_bkp_file )
+function [ ptools, ptools_maps, Ps, pcl_filenames, errors ] = ExtractPToolsFromFolder( root_folder, suffix_bkp_file )
     if ~exist('suffix_bkp_file','var')
         suffix_bkp_file = '';
     end
@@ -29,8 +29,9 @@ function [ ptools, ptools_maps, Ps, pcl_filenames ] = ExtractPToolsFromFolder( r
     ptools = cell(1,numel(pcl_filenames));
     ptools_maps = cell(1,numel(pcl_filenames));
     tot_n_ptools = 0;
+    errors = {};
     for i=1:numel(pcl_filenames)
-        try
+        try            
             tic;
             Ps{i} = ReadPointCloud([root_folder pcl_filenames{i}]);
             SQs = PCL2SQ( Ps{i}, 4, 0, 0, [1 1 1 0 1] );
@@ -48,8 +49,13 @@ function [ ptools, ptools_maps, Ps, pcl_filenames ] = ExtractPToolsFromFolder( r
             save(backup_filepath);
             tot_toc = DisplayEstimatedTimeOfLoop(tot_toc+toc,i,numel(pcl_filenames));                
         catch E
+            errors{end+1}.E = E;
+            errors{end}.ix = i;
+            errors{end}.pcl_filename = pcl_filenames{i};
             disp(['ERROR in pcl: ' pcl_filenames{i}]);
             warning(E.message);
+            disp(['Saving extracted ptools to: ' backup_filepath]);
+            save(backup_filepath);
         end
     end
     backup_filepath = [root_folder 'extracted_ptools_' date suffix_bkp_file '.mat'];

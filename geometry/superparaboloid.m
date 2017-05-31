@@ -48,31 +48,37 @@ function [ pcl, normals, us, omegas ] = superparaboloid( lambda, plot_fig, colou
     a = (us'*cos(omegas).^2); a = a(:);
     b = (us'*sin(omegas).^2); b = b(:);
     c = (eps1/2)*((us.^((2/eps1)))'*ones(1,size(omegas,2))); c = c(:);
-    normals_x = (1./X).*a;
-    normals_y = (1./Y).*b;
-    normals_z = -(1./Z).*c;
-    normals_x = [normals_x(:); normals_x(:); -normals_x(:); -normals_x(:);];
-    normals_y = [normals_y(:); -normals_y(:); normals_y(:); -normals_y(:);];
-    normals_z = [normals_z(:); normals_z(:); normals_z(:); normals_z(:);];
-    normals = normr([normals_x normals_y normals_z]);
     X = [X(:); -X(:); X(:); -X(:);];
     Y = [Y(:); Y(:); -Y(:); -Y(:)];
     Z = [Z(:); Z(:); Z(:); Z(:)];
-    % apply tapering
+    normals_x = (repmat(a,4,1)./X);
+    normals_y = (repmat(b,4,1)./Y);
+    normals_z = -(repmat(c,4,1)./Z);
+    normals = normr([normals_x normals_y normals_z]);
+    %% apply tapering
     if Kx || Ky
+        % apply to points
         f_x_ofz = ((Kx.*Z)/a3) + 1; 
         X = X.*f_x_ofz;
         f_y_ofz = ((Ky.*Z)/a3) + 1;
         Y = Y.*f_y_ofz; 
+        % apply to normals
+        
     end    
-    % apply bending
+    %% apply bending
     if k_bend
-        X = X + (k_bend - sqrt(k_bend^2 - Z.^2));
+        % calculate first for eficiency
+        calc1 = sqrt(k_bend^2 + Z.^2);
+        % apply to points
+        X = X + (k_bend + calc1);
+        % apply to normals
+        bend_j = -(Z./calc1);
+        normals(:,3) = normals(:,3) + bend_j.*normals(:,1);
     end
     %% get the pcl
     pcl = [X(:) Y(:) Z(:)];
     clear X; clear Y; clear Z;    
-    MAX_N_PTS = 1e4;
+    MAX_N_PTS = 2e5;
     ixs = randsample(1:size(pcl,1),min(size(pcl,1),MAX_N_PTS));
     pcl = pcl(ixs,:);  
     normals = normals(ixs,:);

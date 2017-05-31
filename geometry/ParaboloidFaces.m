@@ -3,6 +3,7 @@
 function [ pcl, faces ] = ParaboloidFaces( lambda )
     %% get paraboloid pcl in "canonical" positions (upwards - no rotation)
     pcl = Paraboloid2PCL(lambda);
+    pcl = DownsamplePCL(pcl,5000);
     r = vrrotvec(GetSQVector(lambda),[0;0;1]);
     rot_pcl = vrrotvec2mat(r);
     pcl = pcl*rot_pcl';

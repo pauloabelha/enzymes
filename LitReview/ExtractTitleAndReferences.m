@@ -107,11 +107,11 @@ function [ ref_titles, ref_strs ] = ExtractTitleAndReferences( root_folder, file
         end
         %disp(ref_strs{i});
     end
-%     ref_titles = lower(ref_titles);
-    for i=1:numel(ref_titles)
-%         ref_titles{i} = replace(ref_titles{i},' ','');
-%         disp(ref_titles{i});
-    end
+% %     ref_titles = lower(ref_titles);
+%     for i=1:numel(ref_titles)
+% %         ref_titles{i} = replace(ref_titles{i},' ','');
+% %         disp(ref_titles{i});
+%     end
     system(['rm ' filepath(1:end-3) 'txt']);
 end
 

@@ -29,21 +29,22 @@ function GeneratePToolsForSimulation( simulation_folder, ptools, task, completin
     if completing
        ptool_folders = FindAllFolders( ['~/.gazebo/gazebo_models/' task '/' simulation_folder] ); 
     end
-    for i=1:n_ptools        
-        if completing
-            ptool_already_processed = 0;
-            for j=1:numel(ptool_folders)
-                split_folder_name = strsplit(ptool_folders{j},'/');
-                if strcmp(split_folder_name{1}(end),num2str(i))
-                    ptool_already_processed = 1;
-                    break;
-                end
-            end
-            if ptool_already_processed
-                disp([simulation_folder ptool_folders{j} ': Ptool already processed']);
-                continue;
-            end
-        end
+    parfor i=1:n_ptools    
+        disp(i);
+%         if completing
+%             ptool_already_processed = 0;
+%             for j=1:numel(ptool_folders)
+%                 split_folder_name = strsplit(ptool_folders{j},'/');
+%                 if strcmp(split_folder_name{1}(end),num2str(i))
+%                     ptool_already_processed = 1;
+%                     break;
+%                 end
+%             end
+%             if ptool_already_processed
+%                 disp([simulation_folder ptool_folders{j} ': Ptool already processed']);
+%                 continue;
+%             end
+%         end
         P = PTool2PCL(ptools(i,:),task);
         [SQ_grasp,SQ_action] = GetPToolsSQs(ptools(i,:),task);   
         SQs = {SQ_grasp,SQ_action};

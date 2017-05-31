@@ -77,8 +77,12 @@ function [ final_pcl, final_normals, omegas, etas] = UniformSQSampling3D( SQ, ca
             % figure; scatter3(final_normals(:,1),final_normals(:,2),final_normals(:,3)); axis equal
         end 
         return;
-     end
-    CheckSQParams( SQ );
+    end
+    if SQ(12) < SQ(3)
+        SQ(12) = 0;
+    else
+        CheckSQParams( SQ );
+    end
     % get flag for calculating normals (default is not calculating normals)  
     final_normals = [];
     calc_normals = 0;    
@@ -161,8 +165,8 @@ function [ final_pcl, final_normals, omegas, etas] = UniformSQSampling3D( SQ, ca
         end        
     end
     % use magic number to estimate D_theta
-    magic_num = max(0.005,0.1-max(0.95,abs(min(1.9,min(e1,e2))-1))/10);
-    D_theta = max(0.005,max(magic_num,log(approx_vol)*0.012));
+    magic_num = max(0.05,0.1-max(0.95,abs(min(1.9,min(e1,e2))-1))/10);
+    D_theta = max(0.05,max(magic_num,log(approx_vol)*0.012));
 %     D_theta = 0.002;
     % sample etas
     max_iter = 1e5;

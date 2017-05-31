@@ -7,6 +7,10 @@ function [ m ] = concatcellarrayofmatrices( array, row )
         else
             m = [m array{i}];
         end
+        if i > 88
+           a=0; 
+        end
     end
 end
+
 
