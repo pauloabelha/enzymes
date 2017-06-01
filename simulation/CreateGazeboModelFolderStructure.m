@@ -5,7 +5,7 @@ function [folder_path] = CreateGazeboModelFolderStructure( simulation_folder, ga
 
     folder_path = [GAZEBO_MODELS_ROOTPATH task '/' simulation_folder gazebo_folder_name];
     
-    mass = ptool(21);
+    mass = ptool(end);
     
     if ~exist(folder_path,'dir')
         mkdir(folder_path);
