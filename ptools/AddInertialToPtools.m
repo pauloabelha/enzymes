@@ -7,7 +7,7 @@ function [ ptools_inertia ] = AddInertialToPtools( ptools )
     %% check ptool params
     ptools = PTool2Matrix( ptools );
     % create the new p-tool matrix to hold p-tools with added inertial params
-    ptools_inertia = zeros(size(ptools,1),21+6);
+    ptools_inertia = zeros(size(ptools,1),size(ptools,2)+6);
     for i=1:size(ptools,1)
         [ SQ_grasp, SQ_action ] = GetPToolsSQs( ptools(i,:) );
         [ centre_mass, I ] = CalcCompositeMomentInertia( {SQ_grasp,SQ_action}, ptools(i,21));

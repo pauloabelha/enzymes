@@ -19,7 +19,6 @@ function [ ix_seeds, seeds, seeds_pcls ] = PlantSeedsPCL( P, n_seeds, seed_radiu
     end
     if plot_fig
         scatter3(P.v(:,1),P.v(:,2),P.v(:,3),'.k');
-        P_dummy = P;
         axis equal;
         hold on;
         P.segms = {};

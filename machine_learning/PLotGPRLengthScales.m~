@@ -1,0 +1,13 @@
+function [ output_args ] = PLotGPRLengthScales( gpr, data )
+    d = size(gpr.ActiveSetVectors,2);
+    sigmaM = gpr.KernelInformation.KernelParameters(1:end-1,1);
+    if exist('data','var')
+        %sigmaM = sigmaM.*range(data)';        
+    end
+    plot((1:d)',log(sigmaM),'ro-');
+    xlabel('Length scale number');
+    ylabel('Log of length scale');
+    hold off;
+    
+end
+

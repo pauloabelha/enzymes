@@ -9,7 +9,7 @@ function [ Y, Y_sds ] = TaskFunctionGPR( task_params, X  )
         dim_ixs = logical(task_params{2});
     else        
     end
-    X = X(:,8:end);
+%     X = X(:,8:end);
     [Y,Y_sds] = gpr.predict(X);
 end
 

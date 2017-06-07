@@ -59,7 +59,11 @@ function [ gpr, loss_regression, mean_error, ixs_train, ixs_test ] = FitGPR( X, 
     Y_pred = gpr.predict(X_test);
     mean_error = sum(abs(Y_test-Y_pred))/size(Y_test,1);
     %% plot the results
+    if plot_fit
+        PLotGPRLengthScales( gpr );
+    end
     if plot_fit && size(X,2) <= 2
+        figure;
         % when k = 1
         if size(X,2) == 1
             scatter(X_train,Y_train,100,'.k');
@@ -68,7 +72,7 @@ function [ gpr, loss_regression, mean_error, ixs_train, ixs_test ] = FitGPR( X, 
             legend('Training','Test','Location','bestoutside');
             X_pred_range = min(X)*0.95:var(X)/10:max(X)*1.05;
             [Y_pred,Y_sd] = gpr.predict(X_pred_range');
-            shadedErrorBar(X_pred_range,Y_pred,Y_sd,'-k',1); 
+            shadedErrorBar(X_pred_range',Y_pred,Y_sd,'-k',1); 
             xlabel('Data');
             ylabel('Label');            
         end
@@ -78,7 +82,7 @@ function [ gpr, loss_regression, mean_error, ixs_train, ixs_test ] = FitGPR( X, 
             hold on;
             scatter3(X_test(:,1),X_test(:,2),Y_test,100,'b');
             legend('Training','Test','Location','bestoutside');
-            d = 500;
+            d = 100;
             surf_range_1 = linspace(min(X(:,1))*0.95,max(X(:,1))*1.05,d);
             surf_range_2 = linspace(min(X(:,2))*0.95,max(X(:,2))*1.05,d);
             [X_range1, X_range2] = meshgrid(surf_range_1,surf_range_2);

@@ -42,6 +42,7 @@ function Y_pred = PlotGPR( gpr, X_proj_pt, ranges, dims, axis_ranges )
     %% prepare figure
     figure;
     hold on;
+    axis(axis_ranges);
     dim_1 = dims(1);
     %% plot the gpr in 1 dimension
     if size(dims,2) == 1       
@@ -51,7 +52,7 @@ function Y_pred = PlotGPR( gpr, X_proj_pt, ranges, dims, axis_ranges )
         [Y_pred,Y_sd] = gpr.predict(X_pred);
         shadedErrorBar(X_dim1_range,Y_pred,Y_sd,'-k',1); 
         xlabel('Data');
-        ylabel('Label');            
+        ylabel('Label');
     end
     %% plot the gpr in 2 dimensions
     if size(dims,2) == 2
@@ -65,9 +66,6 @@ function Y_pred = PlotGPR( gpr, X_proj_pt, ranges, dims, axis_ranges )
         X_pred(:,dim_2) = X_range2(:);
         [Y_pred,~] = gpr.predict(X_pred);
         surf(X_range1,X_range2,reshape(Y_pred,size(X_range1,1),size(X_range2,1)));
-        if exist('axis_ranges','var')
-            axis(axis_ranges);
-        end
     end   
     hold off;
 end

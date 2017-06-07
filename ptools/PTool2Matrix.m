@@ -6,8 +6,8 @@ function [ ptools ] = PTool2Matrix( ptools )
        new_ptools = [];
        for i=1:numel(ptools)
            for j=1:size(ptools{i},1)
-               if numel(ptools{i}(j,:)) ~= 21
-                   error(['One of the p-tools (#' num2str(i) ') is not a 1x21 array']);
+               if numel(ptools{i}(j,:)) ~= 25
+                   error(['One of the p-tools (#' num2str(i) ') is not a 1x25 array']);
                end
                new_ptools(end+1,:) = ptools{i}(j,:);
            end
@@ -16,7 +16,7 @@ function [ ptools ] = PTool2Matrix( ptools )
     end
     % check if the ptools matrix is Nx25
     if size(ptools,2) ~= 25
-       error('The p-tool(s) should have 21 elements'); 
+       error('The p-tool(s) should have 25 elements'); 
     end
 
 end

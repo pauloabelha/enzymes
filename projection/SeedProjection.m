@@ -22,7 +22,7 @@ function [ best_score, best_ptool, best_ptool_map, SQs, P ] = SeedProjection( id
     % get SQs from free fitting ot the segments
     SQs_segments_orig = {};
     if use_segments > 0 && size(P.segms,2) >= 2
-        [ SQs_segments_orig, ~, fit_scores_segms, ] = PCL2SQ( P, 1, 0, 0, [1 1 1 0 1] );
+        [ SQs_segments_orig, ~, fit_scores_segms, ] = PCL2SQ( P, 1 );
         rmv_empty = 1;
         [alt_SQs,alt_SQs_errors] = GetRotationSQFits( SQs_segments_orig, P.segms, 0.12, rmv_empty );
         SQs_segments = [SQs_segments_orig flatten_cell(alt_SQs)];        
@@ -54,8 +54,8 @@ function [ best_score, best_ptool, best_ptool_map, SQs, P ] = SeedProjection( id
 %     ptool_fit_scores_action = ptool_fit_scores_action(ptool_fit_ixs,:);
     
     % evalute the task function for very ptool
-    ptools = ptools(:,1:21);
-    [task_scores, task_scores_sds] = feval(task_function, task_function_params, ptools);
+    ptools = ptools(:,1:25);
+    [task_scores, task_scores_sds] = feval(task_function, task_function_params, ptools(:,1:25));
     % TODO: TEMPORARY - REMOVE!!
 %     [~,best_options] = sort(task_scores,'descend');
 %     best_ptool = ptools(best_options(1),:);
@@ -69,7 +69,7 @@ function [ best_score, best_ptool, best_ptool_map, SQs, P ] = SeedProjection( id
     % get the ptools ixs sorted by the rank voting
     [~,best_options] = sort(rank_voting_matrix,'ascend');
     % get the best ptool to return
-    best_ptool = ptools(best_options(1),1:21);
+    best_ptool = ptools(best_options(1),:);
     best_ptool_map = ptools_maps(best_options(1),:);
     best_score = task_scores(best_options(1));
     % plot the N best ptools  
