@@ -1,0 +1,18 @@
+function [ gpr, sigmaMs, feat_imps, dims_imps, ptools, train_res] = TrainRobot( ptools, scores )  
+    train_res = [];
+    sigmaMs = {};
+    feat_imps = {};
+    dims_imps = {};
+    found_more_imp_dims = 0;
+    while found_more_imp_dims
+        prev_dims = dims_imp;
+        [ gpr, loss_regression, mean_error, ixs_train, ixs_test ] = FitGPR( ptools, scores, 0.05, 1);
+        train_res.aaaaaaa = 
+        [ sigmaMs{end+1},  feat_imps{end+1}, new_ptools, dims_imps{end+1}] = PLotGPRLengthScales( gpr, ptools );
+        found_more_imp_dims = size(dims_imps{end},2) < size(ptools,2);
+        ptools = new_ptools;
+    end
+
+
+end
+
