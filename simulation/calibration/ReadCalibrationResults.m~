@@ -176,8 +176,7 @@ function [ tools, tool_scores, best_ptool_scores ] = MergeCalibrationResultsPtoo
             end
         end
         if ~found_pcl
-            error(['Pointcloud ' pcl_shortname ' had no p-tools simulated']);
-        end
+            error(['Pointcloud ' 
     end      
     tool_scores_copy = tool_scores;
     best_ptool_scores_copy = best_ptool_scores;
