@@ -28,7 +28,7 @@ function [ dists_closest, ixs_closest, norm_points ] = GetDistsToClosestPoint( p
     % we also need memory for the identity matrix used to fill the diag of dists
     EXTRA_MEM_REQUIRED = 2*EXTRA_MEM_REQUIRED;
     if EXTRA_MEM_REQUIRED > MAX_EXTRA_MEM
-        error(['Not enough memory. Required extra memory is ' num2str(EXTRA_MEM_REQUIRED) ' bytes to fast calculate for ' num2str(n_points) ' points']);
+        error(['Not enough memory. Required extra memory is ' num2str(EXTRA_MEM_REQUIRED) ' bytes to fast calculate for ' num2str(n_points) ' points. Maximum number of points is ' num2str(floor(sqrt(MAX_EXTRA_MEM)/8))]);
     else
         % get distance matrix
         dists = pdist2(points,points);

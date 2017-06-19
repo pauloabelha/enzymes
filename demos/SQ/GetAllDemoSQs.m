@@ -11,7 +11,11 @@ function [ SQs, SQ_types ] = GetAllDemoSQs( plot_fig )
         disp(SQ_types{i});
         figure;        
         SQs{i} = GetDemoSQ(SQ_types{i});
-        superellipsoid(SQs{i},plot_fig);
+        if i < 10
+            superellipsoid(SQs{i},plot_fig);
+        else
+            superparaboloid(SQs{i},plot_fig);
+        end
         title(SQ_types{i});
     end
 end

@@ -152,7 +152,9 @@ function [ gmBest, gmBest_AIC, gmBest_BIC ] = FitAndChooseGaussianMixtureModel( 
             hold off;        
             % plot the inferred histogram
             figure('Name','Inferred histogram');
-            histogram(gmBest.random(size(X,1)));            
+            histogram(gmBest.random(size(X,1)));      
+            title(['nSC: ' num2str(ixs_best_AIC(1)), ', nSigma: ' num2str(ixs_best_AIC(2)),...
+                ', nK: ' num2str(ixs_best_AIC(3)), ', nSC: ' num2str(ixs_best_AIC(4))]);
             hold off;
         else  
             if size(X,2) == 2

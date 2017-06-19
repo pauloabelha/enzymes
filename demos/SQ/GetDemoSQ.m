@@ -4,7 +4,8 @@ function [ SQ, SQ_types ] = GetDemoSQ( SQ_type )
     SQ_types = {'Superegg - https://en.wikipedia.org/wiki/Superegg',...
                 'Cube','Sphere','Double_Tetrahedron',...
                 'Cuboid','Cylinder','Cone','Double_Cone',...
-                'Pyramid'};
+                'Pyramid',...
+                'Round_Bowl', 'Square_Bowl'};
     if ~exist('SQ_type','var')
         SQ = SQ_types;
         return;
@@ -19,7 +20,7 @@ function [ SQ, SQ_types ] = GetDemoSQ( SQ_type )
         case SQ_types{4}
             SQ = [1 1 1 2 2 0 0 0 0 0 0 0 0 0 0];
         case SQ_types{5}
-            SQ = [1 2 3 .1 .1 0 0 0 0 0 0 0 0 0 0];
+            SQ = [1 1 5 .1 .1 0 0 0 0 0 0 0 0 0 0];
         case SQ_types{6}
             SQ = [1 1 3 .1 1 0 0 0 0 0 0 0 0 0 0];
         case SQ_types{7}
@@ -28,6 +29,10 @@ function [ SQ, SQ_types ] = GetDemoSQ( SQ_type )
             SQ = [1 2 3 .1 1 0 0 0 -1 1 0 0 0 0 0];
         case SQ_types{9}
             SQ = [1 2 3 .1 .1 0 0 0 -1 -1 0 0 0 0 0];
+        case SQ_types{10}
+            SQ = [2 2 1 1 1 0 0 0  0 0 0 0 0 0 0];
+        case SQ_types{11}
+            SQ = [2 2 1 .1 .1 0 0 0  0 0 0 0 0 0 0];
         otherwise
             error('SQ type unkown :(');
     end

@@ -12,7 +12,7 @@
 %   omegas: the omega parameters for the superellipse
 function [ pcl, normals, etas, omegas ] = superellipsoid( lambda, plot_fig, colour )
     %% max number of points for pcl
-    MAX_N_PTS = 1e6;
+    MAX_N_PTS = 1e7;
     %% check whether to plot
     if ~exist('plot_fig','var')
         plot_fig = 0;

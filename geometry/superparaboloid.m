@@ -30,9 +30,8 @@ function [ pcl, normals, us, omegas ] = superparaboloid( lambda, plot_fig, colou
     k_bend = lambda(11);
     %% uniformly sample a superparabola and a superellipse
     % arclength constant
-    D = 0.005;
-    [ ~, us ] = superparabola( 1, a3, eps1, D);
-    [ ~, omegas ] = superellipse( a1, a2, eps2, D);  
+    [ ~, us ] = superparabola( 1, a3, eps1);
+    [ ~, omegas ] = superellipse( a1, a2, eps2);  
     %% downsample the us or omegas
     MAX_N_SAMPLES = 1e5;
     n_samples = min(max(numel(us),numel(omegas)),MAX_N_SAMPLES);
