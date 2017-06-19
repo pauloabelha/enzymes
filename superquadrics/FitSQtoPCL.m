@@ -26,7 +26,7 @@ function [SQ,ERROR,ERROR_vec,ERROR_PCL_SQ,ERROR_SQ_PCL] = FitSQtoPCL(pcl,n_attem
     [~, pcl_scale] = PCLBoundingBoxVolume( pcl );
     %% fit in parallel
     n_tries = n_attempts*4;
-    parfor i=1:n_tries
+    for i=1:n_tries
         [SQ_norm(i,:),F_norm(i),E_norm(i),E_pcl_SQ_norm(i),E_SQ_pcl_norm(i)] = FitSQtoPCL_normal(pcl,pcl_scale,i,opt_options,fitting_modes,fit_constraints);  
         [SQ_taper(i,:),F_taper(i), E_taper(i), E_pcl_SQ_taper(i),E_SQ_pcl_taper(i)] = FitSQtoPCL_Tapering(pcl,pcl_scale,i,opt_options,fitting_modes);
         [SQ_bend(i,:),F_bend(i), E_bend(i), E_pcl_SQ_bend(i),E_SQ_pcl_bend(i)] = FitSQtoPCL_Bending(pcl,pcl_scale,i,opt_options,fitting_modes);

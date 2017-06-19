@@ -11,6 +11,8 @@
 %   etas: the u parameters for the superparabola
 %   omegas: the omega parameters for the superellipse
 function [ pcl, normals, etas, omegas ] = superellipsoid( lambda, plot_fig, colour )
+    %% max number of points for pcl
+    MAX_N_PTS = 1e6;
     %% check whether to plot
     if ~exist('plot_fig','var')
         plot_fig = 0;
@@ -30,9 +32,8 @@ function [ pcl, normals, etas, omegas ] = superellipsoid( lambda, plot_fig, colo
     k_bend = lambda(11);
     %% uniformly sample a superparabola and a superellipse
     % arclength constant
-    D = 0.035;
-    [ ~, etas ] = superellipse( 1, a3, eps1, D);
-    [ ~, omegas ] = superellipse( a1, a2, eps2, D);  
+    [ ~, etas ] = superellipse( 1, a3, eps1);
+    [ ~, omegas ] = superellipse( a1, a2, eps2); 
     %% downsample the etas or omegas
 %     MAX_N_SAMPLES = 1e5;
 %     n_samples = min(max(numel(etas),numel(omegas)),MAX_N_SAMPLES);
@@ -73,8 +74,7 @@ function [ pcl, normals, etas, omegas ] = superellipsoid( lambda, plot_fig, colo
             end
         end
     end   
-    %% get final points and normals
-    MAX_N_PTS = 1e5;
+    %% get final points and normals    
     ixs = randsample(1:size(pcl,1),min(size(pcl,1),MAX_N_PTS));
     pcl = pcl(ixs,:);  
     normals = normals(ixs,:);

@@ -10,6 +10,12 @@ function [ ptools, ptools_maps, Ps, pcl_filenames ] = GeneratePointCloudsForSimu
     end
     task = task_; 
     n_iter = numel(pcl_filenames);
+    disp('Checlking if there are any point clouds without p-tools');
+    for i=1:n_iter
+        if isempty(ptools{i})
+            error(['Pointcloud #' num2str(i) ' ' pcl_filenames{i} ' has no p-tools']);
+        end
+    end
     parfor i=1:n_iter
         simulation_folder = [simulation_rootfolder GetPCLShortName(pcl_filenames{i}) '/'];
         GeneratePCLsWPToolsForSim( simulation_folder, ptools{i}, task, Ps{i}, ptools_maps{i}, completing );

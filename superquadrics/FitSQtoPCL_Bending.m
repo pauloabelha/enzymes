@@ -29,7 +29,7 @@ function [SQ,F,E,E_pcl_SQ, E_SQ_pcl ] = FitSQtoPCL_Bending(pcl,pcl_scale,ix,opt_
         % get initial shape
         x(4:5) = [.1 1];
         % get intiial Euler angles considering PCA
-        scale_options = {[pi -pi/2 0], [0 pi/2 0], [pi -pi/2 0], [pi -pi/2 0]};
+        scale_options = {[0 pi/2 0], [pi -pi/2 pi/2], [pi -pi/2 0], [pi -pi/2 0]};
         x(6:8) = scale_options{mod(ix,4)+1};
         % get random initial bending
 %         x(11) = (randi(30)/100)+0.05;
@@ -47,8 +47,10 @@ function [SQ,F,E,E_pcl_SQ, E_SQ_pcl ] = FitSQtoPCL_Bending(pcl,pcl_scale,ix,opt_
             return;
         end
         lower_lambda = [x(1:3)*0.9 .1 .1 -pi -pi -pi 0 0 (x(3)*1.2)+0.01 0 min(pcl)];
-        upper_lambda = [x(1:3)*1.2 1  1  pi pi pi 0 0 pi x(3)*10 max(pcl)];
+        upper_lambda = [x(1:3)*1.2 1  1  pi pi pi 0 0 x(3)*10 0 max(pcl)];
+        upper_lambda = upper_lambda+1e-6;
         [~, initial_error ] = RankSQ(pcl, initial_lambda );
+        SQ = initial_lambda;
         [SQ,~,~,~,~] = lsqnonlin(@(x) SQFunction(x, pcl), initial_lambda, lower_lambda,upper_lambda, opt_options);
         [~, E ] = RankSQ(pcl, SQ );
         if initial_error < E

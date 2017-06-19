@@ -163,7 +163,7 @@ function [ tools, tool_scores, best_ptool_scores ] = MergeCalibrationResultsPtoo
     tool_scores = reshape(tool_scores,numel(tool_scores),1);
     tot_toc = 0;
     %% get swap indexes
-    swap_ixs = zeros(numel(pcl_filenames),1);
+    swap_ixs = zeros(numel(pcl_filenames),1);not_found_pcls_ixs = [];
     for i=1:numel(pcl_filenames)
         pcl_shortname = GetPCLShortName(pcl_filenames{i});
         found_pcl = 0;
@@ -176,13 +176,16 @@ function [ tools, tool_scores, best_ptool_scores ] = MergeCalibrationResultsPtoo
             end
         end
         if ~found_pcl
-            error(['Pointcloud ' pcl_shortname ' had no p-tools simulated']);
+            error(['Pointcloud #' num2str(i) ' '  pcl_shortname ' had no p-tools simulated']);
         end
     end      
     tool_scores_copy = tool_scores;
     best_ptool_scores_copy = best_ptool_scores;
     %% swap tools
     for i=1:numel(tool_scores)
+        if ismember(i,not_found_pcls_ixs)
+            continue;
+        end
         best_ptool_scores(i) = best_ptool_scores_copy(swap_ixs(i));
         tool_scores{i} = tool_scores_copy{swap_ixs(i)};
         tools{i}.name = tool_scores{i}.name;
