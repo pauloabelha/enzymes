@@ -1,5 +1,8 @@
+% By Paulo Abelha
+% This demo gives back a typical SQ ot all typical SQ types
 function [ SQ, SQ_types ] = GetDemoSQ( SQ_type )
-    SQ_types = {'Superegg','Cube','Sphere','Double_Tetrahedron',...
+    SQ_types = {'Superegg - https://en.wikipedia.org/wiki/Superegg',...
+                'Cube','Sphere','Double_Tetrahedron',...
                 'Cuboid','Cylinder','Cone','Double_Cone',...
                 'Pyramid'};
     if ~exist('SQ_type','var')
@@ -26,7 +29,7 @@ function [ SQ, SQ_types ] = GetDemoSQ( SQ_type )
         case SQ_types{9}
             SQ = [1 2 3 .1 .1 0 0 0 -1 -1 0 0 0 0 0];
         otherwise
-            SQ = [1 1 1 1 1 0 0 0 0 0 0 0 0 0 0];
+            error('SQ type unkown :(');
     end
 end
 

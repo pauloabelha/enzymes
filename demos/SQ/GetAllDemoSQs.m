@@ -1,3 +1,6 @@
+% By Paulo Abelha
+% This demo plots all typical SQs
+% if plot_fig is 0, the function only gives back the typical SQs and types
 function [ SQs, SQ_types ] = GetAllDemoSQs( plot_fig )
     if ~exist('plot_fig','var')
         plot_fig = 1;
