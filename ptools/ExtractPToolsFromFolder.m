@@ -35,6 +35,7 @@ function [ ptools, ptools_maps, ptools_errors, Ps, pcl_filenames, errors ] = Ext
     for i=1:numel(pcl_filenames)
         try            
             tic;
+            i=1;
             Ps{i} = ReadPointCloud([root_folder pcl_filenames{i}]);
             SQs = PCL2SQ( Ps{i}, 4, 0, 0, [1 1 1 0 1] );
             if numel(SQs) == 1

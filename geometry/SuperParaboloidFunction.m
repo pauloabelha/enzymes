@@ -12,7 +12,7 @@ function [ F, F_raw ] = SuperParaboloidFunction( lambda, pcl )
     X = (pcl(:,1)/a1).^2;
     Y = (pcl(:,2)/a2).^2;
     Z = pcl(:,3)/(2*a3);
-    F_raw = ( (X + Y).^(1/(2*eps1)) ) - Z;
+    F_raw = ( (X.^eps2 + Y.^eps2).^(eps2/eps1) ) - Z;
     F = abs(F_raw);
 end
 
