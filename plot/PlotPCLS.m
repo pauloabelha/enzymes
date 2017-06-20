@@ -21,7 +21,9 @@ function PlotPCLS( Ps, downsample, single_colour, colours )
             warning('Skipping empty point cloud');
             continue;
         end
-        if ismatrix(Ps{i})
+        if isstruct(Ps{i})
+            P = Ps{i};
+        elseif ismatrix(Ps{i})
             P = PointCloud(Ps{i});
         end
         if isempty(P.v)
@@ -39,7 +41,7 @@ function PlotPCLS( Ps, downsample, single_colour, colours )
             else
                 colour = colours{mod(i,numel(colours))+1};
             end
-            scatter3(P.v(:,1),P.v(:,2),P.v(:,3),50,colour); axis equal;
+            scatter3(P.v(:,1),P.v(:,2),P.v(:,3),10,colour); axis equal;
         end
     end
     hold off;

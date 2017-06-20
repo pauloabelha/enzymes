@@ -14,9 +14,48 @@
 %   P - PointCloud struct (check function/"constructor" PointCloud)
 %
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-function [ P ] = SQ2PCL( SQ, n_points )
-    
-
-
+function [ Ps ] = SQ2PCL( SQs, n_points, plot_fig )
+    %% deal with list of SQs as input
+    cell_input = 0;
+    if iscell(SQs)
+        cell_input = 1;
+        temp = [];
+        for i=1:size(SQs,2)
+            if ~isempty(SQs{i})
+                temp(end+1,:) = SQs{i};
+            end
+        end
+        SQs = temp;
+    end
+    Ps = cell(1,size(SQs,1));
+    for i=1:size(SQs,1)
+        SQ = SQs(i,:);
+        %% param checks
+        if ~exist('SQ','var')
+            error('This function needs a SQ as first param');
+        end
+        if ~exist('n_points','var')
+            error('This function needs the number of points as second param');
+        end
+        CheckNumericArraySize(SQ,[1 15]);
+        CheckIsScalar(n_points);
+        if ~exist('plot_fig','var')
+            plot_fig = 0;
+        end
+        %% deal with superparaboloids
+        if SQ(12) < 0
+            [pcl, normals] = superparaboloid(SQ, n_points);
+        else
+            [pcl, normals] = superellipsoid(SQ, n_points);    
+        end   
+        Ps{i} = PointCloud(pcl,normals);        
+    end
+    %% plot
+    if plot_fig
+        PlotPCLS(Ps);
+    end
+    if ~cell_input
+       Ps = Ps{1}; 
+    end
 end
 

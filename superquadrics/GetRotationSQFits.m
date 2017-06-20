@@ -1,7 +1,7 @@
 % try to rotate the superquadric around its X and Y axes to find other
 % possible fits, if the fit is good it is retrned in a list of other
 % possible fits
-function [ SQs_alt, ERRORS, ORIG_ERRORS ] = GetRotationSQFits( SQs, Ps, fit_threshold, rmv_empty )
+function [ SQs_alt, ERRORS_SQs_alt, ERRORS, ORIG_ERRORS ] = GetRotationSQFits( SQs, Ps, fit_threshold, rmv_empty )
     %% check if should remove empty alt SQs (bad fits) - default is 0
     if ~exist('rmv_empty','var')
         rmv_empty = 0;
@@ -12,7 +12,7 @@ function [ SQs_alt, ERRORS, ORIG_ERRORS ] = GetRotationSQFits( SQs, Ps, fit_thre
     end
     %% get default fit threshold, if not defined
     if ~exist('fit_threshold','var')
-        fit_threshold = 2;
+        fit_threshold = 0.4;
     end
     %% proportional multiplier for accepting fits worse than orig error
     PROP_THRESHOLD_ORIG_ERROR = 1.5;
@@ -21,6 +21,7 @@ function [ SQs_alt, ERRORS, ORIG_ERRORS ] = GetRotationSQFits( SQs, Ps, fit_thre
     %% initialise variables for parallel loop
     ORIG_ERRORS = zeros(1,numel(SQs));
     ERRORS = zeros(6,size(SQs,2));
+    ERRORS_SQs_alt = ERRORS + Inf;
     SQs_alt = cell(6,size(SQs,2));
     %% get the alternative SQs    
     for i=1:numel(SQs)        
@@ -40,7 +41,7 @@ function [ SQs_alt, ERRORS, ORIG_ERRORS ] = GetRotationSQFits( SQs, Ps, fit_thre
         %% get the 5 alternative SQs, accumulate if the fit is good
         % define SQ ix 
         SQs_alt_j = cell(6,1);
-        parfor j=1:4
+        for j=1:4
             alt_SQ = SQs{i};
             alt_SQ(6:8) = [0 0 0];
             rot = GetRotMtx((j-1)*pi/2,'y');
@@ -50,15 +51,17 @@ function [ SQs_alt, ERRORS, ORIG_ERRORS ] = GetRotationSQFits( SQs, Ps, fit_thre
                 alt_SQ(3) = SQs{i}(1);
             end
             alt_SQ = RotateSQWithRotMtx(alt_SQ,GetEulRotMtx(SQs{i}(6:8))); 
-            alt_SQ_pcl = UniformSQSampling3D(alt_SQ,0,size(P_v,1));
-            E = PCLDist( alt_SQ_pcl,Ps{i}.v );
+            P_alt_SQ_pcl = SQ2PCL(alt_SQ,size(P_v,1));
+            alt_SQ_pcl = P_alt_SQ_pcl.v;
+            E = PCLDist( alt_SQ_pcl, Ps{i}.v );
             ERRORS(j,i) = E;
             % if fit is good, accumulate SQ
             if E <= fit_threshold || E <= (E_orig*PROP_THRESHOLD_ORIG_ERROR)
-                SQs_alt_j{j} = alt_SQ;                
+                SQs_alt_j{j} = alt_SQ;   
+                ERRORS_SQs_alt(j,i) = E;
             end
         end        
-        parfor j=5:6
+        for j=5:6
             alt_SQ = SQs{i};
             alt_SQ(6:8) = [0 0 0];
             if j == 5 
@@ -71,12 +74,14 @@ function [ SQs_alt, ERRORS, ORIG_ERRORS ] = GetRotationSQFits( SQs, Ps, fit_thre
             alt_SQ(2) = SQs{i}(3);
             alt_SQ(3) = SQs{i}(2);
             alt_SQ = RotateSQWithRotMtx(alt_SQ,GetEulRotMtx(SQs{i}(6:8)));
-            alt_SQ_pcl = UniformSQSampling3D(alt_SQ,0,size(P_v,1));
+            P_alt_SQ_pcl = SQ2PCL(alt_SQ,size(P_v,1));
+            alt_SQ_pcl = P_alt_SQ_pcl.v;
             E = PCLDist( alt_SQ_pcl,P_v );
             ERRORS(j,i) = E;
             % if fit is good, accumulate SQ
             if E <= fit_threshold || E <= (E_orig*PROP_THRESHOLD_ORIG_ERROR)
-                SQs_alt_j{j} = alt_SQ;                
+                SQs_alt_j{j} = alt_SQ;  
+                ERRORS_SQs_alt(j,i) = E;
             end
         end
         SQs_alt(:,i) = SQs_alt_j;

@@ -13,7 +13,8 @@ function [ F, E, E_pcl_SQ, E_SQ_pcl  ] = RankSQ(pcl,SQ)
     end    
     F = sum(abs(F))/size(pcl,1);
     % calculate mse
-    SQ_pcl = UniformSQSampling3D(SQ,0,size(pcl,1));
+    P = SQ2PCL(SQ,size(pcl,1));
+    SQ_pcl = P.v;
     [E, E_pcl_SQ, E_SQ_pcl] = PCLDist( pcl, SQ_pcl );
 end
 

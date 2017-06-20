@@ -22,7 +22,9 @@ function [ P_out, transf_lists ] = PTool2PCL( ptools, task )
             grasp_faces = [grasp_faces; rev_grasp_faces];
             grasp_normals = [];
         else        
-            [grasp_pcl,grasp_normals] = UniformSQSampling3D(SQ_grasp,1,N_POINTS);
+            P = SQ2PCL(SQ_grasp,N_POINTS);
+            grasp_pcl = P.v;
+            grasp_normals = P.n;
             grasp_faces = convhull(grasp_pcl);
         end
         % if paraboloid
@@ -32,7 +34,9 @@ function [ P_out, transf_lists ] = PTool2PCL( ptools, task )
             action_faces = [action_faces; rev_action_faces];
             action_normals = [];
         else        
-            [action_pcl,action_normals] = UniformSQSampling3D(SQ_action,1,N_POINTS);
+            P = SQ2PCL(SQ_action,N_POINTS);
+            action_pcl = P.v;
+            action_normals = P.n;
             action_faces = convhull(action_pcl);
         end
         pcl = [grasp_pcl; action_pcl];

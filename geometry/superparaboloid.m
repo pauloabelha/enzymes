@@ -10,14 +10,16 @@
 %   pcl: Nx3 array with the uniform point cloud
 %   us: the u parameters for the superparabola
 %   omegas: the omega parameters for the superellipse
-function [ pcl, normals, us, omegas ] = superparaboloid( lambda, plot_fig, colour )
-    %% check whether to plot
+function [ pcl, normals, us, omegas ] = superparaboloid( lambda, in_max_n_pts,plot_fig, colour)
+    %% check params
     if ~exist('plot_fig','var')
         plot_fig = 0;
     end
-    %% check plot colour (default is black)
     if ~exist('colour','var')
         colour = '.k';
+    end
+    if ~exist('in_max_n_pts','var')
+        in_max_n_pts = Inf;
     end
     %% get parameters
     a1 = lambda(1);
@@ -78,6 +80,7 @@ function [ pcl, normals, us, omegas ] = superparaboloid( lambda, plot_fig, colou
     pcl = [X(:) Y(:) Z(:)];
     clear X; clear Y; clear Z;    
     MAX_N_PTS = 2e5;
+    MAX_N_PTS = min(MAX_N_PTS,in_max_n_pts);
     ixs = randsample(1:size(pcl,1),min(size(pcl,1),MAX_N_PTS));
     pcl = pcl(ixs,:);  
     normals = normals(ixs,:);

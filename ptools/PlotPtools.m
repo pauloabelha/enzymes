@@ -1,5 +1,5 @@
 % plot a 21-dimensional ptool vector (returns both pcls)
-function [ pcl_grasp, pcl_action ] = PlotPtools( ptools, task_name, plot_faces )
+function [ Ps ] = PlotPtools( ptools, task_name, plot_faces )
     if ~exist('plot_faces','var')
         plot_faces = 0;
     end

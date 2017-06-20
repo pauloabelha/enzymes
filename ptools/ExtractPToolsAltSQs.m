@@ -1,9 +1,13 @@
-function [ ptools, ptools_map ] = ExtractPToolsAltSQs(SQs, mass, grasp_alt)
+function [ ptools, ptools_map, ptools_errors] = ExtractPToolsAltSQs(SQs, mass, ERRORS_SQs_alt, grasp_alt)
+    if ~exist('ERRORS_SQs_alt','var')
+        ERRORS_SQs_alt = zeros(size(SQs,1),size(SQs,2)) + Inf;
+    end
     if ~exist('grasp_alt','var')
         grasp_alt=0;
     end
     ptools = [];
     ptools_map = [];
+    ptools_errors = [];
     for sq1_ix=1:size(SQs,2)
         n_grasp_alt = size(SQs,1);
         if ~grasp_alt
@@ -25,6 +29,7 @@ function [ ptools, ptools_map ] = ExtractPToolsAltSQs(SQs, mass, grasp_alt)
                     end  
                     ptools(end+1,:) = ExtractPTool(SQ1,SQ2,mass); 
                     ptools_map(end+1,:) = [SQ1(end-2:end) GetSQVector(SQ1)'];
+                    ptools_errors(end+1) = ERRORS_SQs_alt(sq1_alt_ix,sq1_ix) + ERRORS_SQs_alt(sq2_alt_ix,sq2_ix);
                 end
             end
         end

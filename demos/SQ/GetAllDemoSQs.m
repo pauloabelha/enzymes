@@ -9,14 +9,14 @@ function [ SQs, SQ_types ] = GetAllDemoSQs( plot_fig )
     SQs = cell(1,numel(SQ_types));
     for i=1:numel(SQ_types)
         disp(SQ_types{i});
-        figure;        
         SQs{i} = GetDemoSQ(SQ_types{i});
-        if i < 10
-            superellipsoid(SQs{i},plot_fig);
-        else
-            superparaboloid(SQs{i},plot_fig);
+        if plot_fig
+            figure;
         end
-        title(SQ_types{i});
+        SQ2PCL( SQs{i}, 10000, plot_fig );
+        if plot_fig
+            title(SQ_types{i});
+        end
     end
 end
 
