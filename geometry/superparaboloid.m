@@ -11,6 +11,10 @@
 %   us: the u parameters for the superparabola
 %   omegas: the omega parameters for the superellipse
 function [ pcl, normals, us, omegas ] = superparaboloid( lambda, in_max_n_pts,plot_fig, colour)
+    %% max number of points for pcl
+    MAX_N_PTS = 1e7;
+    %% max number of cross sampling of angles (etas x omegas) - for memory issues
+    MAX_N_CROSS_ANGLES = MAX_N_PTS/2;
     %% check params
     if ~exist('plot_fig','var')
         plot_fig = 0;
@@ -21,6 +25,10 @@ function [ pcl, normals, us, omegas ] = superparaboloid( lambda, in_max_n_pts,pl
     if ~exist('in_max_n_pts','var')
         in_max_n_pts = Inf;
     end
+    % deal with SQs with a scale number less than 1
+    % this is too deal with arbitrarly small SQs and 
+    % still being able to sample
+    [ vol_mult, lambda ] = GetVolMult( lambda );
     %% get parameters
     a1 = lambda(1);
     a2 = lambda(2);
@@ -32,8 +40,12 @@ function [ pcl, normals, us, omegas ] = superparaboloid( lambda, in_max_n_pts,pl
     k_bend = lambda(11);
     %% uniformly sample a superparabola and a superellipse
     % arclength constant
-    [ ~, us ] = superparabola( 1, a3, eps1);
+    [ ~, us ] = superparabola( 1, a3, eps1/2);
     [ ~, omegas ] = superellipse( a1, a2, eps2);  
+    n_cross_angles = size(us,2) * size(omegas,2);
+    if n_cross_angles > MAX_N_CROSS_ANGLES
+        error(['Too many (' num2str(n_cross_angles) ') angles were sampled. maximum is ' num2str(MAX_N_CROSS_ANGLES) ' angles were sampled. Aborting due to possible freezing due to lack of RAM. Check SQ scale param']);
+    end
     %% downsample the us or omegas
     MAX_N_SAMPLES = 1e5;
     n_samples = min(max(numel(us),numel(omegas)),MAX_N_SAMPLES);
@@ -83,6 +95,8 @@ function [ pcl, normals, us, omegas ] = superparaboloid( lambda, in_max_n_pts,pl
     MAX_N_PTS = min(MAX_N_PTS,in_max_n_pts);
     ixs = randsample(1:size(pcl,1),min(size(pcl,1),MAX_N_PTS));
     pcl = pcl(ixs,:);  
+    %% deal with low cubic vol SQs
+    pcl = pcl./vol_mult;
     normals = normals(ixs,:);
     %% get transformations
     rot_mtx = GetEulRotMtx(lambda(6:8));    

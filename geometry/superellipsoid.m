@@ -39,11 +39,7 @@ function [ pcl, normals, etas, omegas ] = superellipsoid( lambda, in_max_n_pts, 
         % deal with SQs with a scale number less than 1
         % this is too deal with arbitrarly small SQs and 
         % still being able to sample
-        vol_mult = 1;
-        if any(lambda(1:3) < 1)
-            vol_mult = 1/min(lambda(1:3));
-            lambda(1:3) = lambda(1:3)*vol_mult;
-        end    
+        [ vol_mult, lambda ] = GetVolMult( lambda );  
         %% get parameters
         a1 = lambda(1);
         a2 = lambda(2);
@@ -133,11 +129,11 @@ function [final_pcl, final_normals, vol_mult] = Get2DSuperellipsoid(lambda, scal
         lambda(1:3) = lambda(1:3)*vol_mult;
     end 
     a=lambda(1:3);
-    a(a>min(a))
+    a=a(a>min(a));
     pcl = superellipse( a(1), a(2), eps);        
     ixs = randsample(1:size(pcl,1),min(1000,size(pcl,1)));
     pcl = pcl(ixs,:);
-    n_iter = floor(max(scale_sort(2:3))/0.001);
+    n_iter = floor(min(1000,max(scale_sort(2:3))/0.001));
     n_pts = size(pcl,1);
     final_pcl = zeros(n_pts+n_pts*n_iter,2);
     final_pcl(1:n_pts,:) = pcl;

@@ -28,6 +28,7 @@ function [SQ,F,E,E_pcl_SQ, E_SQ_pcl ] = FitSQToPCL_Paraboloid( pcl,pcl_scale,ix,
         SQ_opt = lsqnonlin(@(x) SuperParaboloidFunction(x, pcl), initial_lambda, min_lambda, max_lambda, opt_options  );
         SQ = [SQ_opt(1:5) SQ_opt(5:7) 0 0 0 0 SQ_opt(8:10)];
         F = sum(SuperParaboloidFunction(SQ, pcl))/size(pcl,1);
+        SQ(12) = -1;
         SQ_P = SQ2PCL(SQ,size(pcl,1));
         SQ_pcl = SQ_P.v;
         [E, E_pcl_SQ, E_SQ_pcl ] = PCLDist(pcl,SQ_pcl);

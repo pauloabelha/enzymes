@@ -45,7 +45,7 @@ function [ ptools, ptools_maps, ptools_errors, Ps, pcl_filenames, errors ] = Ext
             end
             n_ptools = size(ptools{i},1);
             tot_n_ptools = tot_n_ptools + n_ptools;
-            disp(['Extracted #' num2str(i) ' pcl ' pcl_filenames{i} ' (#ptools ' num2str(n_ptools) ') Tot # ' num2str(tot_n_ptools) ' Avg # ' num2str(floor(tot_n_ptools/i))]);            
+            disp(['Extracted #' num2str(i) ' pcl ' pcl_filenames{i} ' (#ptools ' num2str(n_ptools) ') #Tot ' num2str(tot_n_ptools) ' #Avg ' num2str(floor(tot_n_ptools/i))]);            
             disp(['Saving extracted ptools to: ' backup_filepath]);
             save(backup_filepath);
             tot_toc = DisplayEstimatedTimeOfLoop(tot_toc+toc,i,numel(pcl_filenames));                

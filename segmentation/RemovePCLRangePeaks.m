@@ -6,12 +6,14 @@ function [ pcl ] = RemovePCLRangePeaks( pcl )
     diff_rangesZ = abs(diff(pcl_slice_ranges(:,3)))/median(abs(diff(pcl_slice_ranges(:,3))));
     ix_start = 0;
     ix_end = numel(pcl_slices)+1;
-    for i=1:n_to_cut
-        if diff_rangesY(i) > MAX_PEAK || diff_rangesZ(i) > MAX_PEAK
-            ix_start = ix_start + 1;
-        end        
-        if diff_rangesY(end-(i-1)) > MAX_PEAK || diff_rangesZ(end-(i-1)) > MAX_PEAK
-            ix_end = ix_end - 1;
+    if size(diff_rangesY,2) == n_to_cut && size(diff_rangesZ,2) == n_to_cut
+        for i=1:n_to_cut
+            if diff_rangesY(i) > MAX_PEAK || diff_rangesZ(i) > MAX_PEAK
+                ix_start = ix_start + 1;
+            end        
+            if diff_rangesY(end-(i-1)) > MAX_PEAK || diff_rangesZ(end-(i-1)) > MAX_PEAK
+                ix_end = ix_end - 1;
+            end
         end
     end
     slices = pcl_slices(ix_start+1:ix_end-1);

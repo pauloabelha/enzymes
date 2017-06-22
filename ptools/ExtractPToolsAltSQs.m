@@ -27,9 +27,8 @@ function [ ptools, ptools_map, ptools_errors] = ExtractPToolsAltSQs(SQs, mass, E
                     if isempty(SQ2)
                         continue;
                     end  
-                    ptools(end+1,:) = ExtractPTool(SQ1,SQ2,mass); 
+                    [ptools(end+1,:), ~, ~, ptools_errors(end+1)] = ExtractPTool(SQ1,SQ2,mass,ERRORS_SQs_alt(sq1_alt_ix,sq1_ix) + ERRORS_SQs_alt(sq2_alt_ix,sq2_ix)); 
                     ptools_map(end+1,:) = [SQ1(end-2:end) GetSQVector(SQ1)'];
-                    ptools_errors(end+1) = ERRORS_SQs_alt(sq1_alt_ix,sq1_ix) + ERRORS_SQs_alt(sq2_alt_ix,sq2_ix);
                 end
             end
         end

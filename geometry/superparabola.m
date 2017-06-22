@@ -2,7 +2,7 @@
 % returns or plots a superellipse
 function [ pcl, us ] = superparabola( a, b, eps1, D, plot_fig, not_unif )
     if ~exist('D','var') || D < 0
-        D = ((a*b)^eps1)/100; %0.0005;
+        D = ((a*b))/200; %0.0005;
     end
     if ~exist('plot_fig','var')
         plot_fig = 0;
@@ -29,11 +29,15 @@ function us = unif_sample_u(b, eps1, D)
     max_iter = 10^6;
     us(1) = 0;
     i = 1;
-    while (us(i) < 1)
+    while 1
         if i > max_iter
             error(['Angle eta sampling reach the maximum number of iterations ' num2str(max_iter)]);
         end
-        us(end+1) = us(end) + update_u(b, eps1, us(end), D);    
+        next_u = us(end) + update_u(b, eps1, us(end), D);
+        if next_u > 1
+            break;
+        end
+        us(end+1) = next_u;    
         i = i +1;
     end   
 end

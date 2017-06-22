@@ -12,7 +12,7 @@ function [ SQs_alt, ERRORS_SQs_alt, ERRORS, ORIG_ERRORS ] = GetRotationSQFits( S
     end
     %% get default fit threshold, if not defined
     if ~exist('fit_threshold','var')
-        fit_threshold = 0.4;
+        fit_threshold = 0.5;
     end
     %% proportional multiplier for accepting fits worse than orig error
     PROP_THRESHOLD_ORIG_ERROR = 1.5;
@@ -34,14 +34,15 @@ function [ SQs_alt, ERRORS_SQs_alt, ERRORS, ORIG_ERRORS ] = GetRotationSQFits( S
         % downsample the pcl for fit error comparison
         P_v = DownsamplePCL( P_v, N_POINTS, 1 );
         % get the pointcloud for the SQ
-        SQ_pcl = UniformSQSampling3D(SQs{i},0,N_POINTS);
+        P_SQ_pcl = SQ2PCL(SQs{i},N_POINTS);
+        SQ_pcl = P_SQ_pcl.v;
         % get the error between orig SQ and the pcl
         E_orig = PCLDist( SQ_pcl, P_v );
         ORIG_ERRORS(i) = E_orig;
         %% get the 5 alternative SQs, accumulate if the fit is good
         % define SQ ix 
         SQs_alt_j = cell(6,1);
-        for j=1:4
+        parfor j=1:4
             alt_SQ = SQs{i};
             alt_SQ(6:8) = [0 0 0];
             rot = GetRotMtx((j-1)*pi/2,'y');
@@ -56,12 +57,12 @@ function [ SQs_alt, ERRORS_SQs_alt, ERRORS, ORIG_ERRORS ] = GetRotationSQFits( S
             E = PCLDist( alt_SQ_pcl, Ps{i}.v );
             ERRORS(j,i) = E;
             % if fit is good, accumulate SQ
-            if E <= fit_threshold || E <= (E_orig*PROP_THRESHOLD_ORIG_ERROR)
+            if E <= fit_threshold || E <= (E_orig*PROP_THRESHOLD_ORIG_ERROR) || j == 1
                 SQs_alt_j{j} = alt_SQ;   
                 ERRORS_SQs_alt(j,i) = E;
             end
         end        
-        for j=5:6
+        parfor j=5:6
             alt_SQ = SQs{i};
             alt_SQ(6:8) = [0 0 0];
             if j == 5 
