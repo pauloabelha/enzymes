@@ -181,6 +181,17 @@ function [ tools, tool_scores, best_ptool_scores ] = MergeCalibrationResultsPtoo
     end      
     tool_scores_copy = tool_scores;
     best_ptool_scores_copy = best_ptool_scores;
+    %% read pcls if not available
+    tot_toc = 0;
+    if ~exist('Ps','var')
+        tic;
+        Ps = cell(1,numel(pcl_filenames));
+        for i=1:numel(tool_scores)
+            pcl_filenames = FindAllFilesOfType(exts,root_folder);
+            Ps{i} = ReadPointCloud([root_folder pcl_filenames{i}]);
+            tot_toc = DisplayEstimatedTimeOfLoop(tot_toc+toc,i,numel(pcl_filenames),['Reading pcls from folder: ' root_folder pcl_filenames{i} ' ']);
+        end
+    end
     %% swap tools
     for i=1:numel(tool_scores)
         if ismember(i,not_found_pcls_ixs)

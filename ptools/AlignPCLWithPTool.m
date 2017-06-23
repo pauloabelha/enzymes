@@ -16,7 +16,7 @@ function P = AlignPCLWithPTool( P, ptool, ptool_map, plot_fig )
     SQ_grasp = RotateSQWithRotMtx(SQ_grasp,rm);
     SQ_grasp(end-2:end) = orig_grasp_centre;
     % align action SQ
-    vec_centres = ptool(15:17)';
+    vec_centres = ptool(19:21)';
     new_vec_centres = rm*vec_centres;
     SQ_action = RotateSQWithRotMtx(SQ_action,rm);
     SQ_action(end-2:end) = SQ_grasp(end-2:end) + new_vec_centres';

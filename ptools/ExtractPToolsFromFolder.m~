@@ -1,5 +1,5 @@
 % extract a list of ptools from a given folder
-function [ ptools, ptools_maps, ptools_errors, Ps, pcl_filenames, errors ] = ExtractPToolsFromFolder( root_folder, suffix_bkp_file )
+function [ ptools, ptools_maps, ptools_errors, pcl_filenames, errors ] = ExtractPToolsFromFolder( root_folder, suffix_bkp_file )
     if ~exist('suffix_bkp_file','var')
         suffix_bkp_file = '';
     end
@@ -25,27 +25,26 @@ function [ ptools, ptools_maps, ptools_errors, Ps, pcl_filenames, errors ] = Ext
         end
     end 
     tot_toc = 0;
-    Ps = cell(1,numel(pcl_filenames));
     ptools = cell(1,numel(pcl_filenames));
     ptools_errors = ptools;
     ptools_maps = cell(1,numel(pcl_filenames));
     tot_n_ptools = 0;
     errors = {};
     backup_filepath = [root_folder 'extracted_ptools_' date suffix_bkp_file '.mat'];
-    for i=1:numel(pcl_filenames)
+    for i=34:numel(pcl_filenames)
         try            
             tic;
-            Ps{i} = ReadPointCloud([root_folder pcl_filenames{i}]);
-            SQs = PCL2SQ( Ps{i}, 4, 0, 0, [1 1 1 0 1] );
+            P = ReadPointCloud([root_folder pcl_filenames{i}]);
+            [SQs, ~, ERRORS_SQs] = PCL2SQ( P, 4, 0, 0, [1 1 1 0 1], 1 );
             if numel(SQs) == 1
-                [ ptools{i}, ptools_maps{i}(1:3), ptools_maps{i}(4:6) ] = ExtractPTool(SQs{1},SQs{1},tool_masses(i));
+                [ ptools{i}, ptools_maps{i}(1:3), ptools_maps{i}(4:6), ptools_errors{i} ] = ExtractPTool(SQs{1},SQs{1},tool_masses(i),ERRORS_SQs);
             else
-                [SQs_alt, ERRORS_SQs_alt] = GetRotationSQFits( SQs, Ps{i}.segms );
+                [SQs_alt, ERRORS_SQs_alt] = GetRotationSQFits( SQs, P.segms );
                 [ ptools{i}, ptools_maps{i}, ptools_errors{i} ] = ExtractPToolsAltSQs(SQs_alt, tool_masses(i), ERRORS_SQs_alt);
-            end
+                end34; 
             n_ptools = size(ptools{i},1);
             tot_n_ptools = tot_n_ptools + n_ptools;
-            disp(['Extracted #' num2str(i) ' pcl ' pcl_filenames{i} ' (#ptools ' num2str(n_ptools) ') #Tot ' num2str(tot_n_ptools) ' #Avg ' num2str(floor(tot_n_ptools/i))]);            
+            disp(['Extracted #' num2str(i) ' pcl ' pcl_filenames{i} ' (#ptools ' num2str(n_ptools) ') #Tot ' num2str(tot_n_ptools) ' #Avg ' num2str(floor(tot_n_ptools/i)) ' Min ptool error ' num2str(min(ptools_errors{i}))]);            
             disp(['Saving extracted ptools to: ' backup_filepath]);
             save(backup_filepath);
             tot_toc = DisplayEstimatedTimeOfLoop(tot_toc+toc,i,numel(pcl_filenames));                

@@ -31,7 +31,7 @@ function [ ptools, ptools_maps, ptools_errors, pcl_filenames, errors ] = Extract
     tot_n_ptools = 0;
     errors = {};
     backup_filepath = [root_folder 'extracted_ptools_' date suffix_bkp_file '.mat'];
-    for i=108:numel(pcl_filenames)
+    for i=1:numel(pcl_filenames)
         try            
             tic;
             P = ReadPointCloud([root_folder pcl_filenames{i}]);

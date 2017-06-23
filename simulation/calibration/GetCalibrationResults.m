@@ -10,7 +10,7 @@ function [ tool_names, best_ptool_scores, best_ptool_categ_scores, task_gt, accu
             warning(['Tool ' tool.name ' has a different number of ptools than the original extracted one.']);
         end
             for j=1:numel(tool_names)
-                if strcmp(tools{i}.name,tool_names{j})
+                if strcmp(tools{i}.name,GetPCLShortName(tool_names{j}))
                     task_gt(end+1) = task_groundtruth(j);
                     break;
                 end

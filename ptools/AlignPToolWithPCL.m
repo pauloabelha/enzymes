@@ -13,7 +13,7 @@ function [ SQ_grasp, SQ_action] = AlignPToolWithPCL( ptool, P, ptool_map, plot_f
     [ SQ_grasp, SQ_action ] = GetPToolsSQs( ptool );        
    	%% get vectors
     vec_grasp = GetSQVector( SQ_grasp );
-    vec_centres = ptool(15:17)';
+    vec_centres = ptool(19:21)';
      %% rotate SQs
     % get rotation matrix to align
     [ SQ_grasp, rot_SQ ] = AlignSQWithVector(SQ_grasp, orig_vec_grasp);

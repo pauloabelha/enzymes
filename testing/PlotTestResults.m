@@ -42,11 +42,13 @@ function  [accuracy_best,accuracy_categs,metric_1,metric_2,p,mu,sigma] = PlotTes
     figure;
     plot(pcl_gt_task_scores); hold on;
     plot(best_categ_scores); 
+    plot(pcl_gt_task_scores-best_categ_scores); 
     ax = gca;
     ax.XTickLabel = pcl_filenames;
     ax.XTickLabelRotation = 90;
-    ax.XTick = 1:size(pcl_filenames,2);  
-    legend('Ground Truth',['Best pTool: ' num2str(ceil(accuracy_best*100)) ' %']);
+    ax.XTick = 1:size(pcl_filenames,2);      
+    ax.YLim = [-4 5];
+    legend('Ground Truth',['Best pTool: ' num2str(ceil(accuracy_best*100)) ' %'],'GT - Best p-tool');
     figure;
     if plot_log
         plot(log(best_scores));
