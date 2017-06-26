@@ -53,7 +53,7 @@ function [SQ,ERROR,ERROR_vec,ERROR_PCL_SQ,ERROR_SQ_PCL] = FitSQtoPCL(pcl,n_attem
        SQ = SQ_best_option{best_seed};
     else
         SQ = SQ_best_option(best_seed,:);
-    end   
+    end       
     CheckNumericArraySize(SQ,[1 15]);
     SQ(end-2:end) = SQ(end-2:end)*inv(pca_pcl);  
     SQ = RotateSQWithRotMtx(SQ, inv(pca_pcl)');

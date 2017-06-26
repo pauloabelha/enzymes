@@ -1,0 +1,66 @@
+function [ E, E1, E2, penalty_far_points, A, min_dists_both ] = PCLDist( pcl1,pcl2, plot_fig )
+    % check whether to plot
+    if ~exist('plot_fig','var')
+        plot_fig = 0;
+    end
+    % min dist
+    MIN_DIST = 0.005;
+    % punishment for being far (using quadratic)
+    pow_punish = 1;
+    % if size of pcls are different, downsample the largest one
+    if size(pcl2,1) > size(pcl1,1)        
+        pcl2 = pcl2(randsample(1:size(pcl2,1),size(pcl1,1)),:);        
+    elseif size(pcl1,1) > size(pcl2,1) 
+       %pcl1 = pcl1(randsample(1:size(pcl1,1),size(pcl2,1)),:);        
+    end    
+    %% get pcl density
+    [ local_dens1, min_dists1, prob_dens1, prob_dens_bins1 ] = PCLLocalDensity( pcl1, 0.001 );
+    [ local_dens2, min_dists2, prob_dens2, prob_dens_bins2 ] = PCLLocalDensity( pcl2, 0.001 );
+    %% calculate rest
+    % get number of points
+    N_PTS = size(pcl1,1);
+    % get dist (punishing - here power 1) between point pairs from each pcl
+    DIST=pdist2(pcl1,pcl2).^pow_punish;
+    % get min dist between each point from pcl1 and its closest in pcl2
+    min_dists1 = min(DIST,[],1);
+    % get probability of a point from pcl1 being `close' to one from pcl2
+    [~, ~, TRESH_2STD1] = GetMeanMinDistPCL(pcl1, pow_punish);
+    %TRESH_2STD1 = 0.005;
+    E1 = size(min_dists1(min_dists1>TRESH_2STD1),2)/N_PTS;
+    % get min dist between each point from pcl2 and its closest in pcl1
+    min_dists2 = min(DIST,[],2);
+    % get probability of a point from pcl2 being `close' to one from pcl1    
+    [~, ~, TRESH_2STD2] = GetMeanMinDistPCL(pcl2, pow_punish);
+    %TRESH_2STD2 = 0.005;    
+    E1 = size(min_dists1(min_dists1>local_dens1),2)/size(min_dists1,2);
+    E2 = size(min_dists2(min_dists2>local_dens2),1)/size(min_dists2,1);   
+    E1 = size(min_dists1(min_dists1>MIN_DIST),2)/N_PTS;
+    E2 = size(min_dists2(min_dists2>MIN_DIST),1)/N_PTS;
+     E = (E1 + E2)/2;
+    % get min dist between point pairs form each pcl
+    min_dists_both = [min_dists1'; min_dists2];
+    % get probability of a point pair from each pcl being `close'
+    TRESH_2STD = (TRESH_2STD1 + TRESH_2STD2)/2;
+%     E = size(min_dists_both(min_dists_both>TRESH_2STD & min_dists_both>0.002),1)/(2*N_PTS);
+    penalty_far_points = size(min_dists_both(min_dists_both>0.02),1)/size(min_dists_both(min_dists_both>TRESH_2STD),1);
+    A = sum(min_dists_both(min_dists_both>0.025));
+%     E = E + A;   
+    if plot_fig
+        figure; 
+        axis([0 0.03 0 0.3]);
+        BIN_RANGE = [0 0.5];
+        [prob_dens_min1, prob_dens_bins_min1] = GetProbDistExpResults(min_dists1,MIN_DIST/10,BIN_RANGE,-1,1);
+        axis([0 0.03 0 0.3]);
+        hold on;
+        [prob_dens_min2, prob_dens_bins_min2] = GetProbDistExpResults(min_dists2',MIN_DIST/10,BIN_RANGE,-1,1); 
+        [ ~, min_dists ] = PCLLocalDensity( pcl1, 0.001 );
+        [prob_dens_min_pcl1, prob_dens_bins_min_pcl1] = GetProbDistExpResults(min_dists,MIN_DIST/10,BIN_RANGE,-1,1);
+        [ ~, min_dists ] = PCLLocalDensity( pcl2, 0.001 );
+        [prob_dens_min_pcl2, prob_dens_bins_min_pcl2] = GetProbDistExpResults(min_dists,MIN_DIST/10,BIN_RANGE,-1,1);
+        
+        hold off;
+        figure; scatter3(pcl1(:,1),pcl1(:,2),pcl1(:,3),'.k'); axis equal; hold on; scatter3(pcl2(:,1),pcl2(:,2),pcl2(:,3),'.b'); scatter3(pcl2(:,1),pcl2(:,2),min_dists1,'.r');
+        title(['E_{tot}: ' num2str(E) ' E1: ' num2str(E1) ' ' 'E2: ' num2str(E2) ' Means: ' num2str(mean(min_dists1)) ' ' num2str(mean(min_dists2))]);;
+        hold off;  
+    end
+end

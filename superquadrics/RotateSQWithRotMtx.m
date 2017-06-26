@@ -21,7 +21,6 @@ function [ SQ ] = RotateSQWithRotMtx( SQ, rot_mtx )
     % (ABELHA - 12/06/2017)
     % check if rot_mtx is an improper rotation - if so, invert bending
     if det(rot_mtx) > -1.01 && det(rot_mtx) < -0.99 
-        SQ(12) = -SQ(12);
         SQ(8) = SQ(8) + pi;
     end
     SQ(6:8) = rotm2eul_(rot_mtx*GetEulRotMtx(SQ(6:8)),'ZYZ');    

@@ -30,7 +30,7 @@ function [ SQs, TOT_ERROR, SEGM_ERRORS, SEGM_ERRORS_PCL_SQ, SEGM_ERRORS_SQ_PCL, 
     %% constants
     % max number of points (pcls with more than this will be downsampled)
     % increase this too much at your own risk of freezing the machine :)
-    MAX_PCL_N_PTS = 1000;
+    MAX_PCL_N_PTS = 2000;
     %% sanity checks
     if ~exist('P','var')
         error('No argument given: First argument needs to be a PointCloud or an Nx3 matrix');

@@ -29,11 +29,11 @@ function [SQ,F,E,E_pcl_SQ, E_SQ_pcl ] = FitSQtoPCL_Bending(pcl,pcl_scale,ix,opt_
         % get initial shape
         x(4:5) = [.1 1];
         % get intiial Euler angles considering PCA
-        scale_options = {[0 pi/2 0], [pi -pi/2 pi/2], [pi -pi/2 0], [pi -pi/2 0]};
-        x(6:8) = scale_options{mod(ix,4)+1};
+        angle_options = {[0 pi/2 0], [pi -pi/2 -pi/2], [pi -pi/2 0], [pi -pi/2 0]};
+        x(6:8) = angle_options{mod(ix,4)+1};
         % get random initial bending
 %         x(11) = (randi(30)/100)+0.05;
-        x(11) = ix*x(3);
+        x(11) = 100*ix*x(3);
 %         x(3) = x(3).*(1+x(11));
         % get initial bending plane according to PCA
 %         bend_options =  [0 pi/2 pi 3*pi/4];

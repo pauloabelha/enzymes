@@ -13,7 +13,8 @@ function [SQ,F,E,E_pcl_SQ, E_SQ_pcl ] = FitSQToPCL_Paraboloid( pcl,pcl_scale,ix,
         else
             initial_scale = pcl_scale;           
         end
-        initial_epsilon = 1;
+        initial_scale(3) = initial_scale(3)*0.9;
+        initial_epsilon = .1;
         initial_epsilon2 = 1;
         angle_options = {0 pi/2 pi -pi/2};
         initial_angle = [0 angle_options{mod(ix,4)+1} 0];
@@ -24,11 +25,10 @@ function [SQ,F,E,E_pcl_SQ, E_SQ_pcl ] = FitSQToPCL_Paraboloid( pcl,pcl_scale,ix,
         [E_init, E_pcl_SQ_init, E_SQ_pcl_init ] = PCLDist(pcl,SQ_pcl);
         F_init = sum(SuperParaboloidFunction(SQ_init, pcl))/size(pcl,1);
         min_lambda = [initial_scale*0.9 0.1 0.1 -pi -pi -pi initial_lambda(8:10)];
-        max_lambda = [initial_scale*1.05 2 2 pi pi pi initial_lambda(8:10)+0.05];
+        max_lambda = [initial_scale*1.05 2 0.5 pi pi pi initial_lambda(8:10)+0.05];
         SQ_opt = lsqnonlin(@(x) SuperParaboloidFunction(x, pcl), initial_lambda, min_lambda, max_lambda, opt_options  );
-        SQ = [SQ_opt(1:5) SQ_opt(5:7) 0 0 0 0 SQ_opt(8:10)];
-        F = sum(SuperParaboloidFunction(SQ, pcl))/size(pcl,1);
-        SQ(12) = -1;
+        SQ = [SQ_opt(1:5) SQ_opt(6:8) 0 0 0 -1 SQ_opt(end-2:end)];
+        F = sum(SuperParaboloidFunction(SQ, pcl))/size(pcl,1);        
         SQ_P = SQ2PCL(SQ,size(pcl,1));
         SQ_pcl = SQ_P.v;
         [E, E_pcl_SQ, E_SQ_pcl ] = PCLDist(pcl,SQ_pcl);
@@ -36,8 +36,7 @@ function [SQ,F,E,E_pcl_SQ, E_SQ_pcl ] = FitSQToPCL_Paraboloid( pcl,pcl_scale,ix,
             SQ = SQ_init;
             E = E_init;
             E_pcl_SQ = E_pcl_SQ_init;
-            E_SQ_pcl = E_SQ_pcl_init;
-            
-        end
+            E_SQ_pcl = E_SQ_pcl_init;            
+        end        
     end
 end

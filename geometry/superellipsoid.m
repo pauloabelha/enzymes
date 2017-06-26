@@ -14,7 +14,7 @@
 %   omegas: the omega parameters for the superellipse
 function [ pcl, normals, etas, omegas ] = superellipsoid( lambda, in_max_n_pts, plot_fig, colour )    
     %% min proportion for considering a SQ thin
-    MIN_PROP_THIN_SQ = 0.05;
+    MIN_PROP_THIN_SQ = 0.025;
     %% max number of points for pcl
     MAX_N_PTS = 1e7;
     %% max number of cross sampling of angles (etas x omegas) - for memory issues
@@ -81,7 +81,7 @@ function [ pcl, normals, etas, omegas ] = superellipsoid( lambda, in_max_n_pts, 
                     end
                     % apply bending
                     if k_bend
-                        X = X + (k_bend + sqrt(k_bend^2 + Z.^2));
+                        X = X + (k_bend - sqrt(k_bend^2 + Z.^2));
                     end
                     pcl = [pcl; [X Y Z]];
                     % get normals
