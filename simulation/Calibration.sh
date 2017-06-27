@@ -38,6 +38,9 @@ then
 	exit
 fi
 
+BEG=$4
+END=$5
+
 ROOT_PATH="$HOME/.gazebo/gazebo_models/"
 TASK_PATH="$ROOT_PATH$TASK_NAME"
 START_TRIAL='start_trial'
@@ -56,9 +59,6 @@ do
 	N_FOLDERS=$(($N_FOLDERS+1))
 done
 
-BEG=1
-END=$N_FOLDERS
-
 # define beggining folder as 1 if not defined
 if [ "$BEG" == "" ]
 then
@@ -72,6 +72,31 @@ then
 	echo "WARNING: End folder not defined; ending at last folder"
 	END=$N_FOLDERS	
 fi
+
+IX=0
+N_SIMS=0
+for P in `ls -vd $TASK_PATH"/"$CALIBRATION_FOLDER/*`;
+do 
+	IX=$(($IX+1))
+	if (("$IX" < $BEG))
+	then
+		continue
+	fi
+	for Q in `ls -vd $P/*`;
+	do 
+		
+		if (("$IX" > $END))
+		then
+			break
+		fi
+		N_SIMS=$(($N_SIMS+1))
+	done
+	if (("$IX" > $END))
+	then
+		break
+	fi
+done
+
 N_FOLDERS_TO_PROCESS=$(($(($END-$BEG))+1))
 
 # define end as N_FOLDERS if the number of folders to process is larger than the number of folders
@@ -89,7 +114,10 @@ then
 fi
 N_FOLDERS_TO_PROCESS=$(($(($END-$BEG))+1))
 
-echo "Number of tools to process: "$N_FOLDERS_TO_PROCESS
+echo "Total number of tools to process: "$N_FOLDERS_TO_PROCESS
+echo "Beggining folder #: "$BEG
+echo "End folder #: "$END
+echo "Total number of simulations: "$N_SIMS
 echo "Calibration Folder: "$CALIBRATION_FOLDER
 echo "Gazebo World File: "$GAZEBO_WORLD_FILE
 echo "Output File: "$OUTPUT_FILE
