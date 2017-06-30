@@ -1,4 +1,4 @@
-function [SQs,SQ_errors,seeds_pcls] = FitConstrainedSQsSeededPCL(seeds,seeds_pcls,scale)
+function [SQs,SQs_errors,seeds_pcls] = FitConstrainedSQsSeededPCL(seeds,seeds_pcls,scale)
     %% fit a SQ to each seed pcl    
     DOWNSAMPLE = 500;
     fit_constraints = cell(1,size(seeds_pcls,2));
@@ -17,11 +17,7 @@ function [SQs,SQ_errors,seeds_pcls] = FitConstrainedSQsSeededPCL(seeds,seeds_pcl
     for i=1:size(seeds_pcls,2)       
         [SQs{i}, ~, SQ_errors(i)] = PCL2SQ( seeds_pcls{i}, 1 );
         SQs{i} = SQs{i}{1};
-        %[SQs{i},SQ_errors(i)] = FitSQtoPCL(seeds_pcls{i},4,0,[1 0 0 0 1],fit_constraints{i});
         Ps{i}.v = seeds_pcls{i};
     end
-    rmv_empty = 1;
-    [alt_SQs,alt_SQs_errors] = GetRotationSQFits( SQs, Ps, 0.12, rmv_empty );    
-    SQs = [SQs alt_SQs]; 
-    SQ_errors = [SQ_errors alt_SQs_errors];
+    [SQs,SQs_errors] = GetRotationSQFits( SQs, Ps );    
 end

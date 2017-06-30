@@ -1,5 +1,5 @@
 function F = SQFunction( lambda_in, pcl, rest_lambda )
-    if nargin > 2 && ~isempty(rest_lambda)
+    if nargin > 2 ~isempty(rest_lambda)
         lambda_ = zeros(1,15);
         lambda_(rest_lambda(1,:)) = rest_lambda(2,:);
         lambda_(~ismember(1:15,rest_lambda(1,:))) = lambda_in;

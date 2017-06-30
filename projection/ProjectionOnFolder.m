@@ -10,14 +10,14 @@ function [ best_scores, best_categ_scores, accuracy_best, accuracy_categs, metri
     load([root_folder 'projection_data.mat']);
     root_folder = root_folder_;
     if ~exist('plot_fig','var')
-        plot_fig = 0;
+        plot_fig_ = 0;
     else
         plot_fig_ = plot_fig;
-    end    
-    
+    end        
     plot_fig = plot_fig_;
     
     pcl_filenames = FindAllFilesOfType( {'ply'}, root_folder );
+    ReadGroundTruth
     
     pcl_gt_task_scores = zeros(1,size(pcl_filenames,2));
     pcl_masses = zeros(1,size(pcl_filenames,2));

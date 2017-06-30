@@ -66,7 +66,7 @@ function Y_pred = PlotGPR( gpr, X_proj_pt, ranges, dims, axis_ranges )
         X_pred(:,dim_2) = X_range2(:);
         [Y_pred,~] = gpr.predict(X_pred);
         surf(X_range1,X_range2,reshape(Y_pred,size(X_range1,1),size(X_range2,1)));
-        disp([X_proj_pt(dims(1)),X_proj_pt(dims(1)),gpr.predict(X_proj_pt)]);
+        title(['GP slice: Reference point (' num2str(X_proj_pt(dims(1))) ', ' num2str(X_proj_pt(dims(2))) ')']);
         [Y_proj_pt,Y_proj_std] = gpr.predict(X_proj_pt);
         scatter3(X_proj_pt(dims(1)),X_proj_pt(dims(2)),Y_proj_pt,Y_proj_std,'.r');
         scatter3(X_proj_pt(dims(1)),X_proj_pt(dims(2)),Y_proj_pt,1000,'.g');
@@ -74,5 +74,9 @@ function Y_pred = PlotGPR( gpr, X_proj_pt, ranges, dims, axis_ranges )
         ylabel(['Dim ' num2str(dims(2))]);
         zlabel('Label');
     end   
+    %% plot gpr info if more than 2 dimensions
+    if size(dims,2) > 2
+       PLotGPRLengthScales( gpr, X ); 
+    end
     hold off;
 end

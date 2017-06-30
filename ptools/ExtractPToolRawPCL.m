@@ -10,7 +10,7 @@ function [ ptools, ptools_map, P, SQs, SQs_alt ] = ExtractPToolRawPCL( P, mass )
 %     if numel(P.segms) < 2
 %         error('Could not segment pcl');
 %     end
-    SQs = PCL2SQ( P, 1, 0, 0, [1 0 0 0 1] );
+    SQs = PCL2SQ( P, 1, 0, 0, [1 1 1 0 1] );
     % if there is only one segm, repeat SQ to create ptool
     segms = P.segms;
     if numel(P.segms) < 2

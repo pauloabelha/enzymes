@@ -1,4 +1,4 @@
-function [ sigmaM, feat_imp, imp_dims_ixs, imp_dims_sort_ixs, new_data ] = PLotGPRLengthScales( gpr, data )
+function [ sigmaM, feat_imp, contr_dims_ixs, imp_dims_ixs, imp_dims_sort_ixs, new_data ] = PLotGPRLengthScales( gpr, data )
     %% first param must exist with the gpr
     if ~exist('gpr','var')
         error('Please provide a trained gpr as first param');
@@ -29,8 +29,8 @@ function [ sigmaM, feat_imp, imp_dims_ixs, imp_dims_sort_ixs, new_data ] = PLotG
     figure;
     plot((1:d)', range_data,'ro-');
     title('Data range per dimension');
-    xlabel('Length scale number');
-    ylabel('Log of length scale');
+    xlabel('Dimension');
+    ylabel('Range');
     hold off;
     %% plot kernel lengthscale per dimension
     figure;
@@ -39,10 +39,9 @@ function [ sigmaM, feat_imp, imp_dims_ixs, imp_dims_sort_ixs, new_data ] = PLotG
     xlabel('Length scale number');
     ylabel('Log of length scale');
     hold off;
-    %% plot feature importance
-    
+    %% plot feature importance    
     figure;
-    plot((1:d)',log_feat_imp.*data_entr_cols,'ro-');
+    plot((1:d)',log_feat_imp,'ro-');
     title('Log importance per dimension');
     ylabel('Log of feature importance (range / lengthscale)');
     hold off;

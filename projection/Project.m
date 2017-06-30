@@ -1,30 +1,8 @@
-function [best_scores, best_categ_scores, best_ptools, best_ptool_maps, Ps, gpr_scores, gpr_categ_scores, tools_gt, test_pcls_filenames, accuracy_best,accuracy_categs,metric_1,metric_2] = Project( task, test_folder, gpr )
+function [best_scores, best_categ_scores, best_ptools, best_ptool_maps, Ps, gpr_scores, tools_gt, test_pcls_filenames, accuracy_best,accuracy_categs,metric_1,metric_2] = Project( task, test_folder, gpr )
     %% get all test pcls
     test_pcls_filenames = FindAllFilesOfType( {'ply'}, test_folder );
     %% get groundtruth for existing tools
-    GT = ReadCSVGeneric([test_folder 'groundtruth_' task '.csv']);
-    not_all_gt_found = 0;
-    for i=1:numel(test_pcls_filenames)
-        found_gt = 0;
-        for j=1:size(GT,1)            
-            if strcmp(GetPCLShortName(test_pcls_filenames{i}),GT{j,2})
-               gt = str2double(GT{j,4});
-               mass = str2double(GT{j,3});
-               found_gt = 1;
-               break;
-            end
-        end
-        if found_gt
-            tools_gt(i) = gt;
-            tools_mass(i) = mass;
-        else
-            not_all_gt_found = 1;
-            disp(['Could not find GT for tool ' test_pcls_filenames{i}]); 
-        end
-    end  
-    if ~not_all_gt_found
-        disp('All groundtruths found!');
-    end
+    [ ~, tool_masses, tools_gt ] = ReadGroundTruth([test_folder 'groundtruth_' task '.csv']);
     gpr_scores = zeros(1,numel(test_pcls_filenames));
     tot_toc = 0;
     best_scores = zeros(1,numel(test_pcls_filenames));
@@ -33,19 +11,15 @@ function [best_scores, best_categ_scores, best_ptools, best_ptool_maps, Ps, gpr_
     Ps = cell(1,numel(test_pcls_filenames));
     %% get ideal ptool (from maximum of gpr prediction over its training data)
     [~,max_gpr_ix] = max(gpr.predict(gpr.ActiveSetVectors));
-    ideal_ptool = [.01 .01 .1 .1 1 0 0 gpr.ActiveSetVectors(max_gpr_ix,:)];
+    ideal_ptool = gpr.ActiveSetVectors(max_gpr_ix,:);
     [ ~, n_seeds] = ProjectionHyperParams();
     disp(['Projecting ' num2str(numel(test_pcls_filenames)) ' tools on ' test_folder ' using ' num2str(n_seeds) ' seeds']);
     
     for i=1:numel(test_pcls_filenames)
         tic; 
         try
-            Ps{i} = ReadPointCloud([test_folder test_pcls_filenames{i}],100);
-            [ ptools, ~, Ps{i}, ] = ExtractPToolRawPCL( Ps{i}, tools_mass(i) );
-            %[ best_scores(i), best_ptools(i,:), best_ptool_maps(i,:) ] = ProjectionSimple( Ps{i}, tools_mass(i), @TaskFunctionGPR, gpr );
-            [ best_scores(i), best_ptools(i,:), best_ptool_maps(i,:) ] = SeedProjection( ideal_ptool, Ps{i}, tools_mass(i), task, @TaskFunctionGPR, gpr, 1 ); 
-            gpr_ptool_scores = gpr.predict(ptools);
-            gpr_scores(i) = max(gpr_ptool_scores);
+            P = ReadPointCloud([test_folder test_pcls_filenames{i}],100);
+            [ best_scores(i), best_ptools(i,:), best_ptool_maps(i,:) ] = SeedProjection( ideal_ptool, P, tool_masses(i), task, @TaskFunctionGPR, gpr, 1 ); 
         catch E
            disp(['Error on tool  ' test_pcls_filenames{i} ' - probably memory :(']);
            disp(E.message);
@@ -54,7 +28,6 @@ function [best_scores, best_categ_scores, best_ptools, best_ptool_maps, Ps, gpr_
         tot_toc = DisplayEstimatedTimeOfLoop(tot_toc+toc,i,numel(test_pcls_filenames),msg);
         save([test_folder 'projection_result_' task '.mat'])
     end
-    gpr_categ_scores = TaskCategorisation(gpr_scores,task);
     best_categ_scores = TaskCategorisation(best_scores,task);
     [accuracy_best,accuracy_categs,metric_1,metric_2] = PlotTestResults( best_scores, best_categ_scores, tools_gt, test_pcls_filenames );
     disp(['Saving results: ' test_folder 'projection_result_' task '.mat']);

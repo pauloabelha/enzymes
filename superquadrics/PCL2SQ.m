@@ -56,7 +56,7 @@ function [ SQs, TOT_ERROR, SEGM_ERRORS, SEGM_ERRORS_PCL_SQ, SEGM_ERRORS_SQ_PCL, 
         verbose = 0;
     end
     if ~exist('fitting_modes','var')
-        fitting_modes = [1 0 0 0 0];
+        fitting_modes = [1 1 1 0 1];
     else
         CheckNumericArraySize(fitting_modes,[1 5]);
     end

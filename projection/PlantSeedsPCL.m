@@ -8,25 +8,20 @@ function [ ix_seeds, seeds, seeds_pcls ] = PlantSeedsPCL( P, n_seeds, seed_radiu
     ix_seeds = randi(size(P.v,1),n_seeds,1);
     seeds = P.v(ix_seeds,:);    
     %% get seed pcls
-    seeds_pcls = {};
-    for i=1:size(seeds,1)
-        dist_seed = pdist2(seeds(i,:),P.v);
-        prop_seed_radius = seed_radius*randi(lower_bound_prop_scale,1,1)/lower_bound_prop_scale;
-        ixs_seed = dist_seed <= prop_seed_radius;
-        if sum(ixs_seed) >= MIN_SEED_PCL_SIZE
-            seeds_pcls{end+1} = P.v(ixs_seed,:);
-        end
+    seeds_pcls = cell(1,n_seeds);
+    for i=1:n_seeds
+        center = seeds(i,:);
+        F = ((P.v(:,1)-center(1))/seed_radius).^2 + ((P.v(:,2)-center(2))/seed_radius).^2  + ((P.v(:,3)-center(3))/seed_radius).^2;
+        ixs_seed_pcl = F<=1;
+        seeds_pcls{i} = P.v(ixs_seed_pcl,:);
     end
     if plot_fig
+        figure;
         scatter3(P.v(:,1),P.v(:,2),P.v(:,3),'.k');
+        title(['Pcl with #' num2str(n_seeds) ' seeds']);
         axis equal;
         hold on;
-        P.segms = {};
-        for i=1:size(seeds_pcls,2)
-            P.segms{end+1}.v = seeds_pcls{i};
-            %scatter3(seeds_pcls{i}(:,1),seeds_pcls{i}(:,2),seeds_pcls{i}(:,3),'.y');
-        end       
-        PlotPCLSegments(P);
+        PlotPCLS(seeds_pcls(1:3));
         hold off;        
     end
 end
