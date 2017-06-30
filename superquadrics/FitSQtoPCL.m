@@ -62,4 +62,8 @@ function [SQ,ERROR,ERROR_vec,ERROR_PCL_SQ,ERROR_SQ_PCL] = FitSQtoPCL(pcl,n_attem
     ERROR = E_tot(SQ_min_ix);
     ERROR_PCL_SQ = E_tot_pcl_SQ(SQ_min_ix);
     ERROR_SQ_PCL = E_tot_SQ_pcl(SQ_min_ix);
+    %% deal with thins SQs
+    if IsThinSQ(SQ)
+        SQ(11) = 0;
+    end
 end

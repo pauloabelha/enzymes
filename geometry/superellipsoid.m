@@ -12,9 +12,7 @@
 %   pcl: Nx3 array with the uniform point cloud
 %   etas: the u parameters for the superparabola
 %   omegas: the omega parameters for the superellipse
-function [ pcl, normals, etas, omegas ] = superellipsoid( lambda, in_max_n_pts, plot_fig, colour )    
-    %% min proportion for considering a SQ thin
-    MIN_PROP_THIN_SQ = 0.025;
+function [ pcl, normals, etas, omegas ] = superellipsoid( lambda, in_max_n_pts, plot_fig, colour )        
     %% max number of points for pcl
     MAX_N_PTS = 1e7;
     %% max number of cross sampling of angles (etas x omegas) - for memory issues
@@ -31,10 +29,9 @@ function [ pcl, normals, etas, omegas ] = superellipsoid( lambda, in_max_n_pts, 
         in_max_n_pts = Inf;
     end
     %% deal with thin SQs
-    [scale_sort, scale_sort_ixs] = sort(lambda(1:3),'ascend');
-    prop_thin = scale_sort(1)/scale_sort(3);
-    if prop_thin <= MIN_PROP_THIN_SQ
-        [pcl, normals, vol_mult] = Get2DSuperellipsoid(lambda, scale_sort,scale_sort_ixs);        
+    [ thin_SQ, scale_sort, scale_sort_ixs ] = IsThinSQ( lambda );
+    if thin_SQ
+        [pcl, normals, vol_mult] = Get2DSuperellipsoid(lambda, scale_sort,scale_sort_ixs);
     else
         % deal with SQs with a scale number less than 1
         % this is too deal with arbitrarly small SQs and 
@@ -151,8 +148,7 @@ function [final_pcl, final_normals, vol_mult] = Get2DSuperellipsoid(lambda, scal
     % get a previous rotation to apply because sampling is done in the XY plane
     rot_prev = eye(3);
     if scale_sort_ixs(1) == 1
-        rot_prev1 = GetRotMtx(pi/2,2);
-        rot_prev = GetRotMtx(pi/2,1)*rot_prev1;
+        rot_prev = GetRotMtx(pi/2,2);
     end
     if scale_sort_ixs(1) == 2
         rot_prev = GetRotMtx(pi/2,1);

@@ -182,18 +182,21 @@ function [ tools, tool_scores, best_ptool_scores ] = MergeCalibrationResultsPtoo
     tool_scores_copy = tool_scores;
     best_ptool_scores_copy = best_ptool_scores;
     %% read pcls if not available
-    tot_toc = 0;
-    if ~exist('Ps','var')
-        tic;
-        Ps = cell(1,numel(pcl_filenames));
-        for i=1:numel(tool_scores)
-            pcl_filenames = FindAllFilesOfType(exts,root_folder);
-            Ps{i} = ReadPointCloud([root_folder pcl_filenames{i}]);
-            tot_toc = DisplayEstimatedTimeOfLoop(tot_toc+toc,i,numel(pcl_filenames),['Reading pcls from folder: ' root_folder pcl_filenames{i} ' ']);
-        end
-    end
+%     tot_toc = 0;
+%     swap_pcl_name_ix = 0;
+%     if ~exist('Ps','var')
+%         swap_pcl_name_ix = 1;
+%         tic;
+%         Ps = cell(1,numel(pcl_filenames));
+%         for i=1:numel(pcl_filenames)            
+%             Ps{i} = ReadPointCloud([root_folder pcl_filenames{i}]);
+%             tot_toc = DisplayEstimatedTimeOfLoop(tot_toc+toc,i,numel(pcl_filenames),['Reading pcls from folder: ' root_folder pcl_filenames{i} ' ']);
+%         end
+%     end
     %% swap tools
+    tot_toc = 0;
     for i=1:numel(tool_scores)
+        tic;
         if ismember(i,not_found_pcls_ixs)
             continue;
         end
@@ -204,7 +207,14 @@ function [ tools, tool_scores, best_ptool_scores ] = MergeCalibrationResultsPtoo
         tools{i}.ptool_median_scores = tool_scores{i}.ptool_median_scores;
         tools{i}.ptools = ptools{i};
         tools{i}.ptools_maps = ptools_maps{i};
-        tools{i}.P = Ps{i};       
+        Ps = cell(1,numel(pcl_filenames));
+        for j=1:numel(pcl_filenames)  
+            if strcmp(tools{i}.name,GetPCLShortName(pcl_filenames{i}))
+                tools{i}.P = ReadPointCloud([root_folder pcl_filenames{i}]);
+                break;
+            end
+        end     
+        tot_toc = DisplayEstimatedTimeOfLoop(tot_toc+toc,i,numel(tool_scores),['Creating ''tools'' structure: ']);
     end
 %     for i=1:numel(tool_scores)
 %         tools{i}.name = tool_scores{i}.name;
@@ -225,6 +235,7 @@ function [ tools, tool_scores, best_ptool_scores ] = MergeCalibrationResultsPtoo
     clear ptools_maps;
     clear tool_name;
     disp('Saving data file...');
-    save([root_folder task '_tools_ptools_calibration.mat']);
+%     disp(['Saving backup file: ' root_folder task '_tools_ptools_calibration.mat']);
+%     save([root_folder task '_tools_ptools_calibration.mat']);
 end
 

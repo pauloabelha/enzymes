@@ -14,7 +14,7 @@
 %   entropy - Average Shanon information content (in the chosen log base)
 %
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-function [ P_mass, P_bins, max_prob_bin, max_prob ] = GetProbDistExpResults( P, BIN_RES, BIN_RANGE, MAX_MEM, plot_fig )
+function [ P_mass, P_bins, mean_prob, max_prob_bin, max_prob ] = GetProbDistExpResults( P, BIN_RES, BIN_RANGE, MAX_MEM, plot_fig )
     CheckNumericArraySize(P,[1 Inf]);    
     %% check wether to plot
     if ~exist('plot_fig','var')
@@ -40,6 +40,8 @@ function [ P_mass, P_bins, max_prob_bin, max_prob ] = GetProbDistExpResults( P, 
     else            
         CheckNumericArraySize(BIN_RANGE,[1 2]);
     end   
+    %% get mean
+    mean_prob = mean(P);
     [P_hist, P_bins] = HistogramCustom( P, BIN_RES, BIN_RANGE );
     P_mass = P_hist/sum(P_hist(P_hist>0));
     %% get max probability bin

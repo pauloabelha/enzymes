@@ -34,7 +34,7 @@ function  [accuracy_best,accuracy_categs,metric_1,metric_2,p,mu,sigma] = PlotTes
     metric_1 = Metric1(best_categ_scores,pcl_gt_task_scores);
     metric_1 = round(metric_1,2);
     if ~dont_get_rand_ratings
-        [~, ~, p, mu, sigma] = GetRandomRatings( pcl_gt_task_scores(non_error_ixs), 4, 1e5, metric_1, {'Result'}, 'Random Ratings' );
+        [~, ~, p, mu, sigma] = GetRandomRatings( pcl_gt_task_scores(non_error_ixs), 4, 1e5, metric_1, {'Metric 1'}, 'Random Ratings' );
     else
         p=0; mu=0; sigma=0;
     end
@@ -63,6 +63,7 @@ function  [accuracy_best,accuracy_categs,metric_1,metric_2,p,mu,sigma] = PlotTes
     title('Best scores (real raw value)');
     figure;
     plot(accuracy_categs);
+    title('Accuracy per category');
 
 end
 

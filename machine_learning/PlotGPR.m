@@ -23,21 +23,21 @@ function Y_pred = PlotGPR( gpr, X_proj_pt, ranges, dims, axis_ranges )
     end
     k = size(gpr.ActiveSetVectors,2);
     if size(dims,1) > 1 || size(dims,2) < 1 || dims(1) < 1
-       error('Dimensions input must be a number > 1 or a 1 * 2 array indicating the dimensions to plot'); 
+       error('Fourth param: Dimensions input must be a number > 1 or a 1 * 2 array indicating the dimensions to plot'); 
     end    
     for i=1:size(dims,2)
        if dims(i) < 1
-           error('Dimensions input cannot contain a number smaller than 1'); 
+           error('Fourth param: Dimensions input cannot contain a number smaller than 1'); 
        end
        if dims(i) > k
-           error('Dimensions input cannot contain a number greater than the number k of dimensions'); 
+           error('Fourth param: Dimensions input cannot contain a number greater than the number k of dimensions'); 
        end
     end
     if size(ranges,1) ~= size(dims,2) || size(ranges,2) ~= 2
-        error('Ranges must be a (1 or 2) * 2 array defining the ranges for each dimension'); 
+        error('Third param: Ranges must be a (1 or 2) * 2 array defining the ranges for each dimension'); 
     end
     if size(X_proj_pt,1) ~= 1 || size(X_proj_pt,2) ~= k
-        error('Point of projection must be a 1 x k array'); 
+        error('Second param: Point of projection must be a 1 x k array'); 
     end
     %% prepare figure
     figure;
@@ -66,6 +66,13 @@ function Y_pred = PlotGPR( gpr, X_proj_pt, ranges, dims, axis_ranges )
         X_pred(:,dim_2) = X_range2(:);
         [Y_pred,~] = gpr.predict(X_pred);
         surf(X_range1,X_range2,reshape(Y_pred,size(X_range1,1),size(X_range2,1)));
+        disp([X_proj_pt(dims(1)),X_proj_pt(dims(1)),gpr.predict(X_proj_pt)]);
+        [Y_proj_pt,Y_proj_std] = gpr.predict(X_proj_pt);
+        scatter3(X_proj_pt(dims(1)),X_proj_pt(dims(2)),Y_proj_pt,Y_proj_std,'.r');
+        scatter3(X_proj_pt(dims(1)),X_proj_pt(dims(2)),Y_proj_pt,1000,'.g');
+        xlabel(['Dim ' num2str(dims(1))]);
+        ylabel(['Dim ' num2str(dims(2))]);
+        zlabel('Label');
     end   
     hold off;
 end

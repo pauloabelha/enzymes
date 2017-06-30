@@ -52,7 +52,7 @@ function [ gpr, loss_regression, mean_error, ixs_train, ixs_test ] = FitGPR( X, 
     X_test = X(ixs_test,:);
     Y_test = Y(ixs_test,:);
     %% fit a GPR
-    gpr = fitrgp(X_train,Y_train,'KernelFunction','ardsquaredexponential','verbose',verbose);
+    gpr = fitrgp(X_train,Y_train,'PredictMethod','exact','KernelFunction','ardsquaredexponential','FitMethod','exact','verbose',verbose);
     %% calculate regression loss
     loss_regression = loss(gpr,X_test,Y_test);
     %% calculate mean error (not mean squared error)

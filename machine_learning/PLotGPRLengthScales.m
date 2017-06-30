@@ -1,35 +1,57 @@
-function [ sigmaM, feat_imp, new_data, dims_imp] = PLotGPRLengthScales( gpr, data, dims_imp, plot_fig )
-    if ~exist('plot_fig','var')
-        plot_fig = 0;
+function [ sigmaM, feat_imp, imp_dims_ixs, imp_dims_sort_ixs, new_data ] = PLotGPRLengthScales( gpr, data )
+    %% first param must exist with the gpr
+    if ~exist('gpr','var')
+        error('Please provide a trained gpr as first param');
     end
-    MIN_IMP = -1;
+    %% if data does not exist, use the gpr's active vectors
+    if ~exist('data','var')
+        data = gpr.ActiveSetVectors;
+    end
+    % minimum importance
+    MIN_IMP = 0;
+    %% get entropy for each column
+    % minimum entropy in log 2 to consider the data column
+    MIN_ENTROPY_DATA = 0.1;    
+    data_entr_cols = zeros(1,size(data,2));
+    parfor i=1:size(data,2)
+        data_entr_cols(i) = EntropyExpResults( data(:,i)', 10 )
+    end
+    range_data = range(data)';
     d = size(gpr.ActiveSetVectors,2);
     sigmaM = gpr.KernelInformation.KernelParameters(1:end-1,1);
-    feat_imp = [];
-    new_data = [];
-    if exist('data','var')
-        % get feature importance
-        feat_imp = range(data)' ./ sigmaM;
-        log_feat_imp = log(feat_imp);
-        % get data from important features only
-        if exist('dims_imp','var') && isempty(dims_imp)
-            dims_imp = 1:size(data,2);
-        end
-        dims_imp = dims_imp(log_feat_imp>=MIN_IMP);
-        new_data = data(:,log_feat_imp>=MIN_IMP);
-        if plot_fig
-            plot((1:d)',log_feat_imp,'ro-');
-            ylabel('Log of feature importance (range / lengthscale)');
-        end
-    else  
-        if plot_fig
-            plot((1:d)',log(sigmaM),'ro-');
-            xlabel('Length scale number');
-            ylabel('Log of length scale');
-        end
-    end
-    if plot_fig
-        hold off;
-    end
+    feat_imp = range_data ./ sigmaM;
+    
+    log_feat_imp = log(feat_imp)';
+    imp_dims_ixs = log_feat_imp >= MIN_IMP & data_entr_cols >= MIN_ENTROPY_DATA;
+    [~, imp_dims_sort_ixs] = sort(log_feat_imp,'descend');
+    new_data = data(:,imp_dims_ixs);
+    %% plot data range per dimension
+    figure;
+    plot((1:d)', range_data,'ro-');
+    title('Data range per dimension');
+    xlabel('Length scale number');
+    ylabel('Log of length scale');
+    hold off;
+    %% plot kernel lengthscale per dimension
+    figure;
+    plot((1:d)',log(sigmaM),'ro-');
+    title('Kernel length scale per dimension');
+    xlabel('Length scale number');
+    ylabel('Log of length scale');
+    hold off;
+    %% plot feature importance
+    
+    figure;
+    plot((1:d)',log_feat_imp.*data_entr_cols,'ro-');
+    title('Log importance per dimension');
+    ylabel('Log of feature importance (range / lengthscale)');
+    hold off;
+    %% plot data entropy per dimension
+    figure;
+    plot((1:d)',data_entr_cols,'ro-');
+    title('Data entropy per dimension');
+    xlabel('Dimension');
+    ylabel('Entropy (log 10)');
+    hold off;
 end
 

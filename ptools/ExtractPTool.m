@@ -20,7 +20,10 @@ function [ptool,orig_grasp_centre,orig_vec_grasp,ptool_error] = ExtractPTool(SQ_
     % get original vectors for action and between centres
     orig_vec_grasp = GetSQVector(SQ_grasp);    
     orig_vec_centres = SQ_action(end-2:end)' - SQ_grasp(end-2:end)';
-    [SQ_grasp, grasp_rot] = AlignSQWithVector( SQ_grasp, [0;0;1] );
+    [SQ_grasp, grasp_rot1] = AlignSQWithVector( SQ_grasp, [0;0;1] );
+    % also align with X axis because of X assymetry in bending
+    [SQ_grasp, grasp_rot2] = AlignSQWithVector( SQ_grasp, [1;0;0], 1 );
+    grasp_rot = grasp_rot2*grasp_rot1;
     % rotate the action SQ with the new grasp rotation
     SQ_action = RotateSQWithRotMtx( SQ_action, grasp_rot );
     vec_centres = grasp_rot*orig_vec_centres;

@@ -11,7 +11,7 @@ function [ best_params, best_score, B_best ] = FindBestCategorisation( dataset_f
         end
     end
     %% get groundtruth for existing tools
-    [ tool_names, ~, task_groundtruth ] = ReadGroundTruth([dataset_folder 'groundtruth_' task '.csv']);  
+    [ ~, ~, task_groundtruth ] = ReadGroundTruth([dataset_folder 'groundtruth_' task '.csv']);  
     %% search through the 3 params
 %     best_ptool_scores(best_ptool_scores==0) = min(best_ptool_scores(best_ptool_scores>0));
     best_ptool_scores(best_ptool_scores>50) = 0;
