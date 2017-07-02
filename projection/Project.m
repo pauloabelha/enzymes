@@ -21,7 +21,7 @@ function [best_scores, best_categ_scores, best_ptools, best_ptool_maps, Ps, gpr_
             P = ReadPointCloud([test_folder test_pcls_filenames{i}],100);
             [ best_scores(i), best_ptools(i,:), best_ptool_maps(i,:) ] = SeedProjection( ideal_ptool, P, tool_masses(i), task, @TaskFunctionGPR, gpr, 1 ); 
         catch E
-           disp(['Error on tool  ' test_pcls_filenames{i} ' - probably memory :(']);
+           disp(['Error on tool  ' test_pcls_filenames{i} ' (maybe memory?)']);
            disp(E.message);
         end
         msg = ['Projected ' test_pcls_filenames{i} char(9) char(9) num2str(best_scores(i)) char(9) char(9) num2str(TaskCategorisation(best_scores(i),task)) char(9) char(9) num2str(tools_gt(i)) char(9)];
