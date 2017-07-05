@@ -1,4 +1,4 @@
-% extract a list of ptools from a given folder
+ % extract a list of ptools from a given folder
 function [ ptools, ptools_maps, ptools_errors, pcl_filenames, errors ] = ExtractPToolsFromFolder( root_folder, suffix_bkp_file )
     if ~exist('suffix_bkp_file','var')
         suffix_bkp_file = '';

@@ -1,4 +1,4 @@
-function [ ratings, hist, p, mu, sigma ] = GetRandomRatings( categ_scores, n_categs, n_iter, comparison_values, comparison_names, title_name )
+function [ ratings, hist, p, mu, sigma ] = GetRandomRatings( categ_scores, n_categs, n_iter, comparison_values, comparison_names, title_name, plot_fig )
     if ~exist('n_categs','var')
        n_categs = max(categ_scores); 
     end

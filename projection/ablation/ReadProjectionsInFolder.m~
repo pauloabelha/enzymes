@@ -1,0 +1,30 @@
+function [ projection_filenames, file_date ] = ReadProjectionsInFolder( root_folder, task, file_date )
+    %% check params
+    if ~exist('root_folder','var')
+        error('Please define a root folder as first param');
+    end
+    CheckIsChar(root_folder);
+    if ~exist('task','var')
+        error('Please define a task name as second param');
+    end
+    CheckIsChar(task);
+    if ~exist('file_date','var')
+        file_date = date;
+    end
+    CheckIsChar(file_date);
+    %% get files form folder according to suffix
+    projection_file_suffix = ['projection_result_' task '_' date];
+    projection_filenames = FindAllFilesOfPrefix(projection_file_suffix,root_folder);
+    n_projs = numel(projection_filenames);
+    disp(['Found #' num2str(n_projs) ' files with suffix: ' projection_file_suffix]);
+    %% read all projections in root_folder for the task and file date
+    for i=1:n_projs
+       
+        
+    end   
+    
+    
+    
+    
+end
+

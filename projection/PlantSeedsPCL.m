@@ -1,6 +1,4 @@
-function [ ix_seeds, seeds, seeds_pcls ] = PlantSeedsPCL( P, n_seeds, seed_radius, lower_bound_prop_scale, plot_fig )
-    % default is not plotting
-    MIN_SEED_PCL_SIZE = 100;
+function [ ix_seeds, seeds, seeds_pcls ] = PlantSeedsPCL( P, n_seeds, seed_radius, plot_fig )
     if ~exist('plot_fig','var')
         plot_fig = 0;
     end
@@ -21,7 +19,7 @@ function [ ix_seeds, seeds, seeds_pcls ] = PlantSeedsPCL( P, n_seeds, seed_radiu
         title(['Pcl with #' num2str(n_seeds) ' seeds']);
         axis equal;
         hold on;
-        PlotPCLS(seeds_pcls(1:3));
+        PlotPCLS(seeds_pcls(1:min(numel(seeds_pcls),20)));
         hold off;        
     end
 end
