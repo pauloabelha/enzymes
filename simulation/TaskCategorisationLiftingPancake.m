@@ -8,15 +8,15 @@ function [ category ] = TaskCategorisationLiftingPancake( simulation_score, eps 
             category(i) = -1;
             continue;
         end
-        if simulation_score(i) < 0.7954
+        if simulation_score(i) < 0.5650
             category(i) = 1;
             continue;
         end
-        if simulation_score(i) < 1.0322 
+        if simulation_score(i) < 2
             category(i) = 2;
             continue;
         end
-        if simulation_score(i) < 1.1112
+        if simulation_score(i) < 2.6468
             category(i) = 3;
             continue;
         end
