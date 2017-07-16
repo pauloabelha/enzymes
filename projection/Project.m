@@ -1,14 +1,27 @@
-function [best_scores, best_categ_scores, best_ptools, best_ptool_maps, Ps, gpr_scores, tools_gt, test_pcls_filenames ] = Project( task, test_folder, gpr, n_seeds )
+function [best_scores, best_categ_scores, best_ptools, best_ptool_maps, Ps, gpr_scores, tools_gt, test_pcls_filenames ] = Project( task, test_folder, gpr, gpr_dim_ixs, n_seeds )
     backup_suffix = ['_' date];
     if exist('n_seeds','var')
         backup_suffix = [backup_suffix '_' num2str(n_seeds) '_seeds'];
     else
         n_seeds = -1;
     end
+    if ~exist('gpr_dim_ixs','var') || gpr_dim_ixs == -1
+        gpr_dim_ixs = 1:size(gpr.ActiveSetVectors,2);
+    end        
     %% get all test pcls
     test_pcls_filenames = FindAllFilesOfType( {'ply'}, test_folder );
     %% get groundtruth for existing tools
-    [ ~, tool_masses, tools_gt ] = ReadGroundTruth([test_folder 'groundtruth_' task '.csv']);
+    [ tool_names, tool_masses, tools_gt ] = ReadGroundTruth([test_folder 'groundtruth_' task '.csv']);
+    tools_gt_new = [];
+    for i=1:numel(tool_names)
+        for j=1:numel(test_pcls_filenames)
+            if strcmp(tool_names{i},GetPCLShortName(test_pcls_filenames{j}))
+                tools_gt_new(end+1) = tools_gt(i);
+                break;
+            end
+        end
+    end
+    tools_gt = tools_gt_new';
     gpr_scores = zeros(1,numel(test_pcls_filenames));
     tot_toc = 0;
     best_scores = zeros(1,numel(test_pcls_filenames));
@@ -27,7 +40,7 @@ function [best_scores, best_categ_scores, best_ptools, best_ptool_maps, Ps, gpr_
         tic; 
         try
             P = ReadPointCloud([test_folder test_pcls_filenames{i}],100);
-            [ best_scores(i), best_ptools(i,:), best_ptool_maps(i,:) ] = SeedProjection( ideal_ptool, P, tool_masses(i), task, @TaskFunctionGPR, gpr, n_seeds, seed_project_verbose ); 
+            [ best_scores(i), best_ptools(i,:), best_ptool_maps(i,:) ] = SeedProjection( ideal_ptool, P, tool_masses(i), task, @TaskFunctionGPR, {gpr, gpr_dim_ixs}, n_seeds, seed_project_verbose ); 
             best_categ_scores(i) = TaskCategorisation(best_scores(i),task);
         catch E
            disp(['Error on tool  ' test_pcls_filenames{i} ' (maybe memory?)']);

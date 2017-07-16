@@ -1,4 +1,8 @@
-function [ sigmaM, feat_imp, contr_dims_ixs, imp_dims_ixs, imp_dims_sort_ixs, new_data ] = PLotGPRLengthScales( gpr, data )
+function [ sigmaM, feat_imp, imp_dims_ixs, imp_dims_sort_ixs, new_data ] = PLotGPRLengthScales( gpr, data, plot_fig )
+    %% check whether not to plot
+    if ~exist('plot_fig','var')
+        plot_fig = 1;
+    end
     %% first param must exist with the gpr
     if ~exist('gpr','var')
         error('Please provide a trained gpr as first param');
@@ -25,32 +29,34 @@ function [ sigmaM, feat_imp, contr_dims_ixs, imp_dims_ixs, imp_dims_sort_ixs, ne
     imp_dims_ixs = log_feat_imp >= MIN_IMP & data_entr_cols >= MIN_ENTROPY_DATA;
     [~, imp_dims_sort_ixs] = sort(log_feat_imp,'descend');
     new_data = data(:,imp_dims_ixs);
-    %% plot data range per dimension
-    figure;
-    plot((1:d)', range_data,'ro-');
-    title('Data range per dimension');
-    xlabel('Dimension');
-    ylabel('Range');
-    hold off;
-    %% plot kernel lengthscale per dimension
-    figure;
-    plot((1:d)',log(sigmaM),'ro-');
-    title('Kernel length scale per dimension');
-    xlabel('Length scale number');
-    ylabel('Log of length scale');
-    hold off;
-    %% plot feature importance    
-    figure;
-    plot((1:d)',log_feat_imp,'ro-');
-    title('Log importance per dimension');
-    ylabel('Log of feature importance (range / lengthscale)');
-    hold off;
-    %% plot data entropy per dimension
-    figure;
-    plot((1:d)',data_entr_cols,'ro-');
-    title('Data entropy per dimension');
-    xlabel('Dimension');
-    ylabel('Entropy (log 10)');
-    hold off;
+    if plot_fig
+        %% plot data range per dimension
+        figure;
+        plot((1:d)', range_data,'ro-');
+        title('Data range per dimension');
+        xlabel('Dimension');
+        ylabel('Range');
+        hold off;
+        %% plot kernel lengthscale per dimension
+        figure;
+        plot((1:d)',log(sigmaM),'ro-');
+        title('Kernel length scale per dimension');
+        xlabel('Length scale number');
+        ylabel('Log of length scale');
+        hold off;
+        %% plot feature importance    
+        figure;
+        plot((1:d)',log_feat_imp,'ro-');
+        title('Log importance per dimension');
+        ylabel('Log of feature importance (range / lengthscale)');
+        hold off;
+        %% plot data entropy per dimension
+        figure;
+        plot((1:d)',data_entr_cols,'ro-');
+        title('Data entropy per dimension');
+        xlabel('Dimension');
+        ylabel('Entropy (log 10)');
+        hold off;
+    end
 end
 

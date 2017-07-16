@@ -1,63 +1,69 @@
-function [ ptool_median_scores, ptool_scores, task, failed_ptool_ixs ] = ReadTrainingResults( output_filepath, n_files )
+function [ ptool_median_scores, ptool_scores, task, failed_ptool_ixs ] = ReadTrainingResults( output_filepath, extracted_ptools_filepath, output_backup_folder )
     %% end of file indicator
     EOF_INIDICATOR = 'end_calibration';
-    %% Open file
-    if ~exist('n_files','var')
-        output_filepathes = {output_filepath};
-    else
-        output_filepathes = {};
-        for i=1:n_files
-            output_filepathes{end+1} = [output_filepath(1:end-5) num2str(i) '.txt'];
-        end    
+    %% load extracted ptools
+    if ~exist('extracted_ptools_filepath','var')
+        extracted_ptools_filepath = '';
+        output_backup_folder = '';
+    end
+    if ~exist('output_backup_folder','var')
+        output_backup_folder = '';
     end
     ptool_scores = [];
     ptool_median_scores = [];
-    for file_ix=1:numel(output_filepathes)
-        output_filepath = output_filepathes{file_ix};
-        try
-            fid_output = fopen(output_filepath);
-        catch
-            error(['Could not open file ' output_filepath ' - are you mising the extension in the filename?']);
-        end
-        if fid_output == -1
-            error(['Could not open file ' output_filepath ' - are you mising the extension in the filename?']);
-        end
-        %% read task name
-        task = get_task(fgetl(fid_output));
-        line = fgetl(fid_output);
-        % n_trials = get_n_trials(line);
-        %% read values        
-        n_failed_sim = 0;
-        tot_n_sim = 0;
-        failed_ptool_ixs = [];
-        i = 0;
-        while ~feof(fid_output)
-            i = i + 1;  
-            line = fgetl(fid_output); 
-            scores = [];
-            while ~strcmp(line,'end_trial') && ~strcmp(line,EOF_INIDICATOR)                
-                tot_n_sim = tot_n_sim + 1;
-                score = str2double(line);
-                if score >= 0
-                    scores(end+1) = score;                 
-                end
-                line = get_line_first_el(fgetl(fid_output));
-            end    
-            if isempty(scores)
-                scores = 0;
-            end
-            ptool_scores{end+1} = scores;
-            ptool_median_scores(end+1) = median(ptool_scores{end});
-            if ptool_median_scores(end) < 0
-                n_failed_sim = n_failed_sim + 1;
-                disp(['Simulation failed on tool: ' num2str(i)]);
-                failed_ptool_ixs(end+1) = i;
-            end
-        end
-        fclose(fid_output);
+    try
+        fid_output = fopen(output_filepath);
+    catch
+        error(['Could not open file ' output_filepath ' - are you mising the extension in the filename?']);
     end
+    if fid_output == -1
+        error(['Could not open file ' output_filepath ' - are you mising the extension in the filename?']);
+    end
+    %% read task name
+    task = get_task(fgetl(fid_output));
+    line = fgetl(fid_output);
+    % n_trials = get_n_trials(line);
+    %% read values        
+    n_failed_sim = 0;
+    tot_n_sim = 0;
+    failed_ptool_ixs = [];
+    i = 0;
+    while ~feof(fid_output)
+        i = i + 1;  
+        line = fgetl(fid_output); 
+        scores = [];
+        while ~strcmp(line,'end_trial') && ~strcmp(line,EOF_INIDICATOR)                
+            tot_n_sim = tot_n_sim + 1;
+            score = str2double(line);
+            if score >= 0
+                scores(end+1) = score;                 
+            end
+            line = get_line_first_el(fgetl(fid_output));
+        end    
+        if isempty(scores)
+            scores = 0;
+        end
+        ptool_scores{end+1} = scores;
+        ptool_median_scores(end+1) = median(ptool_scores{end});
+        if ptool_median_scores(end) < 0
+            n_failed_sim = n_failed_sim + 1;
+            disp(['Simulation failed on tool: ' num2str(i)]);
+            failed_ptool_ixs(end+1) = i;
+        end
+    end
+    fclose(fid_output);
     perc_failed_simulations = num2str(round(100*n_failed_sim/tot_n_sim));
     disp(['Failed simulations: ' num2str(n_failed_sim) '/' num2str(tot_n_sim) ' (' perc_failed_simulations ' %)']);
+    %% save training results
+    if ~isempty(extracted_ptools_filepath)
+        load(extracted_ptools_filepath);
+        X = all_ptools;
+        Y = ptool_median_scores;
+        Y = Y';
+        backup_filepath = [output_backup_folder task '_training_data_' date '.mat'];
+        disp(['Saving file: ' backup_filepath]);
+        save(backup_filepath,'X','Y','task');
+    end
 end
 
 function [line_first, line] = get_line_first_el(line)
