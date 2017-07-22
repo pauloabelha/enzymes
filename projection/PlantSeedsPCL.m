@@ -1,17 +1,23 @@
-function [ ix_seeds, seeds, seeds_pcls ] = PlantSeedsPCL( P, n_seeds, seed_radius, plot_fig )
+function [ ix_seeds, seeds, seeds_pcls ] = PlantSeedsPCL( P, n_seeds, seeds_radii, plot_fig )
     if ~exist('plot_fig','var')
         plot_fig = 0;
     end
+    % downsample pcl    
     %% get seeds over target pcl
     ix_seeds = randi(size(P.v,1),n_seeds,1);
     seeds = P.v(ix_seeds,:);    
     %% get seed pcls
-    seeds_pcls = cell(1,n_seeds);
+    seeds_pcls = cell(1,n_seeds*numel(seeds_radii));
+    ix = 1;
     for i=1:n_seeds
-        center = seeds(i,:);
-        F = ((P.v(:,1)-center(1))/seed_radius).^2 + ((P.v(:,2)-center(2))/seed_radius).^2  + ((P.v(:,3)-center(3))/seed_radius).^2;
-        ixs_seed_pcl = F<=1;
-        seeds_pcls{i} = P.v(ixs_seed_pcl,:);
+        for j=1:numel(seeds_radii)
+            seed_radius = seeds_radii(j);
+            center = seeds(i,:);
+            F = ((P.v(:,1)-center(1))/seed_radius).^2 + ((P.v(:,2)-center(2))/seed_radius).^2  + ((P.v(:,3)-center(3))/seed_radius).^2;
+            ixs_seed_pcl = F<=1;
+            seeds_pcls{ix} = P.v(ixs_seed_pcl,:);
+            ix = ix + 1;
+        end
     end
     if plot_fig
         figure;

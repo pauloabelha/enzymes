@@ -5,7 +5,7 @@ function [best_scores, best_categ_scores, best_ptools, best_ptool_maps, Ps, gpr_
     else
         n_seeds = -1;
     end
-    if ~exist('gpr_dim_ixs','var') || gpr_dim_ixs == -1
+    if ~exist('gpr_dim_ixs','var') || (numel(gpr_dim_ixs)==1 && gpr_dim_ixs == -1)
         gpr_dim_ixs = 1:size(gpr.ActiveSetVectors,2);
     end        
     %% get all test pcls
@@ -14,11 +14,16 @@ function [best_scores, best_categ_scores, best_ptools, best_ptool_maps, Ps, gpr_
     [ tool_names, tool_masses, tools_gt ] = ReadGroundTruth([test_folder 'groundtruth_' task '.csv']);
     tools_gt_new = [];
     for i=1:numel(tool_names)
+        found_pcl_name = 0;
         for j=1:numel(test_pcls_filenames)
             if strcmp(tool_names{i},GetPCLShortName(test_pcls_filenames{j}))
                 tools_gt_new(end+1) = tools_gt(i);
+                found_pcl_name  =1;
                 break;
             end
+        end
+        if ~found_pcl_name
+           error(['could not find groundtruth for tool: ' tool_names{i}]);
         end
     end
     tools_gt = tools_gt_new';
