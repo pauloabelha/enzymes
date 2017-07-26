@@ -18,7 +18,7 @@ function [SQs,SQs_errors,seeds_pcls] = FitConstrainedSQsSeededPCL(seeds,seeds_ra
         SQs{i} = SQs{i}{1};
         Ps{i}.v = seeds_pcls{i};
         if verbose
-            tot_toc = DisplayEstimatedTimeOfLoop(tot_toc+toc,i,size(seeds_pcls,2),'Fitting SQs to seed pcls... ');
+            tot_toc = DisplayEstimatedTimeOfLoop(tot_toc+toc,i,size(seeds_pcls,2),[char(9) 'Fitting SQs to seed pcls... ']);
         end
     end
     [SQs,SQs_errors] = GetRotationSQFits( SQs, Ps );    

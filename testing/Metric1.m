@@ -10,8 +10,8 @@ function [ metric1 ] = Metric1( scores, groundtruth, n_categs )
     penalty_power = 2;
     diff = abs(scores - groundtruth).^penalty_power;
     metric1 = mean(((n_categs-1)^2 - diff)/(n_categs-1)^2);
-    if metric1 < 0 || metric1 > 1
-        error('Calculated metric1 is either smaller than 0 or greater than 1');
+    if metric1 < 0 || metric1 > 1.001
+        error(['Calculated metric1 is either smaller than 0 or greater than 1 - diff: ' diff]);
     end
 end
 

@@ -27,5 +27,6 @@ function P = ReadPointCloud( filepath, min_n_pts_segm )
         P = filepath;        
     end
     CheckIsPointCloudStruct(P);
+    P.filepath = filepath;
 end
 

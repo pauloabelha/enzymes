@@ -29,11 +29,11 @@ function [best_scores, best_categ_scores, best_ptools, best_ptool_maps, Ps, gpr_
     tools_gt = tools_gt_new';
     gpr_scores = zeros(1,numel(test_pcls_filenames));
     tot_toc = 0;
-    best_scores = zeros(1,numel(test_pcls_filenames));
-    best_categ_scores = best_scores;
-    best_ptools =  zeros(numel(test_pcls_filenames),25);
-    best_ptool_maps = zeros(numel(test_pcls_filenames),6);
-    Ps = cell(1,numel(test_pcls_filenames));
+    n_weight_tries = 200;
+    best_scores_mtx = zeros(numel(test_pcls_filenames),n_weight_tries);
+    best_categ_scores_mtx = best_scores_mtx;
+    best_ptools_cell =  cell(numel(test_pcls_filenames));
+    best_ptool_maps_cell = cell(numel(test_pcls_filenames));
     %% get ideal ptool (from maximum of gpr prediction over its training data)
     [~,max_gpr_ix] = max(gpr.predict(gpr.ActiveSetVectors));
     ideal_ptool = gpr.ActiveSetVectors(max_gpr_ix,:);
@@ -43,19 +43,24 @@ function [best_scores, best_categ_scores, best_ptools, best_ptool_maps, Ps, gpr_
     backup_file_path = [test_folder 'projection_result_' task backup_suffix '.mat'];
     for i=1:numel(test_pcls_filenames)
         tic; 
+        best_score = -1;
         try
             P = ReadPointCloud([test_folder test_pcls_filenames{i}],100);
-            [ best_scores(i), best_ptools(i,:), best_ptool_maps(i,:) ] = SeedProjection( ideal_ptool, P, tool_masses(i), task, @TaskFunctionGPR, {gpr, gpr_dim_ixs}, n_seeds, seed_project_verbose ); 
-            best_categ_scores(i) = TaskCategorisation(best_scores(i),task);
+            [ best_scores_mtx(i,:), best_categ_scores_mtx(i,:), best_ptools, best_ptool_maps ] = SeedProjection( ideal_ptool, P, tool_masses(i), task, @TaskFunctionGPR, {gpr, gpr_dim_ixs}, n_seeds, seed_project_verbose );             
+            best_ptools_cell{i} = best_ptools;
+            best_ptool_maps_cell{i} = best_ptool_maps;        
+            %[~,best_ix] = max(best_scores_mtx(i,:));
+            best_ix = round(n_weight_tries/2)+1;
+            best_score = best_scores_mtx(i,best_ix);            
+            curr_best_categ = best_categ_scores_mtx(1:i,best_ix)';
+            curr_tools_gt = tools_gt(1:i)';
+            curr_metric1 = Metric1(curr_best_categ,curr_tools_gt,4);
+            curr_acc = size(curr_best_categ(abs(curr_best_categ-curr_tools_gt)==0),2)/size(curr_best_categ,2);
         catch E
            disp(['Error on tool  ' test_pcls_filenames{i} ' (maybe memory?)']);
            disp(E.message);
         end
-        curr_best_categ = best_categ_scores(1:i);
-        curr_tools_gt = tools_gt(1:i)';
-        curr_metric1 = Metric1(curr_best_categ,curr_tools_gt,4);
-        curr_acc = size(curr_best_categ(abs(curr_best_categ-curr_tools_gt)==0),2)/size(curr_best_categ,2);
-        msg = [test_pcls_filenames{i}(1:end-4) char(9) char(9) num2str(best_scores(i),2) char(9) char(9) num2str(best_categ_scores(i)) char(9) char(9) num2str(tools_gt(i)) char(9) char(9) char(9) num2str(curr_acc,2) char(9) char(9) num2str(curr_metric1,2) char(9) char(9)];
+        msg = [test_pcls_filenames{i}(1:end-4) char(9) char(9) num2str(best_score,2) char(9) char(9) num2str(curr_best_categ(i)) char(9) char(9) num2str(tools_gt(i)) char(9) char(9) char(9) num2str(curr_acc,2) char(9) char(9) num2str(curr_metric1,2) char(9) char(9)];
         tot_toc = DisplayEstimatedTimeOfLoop(tot_toc+toc,i,numel(test_pcls_filenames),msg);
         save(backup_file_path)
     end

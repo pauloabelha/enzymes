@@ -9,13 +9,20 @@ function [ ix_seeds, seeds, seeds_pcls ] = PlantSeedsPCL( P, n_seeds, seeds_radi
     %% get seed pcls
     seeds_pcls = cell(1,n_seeds*numel(seeds_radii));
     ix = 1;
+    MIN_N_PCL_PTS = 100;
     for i=1:n_seeds
         for j=1:numel(seeds_radii)
             seed_radius = seeds_radii(j);
             center = seeds(i,:);
             F = ((P.v(:,1)-center(1))/seed_radius).^2 + ((P.v(:,2)-center(2))/seed_radius).^2  + ((P.v(:,3)-center(3))/seed_radius).^2;
-            ixs_seed_pcl = F<=1;
+            add_func = 0;
+            ixs_seed_pcl = F<=1+add_func;
             seeds_pcls{ix} = P.v(ixs_seed_pcl,:);
+            while size(seeds_pcls{ix},1) < MIN_N_PCL_PTS
+                ixs_seed_pcl = F<=1+add_func;
+                seeds_pcls{ix} = P.v(ixs_seed_pcl,:);
+                add_func = add_func + 0.1;
+            end
             ix = ix + 1;
         end
     end
