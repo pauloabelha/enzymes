@@ -1,4 +1,4 @@
-function [best_scores, best_categ_scores, best_ptools, best_ptool_maps, Ps, gpr_scores, tools_gt, test_pcls_filenames ] = Project( task, test_folder, gpr, gpr_dim_ixs, n_seeds )
+function [best_scores_mtx, best_categ_scores_mtx, best_ptools, best_ptool_maps, gpr_scores, tools_gt, test_pcls_filenames ] = Project( task, test_folder, gpr, gpr_dim_ixs, n_seeds )
     backup_suffix = ['_' date];
     if exist('n_seeds','var')
         backup_suffix = [backup_suffix '_' num2str(n_seeds) '_seeds'];
@@ -60,8 +60,8 @@ function [best_scores, best_categ_scores, best_ptools, best_ptool_maps, Ps, gpr_
            disp(['Error on tool  ' test_pcls_filenames{i} ' (maybe memory?)']);
            disp(E.message);
         end
-        msg = [test_pcls_filenames{i}(1:end-4) char(9) char(9) num2str(best_score,2) char(9) char(9) num2str(curr_best_categ(i)) char(9) char(9) num2str(tools_gt(i)) char(9) char(9) char(9) num2str(curr_acc,2) char(9) char(9) num2str(curr_metric1,2) char(9) char(9)];
-        tot_toc = DisplayEstimatedTimeOfLoop(tot_toc+toc,i,numel(test_pcls_filenames),msg);
+        %msg = [test_pcls_filenames{i}(1:end-4) char(9) char(9) num2str(best_score,2) char(9) char(9) num2str(curr_best_categ(i)) char(9) char(9) num2str(tools_gt(i)) char(9) char(9) char(9) num2str(curr_acc,2) char(9) char(9) num2str(curr_metric1,2) char(9) char(9)];
+        tot_toc = DisplayEstimatedTimeOfLoop(tot_toc+toc,i,numel(test_pcls_filenames),'');
         save(backup_file_path)
     end
 %     [accuracy_best,accuracy_categs,metric_1,metric_2] = PlotTestResults( best_scores, best_categ_scores, tools_gt', test_pcls_filenames, 0, 0 );

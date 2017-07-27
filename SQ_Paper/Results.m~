@@ -1,0 +1,42 @@
+
+%% test variables
+N_TRIALS = 100;
+a_1 = 1;
+a_2 = 1;
+EPS_BEG = 0.1;
+EPS_STEP = 0.1;
+EPS_END = 2;
+N_EPS = round(((EPS_END-EPS_BEG)/EPS_STEP)+1);
+D_BEG = 0.05;
+D_STEP = 0.01;
+D_END = 1;
+N_DS = round(((D_END-D_BEG)/D_STEP)+1);
+times = zeros(N_EPS,N_DS);
+i=0;
+%% get average times
+for eps=EPS_BEG:EPS_STEP:EPS_END
+    i=i+1;
+    j = 0;
+    for D=D_BEG:D_STEP:D_END
+        j=j+1;
+        curr_times = zeros(1,N_TRIALS);
+        for k=1:N_TRIALS
+            tic;
+            superellipse( a_1, a_2, eps, D );
+            curr_times(k) = toc;            
+        end
+        times(i,j) = mean(curr_times);
+    end
+end
+%% replace first peak time
+curr_times = zeros(1,N_TRIALS);
+
+for k=1:N_TRIALS
+    tic;
+    superellipse( a_1, a_2, EPS_BEG, D_BEG );
+    curr_times(k) = toc;            
+end
+times(1,1) = mean(curr_times);
+%% get time in ms
+times = times.*1000;
+
