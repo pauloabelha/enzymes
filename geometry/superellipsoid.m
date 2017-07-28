@@ -12,7 +12,7 @@
 %   pcl: Nx3 array with the uniform point cloud
 %   etas: the u parameters for the superparabola
 %   omegas: the omega parameters for the superellipse
-function [ pcl, normals, etas, omegas ] = superellipsoid( lambda, in_max_n_pts, plot_fig, colour )        
+function [ pcl, normals, etas, omegas ] = superellipsoid( lambda, in_max_n_pts, plot_fig, colour, D )        
     %% max number of points for pcl
     MAX_N_PTS = 1e7;
     %% max number of cross sampling of angles (etas x omegas) - for memory issues
@@ -48,8 +48,13 @@ function [ pcl, normals, etas, omegas ] = superellipsoid( lambda, in_max_n_pts, 
         k_bend = lambda(11);        
         %% uniformly sample a superparabola and a superellipse
         % arclength constant
-        [ ~, etas ] = superellipse( 1, a3, eps1);
-        [ ~, omegas ] = superellipse( a1, a2, eps2); 
+        if ~exist('D','var')
+            [ ~, etas ] = superellipse( 1, a3, eps1);
+            [ ~, omegas ] = superellipse( a1, a2, eps2); 
+        else
+            [ ~, etas ] = superellipse( 1, a3, eps1, D);
+            [ ~, omegas ] = superellipse( a1, a2, eps2, D); 
+        end        
         n_cross_angles = size(etas,2) * size(omegas,2);
         if n_cross_angles > MAX_N_CROSS_ANGLES
             error(['Too many (' num2str(n_cross_angles) ') angles were sampled. maximum is ' num2str(MAX_N_CROSS_ANGLES) ' angles were sampled. Aborting due to possible freezing due to lack of RAM. Check SQ scale param']);
