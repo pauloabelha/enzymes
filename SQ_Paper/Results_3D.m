@@ -2,7 +2,7 @@
 close all;
 clear;
 %% test variables
-N_TRIALS = 1;
+N_TRIALS = 10;
 a_1 = 1;
 a_2 = 1;
 a_3 = 1;
