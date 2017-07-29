@@ -55,25 +55,29 @@ function [ pcl, normals, etas, omegas ] = superellipsoid( lambda, in_max_n_pts, 
             [ ~, etas ] = superellipse( 1, a3, eps1, D);
             [ ~, omegas ] = superellipse( a1, a2, eps2, D); 
         end        
-        n_cross_angles = size(etas,2) * size(omegas,2);
+        etas = etas';
+        n_cross_angles = size(etas,2) * size(omegas,1);
         if n_cross_angles > MAX_N_CROSS_ANGLES
             error(['Too many (' num2str(n_cross_angles) ') angles were sampled. maximum is ' num2str(MAX_N_CROSS_ANGLES) ' angles were sampled. Aborting due to possible freezing due to lack of RAM. Check SQ scale param']);
         end
         %% get the points with the superparaboloid parametric equation
-        pcl = [];
-        normals = [];
+        pcl = zeros(n_cross_angles*8,3);
+        normals = pcl;
+        ix_end=0;
         for i=-1:2:1
             for j=-1:2:1
                 for k=-1:2:1
+                    ix_beg=ix_end+1;
+                    ix_end=(ix_beg+n_cross_angles)-1;
                     % get permutated sampled angles
                     cos_j_omegas = cos(j*omegas);
                     sin_j_omegas = sin(j*omegas);
                     cos_k_etas = cos(k*etas);
                     sin_k_etas = sin(k*etas);
                     %% get points
-                    X = a1*i*signedpow(cos_j_omegas,eps2)'*signedpow(cos_k_etas,eps1); X=X(:);
-                    Y = a2*i*signedpow(sin_j_omegas,eps2)'*signedpow(cos_k_etas,eps1); Y=Y(:);             
-                    Z = a3*i*ones(size(omegas,2),1)*signedpow(sin_k_etas,eps1); Z=Z(:);
+                    X = a1*i*signedpow(cos_j_omegas,eps2)*signedpow(cos_k_etas,eps1); X=X(:);
+                    Y = a2*i*signedpow(sin_j_omegas,eps2)*signedpow(cos_k_etas,eps1); Y=Y(:);             
+                    Z = a3*i*ones(size(omegas,1),1)*signedpow(sin_k_etas,eps1); Z=Z(:);
                     % apply tapering
                     if Kx || Ky
                         f_x_ofz = ((Kx.*Z)/a3) + 1; 
@@ -85,12 +89,12 @@ function [ pcl, normals, etas, omegas ] = superellipsoid( lambda, in_max_n_pts, 
                     if k_bend
                         X = X + (k_bend - sqrt(k_bend^2 + Z.^2));
                     end
-                    pcl = [pcl; [X Y Z]];
+                    pcl(ix_beg:ix_end,:) = [X Y Z];
                     % get normals
-                    nx = (cos_j_omegas.^2)'*cos_k_etas.^2; nx = nx(:);
-                    ny = (sin_j_omegas.^2)'*cos_k_etas.^2; ny = ny(:);
-                    nz = ones(size(omegas,2),1)*sin_k_etas.^2; nz = nz(:);
-                    normals = [normals; [1./X.*nx 1./Y.*ny 1./Z.*nz]];
+                    nx = (cos_j_omegas.^2)*cos_k_etas.^2; nx = nx(:);
+                    ny = (sin_j_omegas.^2)*cos_k_etas.^2; ny = ny(:);
+                    nz = ones(size(omegas,1),1)*sin_k_etas.^2; nz = nz(:);
+                    normals(ix_beg:ix_end,:) = [1./X.*nx 1./Y.*ny 1./Z.*nz];
                 end
             end
         end
