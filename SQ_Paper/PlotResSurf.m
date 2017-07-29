@@ -13,5 +13,6 @@ function PlotResSurf( axes_limits, axes_labels, X, Y, Z, FONT_SIZE )
     set(zlhand,'string',axes_labels{3},'fontsize',FONT_SIZE); 
     res_surface.EdgeColor = 'none';
     axes.ZLim = axes_limits(5:6);
+    set(gcf,'color','w');
 end
 

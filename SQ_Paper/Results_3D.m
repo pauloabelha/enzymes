@@ -52,7 +52,7 @@ times = times.*1000;
 %% plot variables
 DS = D_BEG:D_STEP:D_END;
 EPSS = EPS_BEG:EPS_STEP:EPS_END;
-FONT_SIZE = 20;
+FONT_SIZE = 50;
 D_AXIS_LABEL = ['D=' num2str(D_BEG) ':' num2str(D_STEP) ':' num2str(D_END)];
 EPS_AXIS_LABEL = ['\epsilon=' num2str(EPS_BEG) ':' num2str(EPS_STEP) ':' num2str(EPS_END)];
 TIME_TARGET_AXIS_LABEL = 'Sampling time t (ms)';
