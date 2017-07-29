@@ -26,42 +26,41 @@ function [ pcl, normals, etas, omegas ] = fast_superellipsoid( lambda, D )
     [ ~, etas ] = superellipse( 1, a3, eps1, D);
     [ ~, omegas ] = superellipse( a1, a2, eps2, D);     
     %% get the points with the superparaboloid parametric equation
-    pcl_base_size = size(etas,2)*size(omegas,2);
-    pcl = zeros(pcl_base_size*8,3);
-    normals = pcl;
-    ix=0;
-    for i=-1:2:1
-        for j=-1:2:1
-            for k=-1:2:1
-                ix=ix+1;
-                beg_ix = ((ix-1)*pcl_base_size)+1;
-                end_ix = (beg_ix+pcl_base_size)-1;
-                % get permutated sampled angles
-                cos_j_omegas = cos(j*omegas);
-                sin_j_omegas = sin(j*omegas);
-                cos_k_etas = cos(k*etas);
-                sin_k_etas = sin(k*etas);
-                %% get points
-                X = a1*i*signedpow(cos_j_omegas,eps2)'*signedpow(cos_k_etas,eps1); X=X(:);
-                Y = a2*i*signedpow(sin_j_omegas,eps2)'*signedpow(cos_k_etas,eps1); Y=Y(:);             
-                Z = a3*i*ones(size(omegas,2),1)*signedpow(sin_k_etas,eps1); Z=Z(:);
-                % apply tapering
-                if Kx || Ky
-                    f_x_ofz = ((Kx.*Z)/a3) + 1; 
-                    X = X.*f_x_ofz;
-                    f_y_ofz = ((Ky.*Z)/a3) + 1;
-                    Y = Y.*f_y_ofz; 
+        pcl = zeros(n_cross_angles*8,3);
+        normals = pcl;
+        ix_end=0;
+        for i=-1:2:1
+            for j=-1:2:1
+                for k=-1:2:1
+                    ix_beg=ix_end+1;
+                    ix_end=(ix_beg+n_cross_angles)-1;
+                    % get permutated sampled angles
+                    cos_j_omegas = cos(j*omegas);
+                    sin_j_omegas = sin(j*omegas);
+                    cos_k_etas = cos(k*etas);
+                    sin_k_etas = sin(k*etas);
+                    %% get points
+                    X = a1*i*signedpow(cos_j_omegas,eps2)*signedpow(cos_k_etas,eps1); X=X(:);
+                    Y = a2*i*signedpow(sin_j_omegas,eps2)*signedpow(cos_k_etas,eps1); Y=Y(:);             
+                    Z = a3*i*ones(size(omegas,1),1)*signedpow(sin_k_etas,eps1); Z=Z(:);
+                    % apply tapering
+                    if Kx || Ky
+                        f_x_ofz = ((Kx.*Z)/a3) + 1; 
+                        X = X.*f_x_ofz;
+                        f_y_ofz = ((Ky.*Z)/a3) + 1;
+                        Y = Y.*f_y_ofz; 
+                    end
+                    % apply bending
+                    if k_bend
+                        X = X + (k_bend - sqrt(k_bend^2 + Z.^2));
+                    end
+                    pcl(ix_beg:ix_end,:) = [X Y Z];
+                    % get normals
+                    nx = (cos_j_omegas.^2)*cos_k_etas.^2; nx = nx(:);
+                    ny = (sin_j_omegas.^2)*cos_k_etas.^2; ny = ny(:);
+                    nz = ones(size(omegas,1),1)*sin_k_etas.^2; nz = nz(:);
+                    normals(ix_beg:ix_end,:) = [1./X.*nx 1./Y.*ny 1./Z.*nz];
                 end
-                % apply bending
-                if k_bend
-                    X = X + (k_bend - sqrt(k_bend^2 + Z.^2));
-                end
-                pcl(beg_ix:end_ix,:) = [X Y Z];
-                % get normals
-                nx = (cos_j_omegas.^2)'*cos_k_etas.^2; nx = nx(:);
-                ny = (sin_j_omegas.^2)'*cos_k_etas.^2; ny = ny(:);
-                nz = ones(size(omegas,2),1)*sin_k_etas.^2; nz = nz(:);
-                normals(beg_ix:end_ix,:) = [1./X.*nx 1./Y.*ny 1./Z.*nz];
             end
         end
     end
