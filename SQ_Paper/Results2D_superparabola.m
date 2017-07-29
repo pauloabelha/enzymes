@@ -2,7 +2,7 @@
 close all;
 clear;
 %% test variables
-N_TRIALS = 100;
+N_TRIALS = 10;
 a_1 = 1;
 a_2 = 1;
 EPS_BEG = 0.01;
@@ -16,8 +16,8 @@ N_DS = size(D_BEG:D_STEP:D_END,2);
 times = zeros(N_EPS,N_DS);
 n_points = times;
 i=0;
-mean_time=8.6049e-05;
-disp(['Superellipse sampling: Etimated (upper bound) time (s): ' num2str(N_EPS*N_DS*N_TRIALS*mean_time)]);
+mean_time=7.0570e-05;
+disp(['Superparabola sampling: Etimated (upper bound) time (s): ' num2str(N_EPS*N_DS*N_TRIALS*mean_time)]);
 %% get average times
 for eps=EPS_BEG:EPS_STEP:EPS_END
     i=i+1;
@@ -25,13 +25,14 @@ for eps=EPS_BEG:EPS_STEP:EPS_END
     for D=D_BEG:D_STEP:D_END
         j=j+1;
         curr_times = zeros(1,N_TRIALS);
+        s = superparabola( a_1, a_2, eps, D );
+        n_points(i,j) = size(s,1);
         for k=1:N_TRIALS
             tic;
-            s = superellipse( a_1, a_2, eps, D );
+            superparabola( a_1, a_2, eps, D );
             curr_times(k) = toc;            
         end
-        times(i,j) = mean(curr_times);
-        n_points(i,j) = size(s,1);
+        times(i,j) = mean(curr_times);        
     end
 end
 %% replace first peak time

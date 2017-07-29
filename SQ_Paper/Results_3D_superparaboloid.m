@@ -2,9 +2,10 @@
 close all;
 clear;
 %% test variables
-N_TRIALS = 100;
+N_TRIALS = 3;
 a_1 = 1;
 a_2 = 1;
+a_3 = 1;
 EPS_BEG = 0.01;
 EPS_STEP = 0.05;
 EPS_END = 2;
@@ -14,10 +15,11 @@ D_STEP = 0.001;
 D_END = 0.2;
 N_DS = size(D_BEG:D_STEP:D_END,2);
 times = zeros(N_EPS,N_DS);
+std_times = times;
 n_points = times;
 i=0;
-mean_time=8.6049e-05;
-disp(['Superellipse sampling: Etimated (upper bound) time (s): ' num2str(N_EPS*N_DS*N_TRIALS*mean_time)]);
+mean_time=9.3412e-04;
+disp(['Superparaboloid sampling: Etimated (upper bound) time (s): ' num2str(N_EPS*N_DS*N_TRIALS*mean_time)]);
 %% get average times
 for eps=EPS_BEG:EPS_STEP:EPS_END
     i=i+1;
@@ -25,13 +27,15 @@ for eps=EPS_BEG:EPS_STEP:EPS_END
     for D=D_BEG:D_STEP:D_END
         j=j+1;
         curr_times = zeros(1,N_TRIALS);
+        s = fast_superparaboloid( [a_1 a_2 a_3 eps 1 0 0 0 0 0 0 0], D);
+        n_points(i,j) = size(s,1);
         for k=1:N_TRIALS
             tic;
-            s = superellipse( a_1, a_2, eps, D );
+            fast_superparaboloid( [a_1 a_2 a_3 eps 1 0 0 0 0 0 0 0], D );
             curr_times(k) = toc;            
         end
-        times(i,j) = mean(curr_times);
-        n_points(i,j) = size(s,1);
+        times(i,j) = mean(curr_times);       
+        std_times(i,j) = std(curr_times); 
     end
 end
 %% replace first peak time
@@ -49,7 +53,7 @@ times = times.*1000;
 %% plot variables
 DS = D_BEG:D_STEP:D_END;
 EPSS = EPS_BEG:EPS_STEP:EPS_END;
-FONT_SIZE = 40;
+FONT_SIZE = 50;
 D_AXIS_LABEL = ['D=' num2str(D_BEG) ':' num2str(D_STEP) ':' num2str(D_END)];
 EPS_AXIS_LABEL = ['\epsilon=' num2str(EPS_BEG) ':' num2str(EPS_STEP) ':' num2str(EPS_END)];
 TIME_TARGET_AXIS_LABEL = 'Sampling time t (ms)';
@@ -64,5 +68,4 @@ PlotResSurf( [D_BEG D_END EPS_BEG EPS_END 0 MAX_NPTS_TARGET_AXIS ], {D_AXIS_LABE
 PlotResLine( [EPS_BEG EPS_END 0 MAX_TIME_TARGET_AXIS], {EPS_AXIS_LABEL, TIME_TARGET_AXIS_LABEL}, EPSS, times(:,1), FONT_SIZE );
 %% plot D cut
 PlotResLine( [D_BEG D_END 0 MAX_TIME_TARGET_AXIS], {D_AXIS_LABEL, TIME_TARGET_AXIS_LABEL}, DS, times(1,:), FONT_SIZE );
-
 

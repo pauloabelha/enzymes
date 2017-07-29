@@ -6,19 +6,20 @@ N_TRIALS = 100;
 a_1 = 1;
 a_2 = 1;
 a_3 = 1;
-EPS_BEG = 0.1;
-EPS_STEP = 0.1;
+EPS_BEG = 0.01;
+EPS_STEP = 0.05;
 EPS_END = 2;
 N_EPS = size(EPS_BEG:EPS_STEP:EPS_END,2);
 D_BEG = 0.005;
-D_STEP = 0.01;
-D_END = 0.03;
+D_STEP = 0.001;
+D_END = 0.2;
 N_DS = size(D_BEG:D_STEP:D_END,2);
 times = zeros(N_EPS,N_DS);
 std_times = times;
 n_points = times;
-disp(['estimated (upper bound) time (h): ' num2str(N_EPS*N_DS*N_TRIALS/3600)]);
 i=0;
+mean_time=0.0015;
+disp(['Superellipsoid sampling: Etimated (upper bound) time (s): ' num2str(N_EPS*N_DS*N_TRIALS*mean_time)]);
 %% get average times
 for eps=EPS_BEG:EPS_STEP:EPS_END
     i=i+1;

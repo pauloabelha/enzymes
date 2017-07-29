@@ -13,12 +13,12 @@ function [ pcl, us ] = superparabola( a, b, eps1, D, plot_fig, not_unif )
     N = 10^2;
     us = 0:1/N:1;    
     if ~not_unif
-        us = unif_sample_u(b, eps1, D);       
+        us = unif_sample_u(b, eps1, D)';       
     end  
     X = a*us; 
-    X = [fliplr(-X(2:end)) X];
+    X = [fliplr(-X(2:end)); X];
     Y = b*((us.^2).^(1/eps1));
-    Y = [fliplr(Y(2:end)) Y];
+    Y = [fliplr(Y(2:end)); Y];
     pcl = [X' Y'];
     if plot_fig
        scatter(X,Y,1); axis equal; 
