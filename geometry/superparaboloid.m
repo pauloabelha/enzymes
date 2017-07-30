@@ -41,8 +41,9 @@ function [ pcl, normals, us, omegas ] = superparaboloid( lambda, in_max_n_pts,pl
     %% uniformly sample a superparabola and a superellipse
     % arclength constant
     [ ~, us ] = superparabola( 1, a3, eps1/2);
-    [ ~, omegas ] = superellipse( a1, a2, eps2);  
-    n_cross_angles = size(us,2) * size(omegas,2);
+    [ ~, omegas ] = superellipse( a1, a2, eps2); 
+    omegas = omegas';
+    n_cross_angles = size(us,1) * size(omegas,2);    
     if n_cross_angles > MAX_N_CROSS_ANGLES
         error(['Too many (' num2str(n_cross_angles) ') angles were sampled. maximum is ' num2str(MAX_N_CROSS_ANGLES) ' angles were sampled. Aborting due to possible freezing due to lack of RAM. Check SQ scale param']);
     end
@@ -52,15 +53,15 @@ function [ pcl, normals, us, omegas ] = superparaboloid( lambda, in_max_n_pts,pl
     us = us(randsample(numel(us),min(numel(us),n_samples)));
     omegas = omegas(randsample(numel(omegas),min(numel(omegas),n_samples)));
     %% get the points with the superparaboloid parametric equation
-    X = a1*us'*signedpow(cos(omegas),eps2);
+    X = a1*us*signedpow(cos(omegas),eps2);
     X = X(:);
-    Y = a2*us'*signedpow(sin(omegas),eps2);
+    Y = a2*us*signedpow(sin(omegas),eps2);
     Y = Y(:);
-    Z = 2*a3*((us.^2).^(1/eps1) - 1/2)'*ones(1,size(omegas,2));
+    Z = 2*a3*((us.^2).^(1/eps1) - 1/2)*ones(1,size(omegas,2));
     Z = Z(:);
-    a = (us'*cos(omegas).^2); a = a(:);
-    b = (us'*sin(omegas).^2); b = b(:);
-    c = (eps1/2)*((us.^((2/eps1)))'*ones(1,size(omegas,2))); c = c(:);
+    a = (us*cos(omegas).^2); a = a(:);
+    b = (us*sin(omegas).^2); b = b(:);
+    c = (eps1/2)*((us.^((2/eps1)))*ones(1,size(omegas,2))); c = c(:);
     X = [X(:); -X(:); X(:); -X(:);];
     Y = [Y(:); Y(:); -Y(:); -Y(:)];
     Z = [Z(:); Z(:); Z(:); Z(:)];

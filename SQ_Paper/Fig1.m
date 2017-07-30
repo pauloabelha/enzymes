@@ -21,3 +21,4 @@ set(gca,'xcolor','None');
 set(gca,'ycolor','None');
 set(gca,'zcolor','None');
 set(gca,'cameraposition',[1 2 1]);
+set(gca,'ambientlightcolor','none');
