@@ -47,7 +47,6 @@ for i=1:2
         curr_times(k) = toc;            
     end
 end
-times(1,1) = mean(curr_times);
 %% get time in ms
 times = times.*1000;
 %% plot variables

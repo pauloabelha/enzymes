@@ -23,7 +23,7 @@ function [ pcl, thetas ] = superellipse( a, b, eps1, D, plot_fig )
     pcl = [[X; -X; X; -X] [Y; Y; -Y; -Y]];
     pcl=pcl*rot;
     if plot_fig
-       scatter(X,Y,1); axis equal; 
+       scatter(pcl(:,1),pcl(:,2),1); axis equal; 
     end
 end
 

@@ -18,6 +18,7 @@ function [ pcl, normals, etas, omegas ] = naivesuperellipsoid( lambda, plot_fig,
     %% check plot colour (default is black)
     if ~exist('colour','var')
         colour = '.k';
+    end
     %% get parameters
     a1 = lambda(1);
     a2 = lambda(2);
