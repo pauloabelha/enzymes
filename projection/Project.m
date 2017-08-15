@@ -41,7 +41,7 @@ function [best_scores_mtx, best_categ_scores_mtx, best_ptools, best_ptool_maps, 
     ideal_ptool = gpr.ActiveSetVectors(max_gpr_ix,:);
     disp(['Projecting ' num2str(numel(test_pcls_filenames)) ' tools on ' test_folder ' using ' num2str(n_seeds) ' seeds']);
     disp(['Name' char(9) char(9) char(9) char(9) 'Raw score' char(9) 'Categ Score' char(9) 'Categ Groundtruth' char(9) 'Accuracy' char(9) 'Metric 1' char(9) 'Expected time']);
-    seed_project_verbose = 1;
+    seed_project_verbose = 0;
     backup_file_path = [test_folder 'projection_result_' task backup_suffix '.mat'];
     for i=1:numel(test_pcls_filenames)
         tic; 
@@ -63,8 +63,8 @@ function [best_scores_mtx, best_categ_scores_mtx, best_ptools, best_ptool_maps, 
            disp([E.message ' File: ' file_name ' - line: ' num2str(line_num)]);           
         end
         msg = [test_pcls_filenames{i}(1:end-4) char(9) char(9) num2str(best_score,2) char(9) char(9) num2str(curr_best_categ(i)) char(9) char(9) num2str(tools_gt(i)) char(9) char(9) char(9) num2str(curr_acc,2) char(9) char(9) num2str(curr_metric1,2) char(9) char(9)];
-        disp(msg);
-        %tot_toc = DisplayEstimatedTimeOfLoop(tot_toc+toc,i,numel(test_pcls_filenames),'');
+        [tot_toc, estimated_time_hours] = DisplayEstimatedTimeOfLoop(tot_toc+toc,i,numel(test_pcls_filenames),'',1);
+        disp([msg datestr(estimated_time_hours, 'HH:MM:SS')]);
         save(backup_file_path);
     end
 %     [accuracy_best,accuracy_categs,metric_1,metric_2] = PlotTestResults( best_scores, best_categ_scores, tools_gt', test_pcls_filenames, 0, 0 );
