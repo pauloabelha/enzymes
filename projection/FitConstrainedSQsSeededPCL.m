@@ -13,7 +13,9 @@ function [SQs,SQs_errors,seeds_pcls] = FitConstrainedSQsSeededPCL(seeds,seeds_ra
     Ps = cell(1,size(seeds_pcls,2));
     tot_toc = 0;
     for i=1:size(seeds_pcls,2)    
-        tic;
+        if verbose
+            tic;
+        end
         [SQs{i}, ~, SQ_errors(i)] = PCL2SQ( seeds_pcls{i}, 1 );
         SQs{i} = SQs{i}{1};
         Ps{i}.v = seeds_pcls{i};

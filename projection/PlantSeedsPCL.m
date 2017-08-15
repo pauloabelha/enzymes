@@ -1,4 +1,6 @@
 function [ ix_seeds, seeds, seeds_pcls ] = PlantSeedsPCL( P, n_seeds, seeds_radii, plot_fig )
+    % max number of seeds to plot
+    MAX_PLOT_N_SEEDS = 100;
     if ~exist('plot_fig','var')
         plot_fig = 0;
     end
@@ -28,11 +30,12 @@ function [ ix_seeds, seeds, seeds_pcls ] = PlantSeedsPCL( P, n_seeds, seeds_radi
     end
     if plot_fig
         figure;
-        scatter3(P.v(:,1),P.v(:,2),P.v(:,3),'.k');
-        title(['Pcl with #' num2str(n_seeds) ' seeds']);
+%         scatter3(P.v(:,1),P.v(:,2),P.v(:,3),'.k');
         axis equal;
         hold on;
-        PlotPCLS(seeds_pcls(1:min(numel(seeds_pcls),20)));
+        title(['Pcl with #' num2str(n_seeds)  ' seeds and #' num2str(numel(seeds_radii)) ' radii; max #seeds=' num2str(MAX_PLOT_N_SEEDS) '']);        
+        pcl_ixs = randi(numel(seeds_pcls),1,min(numel(seeds_pcls),MAX_PLOT_N_SEEDS));        
+        PlotPCLS(seeds_pcls(pcl_ixs));
         hold off;        
     end
 end

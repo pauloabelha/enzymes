@@ -10,8 +10,7 @@ function [ best_scores, best_categ_scores, best_ptools, best_ptool_maps, SQs, P 
         plot_fig = 0;
     end 
     %% get the hyper params
-    [ n_seeds_hyper, n_seeds_radii, weights ] = ProjectionHyperParams();
-    n_weights = size(weights,1);
+    [ n_seeds_hyper, n_seeds_radii ] = ProjectionHyperParams();
     if ~exist('n_seeds','var') || n_seeds < 1
         n_seeds = n_seeds_hyper;
     end
@@ -26,13 +25,19 @@ function [ best_scores, best_categ_scores, best_ptools, best_ptool_maps, SQs, P 
         disp([char(9) 'Evaluating task function on #' num2str(size(ptools_proj,1)) ' p-tools...']);
     end
     task_scores = feval(task_function, task_function_params, ptools_proj);   
-    %% get weight voting
+    %% get weights
     % get voting matrix (higher the value the better)
-    voting_matrix = [1./ptools_errors_proj; task_scores'];     
+    voting_matrix = [1./ptools_errors_proj; task_scores']; 
+    beg_weight = 0;
+    step_weight = 0.01;
+    mid_weight = 1;
+    end_weight = mid_weight/step_weight;
+    weights = [beg_weight:step_weight:(mid_weight-step_weight) mid_weight:mid_weight:end_weight]';
+    n_weights = size(weights,1);
     if verbose 
         disp([char(9) 'Calculating rank voting for ' num2str(n_weights) ' different weight values...']);
     end        
-    voting_matrix_normalised = NormaliseData(voting_matrix')';
+    voting_matrix_normalised = NormaliseData(voting_matrix,1);
     % outer product of weights with task scores normalised in the matrix
     a = weights * voting_matrix_normalised(2,:);
     final_mtx = a + repmat(voting_matrix_normalised(1,:),200,1);   
@@ -40,12 +45,11 @@ function [ best_scores, best_categ_scores, best_ptools, best_ptool_maps, SQs, P 
     % get the best ptool to return
     best_ptools = ptools_proj(best_ixs,:);
     best_ptool_maps = ptools_map_proj(best_ixs,:);
-    best_fit_scores = ptools_errors_proj(best_ixs);
-    best_scores = task_scores(best_ixs);
+    best_fit_scores = voting_matrix(best_ixs,1);
+    best_scores = voting_matrix(best_ixs,2);
     best_categ_scores = TaskCategorisation(best_scores,task_name);
-    best_ix = floor(n_weights/2)+1;
-    best_score = best_scores(best_ix);
-    best_fit_score = best_fit_scores(best_ix);
+    [best_score,best_weight_ix] = max(best_scores);
+    best_fit_score = best_fit_scores(best_weight_ix);
     if verbose 
         disp([char(9) 'Best p-tool found (task score; fit score)' char(9) num2str(best_score) char(9) num2str(best_fit_score)]);   
     end
