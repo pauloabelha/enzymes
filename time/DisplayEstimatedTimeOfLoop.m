@@ -37,14 +37,16 @@ function [ tot_toc, estimated_time_hours, msg  ] = DisplayEstimatedTimeOfLoop( t
     end
     if ~exist('silent','var')
         silent = 0;        
-    end
+    end    
     if curr_ix == tot_iter 
-        msg = [prefix 'Total elapsed time (HH:MM:SS): ' datestr(tot_toc/(24*60*60),'HH:MM:SS')];
-    else
+        estimated_time_hours = tot_toc/(24*60*60);
+        time_msg = 'Total elapsed time (HH:MM:SS): ';
+    else        
         avg_toc = tot_toc/curr_ix;
-        estimated_time_hours = (avg_toc*(tot_iter-curr_ix))/(24*60*60);
-        msg = [prefix 'Estimated time to finish (HH:MM:SS): ' datestr(estimated_time_hours, 'HH:MM:SS') ' ' num2str(round(curr_ix*100/tot_iter)) '%'];
+        estimated_time_hours = (avg_toc*(tot_iter-curr_ix))/(24*60*60); 
+        time_msg = 'Estimated time to finish (HH:MM:SS): ';
     end
+    msg = [prefix time_msg datestr(estimated_time_hours, 'HH:MM:SS') ' ' num2str(round(curr_ix*100/tot_iter)) '%'];
     if ~silent
         disp(msg);
     end
