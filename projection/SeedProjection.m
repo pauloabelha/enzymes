@@ -21,6 +21,10 @@ function [ best_scores, best_categ_scores, best_ptools, best_ptool_maps, SQs, P 
         disp([char(9) 'Extracting p-tools from the fitted SQs...']);
     end 
     [ ptools_proj, ptools_map_proj, ptools_errors_proj] = ExtractPToolsAltSQs(SQs_proj, tool_mass, fit_scores_proj);  
+    % any ptool with some error in its fitting score receives max (worse)
+    % minimum fit score will never be 0
+    % So, inverse of niminimum will never be Inf
+    ptools_errors_proj(ptools_errors_proj==0) = max(ptools_errors_proj);
     %% avaliate GP
     if verbose 
         disp([char(9) 'Evaluating task function on #' num2str(size(ptools_proj,1)) ' p-tools...']);

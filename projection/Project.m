@@ -41,7 +41,7 @@ function [best_scores_mtx, best_categ_scores_mtx, best_ptools, best_ptool_maps, 
     ideal_ptool = gpr.ActiveSetVectors(max_gpr_ix,:);
     disp(['Projecting ' num2str(numel(test_pcls_filenames)) ' tools on ' test_folder ' using ' num2str(n_seeds) ' seeds']);
     disp(['Name' char(9) char(9) char(9) char(9) 'Raw score' char(9) 'Categ Score' char(9) 'Categ Groundtruth' char(9) 'Accuracy' char(9) 'Metric 1' char(9) 'Expected time']);
-    seed_project_verbose = 0;
+    seed_project_verbose = 1;
     backup_file_path = [test_folder 'projection_result_' task backup_suffix '.mat'];
     for i=1:numel(test_pcls_filenames)
         tic; 
