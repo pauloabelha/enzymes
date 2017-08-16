@@ -18,7 +18,8 @@ function [ best_scores, best_categ_scores, best_ptools, best_ptool_maps, SQs, P 
     %% get SQs from planting seeds and fitting constrained by the ideal ptool scale
     [ SQs_proj, fit_scores_proj ] = GetSQsFromPToolProjection( P, n_seeds, n_seeds_radii, verbose );
     if verbose 
-        disp([char(9) 'Extracting p-tools from the fitted SQs...']);
+        n_valid_SQs = sum(~cellfun(@isempty,SQs_proj(:)));
+        disp([char(9) 'Extracting p-tools from the ' num2str(n_valid_SQs) ' valid SQs (fitted with good rotations)']);
     end 
     [ ptools_proj, ptools_map_proj, ptools_errors_proj] = ExtractPToolsAltSQs(SQs_proj, tool_mass, fit_scores_proj);  
     % any ptool with some error in its fitting score receives max (worse)
@@ -27,7 +28,7 @@ function [ best_scores, best_categ_scores, best_ptools, best_ptool_maps, SQs, P 
     ptools_errors_proj(ptools_errors_proj==0) = max(ptools_errors_proj);
     %% avaliate GP
     if verbose 
-        disp([char(9) 'Evaluating task function on #' num2str(size(ptools_proj,1)) ' p-tools...']);
+        disp([char(9) 'Evaluating task function on ' num2str(size(ptools_proj,1)) ' p-tools...']);
     end
     task_scores = feval(task_function, task_function_params, ptools_proj);   
     %% get weight voting

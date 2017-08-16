@@ -4,7 +4,7 @@ function [ SQs, SQs_errors, seeds_pcls] = GetSQsFromPToolProjection( P, n_seeds,
     end
     CheckIsPointCloudStruct(P);
     if verbose
-        disp([char(9) 'Planting #' num2str(n_seeds) ' seeds on pcl...']);
+        disp([char(9) 'Planting ' num2str(n_seeds) ' seeds, with ' num2str(n_seeds_radii) ' different radii on pcl...']);
     end
     seeds_radii = randi(150,1,n_seeds_radii)/1000;
     [ ~, seeds, seeds_pcls ] = PlantSeedsPCL( P, n_seeds, seeds_radii );

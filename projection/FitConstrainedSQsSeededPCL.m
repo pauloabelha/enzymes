@@ -4,7 +4,7 @@ function [SQs,SQs_errors,seeds_pcls] = FitConstrainedSQsSeededPCL(seeds,seeds_ra
        verbose = 0; 
     end
     %% fit a SQ to each seed pcl    
-    DOWNSAMPLE = 250;
+    DOWNSAMPLE = 200;
     parfor i=1:numel(seeds_pcls)
         seeds_pcls{i} = DownsamplePCL(seeds_pcls{i},DOWNSAMPLE);
     end
@@ -20,7 +20,7 @@ function [SQs,SQs_errors,seeds_pcls] = FitConstrainedSQsSeededPCL(seeds,seeds_ra
         SQs{i} = SQs{i}{1};
         Ps{i}.v = seeds_pcls{i};
         if verbose
-            tot_toc = DisplayEstimatedTimeOfLoop(tot_toc+toc,i,size(seeds_pcls,2),[char(9) 'Fitting SQs to seed pcls... ']);
+            tot_toc = DisplayEstimatedTimeOfLoop(tot_toc+toc,i,size(seeds_pcls,2),[char(9) 'Fitting SQs to ' num2str(size(seeds_pcls,2)) ' seeded pcls... ']);
         end
     end
     [SQs,SQs_errors] = GetRotationSQFits( SQs, Ps );    
