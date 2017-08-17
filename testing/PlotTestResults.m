@@ -28,7 +28,8 @@ function  [accuracy_best,accuracy_categs,metric_1,metric_2,p,mu,sigma] = PlotTes
         end
     end
     metric_2 = sum(accuracy_categs);
-       
+    
+    figure;
     non_error_ixs = best_categ_scores~=0;
     %metric_1 = sum(4-abs(best_categ_scores(non_error_ixs)-pcl_gt_task_scores(non_error_ixs)))/size(best_categ_scores(non_error_ixs),2);
     metric_1 = Metric1(best_categ_scores,pcl_gt_task_scores);
