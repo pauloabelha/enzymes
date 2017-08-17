@@ -13,9 +13,9 @@ function [best_scores_mtx, best_categ_scores_mtx, best_ptools, best_ptool_maps, 
     %% get groundtruth for existing tools
     [ tool_names, tool_masses, tools_gt ] = ReadGroundTruth([test_folder 'groundtruth_' task '.csv']);
     tools_gt_new = [];
-    for i=1:numel(tool_names)
+    for j=1:numel(test_pcls_filenames)    
         found_pcl_name = 0;
-        for j=1:numel(test_pcls_filenames)
+        for i=1:numel(tool_names)
             if strcmp(tool_names{i},GetPCLShortName(test_pcls_filenames{j}))
                 tools_gt_new(end+1) = tools_gt(i);
                 found_pcl_name  =1;
