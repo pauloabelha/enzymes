@@ -23,7 +23,7 @@ function [best_scores_mtx, best_categ_scores_mtx, best_ptools, best_ptool_maps, 
             end
         end
         if ~found_pcl_name
-           error(['could not find groundtruth for tool: ' tool_names{i}]);
+           error(['could not find groundtruth for tool: ' test_pcls_filenames{j}]);
         end
     end
     tools_gt = tools_gt_new';
@@ -43,12 +43,13 @@ function [best_scores_mtx, best_categ_scores_mtx, best_ptools, best_ptool_maps, 
     disp(['Name' char(9) char(9) char(9) char(9) 'Raw score' char(9) 'Categ Score' char(9) 'Categ Groundtruth' char(9) 'Accuracy' char(9) 'Metric 1' char(9) 'Expected time']);
     seed_project_verbose = 1;
     backup_file_path = [test_folder 'projection_result_' task backup_suffix '.mat'];
+    add_segms = 1;
     for i=1:numel(test_pcls_filenames)
         tic; 
         best_score = -1;
         try
             P = ReadPointCloud([test_folder test_pcls_filenames{i}],100);
-            [ best_scores_mtx(i,:), best_categ_scores_mtx(i,:), best_ptools, best_ptool_maps ] = SeedProjection( ideal_ptool, P, tool_masses(i), task, @TaskFunctionGPR, {gpr, gpr_dim_ixs}, n_seeds, seed_project_verbose );             
+            [ best_scores_mtx(i,:), best_categ_scores_mtx(i,:), best_ptools, best_ptool_maps ] = SeedProjection( P, tool_masses(i), task, @TaskFunctionGPR, {gpr, gpr_dim_ixs}, n_seeds, add_segms, seed_project_verbose );             
             best_ptools_cell{i} = best_ptools;
             best_ptool_maps_cell{i} = best_ptool_maps;              
             best_score = best_scores_mtx(i,best_ix);            

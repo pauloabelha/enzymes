@@ -1,4 +1,4 @@
-function [SQs,SQs_errors,seeds_pcls] = FitConstrainedSQsSeededPCL(seeds,seeds_radii,seeds_pcls,verbose)
+function [SQs,SQs_errors,seeds_pcls] = FitConstrainedSQsSeededPCL(seeds_pcls,verbose)
     %% check verbose
     if ~exist('verbose','var')
        verbose = 0; 
