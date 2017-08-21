@@ -1,4 +1,9 @@
-function [ gprs, sigmaMs, feat_imps, dims_ixs ] = TrainRobot( ptools, scores ) 
+function [ gprs, sigmaMs, feat_imps, dims_ixs ] = TrainRobot( ptools, scores, root_folder, task ) 
+    if ~exist('task','var') || ~exist('root_folder','var')
+        warning('No task or root folder defined. File is going to be save at home with task unkown');
+        root_folder = '~/';
+        task = 'unkown';
+    end
     gprs = {};
     sigmaMs = {};
     feat_imps = {};    
@@ -15,5 +20,6 @@ function [ gprs, sigmaMs, feat_imps, dims_ixs ] = TrainRobot( ptools, scores )
         dims_ixs{end+1} = dims_ixs{end};
         dims_ixs{end}(dims_ixs{end}==1) = last_dim_ixs;
         curr_n_dims = sum(dims_ixs{end});
+        save([root_folder 'trained_robot_' task '_' date]);
     end
 end
