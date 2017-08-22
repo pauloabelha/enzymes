@@ -17,8 +17,8 @@ function [ sigmaM, feat_imp, imp_dims_ixs, imp_dims_sort_ixs, new_data ] = PLotG
     % minimum entropy in log 2 to consider the data column
     MIN_ENTROPY_DATA = 0.1;    
     data_entr_cols = zeros(1,size(data,2));
-    parfor i=1:size(data,2)
-        data_entr_cols(i) = EntropyExpResults( data(:,i)', 10 )
+    for i=1:size(data,2)
+        data_entr_cols(i) = EntropyExpResults( data(:,i)', 10 );
     end
     range_data = range(data)';
     d = size(gpr.ActiveSetVectors,2);
