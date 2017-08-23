@@ -1,7 +1,7 @@
 % convert a ptool to a pcl
 function [ P_out, transf_lists ] = PTool2PCL( ptools, task )
     % define resolution of each segment (grasp and action)
-    N_POINTS = 5000;
+    N_POINTS = 100000;
     % if a task is given, rotate the pcl at the end
     if ~exist('task','var')
         task = '';
@@ -15,35 +15,58 @@ function [ P_out, transf_lists ] = PTool2PCL( ptools, task )
         ptool = ptools(i,:);        
         % get grasp and action SQs
         [ SQ_grasp, SQ_action ] = GetPToolsSQs( ptool );
-        % if paraboloid
-        if ptools(i,8) < 0
-            [grasp_pcl, grasp_faces] = ParaboloidFaces(SQ_grasp, N_POINTS);
-            rev_grasp_faces = [grasp_faces(:,3) grasp_faces(:,2) grasp_faces(:,1)];
-            grasp_faces = [grasp_faces; rev_grasp_faces];
-            grasp_normals = [];
-        else        
-            P = SQ2PCL(SQ_grasp,N_POINTS);
-            grasp_pcl = P.v;
-            grasp_normals = P.n;
-            grasp_faces = convhull(grasp_pcl);
+        % hack for mug handles
+        if ptools(i,8) > 0
+            SQ_grasp(6) = pi;
         end
         % if paraboloid
-        if ptools(i,17) < 0
-            [action_pcl, action_faces] = ParaboloidFaces(SQ_action,N_POINTS);
+        if ptools(i,9) < 0
+            [grasp_pcl, grasp_normals, grasp_faces] = ParaboloidFaces(SQ_grasp, N_POINTS);
+            rev_grasp_faces = [grasp_faces(:,3) grasp_faces(:,2) grasp_faces(:,1)];
+            grasp_faces = [grasp_faces; rev_grasp_faces];
+        else        
+            % if bent, calculate convhull before bending
+            if ptools(i,8) > 0
+                SQ = SQ_grasp;
+                % hack for mug handles
+%                 SQ(6) = mod(SQ(6) + pi,2*pi);               
+                % get pcl
+                Q = SQ2PCL(SQ,N_POINTS);
+                grasp_pcl = Q.v;
+                grasp_normals = Q.n;                
+                P.n = grasp_normals;           
+                % get faces from non-bent SQ
+                SQ_non_bent = SQ;
+                SQ_non_bent(11) = 0;
+                P = SQ2PCL(SQ_non_bent,N_POINTS); 
+                grasp_faces = convhull(P.v);
+                P.f = grasp_faces - 1;                
+            else
+                P = SQ2PCL(SQ_grasp,N_POINTS);
+                grasp_pcl = P.v;
+                grasp_normals = P.n;
+                grasp_faces = convhull(grasp_pcl);
+            end
+        end
+        % if paraboloid
+        if ptools(i,18) < 0
+            [action_pcl, action_normals, action_faces] = ParaboloidFaces(SQ_action,N_POINTS);
             rev_action_faces = [action_faces(:,3) action_faces(:,2) action_faces(:,1)];
             action_faces = [action_faces; rev_action_faces];
-            action_normals = [];
         else            
             % if bent, calculate convhull before bending
-            if SQ_action(11) > 0
+            if ptools(i,17) > 0
+                % hack for mug handles
+                SQ_action(6) = mod(SQ_action(6) + pi,2*pi);
                 SQ_action_non_bent = SQ_action;
                 SQ_action_non_bent(11) = 0;
-                P = SQ2PCL(SQ_action_non_bent,N_POINTS);
-                action_pcl = P.v;
-                action_faces = convhull(action_pcl);
-                action_pcl(:,1) = action_pcl(:,1) + (SQ_action(11) - sqrt(SQ_action(11)^2 + action_pcl(:,3).^2));
-                action_normals = P.n;
-                P.v = action_pcl; P.n = action_normals; P.f = action_faces - 1;
+                Q = SQ2PCL(SQ_action,N_POINTS);
+                action_pcl = Q.v;
+                action_normals = Q.n;
+                % get convhull of nonbent pcl
+                P = SQ2PCL(SQ_action_non_bent,N_POINTS);        
+                action_faces = convhull(P.v);
+                P.n = action_normals; P.f = action_faces - 1;
             else
                 P = SQ2PCL(SQ_action,N_POINTS);
                 action_pcl = P.v;

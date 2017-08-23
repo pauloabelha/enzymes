@@ -105,7 +105,7 @@ function [ pcl, normals, us, omegas ] = superparaboloid( lambda, in_max_n_pts,pl
     %% transform points and normals
     pcl = [T*[pcl'; ones(1,size(pcl,1))]]';
     pcl = pcl(:,1:3);
-    normals = normals*rot_mtx;
+    normals = [rot_mtx*normals']';
     %% plot
     if plot_fig        
         scatter3(pcl(:,1),pcl(:,2),pcl(:,3),10,colour); axis equal;   

@@ -1,8 +1,8 @@
 % get paraboloid faces by running convex hull and then eliminating 
 % closing ("lid"/"top") faces
-function [ pcl, faces ] = ParaboloidFaces( lambda, N_POINTS )
+function [ pcl, normals, faces ] = ParaboloidFaces( lambda, N_POINTS )
     %% get paraboloid pcl in "canonical" positions (upwards - no rotation)
-    pcl = superparaboloid(lambda,N_POINTS);
+    [pcl, normals] = superparaboloid(lambda,N_POINTS);
     r = vrrotvec(GetSQVector(lambda),[0;0;1]);
     rot_pcl = vrrotvec2mat(r);
     pcl = pcl*rot_pcl';
@@ -18,7 +18,6 @@ function [ pcl, faces ] = ParaboloidFaces( lambda, N_POINTS )
     end
     pts = 1:size(pcl,1);
     pts_rmv = pts(ixs_rmv);
-    
     faces = [];
     for i=1:size(all_faces,1)
         rmv_face = 1;

@@ -27,5 +27,8 @@ function [ Ps ] = PlotPtools( ptools, task_name, plot_faces )
         zlabel('Z');
         Ps{i} = P;
     end    
+    if size(ptools,1) == 1
+        Ps = Ps{1};
+    end
 end
 

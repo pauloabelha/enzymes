@@ -78,6 +78,11 @@ function [ pcl, normals, etas, omegas ] = superellipsoid( lambda, in_max_n_pts, 
                     X = a1*i*signedpow(cos_j_omegas,eps2)*signedpow(cos_k_etas,eps1); X=X(:);
                     Y = a2*i*signedpow(sin_j_omegas,eps2)*signedpow(cos_k_etas,eps1); Y=Y(:);             
                     Z = a3*i*ones(size(omegas,1),1)*signedpow(sin_k_etas,eps1); Z=Z(:);
+                    % get normals                    
+                    nx = (cos_j_omegas.^2)*cos_k_etas.^2; nx = nx(:);
+                    ny = (sin_j_omegas.^2)*cos_k_etas.^2; ny = ny(:);
+                    nz = ones(size(omegas,1),1)*sin_k_etas.^2; nz = nz(:); nz(nz<1e-10) = 0;
+                    normals(ix_beg:ix_end,:) = [1./X.*nx 1./Y.*ny 1./Z.*nz];
                     % apply tapering
                     if Kx || Ky
                         f_x_ofz = ((Kx.*Z)/a3) + 1; 
@@ -89,12 +94,22 @@ function [ pcl, normals, etas, omegas ] = superellipsoid( lambda, in_max_n_pts, 
                     if k_bend
                         X = X + (k_bend - sqrt(k_bend^2 + Z.^2));
                     end
-                    pcl(ix_beg:ix_end,:) = [X Y Z];
-                    % get normals
-                    nx = (cos_j_omegas.^2)*cos_k_etas.^2; nx = nx(:);
-                    ny = (sin_j_omegas.^2)*cos_k_etas.^2; ny = ny(:);
-                    nz = ones(size(omegas,1),1)*sin_k_etas.^2; nz = nz(:);
-                    normals(ix_beg:ix_end,:) = [1./X.*nx 1./Y.*ny 1./Z.*nz];
+                    pcl(ix_beg:ix_end,:) = [X Y Z];                    
+                    % apply tapering transformation to the normals
+                    if Kx || Ky
+                        normals_x = normals(ix_beg:ix_end,1).*f_y_ofz;
+                        normals_y = normals(ix_beg:ix_end,2).*f_x_ofz;
+                        z_x_taper_factor = -f_prime_x_ofz.*f_y_ofz;
+                        z_y_taper_factor = -f_prime_y_ofz.*f_x_ofz;
+                        normals_z = z_x_taper_factor.*normals(ix_beg:ix_end,1) + z_y_taper_factor.*normals(ix_beg:ix_end,2) + f_x_ofz.*f_y_ofz.*normals(ix_beg:ix_end,3);
+                        normals = [normals_x normals_y normals_z];
+                    end
+                    % apply bending transformation to the normals
+                    if k_bend
+                        bend_T = Z./sqrt(k_bend^2 + Z.^2);
+%                         normals(ix_beg:ix_end,3) = bend_T.*normals(ix_beg:ix_end,1) + normals(ix_beg:ix_end,3);
+                    end
+                    normals(ix_beg:ix_end,:) = normr(normals(ix_beg:ix_end,:));
                 end
             end
         end
@@ -112,7 +127,7 @@ function [ pcl, normals, etas, omegas ] = superellipsoid( lambda, in_max_n_pts, 
     %% transform points and normals
     pcl = [T*[pcl'; ones(1,size(pcl,1))]]';
     pcl = pcl(:,1:3);
-    normals = normals*rot_mtx;
+    normals = [rot_mtx*normals']';
     %% plot
     if plot_fig        
         scatter3(pcl(:,1),pcl(:,2),pcl(:,3),10,colour); axis equal;   
