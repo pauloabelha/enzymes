@@ -31,11 +31,13 @@ function [ ptools, ptools_maps, ptools_errors, pcl_filenames, errors ] = Extract
     tot_n_ptools = 0;
     errors = {};
     backup_filepath = [root_folder 'extracted_ptools_' date suffix_bkp_file '.mat'];
+    disp(['Starting extraction of p-tools from ' char(9) num2str(numel(pcl_filenames)) ' pcls in ' char(9) root_folder]);
+    disp(['The filename with the data will be saved in:' char(9) backup_filepath]);
     for i=1:numel(pcl_filenames)
         try            
             tic;
             P = ReadPointCloud([root_folder pcl_filenames{i}]);
-            [SQs, ~, ERRORS_SQs] = PCL2SQ( P, 4, 0, 0, [1 1 1 0 1], 1 );
+            [SQs, ~, ERRORS_SQs] = PCL2SQ( P, 4 );
             if numel(SQs) == 1
                 [ ptools{i}, ptools_maps{i}(1:3), ptools_maps{i}(4:6), ptools_errors{i} ] = ExtractPTool(SQs{1},SQs{1},tool_masses(i),ERRORS_SQs);
             else

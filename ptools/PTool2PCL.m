@@ -1,7 +1,7 @@
 % convert a ptool to a pcl
 function [ P_out, transf_lists ] = PTool2PCL( ptools, task )
     % define resolution of each segment (grasp and action)
-    N_POINTS = 100000;
+    N_POINTS = 10000;
     % if a task is given, rotate the pcl at the end
     if ~exist('task','var')
         task = '';
@@ -48,30 +48,38 @@ function [ P_out, transf_lists ] = PTool2PCL( ptools, task )
                 grasp_faces = convhull(grasp_pcl);
             end
         end
-        % if paraboloid
-        if ptools(i,18) < 0
-            [action_pcl, action_normals, action_faces] = ParaboloidFaces(SQ_action,N_POINTS);
-            rev_action_faces = [action_faces(:,3) action_faces(:,2) action_faces(:,1)];
-            action_faces = [action_faces; rev_action_faces];
-        else            
-            % if bent, calculate convhull before bending
-            if ptools(i,17) > 0
-                % hack for mug handles
-                SQ_action(6) = mod(SQ_action(6) + pi,2*pi);
-                SQ_action_non_bent = SQ_action;
-                SQ_action_non_bent(11) = 0;
-                Q = SQ2PCL(SQ_action,N_POINTS);
-                action_pcl = Q.v;
-                action_normals = Q.n;
-                % get convhull of nonbent pcl
-                P = SQ2PCL(SQ_action_non_bent,N_POINTS);        
-                action_faces = convhull(P.v);
-                P.n = action_normals; P.f = action_faces - 1;
-            else
-                P = SQ2PCL(SQ_action,N_POINTS);
-                action_pcl = P.v;
-                action_normals = P.n;
-                action_faces = convhull(action_pcl);
+        % check if ptool has only one part
+        ptool_only_one_part = 0;
+        if sum(abs(ptools(1:9) - ptools(10:18))) < 1e-2
+            ptool_only_one_part = 1;
+            action_pcl = [];
+            action_normals = [];
+        else
+            % if paraboloid
+            if ptools(i,18) < 0
+                [action_pcl, action_normals, action_faces] = ParaboloidFaces(SQ_action,N_POINTS);
+                rev_action_faces = [action_faces(:,3) action_faces(:,2) action_faces(:,1)];
+                action_faces = [action_faces; rev_action_faces];
+            else            
+                % if bent, calculate convhull before bending
+                if ptools(i,17) > 0
+                    % hack for mug handles
+                    SQ_action(6) = mod(SQ_action(6) + pi,2*pi);
+                    SQ_action_non_bent = SQ_action;
+                    SQ_action_non_bent(11) = 0;
+                    Q = SQ2PCL(SQ_action,N_POINTS);
+                    action_pcl = Q.v;
+                    action_normals = Q.n;
+                    % get convhull of nonbent pcl
+                    P = SQ2PCL(SQ_action_non_bent,N_POINTS);        
+                    action_faces = convhull(P.v);
+                    P.n = action_normals; P.f = action_faces - 1;
+                else
+                    P = SQ2PCL(SQ_action,N_POINTS);
+                    action_pcl = P.v;
+                    action_normals = P.n;
+                    action_faces = convhull(action_pcl);
+                end
             end
         end
         pcl = [grasp_pcl; action_pcl];
@@ -88,10 +96,14 @@ function [ P_out, transf_lists ] = PTool2PCL( ptools, task )
         % create segmentation indexes for grasping and action
         U = zeros(size(pcl,1),1);
         U(N_POINTS+1:end) = 1;    
-        F = [grasp_faces; action_faces+size(grasp_pcl,1)];
-        F = F - 1;
-        % create point cloud
-        P = PointCloud(pcl,normals,F,U,[],{grasp_segm,action_segm});
+        % create pcl and add faces
+        if ptool_only_one_part
+            F = grasp_faces - 1;
+            P = PointCloud(pcl,normals,F,U,[],{grasp_segm});
+        else
+            F = [grasp_faces; action_faces+size(grasp_pcl,1)] - 1;
+            P = PointCloud(pcl,normals,F,U,[],{grasp_segm,action_segm});
+        end         
         % add colour to segments
         P = AddColourToSegms(P);
         % get the task's transformations

@@ -29,7 +29,7 @@ function [ pcl, normals, etas, omegas ] = superellipsoid( lambda, in_max_n_pts, 
         in_max_n_pts = Inf;
     end
     %% deal with thin SQs
-    [ thin_SQ, scale_sort, scale_sort_ixs ] = IsThinSQ( lambda );
+    [ thin_SQ, scale_sort, scale_sort_ixs, prop_thin ] = IsThinSQ( lambda );
     if thin_SQ
         [pcl, normals, vol_mult] = Get2DSuperellipsoid(lambda, scale_sort,scale_sort_ixs);
     else

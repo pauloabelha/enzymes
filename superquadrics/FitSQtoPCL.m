@@ -9,7 +9,7 @@ function [SQs,Es,E_pcl_SQs,E_SQ_pcls] = FitSQtoPCL(pcl,ix_attempt,verbose,fit_co
     else
         display_iter = 'off';
     end
-    opt_options = optimset('Display',display_iter,'TolX',1e-10,'TolFun',1e-10,'MaxIter',50,'MaxFunEvals',1000); 
+    opt_options = optimset('Display',display_iter,'TolX',1e-10,'TolFun',1e-10,'MaxIter',200,'MaxFunEvals',1000); 
     if size(pcl,1) <= MIN_N_POINTS
         error(['Point cloud has only ' num2str(size(pcl,1)) ' points and the minimum is ' num2str(MIN_N_POINTS)]);
     end    
@@ -18,14 +18,14 @@ function [SQs,Es,E_pcl_SQs,E_SQ_pcls] = FitSQtoPCL(pcl,ix_attempt,verbose,fit_co
     [~, pcl_scale] = PCLBoundingBoxVolume( pcl );
     %% fit in parallel
     SQs = zeros(4,15);
-    Fs = zeros(4,1); Es = Fs; E_pcl_SQs = Fs; E_SQ_pcls = Fs;
+    Fs = zeros(4,1); Es = Fs; E_pcl_SQs = Fs; E_SQ_pcls = Fs; types= Fs;
     inv_pca_pcl = inv(pca_pcl);
-    for i=1:4
-        [SQs(i,:),~,Es(i,:),E_pcl_SQs(i,:),E_SQ_pcls(i,:)] = FitSQtoPCL_type(pcl,pcl_scale,ix_attempt,opt_options,i,fit_constraints,inv_pca_pcl);  
+    parfor i=1:4
+        [SQs(i,:),~,Es(i,:),E_pcl_SQs(i,:),E_SQ_pcls(i,:),types(i,:)] = FitSQtoPCL_type(pcl,pcl_scale,ix_attempt,opt_options,i,fit_constraints,inv_pca_pcl);  
     end
 end
 
-function [ SQ,F,E,E_pcl_SQ, E_SQ_pcl ] = FitSQtoPCL_type(pcl,pcl_scale,ix_attempt,opt_options,type,fit_constraints,inv_pca_pcl)
+function [ SQ,F,E,E_pcl_SQ, E_SQ_pcl,type ] = FitSQtoPCL_type(pcl,pcl_scale,ix_attempt,opt_options,type,fit_constraints,inv_pca_pcl)
     switch type        
         case 1            
             [ SQ,F,E,E_pcl_SQ, E_SQ_pcl ] = FitSQtoPCL_normal(pcl,pcl_scale,ix_attempt,opt_options,[1 0 0 0 0],fit_constraints);  
