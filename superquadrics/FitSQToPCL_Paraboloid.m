@@ -1,5 +1,5 @@
 function [SQ,F,E,E_pcl_SQ, E_SQ_pcl ] = FitSQToPCL_Paraboloid( pcl,pcl_scale,ix,opt_options,fitting_modes,fit_constraints)
-    SQ = zeros(15,1); F = Inf; E = Inf; E_pcl_SQ = Inf; E_SQ_pcl = Inf;
+    SQ = zeros(1,15); F = Inf; E = Inf; E_pcl_SQ = Inf; E_SQ_pcl = Inf;
     if fitting_modes(5)
         MIN_PROP_SCALE_FOR_3D = 0.05;
         if min(pcl_scale)/max(pcl_scale) < MIN_PROP_SCALE_FOR_3D

@@ -78,36 +78,41 @@ function [ pcl, normals, etas, omegas ] = superellipsoid( lambda, in_max_n_pts, 
                     X = a1*i*signedpow(cos_j_omegas,eps2)*signedpow(cos_k_etas,eps1); X=X(:);
                     Y = a2*i*signedpow(sin_j_omegas,eps2)*signedpow(cos_k_etas,eps1); Y=Y(:);             
                     Z = a3*i*ones(size(omegas,1),1)*signedpow(sin_k_etas,eps1); Z=Z(:);
-                    % get normals                    
+                    %% get normals                    
                     nx = (cos_j_omegas.^2)*cos_k_etas.^2; nx = nx(:);
                     ny = (sin_j_omegas.^2)*cos_k_etas.^2; ny = ny(:);
                     nz = ones(size(omegas,1),1)*sin_k_etas.^2; nz = nz(:); nz(nz<1e-10) = 0;
-                    normals(ix_beg:ix_end,:) = [1./X.*nx 1./Y.*ny 1./Z.*nz];
-                    % apply tapering
+                    one_over_X = 1./X; one_over_X(X==0) = 0;
+                    one_over_Y = 1./Y; one_over_Y(Y==0) = 0;
+                    one_over_Z = 1./Z; one_over_Z(Z==0) = 0;
+                    normals(ix_beg:ix_end,:) = [one_over_X.*nx one_over_Y.*ny one_over_Z.*nz];
+                    %% apply tapering
                     if Kx || Ky
                         f_x_ofz = ((Kx.*Z)/a3) + 1; 
                         X = X.*f_x_ofz;
                         f_y_ofz = ((Ky.*Z)/a3) + 1;
                         Y = Y.*f_y_ofz; 
                     end
-                    % apply bending
+                    %% apply bending
                     if k_bend
                         X = X + (k_bend - sqrt(k_bend^2 + Z.^2));
                     end
                     pcl(ix_beg:ix_end,:) = [X Y Z];                    
-                    % apply tapering transformation to the normals
+                    %% apply tapering transformation to the normals
                     if Kx || Ky
-                        normals_x = normals(ix_beg:ix_end,1).*f_y_ofz;
-                        normals_y = normals(ix_beg:ix_end,2).*f_x_ofz;
+                        nx = normals(ix_beg:ix_end,1).*f_y_ofz;
+                        ny = normals(ix_beg:ix_end,2).*f_x_ofz;
+                        f_prime_x_ofz = (Kx/a3).*X;
+                        f_prime_y_ofz = (Ky/a3).*Y;
                         z_x_taper_factor = -f_prime_x_ofz.*f_y_ofz;
                         z_y_taper_factor = -f_prime_y_ofz.*f_x_ofz;
-                        normals_z = z_x_taper_factor.*normals(ix_beg:ix_end,1) + z_y_taper_factor.*normals(ix_beg:ix_end,2) + f_x_ofz.*f_y_ofz.*normals(ix_beg:ix_end,3);
-                        normals = [normals_x normals_y normals_z];
+                        nz = z_x_taper_factor.*normals(ix_beg:ix_end,1) + z_y_taper_factor.*normals(ix_beg:ix_end,2) + f_x_ofz.*f_y_ofz.*normals(ix_beg:ix_end,3);
+                        normals(ix_beg:ix_end,:) = [nx ny nz];
                     end
-                    % apply bending transformation to the normals
+                    %% apply bending transformation to the normals
                     if k_bend
                         bend_T = Z./sqrt(k_bend^2 + Z.^2);
-%                         normals(ix_beg:ix_end,3) = bend_T.*normals(ix_beg:ix_end,1) + normals(ix_beg:ix_end,3);
+                        normals(ix_beg:ix_end,3) = bend_T.*normals(ix_beg:ix_end,1) + normals(ix_beg:ix_end,3);
                     end
                     normals(ix_beg:ix_end,:) = normr(normals(ix_beg:ix_end,:));
                 end

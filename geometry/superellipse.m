@@ -1,8 +1,8 @@
 % By Paulo Abelha
 % returns or plots a superellipse
 function [ pcl, thetas ] = superellipse( a, b, eps1, D, plot_fig )
-    if ~exist('D','var') || D < 0
-        D = ((a*b))/100; %0.0005;
+    if ~exist('D','var') || D < 0     
+        D = ((max(a/b,b/a)))/100; %0.0005;
     end
     if ~exist('plot_fig','var')
         plot_fig = 0;

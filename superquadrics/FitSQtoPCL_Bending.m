@@ -1,4 +1,4 @@
-function [SQ,F,E,E_pcl_SQ, E_SQ_pcl ] = FitSQtoPCL_Bending(pcl,pcl_scale,ix,opt_options,fitting_modes) 
+function [SQ,F,E,E_pcl_SQ, E_SQ_pcl ] = FitSQtoPCL_Bending(pcl,pcl_scale,ix,opt_options,fitting_modes,fit_constraints) 
     SQ = zeros(15,1); F = Inf; E = Inf; E_PROP = Inf; E_pcl_SQ = Inf; E_SQ_pcl= Inf;
     MIN_PCL_SCALE = 1e-7;
     if fitting_modes(3) == 1

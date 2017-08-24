@@ -1,4 +1,4 @@
-function [SQ,F,E,E_PROP,E_pcl_SQ,E_SQ_pcl] = FitSQtoPCL_Toroid(pcl,pcl_scale,ix,opt_options,initial_lambda_in,fitting_modes)  
+function [SQ,F,E,E_PROP,E_pcl_SQ,E_SQ_pcl] = FitSQtoPCL_Toroid(pcl,pcl_scale,ix,opt_options,initial_lambda_in,fitting_modes,fit_constraints)  
     SQ = zeros(15,1); F = Inf; E = Inf; E_PROP = Inf; E_pcl_SQ = Inf; E_SQ_pcl = Inf; 
     MIN_PCL_SCALE = 0.0001;
     if fitting_modes(4) == 1

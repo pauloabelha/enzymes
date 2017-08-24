@@ -26,11 +26,11 @@
 %   SQs_pcls - uniformly sampled pcls of the SQs
 %
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-function [ SQs, TOT_ERROR, SEGM_ERRORS, SEGM_ERRORS_PCL_SQ, SEGM_ERRORS_SQ_PCL, SQ_pcls ] = PCL2SQ( P, n_attempts, plot_fig, verbose, fitting_modes, try_to_clean_segm )
+function [ SQs, TOT_ERROR, SEGM_ERRORS, SEGM_ERRORS_PCL_SQ, SEGM_ERRORS_SQ_PCL, SQ_pcls ] = PCL2SQ( P, n_attempts, plot_fig, verbose, try_to_clean_segm )
     %% constants
     % max number of points (pcls with more than this will be downsampled)
     % increase this too much at your own risk of freezing the machine :)
-    MAX_PCL_N_PTS = 2000;
+    MAX_PCL_N_PTS = 1000;
     %% sanity checks
     if ~exist('P','var')
         error('No argument given: First argument needs to be a PointCloud or an Nx3 matrix');
@@ -55,11 +55,6 @@ function [ SQs, TOT_ERROR, SEGM_ERRORS, SEGM_ERRORS_PCL_SQ, SEGM_ERRORS_SQ_PCL, 
     if ~exist('verbose','var')
         verbose = 0;
     end
-    if ~exist('fitting_modes','var')
-        fitting_modes = [1 1 1 0 1];
-    else
-        CheckNumericArraySize(fitting_modes,[1 5]);
-    end
     if ~exist('try_to_clean_segm','var')
         try_to_clean_segm = 0;
     end    
@@ -67,7 +62,6 @@ function [ SQs, TOT_ERROR, SEGM_ERRORS, SEGM_ERRORS_PCL_SQ, SEGM_ERRORS_SQ_PCL, 
     n_segms = size(P.segms,2);
     SQs = cell(1,n_segms);    
     SEGM_ERRORS = zeros(1,n_segms);
-    SEGM_ERRORS_vec = zeros(1,n_segms); 
     SEGM_ERRORS_PCL_SQ = zeros(1,n_segms); 
     SEGM_ERRORS_SQ_PCL = zeros(1,n_segms);
     %% fit SQs to each segment
@@ -80,17 +74,30 @@ function [ SQs, TOT_ERROR, SEGM_ERRORS, SEGM_ERRORS_PCL_SQ, SEGM_ERRORS_SQ_PCL, 
         % downsample pcl
         pcl = pcl(randsample(size(pcl,1),min(size(pcl,1),MAX_PCL_N_PTS)),:);  
         % fit the SQ to the pcl
-        [SQs{i},SEGM_ERRORS(i),SEGM_ERRORS_vec(i),SEGM_ERRORS_PCL_SQ(i),SEGM_ERRORS_SQ_PCL(i)] = FitSQtoPCL(pcl,n_attempts,verbose,fitting_modes);
+        SQs_fit = zeros(n_attempts*4,15);
+        Es = zeros(n_attempts*4,1);
+        E_pcl_SQs = Es;
+        E_SQ_pcls = Es;
+        ix_end = 0;
+        for ix_attempt=1:n_attempts     
+            ix_beg = ix_end + 1;
+            ix_end = ix_end + 4;
+            [SQs_fit(ix_beg:ix_end,:),Es(ix_beg:ix_end),E_pcl_SQs(ix_beg:ix_end),E_SQ_pcls(ix_beg:ix_end)] = FitSQtoPCL(pcl,ix_attempt,verbose);
+        end
+        [SEGM_ERRORS(i), ix_best] = min(Es);
+        SQs{i} = SQs_fit(ix_best,:);        
+        SEGM_ERRORS_PCL_SQ(i) = E_pcl_SQs(ix_best);
+        SEGM_ERRORS_SQ_PCL(i) = E_SQ_pcls(ix_best);        
     end
     % get total error
     TOT_ERROR = sum(SEGM_ERRORS)/size(SEGM_ERRORS,1);
     % plot results
-    SQ_colours = {'.c' '.m' '.y' '.b' '.g' '.r'};
+    SQ_colours = {'.c' '.c' '.c' '.c' '.c' '.c'};
     if plot_fig
         PlotPCLSegments(P);
         hold on;        
     end 
     if plot_fig || nargout > 5
-        SQ_pcls = PlotSQs(SQs,10000,0,SQ_colours,plot_fig);
+        SQ_pcls = PlotSQs(SQs,20000,0,SQ_colours,plot_fig);
     end
 end

@@ -14,7 +14,6 @@ function [ F, E, E_pcl_SQ, E_SQ_pcl  ] = RankSQ(pcl,SQ)
     F = sum(abs(F))/size(pcl,1);
     % calculate mse
     P = SQ2PCL(SQ,size(pcl,1));
-    SQ_pcl = P.v;
-    [E, E_pcl_SQ, E_SQ_pcl] = PCLDist( pcl, SQ_pcl );
+    [E, E_pcl_SQ, E_SQ_pcl] = PCLDist( pcl, P.v );
 end
 
