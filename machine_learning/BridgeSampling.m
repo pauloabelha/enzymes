@@ -25,7 +25,7 @@ function [ sampled_points ] = BridgeSampling( points, n_connections )
     tot_toc = 0;
     n_visited_points = 0;
     curr_point_ix = 1;
-    mean_dist = overall_mean_dist;
+    mean_dist = overall_mean_dist*10;
     max_dist = mean_dist+std(dists_closest);
     while n_visited_points < n_points && ~all(visited_ixs)       
         tic;
@@ -73,7 +73,7 @@ function [ sampled_points ] = BridgeSampling( points, n_connections )
         end
         tot_toc = DisplayEstimatedTimeOfLoop(tot_toc+toc,n_visited_points,n_points);
     end
-    sampled_points = sampled_points(randi(size(sampled_points,1),1,size(sampled_points,1)),:);
+    %sampled_points = sampled_points(randi(size(sampled_points,1),1,size(sampled_points,1)),:);
 end
 
 
