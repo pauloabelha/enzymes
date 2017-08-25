@@ -121,6 +121,7 @@ function [ pcl, normals, etas, omegas, faces ] = superellipsoid( lambda, in_max_
             end
         end
     end
+    faces = [];
     % get experimental faces
 %     s1 = 35;
 %     s2 = 35;
