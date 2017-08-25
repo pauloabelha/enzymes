@@ -43,12 +43,13 @@ function [ Ps ] = SQ2PCL( SQs, n_points, plot_fig )
             plot_fig = 0;
         end
         %% deal with superparaboloids
+        faces = [];
         if SQ(12) < 0
             [pcl, normals] = superparaboloid(SQ, n_points);
         else
-            [pcl, normals] = superellipsoid(SQ, n_points);    
+            [pcl, normals, ~, ~, faces] = superellipsoid(SQ, n_points);    
         end   
-        Ps{i} = PointCloud(pcl,normals);        
+        Ps{i} = PointCloud(pcl,normals,faces);        
     end
     %% plot
     if plot_fig

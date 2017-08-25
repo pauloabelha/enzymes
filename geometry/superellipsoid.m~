@@ -55,8 +55,6 @@ function [ pcl, normals, etas, omegas, faces ] = superellipsoid( lambda, in_max_
             [ ~, etas ] = superellipse( 1, a3, eps1, D);
             [ ~, omegas ] = superellipse( a1, a2, eps2, D); 
         end        
-        omegas = sort(omegas);
-        etas = sort(etas);
         etas = etas';
         n_cross_angles = size(etas,2) * size(omegas,1);
         if n_cross_angles > MAX_N_CROSS_ANGLES
@@ -122,24 +120,11 @@ function [ pcl, normals, etas, omegas, faces ] = superellipsoid( lambda, in_max_
         end
     end
     % get experimental faces
-%     s1 = 35;
-%     s2 = 35;
-%     M = size(omegas,1);
-%     N = size(etas,2);
-%     F1 = [1; interleave(1+s1:s1:M,1+s1:s1:M)]; F1 = F1(1:end-1);
-%     F2 = interleave(1+M*s2:s1:M*(s2+1)-s1,1+M*s2:s1:M*(s2+1)-s1);
-%     F3 = interleave(1+s1:s1:M,[1+s1:s1:M] + M*s2);
-%     faces = [F1 F2 F3];
-%     ix = 0;
-%     faces_orig = faces;
-%     for i=1:s2:N-s1
-%         ix = ix+1;
-%         faces = [faces; faces_orig+(ix*faces(1,2))];
-%     end
-%     faces_orig = faces;
-%     for i=2:3
-%         faces = [faces; faces_orig.*i];
-%     end
+    F1 = [ s1+1
+    F1 = interleave(1:10:101,1:10:101);
+    F2 = [F1(3:end); F1(end)+10; F1(end)+10];
+    F3 = [F1(2:end-1); F1(end); F1(end)+10] + size(omegas,1);
+    faces = [F3 F2 F1];
     %% deal with low cubic vol SQs
     pcl = pcl./vol_mult;
     %% get final points and normals    

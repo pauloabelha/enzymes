@@ -34,6 +34,7 @@ function [ SQs_Ps, P ] = PlotSQs( SQs, downsample, invert_colours, colours, plot
         end
     end
     SQs_Ps = cell(1,size(SQs,1));    
+    plot_fig = 0;
     if plot_fig
         hold on;
         axis equal;
@@ -43,7 +44,7 @@ function [ SQs_Ps, P ] = PlotSQs( SQs, downsample, invert_colours, colours, plot
     for i=1:size(SQs,1)
         P = SQ2PCL( SQs(i,:), downsample );
         P.segms{1} = P;
-        P.f = convhull(P.v);
+%         P.f = convhull(P.v);
         P.f = P.f - 1;        
         SQs_Ps{i} = P;
         if plot_fig
