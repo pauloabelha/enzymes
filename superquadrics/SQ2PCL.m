@@ -47,7 +47,7 @@ function [ Ps ] = SQ2PCL( SQs, n_points, plot_fig )
         if SQ(12) < 0
             [pcl, normals] = superparaboloid(SQ, n_points);
         else
-            [pcl, normals, ~, ~, faces] = superellipsoid(SQ, n_points);    
+            [pcl, normals, etas, omegas, faces ] = superellipsoid(SQ, n_points);    
         end   
         Ps{i} = PointCloud(pcl,normals,faces);        
     end

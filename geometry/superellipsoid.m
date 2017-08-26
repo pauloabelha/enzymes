@@ -31,7 +31,8 @@ function [ pcl, normals, etas, omegas, faces ] = superellipsoid( lambda, in_max_
     %% deal with thin SQs
     [ thin_SQ, scale_sort, scale_sort_ixs, prop_thin ] = IsThinSQ( lambda );
     if thin_SQ
-        [pcl, normals, vol_mult] = Get2DSuperellipsoid(lambda, scale_sort,scale_sort_ixs);
+        [pcl, normals, vol_mult, omegas] = Get2DSuperellipsoid(lambda, scale_sort,scale_sort_ixs);
+        etas = [];
     else
         % deal with SQs with a scale number less than 1
         % this is too deal with arbitrarly small SQs and 
@@ -146,7 +147,7 @@ function [ pcl, normals, etas, omegas, faces ] = superellipsoid( lambda, in_max_
     %% get final points and normals    
     MAX_N_PTS = min(MAX_N_PTS,in_max_n_pts);
     ixs = randsample(1:size(pcl,1),min(size(pcl,1),MAX_N_PTS));
-    ixs = logical(ones(size(pcl,1),1));
+%     ixs = logical(ones(size(pcl,1),1));
     %% get ixs according to downsampling
 %     a=1:size(pcl,1);
 %     ixs=zeros(size(pcl,1),1);
@@ -170,7 +171,7 @@ function [ pcl, normals, etas, omegas, faces ] = superellipsoid( lambda, in_max_
     end
 end
 
-function [final_pcl, final_normals, vol_mult] = Get2DSuperellipsoid(lambda, scale_sort, scale_sort_ixs)
+function [final_pcl, final_normals, vol_mult, omegas] = Get2DSuperellipsoid(lambda, scale_sort, scale_sort_ixs)
     % decide on which eps for the 2D sq
     eps = 1;
     if scale_sort_ixs(1) == 3
@@ -187,7 +188,7 @@ function [final_pcl, final_normals, vol_mult] = Get2DSuperellipsoid(lambda, scal
     end 
     a=lambda(1:3);
     a=a(a>min(a));
-    pcl = superellipse( a(1), a(2), eps);        
+    [pcl, omegas] = superellipse( a(1), a(2), eps);        
     ixs = randsample(1:size(pcl,1),min(1000,size(pcl,1)));
     pcl = pcl(ixs,:);
     n_iter = floor(min(1000,max(scale_sort(2:3))/0.001));
