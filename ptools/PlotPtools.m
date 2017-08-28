@@ -1,5 +1,5 @@
 % plot a 21-dimensional ptool vector (returns both pcls)
-function [ Ps ] = PlotPtools( ptools, task_name, plot_faces )
+function [ Ps ] = PlotPtools( ptools, task_name, plot_faces, colours )
     if ~exist('plot_faces','var')
         plot_faces = 0;
     end
@@ -20,7 +20,7 @@ function [ Ps ] = PlotPtools( ptools, task_name, plot_faces )
             figure;
             trisurf(F, P.v(:,1),P.v(:,2),P.v(:,3)); axis equal;
         else
-            PlotPCLSegments(P);
+            PlotPCLSegments(P,-1,-1,colours);
         end
         xlabel('X');
         ylabel('Y');

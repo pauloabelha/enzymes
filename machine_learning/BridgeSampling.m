@@ -9,9 +9,16 @@
 %   dists_closest - 1 * M array, for each point, with the distance to its closest point
 %
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-function [ sampled_points ] = BridgeSampling( points, n_connections )
+function [ sampled_points ] = BridgeSampling( points, n_connections, scores, min_score )
     if ~exist('n_connections','var')
         n_connections = 10;
+    end
+    if ~exist('scores','var')
+        scores = zeros(size(points,1),1);
+        min_score = -Inf;
+    end
+    if ~exist('min_score','var')
+        error('When a scores vector is given, you need to define a minimum score');
     end
     % get a distribution of distances between a point and its closest point
     normalise_points = true;
@@ -27,7 +34,7 @@ function [ sampled_points ] = BridgeSampling( points, n_connections )
     curr_point_ix = 1;
     mean_dist = overall_mean_dist*10;
     max_dist = mean_dist+std(dists_closest);
-    while n_visited_points < n_points && ~all(visited_ixs)       
+    while n_visited_points < n_points && ~all(visited_ixs)   
         tic;
         n_visited_points = n_visited_points + 1;    
         visited_ixs(curr_point_ix) = true;
@@ -43,7 +50,7 @@ function [ sampled_points ] = BridgeSampling( points, n_connections )
         dist_closest = pdist([curr_point;closest_point]);
         if dist_closest <= mean_dist*(1+perc_mean_dist) && ~visited_ixs(closest_point_ix)
             mean_dist = (mean_dist+dist_closest)/2;            
-            sampled_points = BridgeSampler(orig_points(curr_point_ix,:),orig_points(closest_point_ix,:),n_connections,sampled_points);
+            sampled_points = BridgeSampler(orig_points(curr_point_ix,:),orig_points(closest_point_ix,:),n_connections,sampled_points,scores(curr_point_ix),scores(closest_point_ix),min_score);
             curr_point_ix = ixs_closest(curr_point_ix);
         else
             non_visited_points = points(~visited_ixs,:);
@@ -56,7 +63,7 @@ function [ sampled_points ] = BridgeSampling( points, n_connections )
                     continue;
                 end
                 if curr_dist <= mean_dist*(1+perc_mean_dist)                                   
-                    sampled_points = BridgeSampler(curr_point,neighbour_point,n_connections,sampled_points);
+                    sampled_points = BridgeSampler(curr_point,neighbour_point,n_connections,sampled_points,scores(curr_point_ix),scores(closest_point_ix),min_score);
                     curr_point_ix = i;
                     point_isolated = 0;
                     break;
@@ -77,11 +84,14 @@ function [ sampled_points ] = BridgeSampling( points, n_connections )
 end
 
 
-function sampled_points = BridgeSampler(curr_point,neighbour_point,n_connections,sampled_points)
-    bridge_vector = neighbour_point - curr_point;
-    new_sampled_points = zeros(n_connections,size(curr_point,2));
-    for i=1:n_connections
-        new_sampled_points(i,:) = curr_point + (bridge_vector*i/n_connections);
+function sampled_points = BridgeSampler(curr_point,neighbour_point,n_connections,sampled_points,score_curr_point,score_neighb_point,min_score)
+    new_sampled_points = [];
+    if score_curr_point > min_score && score_neighb_point > min_score
+        bridge_vector = neighbour_point - curr_point;
+        new_sampled_points = zeros(n_connections,size(curr_point,2));
+        for i=1:n_connections
+            new_sampled_points(i,:) = curr_point + (bridge_vector*i/n_connections);
+        end
     end
     sampled_points = [sampled_points; new_sampled_points];
 end

@@ -34,7 +34,6 @@ function [ SQs_Ps, P ] = PlotSQs( SQs, downsample, invert_colours, colours, plot
         end
     end
     SQs_Ps = cell(1,size(SQs,1));    
-    plot_fig = 0;
     if plot_fig
         hold on;
         axis equal;

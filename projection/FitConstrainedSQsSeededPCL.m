@@ -23,5 +23,8 @@ function [SQs,SQs_errors,seeds_pcls] = FitConstrainedSQsSeededPCL(seeds_pcls,ver
             tot_toc = DisplayEstimatedTimeOfLoop(tot_toc+toc,i,size(seeds_pcls,2),[char(9) 'Fitting SQs to ' num2str(size(seeds_pcls,2)) ' seeded pcls... ']);
         end
     end
+    if verbose
+        disp([char(9)  'Getting rotation options for ' num2str(size(seeds_pcls,2)  ) ' SQs...']);
+    end
     [SQs,SQs_errors] = GetRotationSQFits( SQs, Ps );    
 end

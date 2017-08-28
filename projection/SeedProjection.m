@@ -54,15 +54,11 @@ function [ best_scores, best_categ_scores, best_ptools, best_ptool_maps, SQs, P 
     if verbose 
         disp([char(9) 'Best p-tool found (task score; fit score)' char(9) num2str(best_score) char(9) num2str(best_fit_score)]);   
     end
-    % plot the N best ptools  
     if plot_fig
-        n_best_ptools = 3;
-        for i=1:n_best_ptools
-            [SQs, transf_lists] = rotateSQs(SQs,1,2,task_name);
-            P = Apply3DTransfPCL(P,transf_lists);
-            PlotPCLS(P,10000,1);
-            PlotSQs({SQs{usage_ixs(best_options(i),1)} SQs{usage_ixs(best_options(i),2)}},1000);
-            view([0 0]);
-        end
+        figure;
+        Q = RotatePCLsWithPtoolsForTask(P,best_ptools(101,:), best_ptool_maps(101,:),task_name);
+        Q=Q{1};
+        PlotPCLSegments(Q); hold on;
+        PlotPtools(best_ptools(101,:),task_name,0,{'c', 'k'}); hold off;
     end
 end

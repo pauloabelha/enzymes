@@ -1,14 +1,16 @@
-function PlotPCLSegments( P, colour_segm_ix, downsample )
+function PlotPCLSegments( P, colour_segm_ix, downsample, colours )
     if isempty(P)
         error('P is empty. Please provide a P struct with at least the vertice (.v) field');
     end
-    if ~exist('colour_segm_ix','var')
+    if ~exist('colour_segm_ix','var') || colour_segm_ix == -1
         colour_segm_ix = ones(size(P.segms,2),1);
     end
-    if ~exist('downsample','var')
+    if ~exist('downsample','var') || downsample == -1
         downsample = 0;
     end
-    colours = {'.r' '.g' '.b' '.y' '.m' '.c' '.r' '.g' '.b' '.y' '.m' '.c'};    
+    if ~exist('colours','var')
+        colours = {'.r' '.g' '.b' '.y' '.m' '.c' '.r' '.g' '.b' '.y' '.m' '.c'};  
+    end      
     %figure;
     hold on;
     for i=1:size(P.segms,2)

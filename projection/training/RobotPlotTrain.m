@@ -1,6 +1,6 @@
-function [ X_trains, Y_trains, Y_train_preds, X_tests, Y_tests, Y_test_preds, train_errors, test_errors, train_error, test_error, test_error_std ] = RobotPlotTrain( filepath, ixs_test_fixed, X, Y, plot )
+function [ X_trains, Y_trains, Y_train_preds, X_tests, Y_tests, Y_test_preds, train_errors, test_errors, train_error, test_error, test_error_std ] = RobotPlotTrain( filepath, ixs_test_fixed, X, Y, plot_fig )
     if ~exist('plot','var')
-        plot = 1;
+        plot_fig = 1;
     end
     if ~exist('ixs_test_fixed','var')
         ixs_test_fixed = [];
@@ -39,7 +39,7 @@ function [ X_trains, Y_trains, Y_train_preds, X_tests, Y_tests, Y_test_preds, tr
     train_error = mean(abs(Y_train_preds{end}-Y_trains{end}));
     test_error = mean(abs(Y_test_preds{end}-Y_tests{end}));
     test_error_std = test_error_stds(end);
-    if plot
+    if plot_fig
         figure; title('Training errors');
         plot(sum(train_errors,2)/size(train_errors,2));
         figure; title('Test errors');
