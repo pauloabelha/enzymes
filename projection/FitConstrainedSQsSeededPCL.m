@@ -12,16 +12,19 @@ function [SQs,SQs_errors,seeds_pcls] = FitConstrainedSQsSeededPCL(seeds_pcls,ver
     SQ_errors = zeros(1,size(seeds_pcls,2));
     Ps = cell(1,size(seeds_pcls,2));
     tot_toc = 0;
-    for i=1:size(seeds_pcls,2)    
+    if verbose
+       disp([char(9) 'Fitting SQs to ' num2str(size(seeds_pcls,2)) ' seeded pcls... ']);
+    end
+    parfor i=1:size(seeds_pcls,2)    
         if verbose
             tic;
         end
         [SQs{i}, ~, SQ_errors(i)] = PCL2SQ( seeds_pcls{i}, 1 );
         SQs{i} = SQs{i}{1};
         Ps{i}.v = seeds_pcls{i};
-        if verbose
-            tot_toc = DisplayEstimatedTimeOfLoop(tot_toc+toc,i,size(seeds_pcls,2),[char(9) 'Fitting SQs to ' num2str(size(seeds_pcls,2)) ' seeded pcls... ']);
-        end
+%         if verbose
+%             tot_toc = DisplayEstimatedTimeOfLoop(tot_toc+toc,i,size(seeds_pcls,2),[char(9) 'Fitting SQs to ' num2str(size(seeds_pcls,2)) ' seeded pcls... ']);
+%         end
     end
     if verbose
         disp([char(9)  'Getting rotation options for ' num2str(size(seeds_pcls,2)  ) ' SQs...']);

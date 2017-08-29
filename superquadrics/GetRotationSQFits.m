@@ -21,16 +21,12 @@ function [ SQs_alt, ERRORS_SQs_alt, ERRORS, ORIG_ERRORS ] = GetRotationSQFits( S
     %% initialise variables for parallel loop
     ORIG_ERRORS = zeros(1,numel(SQs));
     ERRORS = zeros(6,size(SQs,2));
-    ERRORS_SQs_alt = ERRORS + Inf;
+    ERRORS_SQs_alt = ERRORS;
     SQs_alt = cell(6,size(SQs,2));
     %% get the alternative SQs    
-    for i=1:numel(SQs)        
+    parfor i=1:numel(SQs)        
         %% get pcl points in a matrix
-        if isstruct(Ps{i})
-            P_v = Ps{i}.v;
-        else
-            P_v = P.v;
-        end
+        P_v = Ps{i}.v;
         % downsample the pcl for fit error comparison
         P_v = DownsamplePCL( P_v, N_POINTS, 1 );
         % get the pointcloud for the SQ
@@ -42,7 +38,9 @@ function [ SQs_alt, ERRORS_SQs_alt, ERRORS, ORIG_ERRORS ] = GetRotationSQFits( S
         %% get the 5 alternative SQs, accumulate if the fit is good
         % define SQ ix 
         SQs_alt_j = cell(6,1);
-        parfor j=1:4
+        curr_ERRORS = zeros(6,1);
+        curr_ERRORS_alt = curr_ERRORS + Inf;
+        for j=1:4
             alt_SQ = SQs{i};
             alt_SQ(6:8) = [0 0 0];
             rot = GetRotMtx((j-1)*pi/2,'y');
@@ -54,15 +52,14 @@ function [ SQs_alt, ERRORS_SQs_alt, ERRORS, ORIG_ERRORS ] = GetRotationSQFits( S
             alt_SQ = RotateSQWithRotMtx(alt_SQ,GetEulRotMtx(SQs{i}(6:8))); 
             P_alt_SQ_pcl = SQ2PCL(alt_SQ,size(P_v,1));
             alt_SQ_pcl = P_alt_SQ_pcl.v;
-            E = PCLDist( alt_SQ_pcl, Ps{i}.v );
-            ERRORS(j,i) = E;
+            curr_ERRORS(j) = PCLDist( alt_SQ_pcl, Ps{i}.v );
             % if fit is good, accumulate SQ
-            if E <= fit_threshold || E <= (E_orig*PROP_THRESHOLD_ORIG_ERROR) || j == 1
-                SQs_alt_j{j} = alt_SQ;   
-                ERRORS_SQs_alt(j,i) = E;
+            if curr_ERRORS(j) <= fit_threshold || curr_ERRORS(j) <= (E_orig*PROP_THRESHOLD_ORIG_ERROR) || j == 1
+                SQs_alt_j{j} = alt_SQ;  
+                curr_ERRORS_alt(j) = curr_ERRORS(j);
             end
         end        
-        parfor j=5:6
+        for j=5:6
             alt_SQ = SQs{i};
             alt_SQ(6:8) = [0 0 0];
             if j == 5 
@@ -77,14 +74,15 @@ function [ SQs_alt, ERRORS_SQs_alt, ERRORS, ORIG_ERRORS ] = GetRotationSQFits( S
             alt_SQ = RotateSQWithRotMtx(alt_SQ,GetEulRotMtx(SQs{i}(6:8)));
             P_alt_SQ_pcl = SQ2PCL(alt_SQ,size(P_v,1));
             alt_SQ_pcl = P_alt_SQ_pcl.v;
-            E = PCLDist( alt_SQ_pcl,P_v );
-            ERRORS(j,i) = E;
+            curr_ERRORS(j) = PCLDist( alt_SQ_pcl,P_v );
             % if fit is good, accumulate SQ
-            if E <= fit_threshold || E <= (E_orig*PROP_THRESHOLD_ORIG_ERROR)
+            if curr_ERRORS(j) <= fit_threshold || curr_ERRORS(j) <= (E_orig*PROP_THRESHOLD_ORIG_ERROR)
                 SQs_alt_j{j} = alt_SQ;  
-                ERRORS_SQs_alt(j,i) = E;
+                curr_ERRORS_alt(j) = curr_ERRORS(j);
             end
         end
+        ERRORS_SQs_alt(:,i) = curr_ERRORS_alt;
+        ERRORS(:,i) = curr_ERRORS;
         SQs_alt(:,i) = SQs_alt_j;
     end   
     %% remove badly fitted alt SQs (if required) - return is flattened
