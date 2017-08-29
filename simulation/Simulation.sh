@@ -98,7 +98,7 @@ do
 		rm -r $TOOL_FOLDER	
 		echo "Current tool folder being trained: "$TASK_PATH"/"$P
 		cp -r $P $TOOL_FOLDER
-		echo $START_TRIAL >> " " >> IX_FOLDER >> $OUTPUT_FILE
+		echo $START_TRIAL" "$IX_FOLDER >> $OUTPUT_FILE
 		for (( i=1; i<=$N_TRIALS; i++ ))
 		do	
 			echo "  Trial "$i	
