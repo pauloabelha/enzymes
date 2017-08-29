@@ -23,6 +23,6 @@ function [ gprs, sigmaMs, feat_imps, dims_ixs, train_res ] = RobotTrain( ptools,
         dims_ixs{end+1} = dims_ixs{end};
         dims_ixs{end}(dims_ixs{end}==1) = last_dim_ixs;
         curr_n_dims = sum(dims_ixs{end});
-        save([root_folder 'trained_robot_' task '_' date '_' suffix]);
+        save([root_folder 'trained_robot_' task '_' date suffix]);
     end
 end
