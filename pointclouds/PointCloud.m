@@ -58,9 +58,9 @@ function [ P ] = PointCloud( V, N, F, U, C, segms )
         if isempty(P.u)
            P.u = zeros(size(P.v,1),1);
            curr = 1;
-           for i=1:numel(P.segms)
-               P.u(curr:size(P.segms{i}.v,1)) = i;
-               curr = size(P.segms{i}.v,1) + 1;
+           for i=0:numel(P.segms)-1
+               P.u(curr:size(P.segms{i+1}.v,1)) = i;
+               curr = size(P.segms{i+1}.v,1) + 1;
            end
         end
         P = AddColourToSegms(P);
