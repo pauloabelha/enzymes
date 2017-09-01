@@ -8,10 +8,10 @@ function PlotPCLSegments( P, colour_segm_ix, downsample, colours )
     if ~exist('downsample','var') || downsample == -1
         downsample = 0;
     end
-    if ~exist('colours','var')
+    if ~exist('colours','var') || colours == -1
         colours = {'.r' '.g' '.b' '.y' '.m' '.c' '.r' '.g' '.b' '.y' '.m' '.c'};  
     end      
-    %figure;
+    figure;
     hold on;
     for i=1:size(P.segms,2)
         colour = [0.5 0.5 0.5];

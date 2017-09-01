@@ -8,6 +8,7 @@ function [ ptools, ptools_map, ptools_errors, ERRORS_SQs_alt] = ExtractPToolsAlt
     ptools_map = [];
     SQs_1 = [];
     SQs_2 = [];
+    ERRORS = [];
     for sq1_ix=1:size(SQs,2)
         n_grasp_alt = size(SQs,1);
         if ~grasp_alt
@@ -29,7 +30,7 @@ function [ ptools, ptools_map, ptools_errors, ERRORS_SQs_alt] = ExtractPToolsAlt
                     end 
                     SQs_1(end+1,:) = SQ1;
                     SQs_2(end+1,:) = SQ2;
-                    ERRORS = ERRORS_SQs_alt(sq1_alt_ix,sq1_ix) + ERRORS_SQs_alt(sq2_alt_ix,sq2_ix);
+                    ERRORS(end+1) = ERRORS_SQs_alt(sq1_alt_ix,sq1_ix) + ERRORS_SQs_alt(sq2_alt_ix,sq2_ix);
                     ptools_map(end+1,:) = [SQ1(end-2:end) GetSQVector(SQ1)'];
                 end
             end
@@ -38,7 +39,7 @@ function [ ptools, ptools_map, ptools_errors, ERRORS_SQs_alt] = ExtractPToolsAlt
     ptools = zeros(size(SQs_1,1),25);
     ptools_errors = zeros(1,size(ptools,1));
     parfor i=1:size(ptools,1)
-        [ptools(i,:), ~, ~, ptools_errors(i)] = ExtractPTool(SQs_1(i,:),SQs_2(i,:),mass,ERRORS); 
+        [ptools(i,:), ~, ~, ptools_errors(i)] = ExtractPTool(SQs_1(i,:),SQs_2(i,:),mass,ERRORS(i)); 
     end
 %     disp(toc);
 %     tic;

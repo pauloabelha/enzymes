@@ -46,6 +46,7 @@ function [ metric1_per_seed, acc_per_seed, accuracy_categs, projection_filenames
             tools_gt = tools_gt';
         end
         % get accuracy per category
+        best_categ_scores = best_categ_scores_mtx(:,101)';
         for j=1:4
             if size(best_categ_scores(tools_gt == j),2) ~= 0            
                 accuracy_categs(ix_ablation,j) = size(best_categ_scores(best_categ_scores == j & tools_gt == j),2)/size(best_categ_scores(tools_gt == j),2);
