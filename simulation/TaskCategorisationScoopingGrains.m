@@ -1,22 +1,26 @@
-function [ category ] = TaskCategorisationScoopingGrains( simulation_scores, eps )
+function [ category, a, b, c, d ] = TaskCategorisationScoopingGrains( simulation_scores, eps )
     if ~exist('eps','var')
         eps = 0.001;
     end    
+    a = 1;
+    b = 3;
+    c = 5;
+    d = 7;
     category = zeros(size(simulation_scores));
     for i=1:length(simulation_scores)
         if isnan(simulation_scores(i))
             category(i) = -1;
             continue;
         end
-        if simulation_scores(i) < 1 || simulation_scores(i) > 50
+        if simulation_scores(i) < a
             category(i) = 1;
             continue;
         end
-        if simulation_scores(i) < 3
+        if simulation_scores(i) < b
             category(i) = 2;
             continue;
         end
-        if simulation_scores(i) < 5
+        if simulation_scores(i) < c
             category(i) = 3;
             continue;
         end

@@ -1,6 +1,6 @@
 
 
-function [ best_scores, best_categ_scores, best_ptools, best_ptool_maps, SQs, P ] = SeedProjection( P, tool_mass, task_name, task_function, task_function_params, n_seeds, add_segms, verbose, plot_fig )  
+function [ best_scores, best_categ_scores, best_ptools, best_ptool_maps, SQs, P ] = SeedProjection( P, tool_mass, task_name, task_function, task_function_params, n_seeds, add_segms, verbose, plot_fig, iter )  
     %% default is not verbose
     if ~exist('verbose','var')
         verbose = 0;
@@ -38,9 +38,26 @@ function [ best_scores, best_categ_scores, best_ptools, best_ptool_maps, SQs, P 
         disp([char(9) 'Calculating rank voting for ' num2str(n_weights) ' different weight values...']);
     end        
     voting_matrix_normalised = NormaliseData(voting_matrix')';
+    %% get ranking for fit score
+    [~,fit_score_sort_ix] = sort(voting_matrix_normalised(1,:)+randi(10,1,size(voting_matrix_normalised(1,:),1))/10^6,'ascend');
+    rank_fit_score = fit_score_sort_ix;
+    for i=1:numel(rank_fit_score)
+        rank_fit_score(fit_score_sort_ix(i)) = i;
+    end
+    %% get ranking for task score
+    [~,task_score_sort_ix] = sort(voting_matrix_normalised(2,:)+randi(10,1,size(voting_matrix_normalised(2,:),1))/10^6,'ascend');
+    rank_task_score = rank_fit_score;
+    for i=1:numel(rank_task_score)
+        rank_task_score(task_score_sort_ix(i)) = i;
+    end
+    %% get max ranked vote element
+    rank_sum = rank_fit_score + rank_task_score;
+    [~,best_elem_ix] = max(rank_sum);
     % outer product of weights with task scores normalised in the matrix
-    a = weights * voting_matrix_normalised(2,:);
-    final_mtx = a + repmat(voting_matrix_normalised(1,:),200,1);   
+%     a = weights * voting_matrix_normalised(2,:);
+%     final_mtx = a + repmat(voting_matrix_normalised(1,:),200,1);   
+    a = weights * rank_task_score;
+    final_mtx = a + repmat(rank_fit_score,n_weights,1);   
     [~,best_ixs] = max(final_mtx,[],2);
     % get the best ptool to return
     best_ptools = ptools_proj(best_ixs,:);

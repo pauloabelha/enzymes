@@ -11,6 +11,10 @@ function [best_scores_mtx, best_categ_scores_mtx, best_ptools, best_ptool_maps, 
     %% get all test pcls
     test_pcls_filenames = FindAllFilesOfType( {'ply'}, test_folder );
     %% get groundtruth for existing tools
+    % sometimes the string for task comes transposed (don't ask me why...)
+    if size(task,1) > 1
+        task = task';
+    end
     [ tool_names, tool_masses, tools_gt ] = ReadGroundTruth([test_folder 'groundtruth_' task '.csv']);
     tools_gt_new = [];
     for j=1:numel(test_pcls_filenames)    

@@ -1,13 +1,18 @@
-function [ X_balanced ] = ImproveTrainingData( X, Y, gpr, task )
+function [ X_balanced ] = ImproveTrainingData( X, Y, task, gpr )
     [ ~, a, b, c ] = TaskCategorisation([],task);
     mins = [0 a b c];
     maxes = [a b c Inf];
     X_balanced = [];
     N = 5000;
-    for i=1:4
+    if exist('gpr','var')
         Y_ = gpr.predict(X);
         Y_(Y_<0) = 0;
-        X_bridge = FilterSampledPTools(X, BridgeSampling( X(Y_>=mins(i) & Y_<maxes(i),:), 1000 ));
+    else
+        Y_ = Y;
+    end
+    for i=1:4 
+        X_filtered = X(Y_>=mins(i) & Y_<maxes(i),:);
+        X_bridge = FilterSampledPTools(X, BridgeSampling( X_filtered, 1000 ));
         X_balanced = [X_balanced; X_bridge(randsample(size(X_bridge,1),N/4),:)];
     end
 %     Y_bridge = gpr.predict(X_bridge);
