@@ -48,6 +48,9 @@ function [ best_scores, best_categ_scores, best_ptools, best_ptool_maps, SQs, P 
     best_fit_scores = ptools_errors_proj(best_ixs);
     best_scores = task_scores(best_ixs);
     best_categ_scores = TaskCategorisation(best_scores,task_name);
+    if verbose 
+        disp([char(9) 'Variance of best category scores:' char(9) num2str(var(best_categ_scores))]);
+    end  
     best_ix = floor(n_weights/2)+1;
     best_score = best_scores(best_ix);
     best_fit_score = best_fit_scores(best_ix);

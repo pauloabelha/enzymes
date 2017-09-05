@@ -92,7 +92,7 @@ function [ SQs, TOT_ERROR, SEGM_ERRORS, SEGM_ERRORS_PCL_SQ, SEGM_ERRORS_SQ_PCL, 
     % get total error
     TOT_ERROR = sum(SEGM_ERRORS)/size(SEGM_ERRORS,1);
     % plot results
-    SQ_colours = {'.c' '.c' '.c' '.c' '.c' '.c'};
+    SQ_colours = {'.k' '.c' '.y' '.b' '.g' '.r'};
     if plot_fig
         PlotPCLSegments(P);
         hold on;        

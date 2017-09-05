@@ -8,15 +8,15 @@ function [ category ] = TaskCategorisationHammeringNail( simulation_score, eps )
             category(i) = -1;
             continue;
         end
-        if simulation_score(i) < 0.0033
+        if simulation_score(i) < 0.003
             category(i) = 1;
             continue;
         end
-        if simulation_score(i) < 0.0062
+        if simulation_score(i) < 0.004
             category(i) = 2;
             continue;
         end
-        if simulation_score(i) < 0.0071
+        if simulation_score(i) < 0.0044
             category(i) = 3;
             continue;
         end

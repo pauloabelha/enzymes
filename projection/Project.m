@@ -47,7 +47,7 @@ function [best_scores_mtx, best_categ_scores_mtx, best_ptools, best_ptool_maps, 
     for i=1:numel(test_pcls_filenames)
         tic; 
         best_score = -1;
-        try
+%         try
             P = ReadPointCloud([test_folder test_pcls_filenames{i}],100);
             [ best_scores_mtx(i,:), best_categ_scores_mtx(i,:), best_ptools, best_ptool_maps ] = SeedProjection( P, tool_masses(i), task, @TaskFunctionGPR, {gpr, gpr_dim_ixs}, n_seeds, add_segms, seed_project_verbose );             
             best_ptools_cell{i} = best_ptools;
@@ -58,13 +58,13 @@ function [best_scores_mtx, best_categ_scores_mtx, best_ptools, best_ptool_maps, 
             curr_metric1 = Metric1(curr_best_categ,curr_tools_gt,4);
             curr_acc = size(curr_best_categ(abs(curr_best_categ-curr_tools_gt)==0),2)/size(curr_best_categ,2);
             msg = [test_pcls_filenames{i}(1:end-4) char(9) char(9) num2str(best_score,2) char(9) char(9) num2str(curr_best_categ(i)) char(9) char(9) num2str(tools_gt(i)) char(9) char(9) char(9) num2str(curr_acc,2) char(9) char(9) num2str(curr_metric1,2) char(9) char(9)];
-        catch E
-           disp(['Error on tool ' test_pcls_filenames{i}]);
-           file_name = E.stack.file;
-           line_num = E.stack.line;
-           disp([E.message ' File: ' file_name ' - line: ' num2str(line_num)]); 
-           msg = 'Error';
-        end        
+%         catch E
+%            disp(['Error on tool ' test_pcls_filenames{i}]);
+%            file_name = E.stack.file;
+%            line_num = E.stack.line;
+%            disp([E.message ' File: ' file_name ' - line: ' num2str(line_num)]); 
+%            msg = 'Error';
+%         end        
         [tot_toc, estimated_time_hours] = DisplayEstimatedTimeOfLoop(tot_toc+toc,i,numel(test_pcls_filenames),'',1);
         disp([msg datestr(estimated_time_hours, 'HH:MM:SS')]);
         save(backup_file_path);

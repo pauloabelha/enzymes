@@ -80,7 +80,7 @@ function P = MergePcls(P1,P2)
 %     P.v = [P1.v; P2.v];
 %     P = DownsamplePCL(P,ceil(size(P.v,1)/2));
     
-    min_error = FitErrorBtwPointClouds(P1_ds.v,P2_ds.v);
+    min_error = PCLDist(P1_ds.v,P2_ds.v);
     min_ixs = [0 0 0];
     min_theta = 0;
     theta_step = 1/5;
@@ -145,5 +145,11 @@ function P = MergePclsMatlab(P1,P2)
     % Update the world scene.
     pcl_merged = pcmerge(fixed, moving, mergeSize);
     P = PointCloud(pcl_merged.Location);
+end
+
+
+function pcl_merged = MergePclsMatlab2(pcl1,pcl2)
+
+
 end
 

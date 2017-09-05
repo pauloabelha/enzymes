@@ -3,6 +3,9 @@ function [ Ps ] = PlotPtools( ptools, task_name, plot_faces, colours )
     if ~exist('plot_faces','var')
         plot_faces = 0;
     end
+    if ~exist('colours','var')
+        colours = -1;
+    end
     % convert list of ptools to a matrix N x 21
     ptools = PTool2Matrix(ptools);
     % check for task plot

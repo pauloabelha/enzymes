@@ -5,7 +5,7 @@ function [SQ,F,E,E_pcl_SQ, E_SQ_pcl ] = FitSQtoPCL_Tapering(pcl,pcl_scale,ix,opt
         if exist('initial_lambda_in','var')
             x = initial_lambda_in;
         else
-            mean_pcl = mean(pcl);
+            mean_pcl = repmat(mean(pcl),size(pcl,1),1);
             pcl = pcl - mean_pcl;
             pca_pcl = pca(pcl);
             pcl = pcl*pca_pcl;
@@ -31,7 +31,7 @@ function [SQ,F,E,E_pcl_SQ, E_SQ_pcl ] = FitSQtoPCL_Tapering(pcl,pcl_scale,ix,opt
         upper_lambda = [initial_lambda(1:3)*1.15 2 2 initial_lambda(6:8) 1 1 0 0 centroid];
         [SQ,~,~,~,~] = lsqnonlin(@(x) SQFunctionNormalised(x, pcl), initial_lambda, lower_lambda,upper_lambda, opt_options);
         [F,E,E_pcl_SQ, E_SQ_pcl ] = RankSQ(pcl, SQ );
-        SQ(end-2:end) = SQ(end-2:end) + mean_pcl;
+        SQ(end-2:end) = SQ(end-2:end) + mean_pcl(1,:);
         SQ = RotateSQWithRotMtx(SQ,inv(pca_pcl));
     end
 end
