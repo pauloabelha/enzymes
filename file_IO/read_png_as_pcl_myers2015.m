@@ -1,7 +1,9 @@
-function [ P, P_raw ] = read_png_as_pcl_myers2015( filepath )
+function [ P, P_raw, centre, rgbd ] = read_png_as_pcl_myers2015( filepath, slash )
     rgbd = double(imread(filepath));
-    
-    a=strfind(filepath,'/');
+    if ~exist('slash','var')
+        slash = '/';
+    end
+    a=strfind(filepath,slash);
     img_filename = filepath(a(end)+1:end);
     tool_name= img_filename(1:end-10);
     label_path = [filepath(1:a(end)) tool_name '_label.mat'];
@@ -25,5 +27,12 @@ function [ P, P_raw ] = read_png_as_pcl_myers2015( filepath )
 %     P = PointCloud([X Y rgbd(:)] );
 %     P = PointCloud(P.v(P.v(:,3)>=1,:));
     P = PointCloud(XYZ);
+    P = Apply3DTransfPCL(P,{GetRotMtx(pi/1.4,'y')});
+    P.v = P.v(P.v(:,3)>=-625,:);
+    P.segms{1}.v = P.segms{1}.v(P.segms{1}.v(:,3)>=-625,:);
+    P = Apply3DTransfPCL(P,{inv(GetRotMtx(pi/1.4,'y'))});    
     P.v = P.v/1000;
+    P.segms{1}.v = P.segms{1}.v/1000;
+    centre = GetRotMtx(pi/1.4,'y')*[240.50 320.50 717.80]';
+    centre = centre/1000;
 end

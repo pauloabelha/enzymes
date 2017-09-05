@@ -1,7 +1,9 @@
 function P = FuseMyersPcls( Ps, theta )
 
     if ~exist('theta','var')
-        theta = size(Ps,2)*-1.0662e-04;% -0.029 for 272 Ps
+%         theta = size(Ps,2)*-1.0662e-04;% -0.029 for 272 Ps
+        THETA_CONST = 0.02;
+        theta = THETA_CONST*272/numel(Ps);
     end
 
     P = Ps{1};
@@ -20,7 +22,8 @@ function P = FuseMyersPcls( Ps, theta )
     
     for i=2:size(Ps,2)
         tic;
-        P = MergePclsMatlab(P,Ps{i});
+         P = MergePclsMatlab2(P,Ps{i},theta,i-1);
+%         P = MergePclsMatlab(P,Ps{i});
         tot_toc = DisplayEstimatedTimeOfLoop(tot_toc+toc,i,size(Ps,2));
     end
     
@@ -102,7 +105,7 @@ function P = MergePcls(P1,P2)
                 theta_ix = theta_ix + 1;
                 P2_ds.v = bsxfun(@plus,orig_P2_ds.v,[x y 0]);
                 P2_ds.v = [GetRotMtx(theta,'z')*P2_ds.v']';
-                error = FitErrorBtwPointClouds(P1_ds.v,P2_ds.v);
+                error = PCLDist(P1_ds.v,P2_ds.v);
                 errors(end+1) = error;
                 if error <= min_error
                     min_error = error;
@@ -148,8 +151,9 @@ function P = MergePclsMatlab(P1,P2)
 end
 
 
-function pcl_merged = MergePclsMatlab2(pcl1,pcl2)
-
-
+function P = MergePclsMatlab2(P1,P2,theta,iter)
+    P3 = Apply3DTransfPCL(P2,GetRotMtx(theta*iter,'z'));
+    P = PointCloud([P1.v; P3.v]);
+%     P = DownsamplePCL(P,size(P2.v,1),1);  
 end
 

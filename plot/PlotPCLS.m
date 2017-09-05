@@ -8,7 +8,7 @@ function PlotPCLS( Ps, downsample, single_colour, colours )
         single_colour = 0;
     end
     if ~exist('colours','var')
-        colours = {'.r' '.g' '.b' '.y' '.m' '.c'};
+        colours = {'.c' '.r' '.g' '.b' '.y' '.m'};
     end
     
     if~iscell(Ps)

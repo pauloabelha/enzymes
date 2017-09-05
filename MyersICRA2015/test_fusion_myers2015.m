@@ -2,8 +2,8 @@
 gridSize = 0.001;
 mergeSize = 0.001;
 
-plot_fig = 0;
-root_folder = '~/part-affordance-dataset/';
+plot_fig = 1;
+root_folder = 'C:\Users\r02pa14\Desktop\Myers_dataset\part-affordance-dataset\';
 fused_folder = 'fused/';
 tools_folder = 'tools/';
 segmentation_folder = '';
@@ -37,6 +37,7 @@ for f=1:size(folders,2)
                 [~, P_raw] = read_png_as_pcl_myers2015(filepath);
                 P = read_png_as_pclwithtable_myers2015( P_raw );
         end
+        
         ptCloudRef = pointCloud(P.v);
 
         tool_prefix = folders{f}(1:end-1);
@@ -109,6 +110,7 @@ for f=1:size(folders,2)
         %     pcl = P.v;
         %     figure;
         %     scatter3(pcl(:,1),pcl(:,2),pcl(:,3),'.k'); axis equal;
+            
             ptCloudCurrent = pointCloud(P.v);
 
             % Use previous moving point cloud as reference.

@@ -1,4 +1,7 @@
 function [ M_list ] = Apply3DTransformations( M_list, T_list, transp)
+    if ~iscell(T_list)
+        T_list = {T_list};
+    end
     if ~exist('transp','var')
         transp=0;
     end

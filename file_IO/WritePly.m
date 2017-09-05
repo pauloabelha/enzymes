@@ -113,8 +113,10 @@ function WritePly( P, filepath_ply )
         fclose(fid);  
         return;
     end
-    % if it only has points
-    dlmwrite(filepath_ply,[P.v P.u],'delimiter',' ','-append');
+    % if it only has points (with segms P.u or not)
+    if isfield(P,'u') && ~isempty(P.u)
+        dlmwrite(filepath_ply,[P.v P.u],'delimiter',' ','-append');
+    end
     fclose(fid);
     return;
 end

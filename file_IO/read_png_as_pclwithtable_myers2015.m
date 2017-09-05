@@ -4,10 +4,12 @@ function [ P ] = read_png_as_pclwithtable_myers2015( P )
     [P, pcl_pca] = ApplyPCAPCl(P);
 %     rot_y = GetRotMtx(pi,'y');
 %     P = Apply3DTransfPCL({P},{rot_y});
-    P.v = P.v(P.v(:,3)<=665,:); 
+    ixs = P.v(:,3)<=665;
+    P.v = P.v(ixs,:); 
+    P.u = P.u(ixs);
 %     P.v = P.v(P.v(:,2)<=50,:); 
 %     P = PointCloud(P.v);
 %     P = ApplyPCAPCl(P,inv(pcl_pca));
     [P, pcl_pca] = ApplyPCAPCl(P);
-    P.v = P.v - mean(P.v);
+    P.v = P.v - repmat(mean(P.v),size(P.v,1),1);
 end
