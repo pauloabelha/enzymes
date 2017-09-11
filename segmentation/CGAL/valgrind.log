@@ -1,0 +1,167 @@
+==15338== Memcheck, a memory error detector
+==15338== Copyright (C) 2002-2013, and GNU GPL'd, by Julian Seward et al.
+==15338== Using Valgrind-3.10.1 and LibVEX; rerun with -h for copyright info
+==15338== Command: ./fuse_small_segments -i data_test/ -o data_test/ --verbose
+==15338== Parent PID: 3434
+==15338== 
+--15338-- 
+--15338-- Valgrind options:
+--15338--    -v
+--15338--    --tool=memcheck
+--15338--    --leak-check=full
+--15338--    --num-callers=40
+--15338--    --log-file=valgrind.log
+--15338-- Contents of /proc/version:
+--15338--   Linux version 3.16.0-77-generic (buildd@lgw01-09) (gcc version 4.8.4 (Ubuntu 4.8.4-2ubuntu1~14.04.3) ) #99~14.04.1-Ubuntu SMP Tue Jun 28 19:17:10 UTC 2016
+--15338-- Arch and hwcaps: AMD64, LittleEndian, amd64-cx16-rdtscp-sse3-avx
+--15338-- Page sizes: currently 4096, max supported 4096
+--15338-- Valgrind library directory: /usr/lib/valgrind
+--15338-- Reading syms from /home/paulo/CGAL/segmentation/fuse_small_segments
+--15338-- Reading syms from /lib/x86_64-linux-gnu/ld-2.19.so
+--15338--   Considering /lib/x86_64-linux-gnu/ld-2.19.so ..
+--15338--   .. CRC mismatch (computed 4616a848 wanted 206a08be)
+--15338--   Considering /usr/lib/debug/lib/x86_64-linux-gnu/ld-2.19.so ..
+--15338--   .. CRC is valid
+--15338-- Reading syms from /usr/lib/valgrind/memcheck-amd64-linux
+--15338--   Considering /usr/lib/valgrind/memcheck-amd64-linux ..
+--15338--   .. CRC mismatch (computed 4f1eed43 wanted a323a3ab)
+--15338--    object doesn't have a symbol table
+--15338--    object doesn't have a dynamic symbol table
+--15338-- Scheduler: using generic scheduler lock implementation.
+--15338-- Reading suppressions file: /usr/lib/valgrind/default.supp
+==15338== embedded gdbserver: reading from /tmp/vgdb-pipe-from-vgdb-to-15338-by-paulo-on-???
+==15338== embedded gdbserver: writing to   /tmp/vgdb-pipe-to-vgdb-from-15338-by-paulo-on-???
+==15338== embedded gdbserver: shared mem   /tmp/vgdb-pipe-shared-mem-vgdb-15338-by-paulo-on-???
+==15338== 
+==15338== TO CONTROL THIS PROCESS USING vgdb (which you probably
+==15338== don't want to do, unless you know exactly what you're doing,
+==15338== or are doing some strange experiment):
+==15338==   /usr/lib/valgrind/../../bin/vgdb --pid=15338 ...command...
+==15338== 
+==15338== TO DEBUG THIS PROCESS USING GDB: start GDB like this
+==15338==   /path/to/gdb ./fuse_small_segments
+==15338== and then give GDB the following command
+==15338==   target remote | /usr/lib/valgrind/../../bin/vgdb --pid=15338
+==15338== --pid is optional if only one valgrind process is running
+==15338== 
+--15338-- REDIR: 0x4019c50 (ld-linux-x86-64.so.2:strlen) redirected to 0x380764b1 (???)
+--15338-- Reading syms from /usr/lib/valgrind/vgpreload_core-amd64-linux.so
+--15338--   Considering /usr/lib/valgrind/vgpreload_core-amd64-linux.so ..
+--15338--   .. CRC mismatch (computed fc68135e wanted 45f5e986)
+--15338--    object doesn't have a symbol table
+--15338-- Reading syms from /usr/lib/valgrind/vgpreload_memcheck-amd64-linux.so
+--15338--   Considering /usr/lib/valgrind/vgpreload_memcheck-amd64-linux.so ..
+--15338--   .. CRC mismatch (computed ae683f7e wanted 08c06df2)
+--15338--    object doesn't have a symbol table
+==15338== WARNING: new redirection conflicts with existing -- ignoring it
+--15338--     old: 0x04019c50 (strlen              ) R-> (0000.0) 0x380764b1 ???
+--15338--     new: 0x04019c50 (strlen              ) R-> (2007.0) 0x04c2e1a0 strlen
+--15338-- REDIR: 0x4019a00 (ld-linux-x86-64.so.2:index) redirected to 0x4c2dd50 (index)
+--15338-- REDIR: 0x4019c20 (ld-linux-x86-64.so.2:strcmp) redirected to 0x4c2f2f0 (strcmp)
+--15338-- REDIR: 0x401a970 (ld-linux-x86-64.so.2:mempcpy) redirected to 0x4c31da0 (mempcpy)
+--15338-- Reading syms from /usr/lib/x86_64-linux-gnu/libboost_system.so.1.54.0
+--15338--    object doesn't have a symbol table
+--15338-- Reading syms from /lib/x86_64-linux-gnu/libpthread-2.19.so
+--15338--   Considering /lib/x86_64-linux-gnu/libpthread-2.19.so ..
+--15338--   .. CRC mismatch (computed 9c548ae8 wanted f02705a7)
+--15338--   Considering /usr/lib/debug/lib/x86_64-linux-gnu/libpthread-2.19.so ..
+--15338--   .. CRC is valid
+--15338-- Reading syms from /usr/lib/x86_64-linux-gnu/libstdc++.so.6.0.19
+--15338--   Considering /usr/lib/x86_64-linux-gnu/libstdc++.so.6.0.19 ..
+--15338--   .. CRC mismatch (computed dc37bb90 wanted ea8c3b40)
+--15338--    object doesn't have a symbol table
+--15338-- Reading syms from /lib/x86_64-linux-gnu/libm-2.19.so
+--15338--   Considering /lib/x86_64-linux-gnu/libm-2.19.so ..
+--15338--   .. CRC mismatch (computed 2e660ccf wanted 7dfd7e39)
+--15338--   Considering /usr/lib/debug/lib/x86_64-linux-gnu/libm-2.19.so ..
+--15338--   .. CRC is valid
+--15338-- Reading syms from /lib/x86_64-linux-gnu/libgcc_s.so.1
+--15338--   Considering /lib/x86_64-linux-gnu/libgcc_s.so.1 ..
+--15338--   .. CRC mismatch (computed 6116126e wanted 54e3f1f2)
+--15338--    object doesn't have a symbol table
+--15338-- Reading syms from /lib/x86_64-linux-gnu/libc-2.19.so
+--15338--   Considering /lib/x86_64-linux-gnu/libc-2.19.so ..
+--15338--   .. CRC mismatch (computed ffb64955 wanted 55b8547d)
+--15338--   Considering /usr/lib/debug/lib/x86_64-linux-gnu/libc-2.19.so ..
+--15338--   .. CRC is valid
+--15338-- REDIR: 0x5b05c60 (libc.so.6:strcasecmp) redirected to 0x4a25720 (_vgnU_ifunc_wrapper)
+--15338-- REDIR: 0x5b07f50 (libc.so.6:strncasecmp) redirected to 0x4a25720 (_vgnU_ifunc_wrapper)
+--15338-- REDIR: 0x5b05430 (libc.so.6:memcpy@GLIBC_2.2.5) redirected to 0x4a25720 (_vgnU_ifunc_wrapper)
+--15338-- REDIR: 0x5b036c0 (libc.so.6:rindex) redirected to 0x4c2da30 (rindex)
+--15338-- REDIR: 0x5b019c0 (libc.so.6:strlen) redirected to 0x4c2e0e0 (strlen)
+--15338-- REDIR: 0x5b04ea0 (libc.so.6:__GI_memcmp) redirected to 0x4c30b80 (__GI_memcmp)
+--15338-- REDIR: 0x5afff70 (libc.so.6:strcmp) redirected to 0x4a25720 (_vgnU_ifunc_wrapper)
+--15338-- REDIR: 0x5bbc630 (libc.so.6:__strcmp_ssse3) redirected to 0x4c2f1b0 (strcmp)
+--15338-- REDIR: 0x52b7d90 (libstdc++.so.6:operator new(unsigned long)) redirected to 0x4c2b070 (operator new(unsigned long))
+--15338-- REDIR: 0x5b0a630 (libc.so.6:memcpy@@GLIBC_2.14) redirected to 0x4a25720 (_vgnU_ifunc_wrapper)
+--15338-- REDIR: 0x5b13620 (libc.so.6:__memcpy_sse2_unaligned) redirected to 0x4c2f6b0 (memcpy@@GLIBC_2.14)
+--15338-- REDIR: 0x5b04e60 (libc.so.6:bcmp) redirected to 0x4a25720 (_vgnU_ifunc_wrapper)
+--15338-- REDIR: 0x5bdc490 (libc.so.6:__memcmp_sse4_1) redirected to 0x4c30c00 (__memcmp_sse4_1)
+--15338-- REDIR: 0x52b60f0 (libstdc++.so.6:operator delete(void*)) redirected to 0x4c2c250 (operator delete(void*))
+--15338-- REDIR: 0x5afb670 (libc.so.6:malloc) redirected to 0x4c2ab10 (malloc)
+--15338-- REDIR: 0x5b052a0 (libc.so.6:__GI_memmove) redirected to 0x4c31660 (__GI_memmove)
+--15338-- REDIR: 0x5afbd10 (libc.so.6:free) redirected to 0x4c2bd80 (free)
+--15338-- REDIR: 0x5b04310 (libc.so.6:__GI_strstr) redirected to 0x4c32030 (__strstr_sse2)
+--15338-- REDIR: 0x52b7ea0 (libstdc++.so.6:operator new[](unsigned long)) redirected to 0x4c2b790 (operator new[](unsigned long))
+--15338-- REDIR: 0x5b04b10 (libc.so.6:memchr) redirected to 0x4c2f390 (memchr)
+--15338-- REDIR: 0x5b0a680 (libc.so.6:__GI_memcpy) redirected to 0x4c2fc90 (__GI_memcpy)
+--15338-- REDIR: 0x5bcc4c0 (libc.so.6:__memmove_ssse3_back) redirected to 0x4c2f450 (memcpy@GLIBC_2.2.5)
+--15338-- REDIR: 0x52b6120 (libstdc++.so.6:operator delete[](void*)) redirected to 0x4c2c7d0 (operator delete[](void*))
+==15338== Invalid write of size 4
+==15338==    at 0x408B50: PLY::PLY(std::string) (fuse_small_segments.cpp:425)
+==15338==    by 0x4037FB: main (fuse_small_segments.cpp:668)
+==15338==  Address 0x6e7a870 is 0 bytes after a block of size 48 alloc'd
+==15338==    at 0x4C2B800: operator new[](unsigned long) (in /usr/lib/valgrind/vgpreload_memcheck-amd64-linux.so)
+==15338==    by 0x408B10: PLY::PLY(std::string) (fuse_small_segments.cpp:423)
+==15338==    by 0x4037FB: main (fuse_small_segments.cpp:668)
+==15338== 
+==15338== Invalid write of size 4
+==15338==    at 0x408B3F: PLY::PLY(std::string) (fuse_small_segments.cpp:426)
+==15338==    by 0x4037FB: main (fuse_small_segments.cpp:668)
+==15338==  Address 0x6e7a874 is 4 bytes after a block of size 48 alloc'd
+==15338==    at 0x4C2B800: operator new[](unsigned long) (in /usr/lib/valgrind/vgpreload_memcheck-amd64-linux.so)
+==15338==    by 0x408B10: PLY::PLY(std::string) (fuse_small_segments.cpp:423)
+==15338==    by 0x4037FB: main (fuse_small_segments.cpp:668)
+==15338== 
+--15338-- REDIR: 0x5b0c9c0 (libc.so.6:strchrnul) redirected to 0x4c319b0 (strchrnul)
+
+valgrind: m_mallocfree.c:278 (mk_plain_bszB): Assertion 'bszB != 0' failed.
+valgrind: This is probably caused by your program erroneously writing past the
+end of a heap block and corrupting heap metadata.  If you fix any
+invalid writes reported by Memcheck, this assertion failure will
+probably go away.  Please try that before reporting this as a bug.
+
+
+host stacktrace:
+==15338==    at 0x3805DB16: ??? (in /usr/lib/valgrind/memcheck-amd64-linux)
+==15338==    by 0x3805DC24: ??? (in /usr/lib/valgrind/memcheck-amd64-linux)
+==15338==    by 0x3805DDA6: ??? (in /usr/lib/valgrind/memcheck-amd64-linux)
+==15338==    by 0x380688EA: ??? (in /usr/lib/valgrind/memcheck-amd64-linux)
+==15338==    by 0x3806B4D3: ??? (in /usr/lib/valgrind/memcheck-amd64-linux)
+==15338==    by 0x3802CB05: ??? (in /usr/lib/valgrind/memcheck-amd64-linux)
+==15338==    by 0x3802CCFB: ??? (in /usr/lib/valgrind/memcheck-amd64-linux)
+==15338==    by 0x3802CF2A: ??? (in /usr/lib/valgrind/memcheck-amd64-linux)
+==15338==    by 0x380AF1F5: ??? (in /usr/lib/valgrind/memcheck-amd64-linux)
+==15338==    by 0x380BDCBC: ??? (in /usr/lib/valgrind/memcheck-amd64-linux)
+
+sched status:
+  running_tid=1
+
+Thread 1: status = VgTs_Runnable
+==15338==    at 0x4C2B800: operator new[](unsigned long) (in /usr/lib/valgrind/vgpreload_memcheck-amd64-linux.so)
+==15338==    by 0x405FA9: get_closest_diff_neighbour(PLY*&) (fuse_small_segments.cpp:548)
+==15338==    by 0x403836: main (fuse_small_segments.cpp:680)
+
+
+Note: see also the FAQ in the source distribution.
+It contains workarounds to several common problems.
+In particular, if Valgrind aborted or crashed after
+identifying problems in your program, there's a good chance
+that fixing those problems will prevent Valgrind aborting or
+crashing, especially if it happened in m_mallocfree.c.
+
+If that doesn't help, please report this bug to: www.valgrind.org
+
+In the bug report, send all the above text, the valgrind
+version, and what OS and version you are using.  Thanks.
+

@@ -1,4 +1,4 @@
-function [ prop_diff_segm ] = RemoveSimilarSegmInFolder( root_folder, pcl_file_ext, MIN_SCORE_SIM )
+function [ output_path, prop_diff_segm ] = RemoveSimilarSegmInFolder( root_folder, pcl_file_ext, MIN_SCORE_SIM )
     if ~exist('MIN_SCORE_SIM','var')
         MIN_SCORE_SIM = 0.9;
     end
@@ -8,7 +8,8 @@ function [ prop_diff_segm ] = RemoveSimilarSegmInFolder( root_folder, pcl_file_e
     pcl_filenames = FindAllFilesOfType( {pcl_file_ext}, root_folder );
     n_pcls = numel(pcl_filenames);
     unique_segm_folder = ['unique_segmentations_' num2str(MIN_SCORE_SIM) '/'];
-    system(['mkdir ' root_folder unique_segm_folder]);
+    output_path = [root_folder unique_segm_folder];
+    system(['mkdir ' output_path]);
     %% first iteration for the first pcl (same as if found a new segmentation)
     % the first pcl is always a new segmentation
     i = 1;

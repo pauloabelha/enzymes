@@ -1,0 +1,5 @@
+/home/paulo/enzymes/segmentation/CGAL/CMakeFiles/sdf_values_example.dir
+/home/paulo/enzymes/segmentation/CGAL/CMakeFiles/segment_meshes.dir
+/home/paulo/enzymes/segmentation/CGAL/CMakeFiles/segmentation_from_sdf_values_example.dir
+/home/paulo/enzymes/segmentation/CGAL/CMakeFiles/segmentation_via_sdf_values_example.dir
+/home/paulo/enzymes/segmentation/CGAL/CMakeFiles/segmentation_with_facet_ids_example.dir

@@ -1,0 +1,24 @@
+#IncludeRegexLine: ^[ 	]*#[ 	]*(include|import)[ 	]*[<"]([^">]+)([">])
+
+#IncludeRegexScan: ^.*$
+
+#IncludeRegexComplain: ^$
+
+#IncludeRegexTransform: 
+
+/home/paulo/enzymes/segmentation/CGAL/segmentation_from_sdf_values_example.cpp
+CGAL/Exact_predicates_inexact_constructions_kernel.h
+-
+CGAL/boost/graph/graph_traits_Polyhedron_3.h
+-
+CGAL/IO/Polyhedron_iostream.h
+-
+CGAL/mesh_segmentation.h
+-
+CGAL/property_map.h
+-
+iostream
+-
+fstream
+-
+

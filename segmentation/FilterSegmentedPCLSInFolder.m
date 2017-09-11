@@ -48,7 +48,7 @@ function [ problem_pcls, E_SEGMS ] = FilterSegmentedPCLSInFolder( root_folder, m
             P = DownsamplePCL(P,1000);
             if numel(P.segms) <= MAX_N_SEGMS
                 disp(['Fitting SQs to ' pcl_filenames{i} '...']);
-                [ SQs, ~, E_SEGM ] = PCL2SQ( P, 2 );
+                [ SQs, ~, E_SEGM ] = PCL2SQ( P, 4 );
                 E_SEGMS{i} = E_SEGM;
                 disp(['Fitted SQs errors (min=' num2str(MIN_SEGM_ERROR) '): ' num2str(E_SEGM)]);
                 good_segm_ixs = E_SEGM <= MIN_SEGM_ERROR;
