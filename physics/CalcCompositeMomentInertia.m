@@ -8,20 +8,20 @@
 %   The I inertial matrix)
 %   inertial (6x1 array) holding both centre of mass and inertia diagonal
 %   the read pcl P is SQs was a path to a pcl file or a P struct 
+%
+% Currently this is a very crude approximation sicne it does not consider
+% bending, tpaering nor superparaboloids. In the future I hope I have time 
+% to add these :(
+%
 %% By Paulo Abelha
-function [ centre_mass, I, inertial, P ] = CalcCompositeMomentInertia( SQs, mass)
-    %% deal with SQs param
-    if iscell(SQs)
-        P = [];
-    else
-        if ischar(SQs)
-            P = ReadPointCloud(SQs);
-        elseif isstruct(SQs)
-            P = SQs;        
-        else
-            error('Unrecognized first param');
-        end
-        SQs = PCL2SQ( P, 4, 0, 0, [1 1 1 0 1] );         
+function [ centre_mass, I, inertial ] = CalcCompositeMomentInertia( Param1, mass)
+    %% deal with first argument being a PCL
+    try
+        CheckIsPointCloudStruct(Param1);
+        SQs = PCL2SQ(Param1);
+    catch E
+        %% deal with SQs param
+        SQs = Param1;
     end
 
     if size(mass,2) == 25
