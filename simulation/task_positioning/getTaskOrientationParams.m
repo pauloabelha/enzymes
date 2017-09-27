@@ -33,12 +33,12 @@ switch(task)
     case 'hammering_nail'
         new_action_orientation_vector = [1;0;0]; 
         new_centers_orientation_vector = [0;0;1];
-        isCorrect = @(dot_prod) dot_prod>=0;
+        isCorrect = @(dot_prod) true; % dot_prod>=0;
         
     case 'lifting_pancake'
         new_action_orientation_vector = [0;0;1];
         new_centers_orientation_vector = [1;0;0];
-        isCorrect = @(dot_prod) dot_prod<=0;
+        isCorrect = @(dot_prod) true; %dot_prod<=0;
         
     case 'rolling_dough'
         new_action_orientation_vector = [0;1;0];
@@ -48,12 +48,12 @@ switch(task)
     case 'cutting_lasagna'
         new_action_orientation_vector = [0;1;0];
         new_centers_orientation_vector = [0;0;-1];
-        isCorrect = @(dot_prod) dot_prod>=0;
+        isCorrect = @(dot_prod) true; %dot_prod>=0;
         
     case 'scooping_grains'
         new_action_orientation_vector = [0;0;1];
         new_centers_orientation_vector = [1;0;0];
-        isCorrect = @(dot_prod) dot_prod<=0;
+        isCorrect = @(dot_prod) true; % dot_prod<=0;
         
    otherwise
         error(['Task ''' task ''' does not exist']);

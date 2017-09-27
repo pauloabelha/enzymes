@@ -102,7 +102,7 @@ do
 		for (( i=1; i<=$N_TRIALS; i++ ))
 		do	
 			echo "  Trial "$i	
-			gzserver $GAZEBO_WORLD_FILE >> $OUTPUT_FILE	
+			gazebo $GAZEBO_WORLD_FILE >> $OUTPUT_FILE	
 		done
 		echo $END_TRIAL >> $OUTPUT_FILE		
 		
