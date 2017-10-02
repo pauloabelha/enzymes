@@ -58,8 +58,10 @@ function [ P_out, transf_lists ] = PTool2PCL( ptools, task )
             % if paraboloid
             if ptools(i,18) < 0
                 [action_pcl, action_normals, action_faces] = ParaboloidFaces(SQ_action,N_POINTS);
-                rev_action_faces = [action_faces(:,3) action_faces(:,2) action_faces(:,1)];
-                action_faces = [action_faces; rev_action_faces];
+                if ~isempty(action_faces)
+                    rev_action_faces = [action_faces(:,3) action_faces(:,2) action_faces(:,1)];
+                    action_faces = [action_faces; rev_action_faces];
+                end
             else            
                 % if bent, calculate convhull before bending
                 if ptools(i,17) > 0

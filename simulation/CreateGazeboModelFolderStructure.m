@@ -36,7 +36,5 @@ function [folder_path] = CreateGazeboModelFolderStructure( simulation_folder, ga
     system(command);
     %system(['rm ' folder_path 'tool.ply']);
     
-    %delete(ply_full_name);
-    fileattrib([folder_path '/*'],'+w','a');
 
 end

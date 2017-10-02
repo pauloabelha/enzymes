@@ -11,7 +11,7 @@ function [ pcl_filenames ] = ApplyPCAToPCLFolder( root_folder, output_folder, ex
     end
     pcl_filenames = FindAllFilesOfType(exts,root_folder);
     tot_toc = 0;
-    for i=1:size(pcl_filenames,2)
+    for i=1:size(pcl_filenames,1)
         tic;
         P = ReadPointCloud([root_folder pcl_filenames{i}]);
         P = ApplyPCAPCl(P);
@@ -24,7 +24,7 @@ function [ pcl_filenames ] = ApplyPCAToPCLFolder( root_folder, output_folder, ex
             P.f = P.f - 1;
         end
         WritePly(P,[root_folder output_folder pcl_filenames{i}]);
-        tot_toc = DisplayEstimatedTimeOfLoop(tot_toc+toc,i,size(pcl_filenames,2),['Applying PCA to folder: ' root_folder pcl_filenames{i} '    ' ]);
+        tot_toc = DisplayEstimatedTimeOfLoop(tot_toc+toc,i,size(pcl_filenames,1),['Applying PCA to folder: ' root_folder pcl_filenames{i} '    ' ]);
         
     end
 end

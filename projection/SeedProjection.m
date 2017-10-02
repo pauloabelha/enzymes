@@ -71,6 +71,8 @@ function [ best_scores, best_categ_scores, best_ptools, best_ptool_maps, SQs, P 
     best_ix = floor(n_weights/2)+1;
     best_score = best_scores(best_ix);
     best_fit_score = best_fit_scores(best_ix);
+    IX=1; GenerateSimulationForPCLWithPtool( P, best_ptools(IX,:), best_ptool_maps(IX,:), task_name, ['good_' num2str(tool_mass) '/'] );
+    IX=200; GenerateSimulationForPCLWithPtool( P, best_ptools(IX,:), best_ptool_maps(IX,:), task_name, ['bad_' num2str(tool_mass) '/'] );
     if verbose 
         disp([char(9) 'Best p-tool found (task score; fit score)' char(9) num2str(best_score) char(9) num2str(best_fit_score)]);   
     end

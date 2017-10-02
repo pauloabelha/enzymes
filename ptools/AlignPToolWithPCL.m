@@ -24,8 +24,8 @@ function [ SQ_grasp, SQ_action] = AlignPToolWithPCL( ptool, P, ptool_map, plot_f
     new_vec_centres = rot_SQ*vec_centres;    
     SQ_action(end-2:end) = SQ_grasp(end-2:end) + new_vec_centres';
     if plot_fig
-        PlotPCLSegments(P);
+        PlotPCLSegments(P,-1,5000,{'.b'});
         hold on;
-        PlotSQs({SQ_grasp,SQ_action});
+        PlotSQs({SQ_grasp,SQ_action},10000);
     end    
 end

@@ -20,7 +20,7 @@ function [ Ps ] = PlotPtools( ptools, task_name, plot_faces, colours )
         if plot_faces
             F = P.f;
             F = F + 1;
-            figure;
+            %figure;
             trisurf(F, P.v(:,1),P.v(:,2),P.v(:,3)); axis equal;
         else
             PlotPCLSegments(P,-1,-1,colours);
