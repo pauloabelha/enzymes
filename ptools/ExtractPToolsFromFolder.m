@@ -4,7 +4,7 @@ function [ ptools, ptools_maps, ptools_errors, pcl_filenames, errors ] = Extract
         suffix_bkp_file = '';
     end
     %% read groundtruth csv file (from hammering nail, but it just to get mass)
-    [ tool_names, tool_masses ] = ReadGroundTruth([root_folder 'groundtruth_mass.csv']);
+    [ tool_names, tool_masses ] = ReadGroundTruth([root_folder 'groundtruth_hammering_nail.csv']);
     CheckIsChar(root_folder);
     if ~exist('ext','var')
         exts = {'ply'};
@@ -15,7 +15,7 @@ function [ ptools, ptools_maps, ptools_errors, pcl_filenames, errors ] = Extract
         pcl_shortname = GetPCLShortName(pcl_filenames{i});
         found_pcl_name = 0;
         for j=1:numel(tool_names)
-            if strcmp(pcl_shortname,tool_names{j})
+            if strcmp(pcl_shortname,GetPCLShortName(tool_names{j}))
                 found_pcl_name = 1;
                 break;                
             end

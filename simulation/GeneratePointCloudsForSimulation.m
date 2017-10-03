@@ -20,7 +20,7 @@ function [ ptools, ptools_maps, Ps, pcl_filenames ] = GeneratePointCloudsForSimu
             Ps{i} = ReadPointCloud([root_folder pcl_filenames{i}]);
             found_pcl_name = 0;
             for j=1:numel(tool_names)
-                if strcmp(pcl_shortname,tool_names{j})
+                if strcmp(pcl_shortname,GetPCLShortName(tool_names{j}))
                     found_pcl_name = 1;
                     break;                
                 end
