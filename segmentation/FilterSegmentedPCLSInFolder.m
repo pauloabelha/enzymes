@@ -62,8 +62,9 @@ function [ problem_pcls, E_SEGMS ] = FilterSegmentedPCLSInFolder( root_folder, m
             disp(['Proportion of good segmentations: ' num2str(n_good_segmentations/i)]);
             prev_pcl_prefix_name = pcl_prefix_name;        
             tot_toc = DisplayEstimatedTimeOfLoop(tot_toc+toc,i,n_pcls,['Filtering segmented pcls ' pcl_filenames{i} ' ' num2str(numel(P.segms)) ' segms: ']);
-        catch
+        catch E
             disp(['ERROR with pointcloud ' pcl_filenames{i}]);
+            disp(E.message);
             problem_pcls{end+1} = pcl_filenames{i};
             continue; 
         end

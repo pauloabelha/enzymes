@@ -1,4 +1,4 @@
-function [ Ps ] = RescalePcls( root_folder, add_noise, write_file, output_folder, plot_fig )
+function [ Ps ] = RescalePcls( root_folder, rescale_factor, add_noise, write_file, output_folder, plot_fig )
     
     if ~exist('add_noise','var')
         add_noise = 0;
@@ -22,21 +22,25 @@ function [ Ps ] = RescalePcls( root_folder, add_noise, write_file, output_folder
     Ps = {};
     tot_toc = 0;
     max_sizes = zeros(1,size(pcl_filenames,2));
-    for i=1:size(pcl_filenames,2)
+    for i=1:size(pcl_filenames,1)
         tic;       
         tool_categ = GetTolCateg( pcl_filenames{i}(1:end-4) );        
         P = ReadPointCloud([root_folder pcl_filenames{i}]);
         P = ApplyPCAPCl(P);
+        old_scale = range(P.v);
         [tool_max_size, rescale_noise] = ToolMaxSize( tool_categ );
         if ~add_noise
             rescale_noise = 0;
         else
             rescale_noise = randsample(0:rescale_noise/10:rescale_noise,1);
         end
-        tool_max_size = tool_max_size * ( 1 - rescale_noise );        
-        old_scale = range(P.v);
-        mult_rescale = tool_max_size/max(old_scale);
-        P = RescalePCL( P, mult_rescale, rescale_noise );
+        if exist('rescale_factor','var') || rescale_factor > 0
+            P = RescalePCL( P, rescale_factor, rescale_noise );
+        else            
+            tool_max_size = tool_max_size * ( 1 - rescale_noise );           
+            mult_rescale = tool_max_size/max(old_scale);
+            P = RescalePCL( P, mult_rescale, rescale_noise );
+        end
         new_scale = range(P.v);
         max_sizes(i) = tool_max_size;
         Ps{end+1} = P;
@@ -44,6 +48,7 @@ function [ Ps ] = RescalePcls( root_folder, add_noise, write_file, output_folder
             WritePly(P,[root_folder output_folder pcl_filenames{i}(1:end-4) '_rescaled.ply']);            
         end
         disp(pcl_filenames{i});
+        disp(['    Tool category:  ' tool_categ]);
         disp(['    Old scale:  ' num2str(old_scale)]);
         disp(['    New scale:  ' num2str(new_scale)]);
         disp(['    Max size: ' num2str(max_sizes(i))]);
@@ -71,12 +76,13 @@ function tool_categ = GetTolCateg( tool_name )
     tool_categ = '';
     list_categs = {'bottle','bowl','breadknife','chineseknife','chopstick', 'cup', ...
         'knifechinese', 'fryingpan','hammer','tableknife','kitchenknife','ladle','mallet','meshspatula', ...
-        'mug','fork','pencil','pen','rollingpin','skillet','spatula','spoon', ...
+        'mug','fork','pencil','pen','rollingpin','servingspoon','skillet','spatula','spoon', ...
         'squeegee','tablefork','tableknife','tablespoon','vase'};    
     for i=1:numel(list_categs)
         k = findstr(list_categs{i},tool_name);
         if ~isempty(k)
             tool_categ = list_categs{i};
+            break;
         end
     end
     if isempty(tool_categ)
@@ -137,6 +143,9 @@ function [max_size, rescale_noise] = ToolMaxSize( tool_category )
             max_size = 0.2;
             return;
         case 'rollingpin'
+            max_size = 0.4;
+            return;
+        case 'servingspoon'
             max_size = 0.4;
             return;
         case 'skillet'
