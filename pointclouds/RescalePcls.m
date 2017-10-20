@@ -26,21 +26,32 @@ function [ Ps ] = RescalePcls( root_folder, rescale_factor, add_noise, write_fil
         tic;       
         tool_categ = GetTolCateg( pcl_filenames{i}(1:end-4) );        
         P = ReadPointCloud([root_folder pcl_filenames{i}]);
-        P = ApplyPCAPCl(P);
         old_scale = range(P.v);
         [tool_max_size, rescale_noise] = ToolMaxSize( tool_categ );
+        if ~exist('rescale_factor','var') || rescale_factor == -1
+            max_range = max(range(P.v));
+            if max_range < 1
+                rescale_factor = 1;
+            else
+                rescale_factor = 10^-round(log10(max_range));;
+            end
+            P = RescalePCL( P, rescale_factor, rescale_noise );
+        else
+            if exist('rescale_factor','var') || rescale_factor > 0
+            P = RescalePCL( P, rescale_factor, rescale_noise );
+            else            
+                tool_max_size = tool_max_size * ( 1 - rescale_noise );           
+                mult_rescale = tool_max_size/max(old_scale);
+                P = RescalePCL( P, mult_rescale, rescale_noise );
+            end
+        end
+        P = ApplyPCAPCl(P);
         if ~add_noise
             rescale_noise = 0;
         else
             rescale_noise = randsample(0:rescale_noise/10:rescale_noise,1);
         end
-        if exist('rescale_factor','var') || rescale_factor > 0
-            P = RescalePCL( P, rescale_factor, rescale_noise );
-        else            
-            tool_max_size = tool_max_size * ( 1 - rescale_noise );           
-            mult_rescale = tool_max_size/max(old_scale);
-            P = RescalePCL( P, mult_rescale, rescale_noise );
-        end
+        
         new_scale = range(P.v);
         max_sizes(i) = tool_max_size;
         Ps{end+1} = P;

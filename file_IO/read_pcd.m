@@ -47,8 +47,13 @@ function [P, segms] = read_pcd( filename, min_n_pts_segm )
     ix_col_segm = 0;
     switch(n_cols)           
         case 4
-            P.u = M(:,4);
-            ix_col_segm = 4;
+            if size(M(M(:,4)<0),1) > 1
+                P.u = ones(size(M,1),1);
+                ix_col_segm = 0;
+            else
+                P.u = M(:,4);
+                ix_col_segm = 4;
+            end
         case 6
             P.n = M(:,4:6);
         case 7

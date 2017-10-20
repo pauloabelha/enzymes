@@ -12,7 +12,8 @@ function [ rot_mtx ] = GetEulRotMtx( angles, axis )
     end
     rot_mtx = eye(3);
     for i=1:3
-        rot_mtx = rot_mtx*GetRotMtx(angles(i),axis{i});
+        ix=4-i;
+        rot_mtx = rot_mtx*GetRotMtx(angles(ix),axis{ix});
     end
 end
 
