@@ -16,6 +16,7 @@ function [ Ps ] = PlotPtools( ptools, task_name, plot_faces, colours )
     %% get grasp and action SQs
     for i=1:size(ptools,1)
         % get pcl from ptool
+        figure; 
         P = PTool2PCL( ptools(i,:), task_name );
         if plot_faces
             F = P.f;
