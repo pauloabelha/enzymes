@@ -1,4 +1,4 @@
-function P = read_off(filename)
+function P = read_off(fid)
 
     % read_off - read data from OFF file.
     %
@@ -8,13 +8,6 @@ function P = read_off(filename)
     %   'face' is a 'nb.face x 3' array specifying the connectivity of the mesh.
     %
     %   Copyright (c) 2003 Gabriel Peyr�
-
-
-    fid = fopen(filename,'r');
-    if( fid==-1 )
-        error('Can''t open the file.');
-        return;
-    end
 
     str = fgets(fid);
     % skip comments
@@ -48,7 +41,7 @@ function P = read_off(filename)
     
     face_colours = A(5:7,:);
 
-    fclose(fid);
+    
     
     P.v = vertex';
     P.f = face';

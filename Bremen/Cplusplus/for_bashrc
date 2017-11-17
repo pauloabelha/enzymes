@@ -1,0 +1,4 @@
+# added by Paulo Abelha for usage of Matlab runtime C/C++ compilation
+export XAPPLRESDIR=MCR_ROOT/v92/X11/app-defaults
+export MCR_ROOT=/usr/local/MATLAB/MATLAB_Runtime
+export LD_LIBRARY_PATH=$MCR_ROOT/v92/runtime/glnxa64:$MCR_ROOT/v92/bin/glnxa64:$MCR_ROOT/v92/sys/os/glnxa64:$MCR_ROOT/v92/sys/opengl/lib/glnxa64:$LD_LIBRARY_PATH

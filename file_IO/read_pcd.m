@@ -1,12 +1,6 @@
-function [P, segms] = read_pcd( filename, min_n_pts_segm )
+function [P, segms] = read_pcd( fid, min_n_pts_segm )
     P = zeros( 0,3 );
     %h = txtwaitbar('init', 'reading PLY file: ');
-
-    % Open file
-    fid = fopen(filename);
-    if fid == -1
-        error(['ERROR: could not open file "' filename '"']);
-    end
 
     % spin until end of header
     curr_row=0;
@@ -86,5 +80,4 @@ function [P, segms] = read_pcd( filename, min_n_pts_segm )
     end
     
     P.segms = segms;
-    fclose(fid);
 end

@@ -9,17 +9,17 @@
 % All Rights Reserved
 % email: ata2@cs.sfu.ca 
 % $Revision: 1.0$  Created on: 2008/08/05
-function [P] = read_ply( filename, min_n_pts_segm )
+function [P] = read_ply( fid, min_n_pts_segm, filepath )
+
+if ~exist('filepath','var')
+    filepath = '';
+end
 
 segms = {};
 P = zeros( 0,3 );
 %h = txtwaitbar('init', 'reading PLY file: ');
 
-% Open file
-fid = fopen(filename);
-if fid == -1
-    error(['ERROR: could not open file "' filename '"']);
-end
+
 
 % spin until end of header
 line = fgetl(fid);
@@ -36,8 +36,8 @@ while ~strcmp( line, 'end_header' );
     line = fgetl(fid);
     if length(line) >= 6 && strcmp( line(1:6), 'format' )
         if length(line) >= 27 &&  strcmp(line(8:27),'binary_little_endian' )
-            fclose(fid);
-            [P.v,P.n,P.c,P.f] = read_ply2(filename);
+            % Open file            
+            [P.v,P.n,P.c,P.f] = read_ply2(filepath);
             P.f = P.f - 1;
             P.u = GetSegmLabelsFromColour(P.c);
             P.segms = {};
@@ -111,7 +111,7 @@ if ~exist('start_vertex','var') || start_vertex < 1
     error('Could not find ''property float x'' that defines the start of vertexices');
 end
 
-M = dlmread(filename, ' ', [curr_line 0 N+curr_line-1 n_properties-1]);
+M = dlmread(fopen(fid), ' ', [curr_line 0 N+curr_line-1 n_properties-1]);
 
 P.v = M(:,start_vertex:start_vertex+2);
 
@@ -127,7 +127,7 @@ end
 
 P.f = [];
 if exist('start_faces','var')
-   P.f = dlmread(filename, ' ', [N+curr_line start_faces N+curr_line+n_faces-1 start_faces+2]);
+   P.f = dlmread(fopen(fid), ' ', [N+curr_line start_faces N+curr_line+n_faces-1 start_faces+2]);
 end
 
 there_is_prop_colour = there_is_prop_red && there_is_prop_green && there_is_prop_blue;
@@ -150,8 +150,6 @@ for i=1:numel(P.segms)
     end
 end
 P.segms = new_segms;
-
-fclose(fid);
 
 end
 

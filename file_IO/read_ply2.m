@@ -1,4 +1,4 @@
-function [vertex,normal,colours,face] = read_ply2(filename)
+function [vertex,normal,colours,face] = read_ply2(Path)
 
 % read_ply - read data from PLY file.
 %
@@ -11,7 +11,7 @@ function [vertex,normal,colours,face] = read_ply2(filename)
 %
 %   Copyright (c) 2003 Gabriel Peyr�
 
-[d,c] = plyread(filename);
+[d,c] = plyread(Path);
 
 vi = d.face.vertex_indices;
 nf = length(vi);
@@ -39,7 +39,7 @@ else
 end
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-function [Elements,varargout] = plyread(Path,Str)
+function [Elements,varargout] = plyread(Path)
 %PLYREAD   Read a PLY 3D data file.
 %   [DATA,COMMENTS] = PLYREAD(FILENAME) reads a version 1.0 PLY file
 %   FILENAME and returns a structure DATA.  The fields in this structure
@@ -64,9 +64,10 @@ function [Elements,varargout] = plyread(Path,Str)
 
 % Pascal Getreuer 2004
 
-[fid,Msg] = fopen(Path,'rt');	% open file in read text mode
-
-if fid == -1, error(Msg); end
+fid = fopen(Path);
+if fid == -1
+    error(['ERROR: could not open file "' filepath '"']);
+end
 
 Buf = fscanf(fid,'%s',1);
 if ~strcmp(Buf,'ply')

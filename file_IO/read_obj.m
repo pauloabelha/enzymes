@@ -19,16 +19,10 @@
 %
 % See also mesh_read, mesh_read_smf
 %
-function P = read_obj(filename)
+function P = read_obj(fid)
 %
 % Copyright (c) 2008, 2009, 2010 Oliver van Kaick <ovankaic@cs.sfu.ca>
 % Copyright (c) 2015 Paulo Abelha <p.abelha@abdn.ac.uk>
-
-    fid = fopen(filename);
-    if fid == -1
-        disp(['ERROR: could not open file "' filename '"']);
-        return;
-    end
 
     tline = fgetl(fid);
     i=0;
