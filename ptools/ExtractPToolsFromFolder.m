@@ -37,7 +37,7 @@ function [ ptools, ptools_maps, ptools_errors, pcl_filenames, errors ] = Extract
         try            
             tic;
             P = ReadPointCloud([root_folder pcl_filenames{i}]);
-            [SQs, ~, ERRORS_SQs] = PCL2SQ( P, 4 );
+            [SQs, ~, ERRORS_SQs] = PCL2SQ( P, 8 );
             if numel(SQs) == 1
                 [ ptools{i}, ptools_maps{i}(1:3), ptools_maps{i}(4:6), ptools_errors{i} ] = ExtractPTool(SQs{1},SQs{1},tool_masses(i),ERRORS_SQs);
             else

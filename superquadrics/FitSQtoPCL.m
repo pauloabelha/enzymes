@@ -9,11 +9,11 @@ function [SQs,Es,E_pcl_SQs,E_SQ_pcls] = FitSQtoPCL(pcl,ix_attempt,verbose,fit_co
     else
         display_iter = 'off';
     end
-    opt_options = optimset('Display',display_iter,'TolX',1e-10,'TolFun',1e-10,'MaxIter',200,'MaxFunEvals',1000); 
+    opt_options = optimset('Display',display_iter,'TolX',1e-10,'TolFun',1e-10,'MaxIter',1000,'MaxFunEvals',1000); 
     if size(pcl,1) <= MIN_N_POINTS
         error(['Point cloud has only ' num2str(size(pcl,1)) ' points and the minimum is ' num2str(MIN_N_POINTS)]);
     end    
-    pca_pcl = pca(pcl);
+    pca_pcl = eye(3);% pca(pcl);
     pcl = pcl*pca_pcl;
     [~, pcl_scale] = PCLBoundingBoxVolume( pcl );
     %% fit in parallel

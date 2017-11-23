@@ -30,7 +30,7 @@ function [SQ,F,E,E_pcl_SQ, E_SQ_pcl ] = FitSQtoPCL_normal(pcl,pcl_scale,ix,opt_o
             min_scale(i) = max(min_scale(i),0.0005);
         end
         lower_lambda = [min_scale 0.1 0.1 0 0 0 0 0 0 0 min_pos];
-        initial_angles = [pi/randsample(1:2,1) pi/randsample(1:2,1) pi/randsample(1:2,1)];
+        initial_angles = [0 pi/2 0];
         initial_lambda = [initial_scale 0.1 1 initial_angles 0 0 0 0 initial_pos]; 
         upper_lambda = [max_scale 2 2 pi pi pi 0 0 0 0 max_pos];
         [SQ,~,~,~,~] = lsqnonlin(@(x) SQFunctionNormalised(x, pcl), initial_lambda, lower_lambda,upper_lambda, opt_options);

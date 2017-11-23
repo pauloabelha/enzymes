@@ -98,11 +98,11 @@ do
 		rm -r $TOOL_FOLDER	
 		echo "Current tool folder being trained: "$TASK_PATH"/"$P
 		cp -r $P $TOOL_FOLDER
-		echo $START_TRIAL >> $OUTPUT_FILE
+		echo $START_TRIAL" "$IX_FOLDER >> $OUTPUT_FILE
 		for (( i=1; i<=$N_TRIALS; i++ ))
 		do	
 			echo "  Trial "$i	
-			gzserver $GAZEBO_WORLD_FILE >> $OUTPUT_FILE	
+			gazebo $GAZEBO_WORLD_FILE >> $OUTPUT_FILE	
 		done
 		echo $END_TRIAL >> $OUTPUT_FILE		
 		
@@ -122,6 +122,7 @@ do
 		
 		ESTIMATED_TIME=$(printf "%d:%02d" $ESTIMATED_TIME_HRS $ESTIMATED_TIME_MIN)
 		echo "Estimated time to finish (HH:MM): "$ESTIMATED_TIME
+		rm $OUTPUT_EST_TIME_FILE
 		echo $ESTIMATED_TIME >> $OUTPUT_EST_TIME_FILE
 	fi
 	if (("$IX_FOLDER" > $END)) 	
