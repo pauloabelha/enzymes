@@ -17,7 +17,7 @@ function [ SQs_Ps, P ] = PlotSQs( SQs, downsample, invert_colours, colours, plot
         end
         SQs = temp;
     end    
-    if ~exist('colours','var')
+    if ~exist('colours','var') || (isreal(colours) && colours < 1)
         basic_colours = {'.r' '.g' '.b' '.y' '.m' '.c'}; 
         colours = {};
         i=1; j=1;
@@ -40,12 +40,14 @@ function [ SQs_Ps, P ] = PlotSQs( SQs, downsample, invert_colours, colours, plot
     end
     P.v = [];
     P.n = [];
+    P.u = [];
     for i=1:size(SQs,1)
-        P = SQ2PCL( SQs(i,:), downsample );
-        P.segms{1} = P;
-%         P.f = convhull(P.v);
-        P.f = P.f - 1;        
-        SQs_Ps{i} = P;
+        Q = SQ2PCL( SQs(i,:), downsample );
+        P.segms{i} = Q;    
+        SQs_Ps{i} = Q; 
+        P.v = [P.v; Q.v];
+        P.n = [P.n; Q.n];
+        P.u = [P.u; repmat(i,downsample,1)];
         if plot_fig
             scatter3(P.v(:,1),P.v(:,2),P.v(:,3),200,colours{min(size(colours,2),i)});   
             xlabel('X');
@@ -53,6 +55,7 @@ function [ SQs_Ps, P ] = PlotSQs( SQs, downsample, invert_colours, colours, plot
             zlabel('Z');
         end
     end
+    P = AddColourToSegms(P);
     if size(SQs,1) == 1
         SQs_Ps = SQs_Ps{1};
     end

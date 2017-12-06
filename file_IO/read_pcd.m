@@ -1,4 +1,4 @@
-function [P, segms] = read_pcd( fid, min_n_pts_segm )
+function [P, segms] = read_pcd( fid, min_n_pts_segm, filename )
     P = zeros( 0,3 );
     %h = txtwaitbar('init', 'reading PLY file: ');
 

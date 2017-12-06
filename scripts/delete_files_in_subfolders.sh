@@ -24,5 +24,5 @@ fi
 
 for P in `ls -vd $ROOT_FOLDER/*/`;
 do
-	rm $P"*."$FILE_TYPE
+	rm $P"tool."$FILE_TYPE
 done

@@ -34,7 +34,7 @@ function [folder_path] = CreateGazeboModelFolderStructure( simulation_folder, ga
     command = ['meshlabserver -i ' folder_path 'tool.ply' ' -o ' folder_path 'tool.dae ' extra_command];
     disp(command);
     system(command);
-    %system(['rm ' folder_path 'tool.ply']);
+    system(['rm ' folder_path 'tool.ply']);
     
 
 end

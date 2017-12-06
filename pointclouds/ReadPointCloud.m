@@ -16,7 +16,7 @@ function P = ReadPointCloud( filepath, min_n_pts_segm )
         extension = filepath(end-2:end);
         switch extension
             case 'pcd'
-                P = read_pcd( fid, min_n_pts_segm );
+                P = read_pcd( fid, min_n_pts_segm, filepath );
                 P.f = [];
             case 'ply'
                 P = read_ply( fid, min_n_pts_segm, filepath);
