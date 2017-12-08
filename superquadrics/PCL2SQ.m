@@ -26,7 +26,7 @@
 %   SQs_pcls - uniformly sampled pcls of the SQs
 %
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-function [ SQs, TOT_ERROR, SEGM_ERRORS, SEGM_ERRORS_PCL_SQ, SEGM_ERRORS_SQ_PCL, SQ_pcls ] = PCL2SQ( P, n_attempts, plot_fig, verbose, try_to_clean_segm )
+function [ SQs, TOT_ERROR, SEGM_ERRORS, SEGM_ERRORS_PCL_SQ, SEGM_ERRORS_SQ_PCL, SQ_pcls ] = PCL2SQ( P, n_attempts, plot_fig, verbose, parallel, try_to_clean_segm )
     %% constants
     % max number of points (pcls with more than this will be downsampled)
     % increase this too much at your own risk of freezing the machine :)
@@ -55,6 +55,9 @@ function [ SQs, TOT_ERROR, SEGM_ERRORS, SEGM_ERRORS_PCL_SQ, SEGM_ERRORS_SQ_PCL, 
     if ~exist('verbose','var')
         verbose = 0;
     end
+    if ~exist('parallel','var')
+        parallel = 1;
+    end
     if ~exist('try_to_clean_segm','var')
         try_to_clean_segm = 0;
     end    
@@ -82,7 +85,7 @@ function [ SQs, TOT_ERROR, SEGM_ERRORS, SEGM_ERRORS_PCL_SQ, SEGM_ERRORS_SQ_PCL, 
         for ix_attempt=1:n_attempts     
             ix_beg = ix_end + 1;
             ix_end = ix_end + 4;
-            [SQs_fit(ix_beg:ix_end,:),Es(ix_beg:ix_end),E_pcl_SQs(ix_beg:ix_end),E_SQ_pcls(ix_beg:ix_end)] = FitSQtoPCL(pcl,ix_attempt,verbose);
+            [SQs_fit(ix_beg:ix_end,:),Es(ix_beg:ix_end),E_pcl_SQs(ix_beg:ix_end),E_SQ_pcls(ix_beg:ix_end)] = FitSQtoPCL(pcl,ix_attempt,verbose,[],parallel);
         end
         [SEGM_ERRORS(i), ix_best] = min(Es);
         SQs{i} = SQs_fit(ix_best,:);        

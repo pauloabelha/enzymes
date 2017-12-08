@@ -1,29 +1,13 @@
 % Return the closest edge of P from point
-function [ edges, min_dists, SQ ] = EdgeDetector( P, points, dump_edges, plot_fig, parallel)
+function [ edges, min_dists, SQ ] = EdgeDetector( P, points, dump_edges, plot_fig, parallel, colours)
     % print help
     if ischar(P) && P == "--help"
-       disp('Function edge detector');        
+       disp('Function edge detector'); 
+       disp('Written by Paulo Abelha'); 
        disp('This function will detect the closest edges of a point cloud for each point in a given list of points'); 
-       disp('Only the first and second params are compulsory'); 
        disp([char(9) 'First param: filepath to the point cloud']); 
        disp([char(9) 'Second param: list of points passed in the followng syntax:']);
-       disp([char(9) char(9) 'One point: [0.1 0.1 0.1]']);
-       disp([char(9) char(9) 'Two point: [0.1 0.1 0.1;0.2 0.2 0.2]']);
-       disp([char(9) char(9) 'Three point: [0.1 0.1 0.1;0.2 0.2 0.2;0.3 0.3 0.3]']);
-       disp([char(9) 'Third param: 1 or 0 for whether to print the edges to the terminal (default is 1)']);
-       disp([char(9) 'Fourth param: 1 or 0 for whether to plot the results (default is 0)']);
-       disp([char(9) 'Fifth param: 1 or 0 for whether to run the superquadric fitting in parallel (default is 0)']);
-       disp([char(9) char(9) 'Setting the parallel param to 1 may incur in a long waiting time to create a parallel pool of cores']);
-       disp('')
-       disp('Example calls:');
-       disp([char(9) './edge_detector ~/ToolWeb/bowl_2_3dwh.ply [0.1 0.1 0.1;0.2 0.2 0.2] 0 1 0']);
-       disp([char(9) 'This will cal edge_detector on the given point cloud, using two points, plot the results, and running serially']);
-       disp('')
-       disp('Example calls:');
-       disp([char(9) './edge_detector ~/ToolWeb/bowl_2_3dwh.ply [0.1 0.1 0.1;0.2 0.2 0.2;0.3 0.3 0.3]']);
-       disp([char(9) 'This will cal edge_detector on the given point cloud, using three points and print the edges to the terminal']);
-       disp('')
-       disp('Written by Paulo Abelha'); 
+       disp([char(9) char(9) 'Onepoint: list of points passed in the followng syntax:']);
        return;
     end
     %% check inputs
@@ -49,11 +33,11 @@ function [ edges, min_dists, SQ ] = EdgeDetector( P, points, dump_edges, plot_fi
            points(i,3) = str2double(point_str(3));
        end
     end
-    %disp('Points:');
-    %disp(points);
-    %disp('');
+    disp('Points:');
+    disp(points);
+    disp('');
     if ~exist('dump_edges','var') || dump_edges < 0
-        dump_edges = 1;
+        dump_edges = 0;
     end  
     if ischar(dump_edges)
         dump_edges = str2double(dump_edges);
@@ -66,10 +50,9 @@ function [ edges, min_dists, SQ ] = EdgeDetector( P, points, dump_edges, plot_fi
      else
          parallel = str2double(parallel);
      end
-     colours = {'.g', '.b', '.y', '.c'};
-%     if ~exist('colours','var') || colours < 0 || (ischar(colours) && str2double(colours) < 0)
-%         colours = {'.g', '.b', '.y', '.c'};
-%     end          
+    if ~exist('colours','var') || colours < 0 || (ischar(colours) && str2double(colours) < 0)
+        colours = {'.g', '.b', '.y', '.c'};
+    end          
     %% get SQ from pcl
     if plot_fig 
        clf; 
