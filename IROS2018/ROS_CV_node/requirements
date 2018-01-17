@@ -1,0 +1,39 @@
+Hi Paulo,
+
+Just in case you forgot the points, I just resend
+
+(I just thought you might have forgotten because yesterday you said only orientation)
+
+ 
+
+Is it a lot of work?
+
+Need to pull in myself/chaozheng?
+
+ 
+
+From: Abelha Ferreira, Paulo
+Sent: 30 November 2017 15:23
+To: Paweł Gajewski <pawel.gajewski@agh.edu.pl>
+Cc: Guerin, Dr Frank <f.guerin@abdn.ac.uk>; Wang, Chaozheng <r01cw17@abdn.ac.uk>
+Subject: IROS 2018:
+
+ 
+
+Hi,
+
+ 
+
+As far as I know here is what is required from the vision side.
+
+-The end point of the tool (e.g. spoon or spatula, the end point that will penetrate the grains first)
+
+-A point at the back of the tool head, before it becomes the handle (i.e. the part of knife that will contact the edge first, for scraping along)
+
+-The orientation of the tool in relation to the PCA'ed point cloud
+
+-The middle of the handle (Chaozheng will probably put the grasp sphere here)
+
+ 
+
+Is that everything?
