@@ -23,6 +23,6 @@ function [ SQ ] = RotateSQWithRotMtx( SQ, rot_mtx )
     if det(rot_mtx) > -1.01 && det(rot_mtx) < -0.99 
         SQ(8) = SQ(8) + pi;
     end
-    SQ(6:8) = rotm2eul_(rot_mtx*GetEulRotMtx(SQ(6:8)),'ZYZ');    
+    SQ(6:8) = mod(rotm2eul_(rot_mtx*GetEulRotMtx(SQ(6:8)),'ZYZ'), pi);
 end
 

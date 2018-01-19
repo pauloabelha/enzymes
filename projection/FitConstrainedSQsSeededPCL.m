@@ -15,13 +15,14 @@ function [SQs,SQs_errors,seeds_pcls] = FitConstrainedSQsSeededPCL(seeds_pcls,ver
     if verbose
        disp([char(9) 'Fitting SQs to ' num2str(size(seeds_pcls,2)) ' seeded pcls... ']);
     end
-    parfor i=1:size(seeds_pcls,2)    
+    for i=1:size(seeds_pcls,2)    
         if verbose
             tic;
         end
         [SQs{i}, ~, SQ_errors(i)] = PCL2SQ( seeds_pcls{i}, 1 );
         SQs{i} = SQs{i}{1};
-        Ps{i}.v = seeds_pcls{i};
+        Ps{i} = PointCloud(seeds_pcls{i});
+     
 %         if verbose
 %             tot_toc = DisplayEstimatedTimeOfLoop(tot_toc+toc,i,size(seeds_pcls,2),[char(9) 'Fitting SQs to ' num2str(size(seeds_pcls,2)) ' seeded pcls... ']);
 %         end

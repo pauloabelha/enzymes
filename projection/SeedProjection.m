@@ -1,6 +1,6 @@
 
 
-function [ best_scores, best_categ_scores, best_ptools, best_ptool_maps, SQs, P ] = SeedProjection( P, tool_mass, task_name, task_function, task_function_params, n_seeds, add_segms, verbose, plot_fig, iter )  
+function [ best_scores, best_categ_scores, best_ptools, best_ptool_maps, SQs, P ] = SeedProjection( P, tool_mass, task_name, task_function, task_function_params, n_seeds, add_segms, only_segms, verbose, plot_fig, iter )  
     %% default is not verbose
     if ~exist('verbose','var')
         verbose = 0;
@@ -16,7 +16,7 @@ function [ best_scores, best_categ_scores, best_ptools, best_ptool_maps, SQs, P 
         n_seeds = n_seeds_hyper;
     end
     %% get SQs from planting seeds and fitting constrained by the ideal ptool scale
-    [ SQs_proj, fit_scores_proj ] = GetSQsFromPToolProjection( P, n_seeds, n_seeds_radii, add_segms, verbose );
+    [ SQs_proj, fit_scores_proj ] = GetSQsFromPToolProjection( P, n_seeds, n_seeds_radii, add_segms, only_segms, verbose );
     if verbose 
         n_valid_SQs = sum(~cellfun(@isempty,SQs_proj(:)));
         disp([char(9) 'Extracting p-tools from the ' num2str(n_valid_SQs) ' valid SQs (fitted with good rotations)']);
@@ -71,8 +71,8 @@ function [ best_scores, best_categ_scores, best_ptools, best_ptool_maps, SQs, P 
     best_ix = floor(n_weights/2)+1;
     best_score = best_scores(best_ix);
     best_fit_score = best_fit_scores(best_ix);
-    IX=1; GenerateSimulationForPCLWithPtool( P, best_ptools(IX,:), best_ptool_maps(IX,:), task_name, ['good_' num2str(tool_mass) '/'] );
-    IX=200; GenerateSimulationForPCLWithPtool( P, best_ptools(IX,:), best_ptool_maps(IX,:), task_name, ['bad_' num2str(tool_mass) '/'] );
+%     IX=1; GenerateSimulationForPCLWithPtool( P, best_ptools(IX,:), best_ptool_maps(IX,:), task_name, ['good_' num2str(tool_mass) '/'] );
+%     IX=200; GenerateSimulationForPCLWithPtool( P, best_ptools(IX,:), best_ptool_maps(IX,:), task_name, ['bad_' num2str(tool_mass) '/'] );
     if verbose 
         disp([char(9) 'Best p-tool found (task score; fit score)' char(9) num2str(best_score) char(9) num2str(best_fit_score)]);   
     end
