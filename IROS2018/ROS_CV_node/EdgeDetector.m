@@ -46,7 +46,7 @@ function [ edges, min_dists, SQ ] = EdgeDetector( P, points, dump_edges, plot_fi
        points = zeros(numel(points_spilt),3);
        for i=1:numel(points_spilt)
            point_str = strsplit(points_spilt{i},' ');
-           points(i,1) = s 	StupidMeshAlignment.mtr2double(point_str(1));
+           points(i,1) = str2double(point_str(1));
            points(i,2) = str2double(point_str(2));
            points(i,3) = str2double(point_str(3));
        end
@@ -76,8 +76,8 @@ function [ edges, min_dists, SQ ] = EdgeDetector( P, points, dump_edges, plot_fi
     if plot_fig 
        clf; 
     end
-% print help
-SQ = PCL2SQ(P,4,plot_fig,0,parallel);
+% fit sueprquadric
+	SQ = PCL2SQ(P,4,plot_fig,0,parallel);
     if plot_fig 
         hold on;        
     end
