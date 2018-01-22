@@ -16,7 +16,7 @@ function [SQs,Es,E_pcl_SQs,E_SQ_pcls] = FitSQtoPCL(pcl,ix_attempt,verbose,fit_co
     if ~exist('parallel','var')
         parallel = 1;
     end
-    pca_pcl = eye(3);% pca(pcl);
+    pca_pcl = pca(pcl);
     pcl = pcl*pca_pcl;
     [~, pcl_scale] = PCLBoundingBoxVolume( pcl );
     %% fit in parallel
@@ -47,6 +47,7 @@ function [ SQ,F,E,E_pcl_SQ, E_SQ_pcl,type ] = FitSQtoPCL_type(pcl,pcl_scale,ix_a
         otherwise
             error('Please define the type of fitting as 1-4');            
     end
+    %% perform the inverse transformation of the pca to get SQ to the original pcl' coordinate frame
     SQ(end-2:end) = SQ(end-2:end)*inv_pca_pcl;  
     SQ = RotateSQWithRotMtx(SQ, inv_pca_pcl');
     % deal with thins SQs

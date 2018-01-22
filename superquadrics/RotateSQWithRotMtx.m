@@ -12,6 +12,9 @@
 %
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 function [ SQ ] = RotateSQWithRotMtx( SQ, rot_mtx )
+    if ~exist('pca_apply','var')
+        pca_apply = 0;
+    end
     %% sanity checks
     CheckNumericArraySize(rot_mtx,[3 3]);
     if size(SQ,2) ~= 15 && size(SQ,2) ~= 16
@@ -23,6 +26,13 @@ function [ SQ ] = RotateSQWithRotMtx( SQ, rot_mtx )
     if det(rot_mtx) > -1.01 && det(rot_mtx) < -0.99 
         SQ(8) = SQ(8) + pi;
     end
-    SQ(6:8) = mod(rotm2eul_(rot_mtx*GetEulRotMtx(SQ(6:8)),'ZYZ'), pi);
+    vec = [0;0;1];
+    a = GetEulRotMtx(SQ(6:8))*vec;
+    disp(['Before:' char(9) num2str(a')]);
+    SQ(6:8) = rotm2eul_(GetEulRotMtx(SQ(6:8)),'ZYZ');  
+    b = GetEulRotMtx(SQ(6:8))*vec; 
+    disp(['After:' char(9) num2str(b')]);
+    disp(['Dist:' char(9) num2str((a-b)')]);
+    disp(char(9));
 end
 
