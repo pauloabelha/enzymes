@@ -88,7 +88,6 @@ function [ SQs, TOT_ERROR, SEGM_ERRORS, SEGM_ERRORS_PCL_SQ, SEGM_ERRORS_SQ_PCL, 
             [SQs_fit(ix_beg:ix_end,:),Es(ix_beg:ix_end),E_pcl_SQs(ix_beg:ix_end),E_SQ_pcls(ix_beg:ix_end)] = FitSQtoPCL(pcl,ix_attempt,verbose,[],parallel);
         end        
         [SEGM_ERRORS(i), ix_best] = min(Es);
-        disp(ix_best);
         SQs{i} = SQs_fit(ix_best,:);        
         SEGM_ERRORS_PCL_SQ(i) = E_pcl_SQs(ix_best);
         SEGM_ERRORS_SQ_PCL(i) = E_SQ_pcls(ix_best);        
