@@ -84,12 +84,11 @@ function [ edges, min_dists, SQ ] = EdgeDetector( P, points, dump_edges, plot_fi
     SQ = SQ{1};
     %% get superellipse pcl 
     pcl_superellipse = superellipse( SQ(1), SQ(2), SQ(5) );
-    pcl_superellipse = [pcl_superellipse zeros(size(pcl_superellipse,1),1)];
+    pcl_superellipse = [pcl_superellipse repmat(SQ(3),size(pcl_superellipse,1),1)];
     % rotate and translate pcl
     rot_mtx = GetEulRotMtx(SQ(6:8));    
     pcl_superellipse = [rot_mtx*pcl_superellipse']';
     pcl_superellipse = pcl_superellipse + SQ(end-2:end);
-    pcl_superellipse(:,3) = pcl_superellipse(:,3) + SQ(3);    
     if plot_fig
         scatter3(pcl_superellipse(:,1),pcl_superellipse(:,2),pcl_superellipse(:,3),100,'.m');
     end
