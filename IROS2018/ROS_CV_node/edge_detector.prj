@@ -1,31 +1,31 @@
 <deployment-project plugin="plugin.ezdeploy" plugin-version="1.0">
-  <configuration build-checksum="3023346352" file="/home/paulo/enzymes/Bremen/edge_detector.prj" location="/home/paulo/enzymes/Bremen" name="edge_detector" preferred-package-location="/home/paulo/enzymes/Bremen/edge_detector/for_redistribution" preferred-package-type="package.type.install" target="target.ezdeploy.standalone" target-name="Application Compiler">
+  <configuration file="/home/tom/enzymes/IROS2018/ROS_CV_node/edge_detector.prj" location="/home/tom/enzymes/IROS2018/ROS_CV_node" name="edge_detector" target="target.ezdeploy.standalone" target-name="Application Compiler">
     <param.appname>edge_detector</param.appname>
     <param.icon />
     <param.icons />
-    <param.version>2.0</param.version>
-    <param.authnamewatermark>Paulo Abelha Ferreira</param.authnamewatermark>
-    <param.email>pauloabelha@gmail.com</param.email>
+    <param.version>1.0</param.version>
+    <param.authnamewatermark>Paulo Abelha</param.authnamewatermark>
+    <param.email />
     <param.company />
-    <param.summary>Function edge detector
-This function will detect the closest edges of a point cloud for each point in a given list of points</param.summary>
+    <param.summary />
     <param.description>Function edge detector
 This function will detect the closest edges of a point cloud for each point in a given list of points
 Only the first and second params are compulsory
 	First param: filepath to the point cloud
 	Second param: list of points passed in the followng syntax:
-		One point: [0.1 0.1 0.1]
-		Two point: [0.1 0.1 0.1;0.2 0.2 0.2]
-		Three point: [0.1 0.1 0.1;0.2 0.2 0.2;0.3 0.3 0.3]
+		One point: "[0.1 0.1 0.1]"
+		Two point: "[0.1 0.1 0.1;0.2 0.2 0.2]"
+		Three point: "[0.1 0.1 0.1;0.2 0.2 0.2;0.3 0.3 0.3]"
+		The double quote around the list of points is required
 	Third param: 1 or 0 for whether to print the edges to the terminal (default is 1)
 	Fourth param: 1 or 0 for whether to plot the results (default is 0)
 	Fifth param: 1 or 0 for whether to run the superquadric fitting in parallel (default is 0)
 		Setting the parallel param to 1 may incur in a long waiting time to create a parallel pool of cores
 Example calls:
-	./edge_detector ~/ToolWeb/bowl_2_3dwh.ply [0.1 0.1 0.1;0.2 0.2 0.2] 0 1 0
+	./edge_detector ~/ToolWeb/bowl_2_3dwh.ply "[0.1 0.1 0.1;0.2 0.2 0.2]" 0 1 0
 	This will cal edge_detector on the given point cloud, using two points, plot the results, and running serially
 Example calls:
-	./edge_detector ~/ToolWeb/bowl_2_3dwh.ply [0.1 0.1 0.1;0.2 0.2 0.2;0.3 0.3 0.3]
+	./edge_detector ~/ToolWeb/bowl_2_3dwh.ply "[0.1 0.1 0.1;0.2 0.2 0.2;0.3 0.3 0.3]"
 	This will cal edge_detector on the given point cloud, using three points and print the edges to the terminal
 Written by Paulo Abelha</param.description>
     <param.screenshot />
@@ -66,7 +66,7 @@ Written by Paulo Abelha</param.description>
     <param.web.mcr>true</param.web.mcr>
     <param.package.mcr>false</param.package.mcr>
     <param.no.mcr>false</param.no.mcr>
-    <param.web.mcr.name>edge_detector_installer</param.web.mcr.name>
+    <param.web.mcr.name>MyAppInstaller_web</param.web.mcr.name>
     <param.package.mcr.name>MyAppInstaller_mcr</param.package.mcr.name>
     <param.no.mcr.name>MyAppInstaller_app</param.no.mcr.name>
     <param.windows.command.prompt>false</param.windows.command.prompt>
@@ -75,7 +75,10 @@ Written by Paulo Abelha</param.description>
     <unset>
       <param.icon />
       <param.icons />
+      <param.version />
+      <param.email />
       <param.company />
+      <param.summary />
       <param.screenshot />
       <param.guid />
       <param.installpath.string />
@@ -93,6 +96,7 @@ Written by Paulo Abelha</param.description>
       <param.web.mcr />
       <param.package.mcr />
       <param.no.mcr />
+      <param.web.mcr.name />
       <param.package.mcr.name />
       <param.no.mcr.name />
       <param.windows.command.prompt />
@@ -105,68 +109,68 @@ Written by Paulo Abelha</param.description>
     <fileset.resources />
     <fileset.package />
     <fileset.depfun>
-      <file>/home/paulo/enzymes/file_IO/read_obj.m</file>
-      <file>/home/paulo/enzymes/file_IO/read_off.m</file>
-      <file>/home/paulo/enzymes/file_IO/read_pcd.m</file>
-      <file>/home/paulo/enzymes/file_IO/read_ply.m</file>
-      <file>/home/paulo/enzymes/file_IO/read_ply2.m</file>
-      <file>/home/paulo/enzymes/file_IO/read_png_as_pcl.m</file>
-      <file>/home/paulo/enzymes/geometry/GetEulRotMtx.m</file>
-      <file>/home/paulo/enzymes/geometry/GetVolMult.m</file>
-      <file>/home/paulo/enzymes/geometry/RotateAndTranslatePoints.m</file>
-      <file>/home/paulo/enzymes/geometry/SuperParaboloidFunction.m</file>
-      <file>/home/paulo/enzymes/geometry/superellipse.m</file>
-      <file>/home/paulo/enzymes/geometry/superellipsoid.m</file>
-      <file>/home/paulo/enzymes/geometry/superparabola.m</file>
-      <file>/home/paulo/enzymes/geometry/superparaboloid.m</file>
-      <file>/home/paulo/enzymes/geometry/unif_sample_theta.m</file>
-      <file>/home/paulo/enzymes/geometry/update_theta.m</file>
-      <file>/home/paulo/enzymes/linear_algebra/Get2DRotMtx.m</file>
-      <file>/home/paulo/enzymes/linear_algebra/GetRotMtx.m</file>
-      <file>/home/paulo/enzymes/linear_algebra/eul2rotm_.m</file>
-      <file>/home/paulo/enzymes/linear_algebra/rotm2eul_.m</file>
-      <file>/home/paulo/enzymes/linear_algebra/signedpow.m</file>
-      <file>/home/paulo/enzymes/list/CheckIsScalar.m</file>
-      <file>/home/paulo/enzymes/list/CheckNumericArraySize.m</file>
-      <file>/home/paulo/enzymes/list/GetPermGrid.m</file>
-      <file>/home/paulo/enzymes/list/concatcellarrayofmatrices.m</file>
-      <file>/home/paulo/enzymes/list/flatten_cell.m</file>
-      <file>/home/paulo/enzymes/plot/PlotPCLS.m</file>
-      <file>/home/paulo/enzymes/plot/PlotPCLSegments.m</file>
-      <file>/home/paulo/enzymes/plot/PlotSQs.m</file>
-      <file>/home/paulo/enzymes/pointclouds/AddColourToSegms.m</file>
-      <file>/home/paulo/enzymes/pointclouds/CheckIsPointCloudStruct.m</file>
-      <file>/home/paulo/enzymes/pointclouds/DownsamplePCL.m</file>
-      <file>/home/paulo/enzymes/pointclouds/GetMeanMinDistPCL.m</file>
-      <file>/home/paulo/enzymes/pointclouds/GetMedianRangeBySlicingPcl.m</file>
-      <file>/home/paulo/enzymes/pointclouds/PCLBoundingBoxVolume.m</file>
-      <file>/home/paulo/enzymes/pointclouds/PCLDist.m</file>
-      <file>/home/paulo/enzymes/pointclouds/PointCloud.m</file>
-      <file>/home/paulo/enzymes/pointclouds/ReadPointCloud.m</file>
-      <file>/home/paulo/enzymes/pointclouds/calculatePCLSegScale.m</file>
-      <file>/home/paulo/enzymes/segmentation/GetEquivalentSegmLabels.m</file>
-      <file>/home/paulo/enzymes/segmentation/RemovePCLRangePeaks.m</file>
-      <file>/home/paulo/enzymes/segmentation/SlicePointCloud.m</file>
-      <file>/home/paulo/enzymes/superquadrics/FitSQToPCL_Paraboloid.m</file>
-      <file>/home/paulo/enzymes/superquadrics/FitSQtoPCL.m</file>
-      <file>/home/paulo/enzymes/superquadrics/FitSQtoPCL_Bending.m</file>
-      <file>/home/paulo/enzymes/superquadrics/FitSQtoPCL_Tapering.m</file>
-      <file>/home/paulo/enzymes/superquadrics/FitSQtoPCL_normal.m</file>
-      <file>/home/paulo/enzymes/superquadrics/GetToroid.m</file>
-      <file>/home/paulo/enzymes/superquadrics/IsThinSQ.m</file>
-      <file>/home/paulo/enzymes/superquadrics/PCL2SQ.m</file>
-      <file>/home/paulo/enzymes/superquadrics/RankSQ.m</file>
-      <file>/home/paulo/enzymes/superquadrics/RotateSQWithRotMtx.m</file>
-      <file>/home/paulo/enzymes/superquadrics/SQ2PCL.m</file>
-      <file>/home/paulo/enzymes/superquadrics/SQFunction.m</file>
-      <file>/home/paulo/enzymes/superquadrics/SQFunctionNormalised.m</file>
-      <file>/home/paulo/enzymes/superquadrics/SQToroidFunction.m</file>
+      <file>/home/tom/enzymes/file_IO/read_obj.m</file>
+      <file>/home/tom/enzymes/file_IO/read_off.m</file>
+      <file>/home/tom/enzymes/file_IO/read_pcd.m</file>
+      <file>/home/tom/enzymes/file_IO/read_ply.m</file>
+      <file>/home/tom/enzymes/file_IO/read_ply2.m</file>
+      <file>/home/tom/enzymes/file_IO/read_png_as_pcl.m</file>
+      <file>/home/tom/enzymes/geometry/GetEulRotMtx.m</file>
+      <file>/home/tom/enzymes/geometry/GetVolMult.m</file>
+      <file>/home/tom/enzymes/geometry/RotateAndTranslatePoints.m</file>
+      <file>/home/tom/enzymes/geometry/SuperParaboloidFunction.m</file>
+      <file>/home/tom/enzymes/geometry/superellipse.m</file>
+      <file>/home/tom/enzymes/geometry/superellipsoid.m</file>
+      <file>/home/tom/enzymes/geometry/superparabola.m</file>
+      <file>/home/tom/enzymes/geometry/superparaboloid.m</file>
+      <file>/home/tom/enzymes/geometry/unif_sample_theta.m</file>
+      <file>/home/tom/enzymes/geometry/update_theta.m</file>
+      <file>/home/tom/enzymes/linear_algebra/Get2DRotMtx.m</file>
+      <file>/home/tom/enzymes/linear_algebra/GetRotMtx.m</file>
+      <file>/home/tom/enzymes/linear_algebra/eul2rotm_.m</file>
+      <file>/home/tom/enzymes/linear_algebra/rotm2eul_.m</file>
+      <file>/home/tom/enzymes/linear_algebra/signedpow.m</file>
+      <file>/home/tom/enzymes/list/CheckIsScalar.m</file>
+      <file>/home/tom/enzymes/list/CheckNumericArraySize.m</file>
+      <file>/home/tom/enzymes/list/GetPermGrid.m</file>
+      <file>/home/tom/enzymes/list/concatcellarrayofmatrices.m</file>
+      <file>/home/tom/enzymes/list/flatten_cell.m</file>
+      <file>/home/tom/enzymes/plot/PlotPCLS.m</file>
+      <file>/home/tom/enzymes/plot/PlotPCLSegments.m</file>
+      <file>/home/tom/enzymes/plot/PlotSQs.m</file>
+      <file>/home/tom/enzymes/pointclouds/AddColourToSegms.m</file>
+      <file>/home/tom/enzymes/pointclouds/CheckIsPointCloudStruct.m</file>
+      <file>/home/tom/enzymes/pointclouds/DownsamplePCL.m</file>
+      <file>/home/tom/enzymes/pointclouds/GetMeanMinDistPCL.m</file>
+      <file>/home/tom/enzymes/pointclouds/GetMedianRangeBySlicingPcl.m</file>
+      <file>/home/tom/enzymes/pointclouds/PCLBoundingBoxVolume.m</file>
+      <file>/home/tom/enzymes/pointclouds/PCLDist.m</file>
+      <file>/home/tom/enzymes/pointclouds/PointCloud.m</file>
+      <file>/home/tom/enzymes/pointclouds/ReadPointCloud.m</file>
+      <file>/home/tom/enzymes/pointclouds/calculatePCLSegScale.m</file>
+      <file>/home/tom/enzymes/segmentation/GetEquivalentSegmLabels.m</file>
+      <file>/home/tom/enzymes/segmentation/RemovePCLRangePeaks.m</file>
+      <file>/home/tom/enzymes/segmentation/SlicePointCloud.m</file>
+      <file>/home/tom/enzymes/superquadrics/FitSQToPCL_Paraboloid.m</file>
+      <file>/home/tom/enzymes/superquadrics/FitSQtoPCL.m</file>
+      <file>/home/tom/enzymes/superquadrics/FitSQtoPCL_Bending.m</file>
+      <file>/home/tom/enzymes/superquadrics/FitSQtoPCL_Tapering.m</file>
+      <file>/home/tom/enzymes/superquadrics/FitSQtoPCL_normal.m</file>
+      <file>/home/tom/enzymes/superquadrics/GetToroid.m</file>
+      <file>/home/tom/enzymes/superquadrics/IsThinSQ.m</file>
+      <file>/home/tom/enzymes/superquadrics/PCL2SQ.m</file>
+      <file>/home/tom/enzymes/superquadrics/RankSQ.m</file>
+      <file>/home/tom/enzymes/superquadrics/RotateSQWithRotMtx.m</file>
+      <file>/home/tom/enzymes/superquadrics/SQ2PCL.m</file>
+      <file>/home/tom/enzymes/superquadrics/SQFunction.m</file>
+      <file>/home/tom/enzymes/superquadrics/SQFunctionNormalised.m</file>
+      <file>/home/tom/enzymes/superquadrics/SQToroidFunction.m</file>
     </fileset.depfun>
     <build-deliverables>
-      <file location="${PROJECT_ROOT}/edge_detector/for_testing" name="edge_detector" optional="false">/home/paulo/enzymes/Bremen/edge_detector/for_testing/edge_detector</file>
-      <file location="${PROJECT_ROOT}/edge_detector/for_testing" name="splash.png" optional="false">/home/paulo/enzymes/Bremen/edge_detector/for_testing/splash.png</file>
-      <file location="${PROJECT_ROOT}/edge_detector/for_testing" name="readme.txt" optional="true">/home/paulo/enzymes/Bremen/edge_detector/for_testing/readme.txt</file>
-      <file location="${PROJECT_ROOT}/edge_detector/for_testing" name="run_edge_detector.sh" optional="false">/home/paulo/enzymes/Bremen/edge_detector/for_testing/run_edge_detector.sh</file>
+      <file location="${PROJECT_ROOT}/edge_detector/for_testing" name="edge_detector" optional="false">/home/tom/enzymes/IROS2018/ROS_CV_node/edge_detector/for_testing/edge_detector</file>
+      <file location="${PROJECT_ROOT}/edge_detector/for_testing" name="splash.png" optional="false">/home/tom/enzymes/IROS2018/ROS_CV_node/edge_detector/for_testing/splash.png</file>
+      <file location="${PROJECT_ROOT}/edge_detector/for_testing" name="run_edge_detector.sh" optional="false">/home/tom/enzymes/IROS2018/ROS_CV_node/edge_detector/for_testing/run_edge_detector.sh</file>
+      <file location="${PROJECT_ROOT}/edge_detector/for_testing" name="readme.txt" optional="true">/home/tom/enzymes/IROS2018/ROS_CV_node/edge_detector/for_testing/readme.txt</file>
     </build-deliverables>
     <workflow />
     <matlab>
@@ -182,7 +186,7 @@ Written by Paulo Abelha</param.description>
       <vista>false</vista>
       <linux>true</linux>
       <solaris>false</solaris>
-      <osver>3.16.0-77-generic</osver>
+      <osver>4.4.0-109-generic</osver>
       <os32>false</os32>
       <os64>true</os64>
       <arch>glnxa64</arch>
