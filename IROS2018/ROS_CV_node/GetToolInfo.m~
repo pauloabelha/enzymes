@@ -1,4 +1,4 @@
-function [ P, SQs, ptools, ptool_maps, grasp_centre, action_centre ] = get_tool_info( pcl_path, gpr_task_path, task, verbose, pcl_mass )
+function [ P, SQs, ptools, ptool_maps, grasp_centre, action_centre ] = GetToolInfo( pcl_path, gpr_task_path, task, verbose, pcl_mass )
     if ~exist('pcl_mass','var')
         pcl_mass = 0.1;
     end
@@ -10,6 +10,7 @@ function [ P, SQs, ptools, ptool_maps, grasp_centre, action_centre ] = get_tool_
     end
     %% load GPR for task
     if verbose
+        disp('begin_log');
         disp('Loading Gaussian Process Regression object for task...');
     end
     load(gpr_task_path);
@@ -24,6 +25,8 @@ function [ P, SQs, ptools, ptool_maps, grasp_centre, action_centre ] = get_tool_
     if verbose
         toc;
     end
+    
+    [ best_scores, best_categ_scores, best_ptools, best_ptool_maps, SQs, P ] = SeedProjection( P, pcl_mass, task, @TaskFunctionGPR, {gpr, gpr_dim_ixs}, 0, 0,, only_segms, verbose, plot_fig, iter )  
     %% fit SQs
     if verbose
         disp('Fitting SQs...');
@@ -46,34 +49,37 @@ function [ P, SQs, ptools, ptool_maps, grasp_centre, action_centre ] = get_tool_
         toc;
     end
     % decide which part is grasping
-    ptool_ix = 6;
+    ptool_ix = 1;
     % align ptool
     if verbose
-        disp('Aligning ptool with pcl...');
+        disp('Extracting pcl transformation');
     end
     [SQ_grasp, SQ_action] = AlignPToolWithPCL( ptools(ptool_ix,:), P, ptool_maps(ptool_ix,:) );
-    if verbose
-        toc;
-    end
     %% get action end point
     transf_lists = PtoolsTaskTranfs( ptools(ptool_ix, :), task );
     P = Apply3DTransfPCL({P},transf_lists);
     PlotPCLSegments(P);
+    if verbose
+        toc;
+    end
+    %% finish log writing
+    if verbose
+        disp('end_log');
+    end
     %% print tool info
     disp('begin_tool_info');
     %% get grasp part centre
     grasp_centre = SQ_grasp(end-2:end);
-    disp('Grasp part center:');
-    disp([num2str(grasp_centre)]);
+    disp('grasp_center');
+    disp(num2str(grasp_centre));
     %% get action part centre
     action_centre = SQ_action(end-2:end);
-    disp('Action part center:');
-    disp([num2str(action_centre)]);
+    disp('action_center');
+    disp(num2str(action_centre));
     %% get tool tip
     tool_tip = [1 2 3];
-    disp('Tool tip:');
-    disp([num2str(tool_tip)]);
-    
+    disp('tool_tip');
+    disp([num2str(tool_tip)]);    
     disp('end_tool_info');    
 end
 

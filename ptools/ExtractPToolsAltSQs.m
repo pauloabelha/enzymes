@@ -1,4 +1,4 @@
-function [ ptools, ptools_map, ptools_errors, ERRORS_SQs_alt] = ExtractPToolsAltSQs(SQs, mass, ERRORS_SQs_alt, grasp_alt)
+function [ ptools, ptools_map, ptools_errors, ERRORS_SQs_alt, SQs_ptools, ERRORS_SQS] = ExtractPToolsAltSQs(SQs, mass, ERRORS_SQs_alt, grasp_alt)
     if ~exist('ERRORS_SQs_alt','var')
         ERRORS_SQs_alt = zeros(size(SQs,1),size(SQs,2)) + Inf;
     end
@@ -6,6 +6,8 @@ function [ ptools, ptools_map, ptools_errors, ERRORS_SQs_alt] = ExtractPToolsAlt
         grasp_alt=0;
     end
     ptools_map = [];
+    SQs_ptools = {};
+    ERRORS_SQS = {};
     SQs_1 = [];
     SQs_2 = [];
     ERRORS = [];
@@ -30,6 +32,8 @@ function [ ptools, ptools_map, ptools_errors, ERRORS_SQs_alt] = ExtractPToolsAlt
                     end 
                     SQs_1(end+1,:) = SQ1;
                     SQs_2(end+1,:) = SQ2;
+                    SQs_ptools{end+1} = [SQ1; SQ2];
+                    ERRORS_SQS{end+1} = [ERRORS_SQs_alt(sq1_alt_ix,sq1_ix); ERRORS_SQs_alt(sq2_alt_ix,sq2_ix)];
                     ERRORS(end+1) = ERRORS_SQs_alt(sq1_alt_ix,sq1_ix) + ERRORS_SQs_alt(sq2_alt_ix,sq2_ix);
                     ptools_map(end+1,:) = [SQ1(end-2:end) GetSQVector(SQ1)'];
                 end

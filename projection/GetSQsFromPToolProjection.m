@@ -6,7 +6,7 @@ function [ SQs, SQs_errors, seeds_pcls] = GetSQsFromPToolProjection( P, n_seeds,
     if verbose
         disp([char(9) 'Planting ' num2str(n_seeds) ' seeds, with ' num2str(n_seeds_radii) ' different radii on pcl...']);
     end
-    if add_segms
+    if add_segms || only_segms
         segm_pcls = cell(1,size(P.segms,2));
         parfor i=1:size(P.segms,2)
             segm_pcls{i} = P.segms{i}.v;
