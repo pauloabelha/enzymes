@@ -8,7 +8,7 @@ function [ Ps ] = Apply3DTransfPCL( Ps, T_list, transp)
         cell_P = 0;
     end
     for i=1:size(Ps,2)
-        pcl_and_normals = Apply3DTransformations({Ps{i}.v,Ps{i}.n},T_list,transp);
+        [pcl_and_normals] = Apply3DTransformations({Ps{i}.v,Ps{i}.n},T_list,transp);
         Ps{i}.v = pcl_and_normals{1};
         Ps{i}.n = pcl_and_normals{2};
         if isfield(Ps{i},'segms')
