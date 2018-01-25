@@ -31,7 +31,7 @@ function [ Y, Y_sds ] = TaskFunctionGPR( task_params, X  )
     end
     Ys = cell(1,N_cores_real);
     Y_sdss = Ys;
-    parfor i=1:N_cores_real
+    for i=1:N_cores_real
         [Ys{i},Y_sdss{i}] = gpr.predict(Xs{i});
     end
     Y = concatcellarrayofmatrices(Ys,'row');

@@ -3,7 +3,7 @@
     <param.appname>get_tool_info</param.appname>
     <param.icon />
     <param.icons />
-    <param.version>1.0</param.version>
+    <param.version>2.0</param.version>
     <param.authnamewatermark>Paulo Abelha</param.authnamewatermark>
     <param.email>p.abelha@abdn.ac.uk</param.email>
     <param.company />
@@ -64,7 +64,6 @@ Written by Paulo Abelha</param.description>
     <unset>
       <param.icon />
       <param.icons />
-      <param.version />
       <param.company />
       <param.summary />
       <param.screenshot />

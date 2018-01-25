@@ -59,8 +59,8 @@ else
 end
 
 % compute the rotation, vectors must be normalized
-an = sl3dnormalize(a, epsilon);
-bn = sl3dnormalize(b, epsilon);
+an = sl3dnormalize_(a, epsilon);
+bn = sl3dnormalize_(b, epsilon);
 
 % test for zero input argument magnitude after normalize to take epsilon 
 % into account
@@ -68,7 +68,7 @@ if (~any(an) || ~any(bn))
   error(message('sl3d:vrdirorirot:argzeromagnitude'));
 end
 
-ax = sl3dnormalize(cross(an, bn), epsilon);
+ax = sl3dnormalize_(cross(an, bn), epsilon);
 % min to eliminate possible rounding errors that can lead to dot product >1
 angle = acos(min(dot(an, bn), 1));
 
@@ -82,7 +82,7 @@ if ~any(ax)
     [~, mind] = min(absa);
     c = zeros(1,3);
     c(mind) = 1;
-    ax = sl3dnormalize(cross(an, c), epsilon);
+    ax = sl3dnormalize_(cross(an, c), epsilon);
 end
 
 % Be tolerant to column vector arguments, produce a row vector

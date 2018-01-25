@@ -8,14 +8,15 @@ function [ P, SQs, ptools, ptool_maps, grasp_centre, action_centre, tool_tip, co
         disp([char(9) 'Third param: target object alignment vector']);
         disp([char(9) 'Fourth param: task name']);
         disp([char(9) 'Fifth param: path to the trained GPR']);
-        disp([char(9) 'Sixth param: flag for verbose and logging']);
+        disp([char(9) 'Sixth param: flag for verbose and logging (default is 0)']);
+        disp([char(9) 'Sixth param: flag for running in parallel (default is 0)']);
         disp('Written by Paulo Abelha'); 
         return;
     end
     %% deal with inputs
     if verbose
         tic;
-    end
+    end    
     % read pcl
     if verbose
         disp('Reading pcl...');
@@ -55,6 +56,17 @@ function [ P, SQs, ptools, ptool_maps, grasp_centre, action_centre, tool_tip, co
     else
         parallel = str2double(parallel);
     end
+    % print inputs
+    if verbose
+        disp('Inputs:');
+        disp(P);
+        disp(pcl_mass);
+        disp(target_obj_align_vec_str);
+        disp(task);
+        disp(gpr_task_path);
+        disp(verbose);
+        disp(parallel);
+    end
     %% load GPR for task
     if verbose
         disp('begin_log');
@@ -70,7 +82,7 @@ function [ P, SQs, ptools, ptool_maps, grasp_centre, action_centre, tool_tip, co
     if verbose
         disp('Performing projection...');
     end
-    [ best_scores, best_categ_scores, best_ptools, best_ptool_maps, best_ixs, SQs_ptools, ERRORS_SQs_ptools ] = SeedProjection( P, pcl_mass, task, @TaskFunctionGPR, {gprs{end}, dims_ixs{end}}, 0, 0, 1, verbose, verbose, parallel );  
+    [ best_scores, best_categ_scores, best_ptools, best_ptool_maps, best_ixs, SQs_ptools, ERRORS_SQs_ptools ] = SeedProjection( P, pcl_mass, task, @TaskFunctionGPR, {gprs{end}, dims_ixs{end}}, 0, 0, 1, verbose, 0, parallel );  
     best_score = best_scores(best_weight_ix);
     best_categ_score = best_categ_scores(best_weight_ix);
     best_ptool = best_ptools(best_weight_ix,:);
@@ -80,29 +92,28 @@ function [ P, SQs, ptools, ptool_maps, grasp_centre, action_centre, tool_tip, co
     if verbose
         toc;
     end
-    %% fit SQs
-    if verbose
-        disp('Fitting SQs...');
-    end
-    [SQs, ~, ERRORS_SQs] = PCL2SQ(P, 1);
-    if verbose
-        toc;
-    end
-    %% get ptools
-    if verbose
-        disp('Extracting ptools...');
-    end
-    if numel(P.segms) == 1
-        [ ptools, ptool_maps, ptool_errors ] = ExtractPTool(SQs{1},SQs{1}, pcl_mass,ERRORS_SQs);
-    else
-        [SQs_alt, ERRORS_SQs_alt] = GetRotationSQFits( SQs, P.segms );
-        [ ptools, ptool_maps, ptool_errors ] = ExtractPToolsAltSQs(SQs_alt, pcl_mass, ERRORS_SQs_alt);
-    end
-    if verbose
-        toc;
-    end
+%     %% fit SQs
+%     if verbose
+%         disp('Fitting SQs...');
+%     end
+%     [SQs, ~, ERRORS_SQs] = PCL2SQ(P, 1);
+%     if verbose
+%         toc;
+%     end
+%     %% get ptools
+%     if verbose
+%         disp('Extracting ptools...');
+%     end
+%     if numel(P.segms) == 1
+%         [ ptools, ptool_maps, ptool_errors ] = ExtractPTool(SQs{1},SQs{1}, pcl_mass,ERRORS_SQs);
+%     else
+%         [SQs_alt, ERRORS_SQs_alt] = GetRotationSQFits( SQs, P.segms );
+%         [ ptools, ptool_maps, ptool_errors ] = ExtractPToolsAltSQs(SQs_alt, pcl_mass, ERRORS_SQs_alt);
+%     end
+%     if verbose
+%         toc;
+%     end
     % decide which part is grasping
-    ptool_ix = 1;
     % align ptool
     if verbose
         disp('Extracting pcl transformation');
@@ -148,7 +159,7 @@ function [ P, SQs, ptools, ptool_maps, grasp_centre, action_centre, tool_tip, co
     tool_tip_vector = tool_tip - grasp_centre';
     disp('tool_tip_vector');
     disp([num2str(tool_tip_vector)]);
-    rot_tool_tip = vrrotvec2mat(vrrotvec(tool_tip_vector, target_obj_align_vec));
+    rot_tool_tip = vrrotvec2mat_(vrrotvec_(tool_tip_vector, target_obj_align_vec));
     Q = Apply3DTransfPCL({P},{rot_tool_tip});
     % get complete transformation
     complete_transf = CombineTranfs(transf_lists);
@@ -161,15 +172,29 @@ function [ P, SQs, ptools, ptool_maps, grasp_centre, action_centre, tool_tip, co
         toc;
     end
     if verbose
+        sphere_plot_size = 5000;
         disp('Plotting tool info...');
         PlotPCLSegments(P,-1,0,{'.k','.k','.k','.k','.k','.k','.k'});   
         disp('Original point cloud is in black');        
-        %PlotSQs(best_SQs,-1,-1,{'.b', '.y'});
+        %PlotPtools(best_SQs,-1,-1,{'.b', '.y'});
         disp('Superquadrics fitted to the original point cloud are:');
         disp([char(9) 'Grasp part in blue']);
         disp([char(9) 'Action part in yellow']);
         PlotPCLSegments(Q,-1,0);
         disp('Transformed point cloud''s segments are coloured (red, green, blue, yellow, ...)');
+        hold on;
+        scatter3(grasp_centre(1),grasp_centre(2),grasp_centre(3),sphere_plot_size,'.g');
+        disp('Original grasp point as a green sphere');
+        scatter3(tool_tip(1,1),tool_tip(2,1),tool_tip(3,1),sphere_plot_size,'.b');
+        disp('Original tool tip as a blue sphere');
+        transf_tool_tip = [rot_tool_tip [0;0;0]; 0 0 0 1]*[tool_tip;0];
+        transf_tool_tip = transf_tool_tip(1:3);
+        scatter3(transf_tool_tip(1,1),transf_tool_tip(2,1),transf_tool_tip(3,1),sphere_plot_size,'.m');
+        disp('Transformed tool tip as a yellow sphere');
+        transf_grasp_centre = [rot_tool_tip [0;0;0]; 0 0 0 1]*[grasp_centre';0];
+        transf_grasp_centre = transf_grasp_centre(1:3);
+        scatter3(transf_grasp_centre(1,1),transf_grasp_centre(2,1),transf_grasp_centre(3,1),sphere_plot_size,'.c');
+        disp('Transformed grasp centre as a cyan sphere');
     end
 end
 
