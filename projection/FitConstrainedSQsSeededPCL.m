@@ -1,12 +1,21 @@
-function [SQs,SQs_errors,seeds_pcls] = FitConstrainedSQsSeededPCL(seeds_pcls,verbose)
+function [SQs,SQs_errors,seeds_pcls] = FitConstrainedSQsSeededPCL(seeds_pcls,verbose,parallel)
     %% check verbose
     if ~exist('verbose','var')
        verbose = 0; 
     end
+    if ~exist('parallel','var')
+       parallel = 1; 
+    end
     %% fit a SQ to each seed pcl    
     DOWNSAMPLE = 200;
-    parfor i=1:numel(seeds_pcls)
-        seeds_pcls{i} = DownsamplePCL(seeds_pcls{i},DOWNSAMPLE);
+    if parallel
+        parfor i=1:numel(seeds_pcls)
+            seeds_pcls{i} = DownsamplePCL(seeds_pcls{i},DOWNSAMPLE);
+        end
+    else
+        for i=1:numel(seeds_pcls)
+            seeds_pcls{i} = DownsamplePCL(seeds_pcls{i},DOWNSAMPLE);
+        end
     end
     SQs = cell(1,size(seeds_pcls,2));
     SQ_errors = zeros(1,size(seeds_pcls,2));

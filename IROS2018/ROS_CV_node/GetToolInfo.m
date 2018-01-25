@@ -1,29 +1,16 @@
-function [ P, SQs, ptools, ptool_maps, grasp_centre, action_centre, tool_tip, complete_transf ] = GetToolInfo( P, pcl_mass, task, gpr_task_path, verbose )
+function [ P, SQs, ptools, ptool_maps, grasp_centre, action_centre, tool_tip, complete_transf ] = GetToolInfo( P, pcl_mass, target_obj_align_vec_str, task, gpr_task_path, verbose, parallel )
     % print help
     if ischar(P) && P == "--help"
-       disp('Function GetToolInfo');        
-       disp('This function will output all the necessary info for using a tool for a task'); 
-       disp([char(9) 'First param: filepath to the point cloud']); 
-       disp([char(9) 'Second param: mass of the pcl']);
-       disp([char(9) char(9) 'One point: "[0.1 0.1 0.1]"']);
-       disp([char(9) char(9) 'Two point: "[0.1 0.1 0.1;0.2 0.2 0.2]"']);
-       disp([char(9) char(9) 'Three point: "[0.1 0.1 0.1;0.2 0.2 0.2;0.3 0.3 0.3]"']);
-       disp([char(9) char(9) 'The double quote around the list of points is required']);
-       disp([char(9) 'Third param: 1 or 0 for whether to print the edges to the terminal (default is 1)']);
-       disp([char(9) 'Fourth param: 1 or 0 for whether to plot the results (default is 0)']);
-       disp([char(9) 'Fifth param: 1 or 0 for whether to run the superquadric fitting in parallel (default is 0)']);
-       disp([char(9) char(9) 'Setting the parallel param to 1 may incur in a long waiting time to create a parallel pool of cores']);
-       disp('')
-       disp('Example calls:');
-       disp([char(9) './edge_detector ~/ToolWeb/bowl_2_3dwh.ply "[0.1 0.1 0.1;0.2 0.2 0.2]" 0 1 0']);
-       disp([char(9) 'This will cal edge_detector on the given point cloud, using two points, plot the results, and running serially']);
-       disp('')
-       disp('Example calls:');
-       disp([char(9) './edge_detector ~/ToolWeb/bowl_2_3dwh.ply "[0.1 0.1 0.1;0.2 0.2 0.2;0.3 0.3 0.3]"']);
-       disp([char(9) 'This will cal edge_detector on the given point cloud, using three points and print the edges to the terminal']);
-       disp('')
-       disp('Written by Paulo Abelha'); 
-       return;
+        disp('Function GetToolInfo');        
+        disp('This function will output all the necessary info for using a tool for a task'); 
+        disp([char(9) 'First param: filepath to the point cloud']); 
+        disp([char(9) 'Second param: mass of the pcl']);
+        disp([char(9) 'Third param: target object alignment vector']);
+        disp([char(9) 'Fourth param: task name']);
+        disp([char(9) 'Fifth param: path to the trained GPR']);
+        disp([char(9) 'Sixth param: flag for verbose and logging']);
+        disp('Written by Paulo Abelha'); 
+        return;
     end
     %% deal with inputs
     if verbose
@@ -48,10 +35,26 @@ function [ P, SQs, ptools, ptool_maps, grasp_centre, action_centre, tool_tip, co
     if ~exist('pcl_mass','var')
         disp('Warning! No mass provided; default of 0.1 will be used');
         pcl_mass = 0.1;
+    else
+        pcl_mass = str2double(pcl_mass);
+    end
+    % try to parse points string
+    points_spilt = strsplit(target_obj_align_vec_str(2:end-1),';');
+    target_obj_align_vec = zeros(3,1);
+    for i=1:3
+        point_str = strsplit(points_spilt{i},' ');
+        target_obj_align_vec(i) = str2double(point_str);
     end
     if ~exist('verbose','var')
         verbose = 0;
-    end    
+    else
+        verbose = str2double(verbose);
+    end
+    if ~exist('parallel','var')
+        parallel = 0;
+    else
+        parallel = str2double(parallel);
+    end
     %% load GPR for task
     if verbose
         disp('begin_log');
@@ -67,7 +70,7 @@ function [ P, SQs, ptools, ptool_maps, grasp_centre, action_centre, tool_tip, co
     if verbose
         disp('Performing projection...');
     end
-    [ best_scores, best_categ_scores, best_ptools, best_ptool_maps, best_ixs, SQs_ptools, ERRORS_SQs_ptools ] = SeedProjection( P, pcl_mass, task, @TaskFunctionGPR, {gprs{end}, dims_ixs{end}}, 0, 0, 1, verbose );  
+    [ best_scores, best_categ_scores, best_ptools, best_ptool_maps, best_ixs, SQs_ptools, ERRORS_SQs_ptools ] = SeedProjection( P, pcl_mass, task, @TaskFunctionGPR, {gprs{end}, dims_ixs{end}}, 0, 0, 1, verbose, verbose, parallel );  
     best_score = best_scores(best_weight_ix);
     best_categ_score = best_categ_scores(best_weight_ix);
     best_ptool = best_ptools(best_weight_ix,:);
@@ -137,9 +140,16 @@ function [ P, SQs, ptools, ptool_maps, grasp_centre, action_centre, tool_tip, co
     else
         [~,tool_tip_ix] = min(P.v(:,1));
     end    
-    tool_tip = P.v(tool_tip_ix,:);
+    % get tool tip
+    tool_tip = P.v(tool_tip_ix,:)';
     disp('tool_tip');
     disp([num2str(tool_tip)]);
+    % get tool tip vector (grasp centre to tool tip)
+    tool_tip_vector = tool_tip - grasp_centre';
+    disp('tool_tip_vector');
+    disp([num2str(tool_tip_vector)]);
+    rot_tool_tip = vrrotvec2mat(vrrotvec(tool_tip_vector, target_obj_align_vec));
+    Q = Apply3DTransfPCL({P},{rot_tool_tip});
     % get complete transformation
     complete_transf = CombineTranfs(transf_lists);
     disp('tool_transf');
@@ -154,7 +164,7 @@ function [ P, SQs, ptools, ptool_maps, grasp_centre, action_centre, tool_tip, co
         disp('Plotting tool info...');
         PlotPCLSegments(P,-1,0,{'.k','.k','.k','.k','.k','.k','.k'});   
         disp('Original point cloud is in black');        
-        PlotSQs(best_SQs,-1,-1,{'.b', '.y'});
+        %PlotSQs(best_SQs,-1,-1,{'.b', '.y'});
         disp('Superquadrics fitted to the original point cloud are:');
         disp([char(9) 'Grasp part in blue']);
         disp([char(9) 'Action part in yellow']);

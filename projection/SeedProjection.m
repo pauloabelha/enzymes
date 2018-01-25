@@ -1,6 +1,6 @@
 
 
-function [ best_scores, best_categ_scores, best_ptools, best_ptool_maps, best_ixs, SQs_ptools, ERRORS_SQs_ptools ] = SeedProjection( P, tool_mass, task_name, task_function, task_function_params, n_seeds, add_segms, only_segms, verbose, plot_fig )  
+function [ best_scores, best_categ_scores, best_ptools, best_ptool_maps, best_ixs, SQs_ptools, ERRORS_SQs_ptools ] = SeedProjection( P, tool_mass, task_name, task_function, task_function_params, n_seeds, add_segms, only_segms, verbose, plot_fig, parallel )  
     %% default is not verbose
     if ~exist('verbose','var')
         verbose = 0;
@@ -18,12 +18,12 @@ function [ best_scores, best_categ_scores, best_ptools, best_ptool_maps, best_ix
         n_seeds = n_seeds_hyper;
     end
     %% get SQs from planting seeds and fitting constrained by the ideal ptool scale
-    [ SQs_proj, fit_scores_proj ] = GetSQsFromPToolProjection( P, n_seeds, n_seeds_radii, add_segms, only_segms, verbose );
+    [ SQs_proj, fit_scores_proj ] = GetSQsFromPToolProjection( P, n_seeds, n_seeds_radii, add_segms, only_segms, verbose, parallel );
     if verbose 
         n_valid_SQs = sum(~cellfun(@isempty,SQs_proj(:)));
         disp([char(9) 'Extracting p-tools from the ' num2str(n_valid_SQs) ' valid SQs (fitted with good rotations)']);
     end 
-    [ ptools_proj, ptools_map_proj, ptools_errors_proj, ~, SQs_ptools, ERRORS_SQs_ptools] = ExtractPToolsAltSQs(SQs_proj, tool_mass, fit_scores_proj);  
+    [ ptools_proj, ptools_map_proj, ptools_errors_proj, ~, SQs_ptools, ERRORS_SQs_ptools] = ExtractPToolsAltSQs(SQs_proj, tool_mass, fit_scores_proj, -1, parallel);  
     % any ptool with some error in its fitting score receives max (worse)
     % minimum fit score will never be 0
     % So, inverse of niminimum will never be Inf

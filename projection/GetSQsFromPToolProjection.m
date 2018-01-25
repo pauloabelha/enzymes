@@ -1,4 +1,4 @@
-function [ SQs, SQs_errors, seeds_pcls] = GetSQsFromPToolProjection( P, n_seeds, n_seeds_radii, add_segms, only_segms, verbose )   
+function [ SQs, SQs_errors, seeds_pcls] = GetSQsFromPToolProjection( P, n_seeds, n_seeds_radii, add_segms, only_segms, verbose, parallel )   
     if ~exist('verbose','var')
         verbose = 0;
     end
@@ -8,8 +8,14 @@ function [ SQs, SQs_errors, seeds_pcls] = GetSQsFromPToolProjection( P, n_seeds,
     end
     if add_segms || only_segms
         segm_pcls = cell(1,size(P.segms,2));
-        parfor i=1:size(P.segms,2)
-            segm_pcls{i} = P.segms{i}.v;
+        if parallel
+            for i=1:size(P.segms,2)
+                segm_pcls{i} = P.segms{i}.v;
+            end
+        else
+            parfor i=1:size(P.segms,2)
+                segm_pcls{i} = P.segms{i}.v;
+            end
         end
     end
     if only_segms
