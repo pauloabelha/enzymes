@@ -1,8 +1,8 @@
 function [ SQs_Ps, P ] = PlotSQs( SQs, downsample, invert_colours, colours, plot_fig )
-    if ~exist('downsample','var')
+    if ~exist('downsample','var') || downsample < 0
        downsample = 10000; 
     end
-    if ~exist('invert_colours','var')
+    if ~exist('invert_colours','var') || invert_colours < 0
        invert_colours = 0; 
     end
     if ~exist('plot_fig','var')

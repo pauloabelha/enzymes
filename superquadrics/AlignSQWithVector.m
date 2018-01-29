@@ -8,8 +8,8 @@ function [ SQ, rot_SQ ] = AlignSQWithVector( SQ, vec, SQ_axis )
         vec = [-vec(1) vec(2) vec(3)];
     end
     SQ_vec = GetSQVector( SQ, SQ_axis );
-    r = vrrotvec(SQ_vec,vec);
-    rot_SQ = vrrotvec2mat(r);
+    r = vrrotvec_(SQ_vec,vec);
+    rot_SQ = vrrotvec2mat_(r);
     SQ = RotateSQWithRotMtx(SQ,rot_SQ);
 end
 
