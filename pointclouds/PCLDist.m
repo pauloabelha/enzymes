@@ -1,4 +1,4 @@
-function [ E, E1, E2, penalty_far_points, A, min_dists_both ] = PCLDist( pcl1,pcl2 )
+function [ E, E1, E2, penalty_far_points, A, min_dists_both, min_dists1_mean, min_dists2_mean ] = PCLDist( pcl1,pcl2 )
     % punishment for being far (using quadratic)
     pow_punish = 1;
     % if size of pcls are different, downsample the largest one
@@ -13,12 +13,14 @@ function [ E, E1, E2, penalty_far_points, A, min_dists_both ] = PCLDist( pcl1,pc
     DIST=pdist2(pcl1,pcl2).^pow_punish;
     % get min dist between each point from pcl1 and its closest in pcl2
     min_dists1 = min(DIST,[],1);
+    min_dists1_mean = mean(min_dists1);
     % get probability of a point from pcl1 being `close' to one from pcl2
     [~, ~, TRESH_2STD1] = GetMeanMinDistPCL(pcl1, pow_punish);
     %TRESH_2STD1 = 0.005;
     E1 = size(min_dists1(min_dists1>TRESH_2STD1),2)/N_PTS;
     % get min dist between each point from pcl2 and its closest in pcl1
     min_dists2 = min(DIST,[],2);
+    min_dists2_mean = mean(min_dists2);
     % get probability of a point from pcl2 being `close' to one from pcl1    
     [~, ~, TRESH_2STD2] = GetMeanMinDistPCL(pcl2, pow_punish);
     %TRESH_2STD2 = 0.005;
