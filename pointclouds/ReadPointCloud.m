@@ -34,6 +34,9 @@ function P = ReadPointCloud( filepath, min_n_pts_segm )
         P = filepath;        
     end
     fclose(fid);
+    if isempty(P.u)
+        P.u = ones(size(P.v,1),1);
+    end
     CheckIsPointCloudStruct(P);
     P.filepath = filepath;
 end

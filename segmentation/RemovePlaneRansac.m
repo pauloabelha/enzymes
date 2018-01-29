@@ -4,7 +4,7 @@
 function [ P ] = RemovePlaneRansac( root_folder, pcl_filename, plane_thickness, output_type )    
     %% constants
     % min and max plane thickness (in meters)
-    MIN_PLANE_THICKNESS = 0.001;
+    MIN_PLANE_THICKNESS = 0.0001;
     MAX_PLANE_THICKNESS = 1;
     DEFAULT_PLANE_THICKNESS = 0.005;
     % default folder to write is Desktop
@@ -43,7 +43,10 @@ function [ P ] = RemovePlaneRansac( root_folder, pcl_filename, plane_thickness, 
     %% rescale pcl to be in meters
        
     % try to convert pcl scale to meters
-    P = RescalePcl(P,0,3);
+    if range(P.v) > 1
+        P.v = P.v/1000;
+        P.segms{1}.v = P.segms{1}.v/1000;
+    end
     %% get downsampled pcl to work with
     % downsample pcl if too big
     MAX_PCL_SIZE = 2e4;
