@@ -3,46 +3,31 @@
     <param.appname>get_tool_info</param.appname>
     <param.icon />
     <param.icons />
-    <param.version>2.0</param.version>
-    <param.authnamewatermark>Paulo Abelha</param.authnamewatermark>
-    <param.email>p.abelha@abdn.ac.uk</param.email>
+    <param.version>1.0</param.version>
+    <param.authnamewatermark />
+    <param.email />
     <param.company />
     <param.summary />
-    <param.description>Function GetToolInfo
-This function will output all the necessary info for using a tool for a task
-	First param: filepath to the point cloud
-	Second param: mass of the pcl
-	Third param: target object alignment vector
-	Fourth param: task name
-	Fifth param: path to the trained GPR
-	Sixth param: flag for verbose and logging
-Written by Paulo Abelha</param.description>
+    <param.description />
     <param.screenshot />
     <param.guid />
     <param.installpath.string>/get_tool_info/</param.installpath.string>
     <param.installpath.combo>option.installpath.user</param.installpath.combo>
     <param.logo />
-    <param.install.notes>In the following directions, replace MCR_ROOT by the directory where the MATLAB Runtime is installed on the target machine.
+    <param.install.notes>In the following directions, replace MR by the directory where MATLAB or the MATLAB Runtime is installed on the target machine.
 
 (1) Set the environment variable XAPPLRESDIR to this value:
 
-    MCR_ROOT/v92/X11/app-defaults
+MR/v93/X11/app-defaults
 
 
-(2) If the environment variable LD_LIBRARY_PATH is undefined, set it to the concatenation of the following strings:
+(2) If the environment variable LD_LIBRARY_PATH is undefined, set it to the following:
 
-    MCR_ROOT/v92/runtime/glnxa64:
-    MCR_ROOT/v92/bin/glnxa64:
-    MCR_ROOT/v92/sys/os/glnxa64:
-    MCR_ROOT/v92/sys/opengl/lib/glnxa64
+MR/v93/runtime/glnxa64:MR/v93/bin/glnxa64:MR/v93/sys/os/glnxa64:MR/v93/sys/opengl/lib/glnxa64
 
-    If it is defined, set it to the concatenation of these strings:
+If it is defined, set it to the following:
 
-    ${LD_LIBRARY_PATH}: 
-    MCR_ROOT/v92/runtime/glnxa64:
-    MCR_ROOT/v92/bin/glnxa64:
-    MCR_ROOT/v92/sys/os/glnxa64:
-    MCR_ROOT/v92/sys/opengl/lib/glnxa64</param.install.notes>
+${LD_LIBRARY_PATH}:MR/v93/runtime/glnxa64:MR/v93/bin/glnxa64:MR/v93/sys/os/glnxa64:MR/v93/sys/opengl/lib/glnxa64</param.install.notes>
     <param.target.install.notes />
     <param.intermediate>${PROJECT_ROOT}/get_tool_info/for_testing</param.intermediate>
     <param.files.only>${PROJECT_ROOT}/get_tool_info/for_redistribution_files_only</param.files.only>
@@ -55,17 +40,25 @@ Written by Paulo Abelha</param.description>
     <param.web.mcr>true</param.web.mcr>
     <param.package.mcr>false</param.package.mcr>
     <param.no.mcr>false</param.no.mcr>
-    <param.web.mcr.name>MyAppInstaller_web</param.web.mcr.name>
+    <param.web.mcr.name>get_tool_info</param.web.mcr.name>
     <param.package.mcr.name>MyAppInstaller_mcr</param.package.mcr.name>
     <param.no.mcr.name>MyAppInstaller_app</param.no.mcr.name>
     <param.windows.command.prompt>false</param.windows.command.prompt>
     <param.create.log>false</param.create.log>
     <param.log.file />
+    <param.native.matlab>false</param.native.matlab>
+    <param.checkbox>false</param.checkbox>
+    <param.example />
+    <param.help.text />
     <unset>
       <param.icon />
       <param.icons />
+      <param.version />
+      <param.authnamewatermark />
+      <param.email />
       <param.company />
       <param.summary />
+      <param.description />
       <param.screenshot />
       <param.guid />
       <param.installpath.string />
@@ -83,12 +76,15 @@ Written by Paulo Abelha</param.description>
       <param.web.mcr />
       <param.package.mcr />
       <param.no.mcr />
-      <param.web.mcr.name />
       <param.package.mcr.name />
       <param.no.mcr.name />
       <param.windows.command.prompt />
       <param.create.log />
       <param.log.file />
+      <param.native.matlab />
+      <param.checkbox />
+      <param.example />
+      <param.help.text />
     </unset>
     <fileset.main>
       <file>${PROJECT_ROOT}/GetToolInfo.m</file>
@@ -121,6 +117,9 @@ Written by Paulo Abelha</param.description>
       <file>/home/paulo/enzymes/linear_algebra/eul2rotm_.m</file>
       <file>/home/paulo/enzymes/linear_algebra/rotm2eul_.m</file>
       <file>/home/paulo/enzymes/linear_algebra/signedpow.m</file>
+      <file>/home/paulo/enzymes/linear_algebra/sl3dnormalize_.m</file>
+      <file>/home/paulo/enzymes/linear_algebra/vrrotvec2mat_.m</file>
+      <file>/home/paulo/enzymes/linear_algebra/vrrotvec_.m</file>
       <file>/home/paulo/enzymes/list/CheckIsScalar.m</file>
       <file>/home/paulo/enzymes/list/CheckNumericArraySize.m</file>
       <file>/home/paulo/enzymes/list/GetPermGrid.m</file>
@@ -188,14 +187,14 @@ Written by Paulo Abelha</param.description>
       <file>/home/paulo/enzymes/superquadrics/SQToroidFunction.m</file>
     </fileset.depfun>
     <build-deliverables>
-      <file location="${PROJECT_ROOT}/get_tool_info/for_testing" name="readme.txt" optional="true">/home/paulo/enzymes/IROS2018/ROS_CV_node/get_tool_info/for_testing/readme.txt</file>
+      <file location="${PROJECT_ROOT}/get_tool_info/for_testing" name="get_tool_info" optional="false">/home/paulo/enzymes/IROS2018/ROS_CV_node/get_tool_info/for_testing/get_tool_info</file>
       <file location="${PROJECT_ROOT}/get_tool_info/for_testing" name="splash.png" optional="false">/home/paulo/enzymes/IROS2018/ROS_CV_node/get_tool_info/for_testing/splash.png</file>
       <file location="${PROJECT_ROOT}/get_tool_info/for_testing" name="run_get_tool_info.sh" optional="false">/home/paulo/enzymes/IROS2018/ROS_CV_node/get_tool_info/for_testing/run_get_tool_info.sh</file>
-      <file location="${PROJECT_ROOT}/get_tool_info/for_testing" name="get_tool_info" optional="false">/home/paulo/enzymes/IROS2018/ROS_CV_node/get_tool_info/for_testing/get_tool_info</file>
+      <file location="${PROJECT_ROOT}/get_tool_info/for_testing" name="readme.txt" optional="true">/home/paulo/enzymes/IROS2018/ROS_CV_node/get_tool_info/for_testing/readme.txt</file>
     </build-deliverables>
     <workflow />
     <matlab>
-      <root>/usr/local/MATLAB/R2017a</root>
+      <root>/usr/local/MATLAB/R2017b</root>
       <toolboxes />
     </matlab>
     <platform>
@@ -207,7 +206,7 @@ Written by Paulo Abelha</param.description>
       <vista>false</vista>
       <linux>true</linux>
       <solaris>false</solaris>
-      <osver>3.16.0-77-generic</osver>
+      <osver>4.13.0-32-generic</osver>
       <os32>false</os32>
       <os64>true</os64>
       <arch>glnxa64</arch>

@@ -27,6 +27,9 @@ function [ best_scores, best_categ_scores, best_ptools, best_ptool_maps, best_ix
     % any ptool with some error in its fitting score receives max (worse)
     % minimum fit score will never be 0
     % So, inverse of niminimum will never be Inf
+    if isempty(ptools_errors_proj)
+        error('Empty list of ptool projection error; something bad happend :(');
+    end
     ptools_errors_proj(ptools_errors_proj==0) = max(ptools_errors_proj);
     %% avaliate GP
     if verbose 

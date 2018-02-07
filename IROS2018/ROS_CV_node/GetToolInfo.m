@@ -1,4 +1,6 @@
 function [ P, SQs, ptools, ptool_maps, grasp_centre, action_centre, tool_tip, complete_transf ] = GetToolInfo( P, pcl_mass, target_obj_align_vec_str, task, gpr_task_path, verbose, parallel )
+    % set default outputs
+    SQs=[];ptools=[];ptool_maps=[];grasp_centre=[];action_centre=[];tool_tip=[];complete_transf=[];
     % print help
     if ischar(P) && P == "--help"
         disp('Function GetToolInfo');        

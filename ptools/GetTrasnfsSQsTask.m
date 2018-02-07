@@ -14,8 +14,8 @@ function [ transf_list ] = GetTrasnfsSQsTask( SQ_grasp, SQ_action, task, grasp_c
         action_vec = GetSQVector( SQ_action );
         %% 1st Rotation : align the action part with the task action vector
         % Get rotation matrix between action part zVector and the new direction
-        r = vrrotvec(action_vec,task_action_vec);
-        rot_1 = vrrotvec2mat(r);
+        r = vrrotvec_(action_vec,task_action_vec);
+        rot_1 = vrrotvec2mat_(r);
         transf_list{1} = rot_1;
          % rotate the vector between centres and get its unit vecto
         vec_centres = [SQ_action(end-2:end) - SQ_grasp(end-2:end)]';
@@ -37,8 +37,8 @@ function [ transf_list ] = GetTrasnfsSQsTask( SQ_grasp, SQ_action, task, grasp_c
         end
         % Get rotation matrix in order to align this vector to the given vector,
         % so we get the vec_centers in the action plan :
-        r = vrrotvec(vec_centres_perp_proj, task_centres_dir);
-        rot_2 = vrrotvec2mat(r);
+        r = vrrotvec_(vec_centres_perp_proj, task_centres_dir);
+        rot_2 = vrrotvec2mat_(r);
         transf_list{2} = rot_2;
         % update unit vector between centres
         vec_centres_unit = rot_2*vec_centres_unit;

@@ -13,6 +13,10 @@ function [ SQs, SQs_errors, seeds_pcls] = GetSQsFromPToolProjection( P, n_seeds,
                 segm_pcls{i} = P.segms{i}.v;
             end
         else
+            % deal with pcls with only one segm (e.g. bowl)
+            if numel(P.segms) == 1
+                P.segms{end+1} = P.segms{end};
+            end
             for i=1:size(P.segms,2)
                 segm_pcls{i} = P.segms{i}.v;
             end
