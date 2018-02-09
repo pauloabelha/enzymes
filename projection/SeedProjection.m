@@ -9,6 +9,10 @@ function [ best_scores, best_categ_scores, best_ptools, best_ptool_maps, best_ix
     if ~exist('plot_fig','var')
         plot_fig = 0;
     end 
+    %% ehck tool mass
+    if ~exist('tool_mass','var')  || isnan(tool_mass)
+        error('Tool mass has a NaN value. Throwing error and saving Universe from dark matter singularity...');
+    end
     %% get the hyper params
     [ n_seeds_hyper, n_seeds_radii, weights ] = ProjectionHyperParams();
     n_weights = size(weights,1);

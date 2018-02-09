@@ -12,10 +12,10 @@ function [ P, SQs, ptools, ptool_maps, grasp_centre, action_centre, tool_tip, co
         disp([char(9) 'First param: filepath to the point cloud']); 
         disp([char(9) 'Second param: mass of the pcl']);
         disp([char(9) 'Third param: target object alignment vector (final vector to which the tool''s vector going from grasp centre to action centre should be aligned)']);
-        disp([char(9) 'Fourth param: task name (works only with ''scraping_butter'' for now)']);
+        disp([char(9) 'Fourth param: task name (scraping_butter, scooping_grains']);
         disp([char(9) 'Fifth param: path to the trained Task Function file']);
         disp([char(9) 'Sixth param: flag for verbose and logging (default is 0)']);
-        disp([char(9) 'Seventh param: flag for running in parallel (default is 0)']);
+        disp([char(9) 'Sixth param: flag for running in parallel (default is 0)']);
         disp('Written by Paulo Abelha'); 
         return;
     end
@@ -83,19 +83,12 @@ function [ P, SQs, ptools, ptool_maps, grasp_centre, action_centre, tool_tip, co
     % print inputs
     if verbose
         disp('Inputs:');
-        disp('Point cloud:');
         disp(P);
-        disp('Mass:');
         disp(pcl_mass);
-        disp('Target Object Alinment Vector:');
         disp(target_obj_align_vec_str);
-        disp('Task Name:');
         disp(task);
-        disp('Task Function Filepath:');
         disp(gpr_task_path);
-        disp('Verbose:');
         disp(verbose);
-        disp('Parallel:');
         disp(parallel);
     end
     %% load GPR for task
@@ -103,11 +96,7 @@ function [ P, SQs, ptools, ptool_maps, grasp_centre, action_centre, tool_tip, co
         disp('begin_log');
         disp('Loading Gaussian Process Regression object for task...');
     end
-    try
-        load(gpr_task_path);
-    catch
-        error(['Unable to locate Task Function file at: ' gpr_task_path]);
-    end
+    load(gpr_task_path);
     if verbose
         toc;
     end    

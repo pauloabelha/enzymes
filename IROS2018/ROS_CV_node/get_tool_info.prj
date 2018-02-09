@@ -1,5 +1,5 @@
 <deployment-project plugin="plugin.ezdeploy" plugin-version="1.0">
-  <configuration file="/home/paulo/enzymes/IROS2018/ROS_CV_node/get_tool_info.prj" location="/home/paulo/enzymes/IROS2018/ROS_CV_node" name="get_tool_info" target="target.ezdeploy.standalone" target-name="Application Compiler">
+  <configuration build-checksum="482068200" file="/home/paulo/enzymes/IROS2018/ROS_CV_node/get_tool_info.prj" location="/home/paulo/enzymes/IROS2018/ROS_CV_node" name="get_tool_info" preferred-package-location="/home/paulo/enzymes/IROS2018/ROS_CV_node/get_tool_info/for_redistribution" preferred-package-type="package.type.install" target="target.ezdeploy.standalone" target-name="Application Compiler">
     <param.appname>get_tool_info</param.appname>
     <param.icon />
     <param.icons />
