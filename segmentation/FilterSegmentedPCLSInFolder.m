@@ -1,4 +1,4 @@
-function [ problem_pcls, E_SEGMS ] = FilterSegmentedPCLSInFolder( root_folder, min_error, pcl_file_ext )
+function [ problem_pcls, E_SEGMS, good_segm_names, good_segm_errors, good_segm_n_segms, best_pcl_ix ] = FilterSegmentedPCLSInFolder( root_folder, min_error, pcl_file_ext )
     MAX_N_SEGMS = 4;
     if exist('min_error','var')
         MIN_SEGM_ERROR = min_error;
@@ -27,6 +27,9 @@ function [ problem_pcls, E_SEGMS ] = FilterSegmentedPCLSInFolder( root_folder, m
     k=1;
     problem_pcls = {};
     tot_toc = 0;
+    good_segm_names = {};
+    good_segm_errors = {};
+    good_segm_n_segms = [];
     for i=k:n_pcls
         tic;
         try
@@ -53,6 +56,9 @@ function [ problem_pcls, E_SEGMS ] = FilterSegmentedPCLSInFolder( root_folder, m
                 disp(['Fitted SQs errors (min=' num2str(MIN_SEGM_ERROR) '): ' num2str(E_SEGM)]);
                 good_segm_ixs = E_SEGM <= MIN_SEGM_ERROR;
                 if all(good_segm_ixs)
+                    good_segm_names{end+1} = pcl_filenames{i};
+                    good_segm_errors{end+1} =  E_SEGM;
+                    good_segm_n_segms(end+1) = numel(good_segm_ixs);
                     n_good_segmentations = n_good_segmentations + 1;
                     disp(['Found good segmentation! ' pcl_filenames{i} ' with ' num2str(numel(E_SEGM)) ' segments']);
                     system(['cp ' root_folder pcl_filenames{i} ' ' root_folder good_segm_folder pcl_filenames{i}]);
@@ -70,4 +76,16 @@ function [ problem_pcls, E_SEGMS ] = FilterSegmentedPCLSInFolder( root_folder, m
         end
         tot_toc = DisplayEstimatedTimeOfLoop(tot_toc+toc,i,n_pcls);
     end    
+    %% choose best segmentation
+%     avg_errors = zeros(1,numel(good_segm_errors));
+%     parfor i=1:numel(good_segm_errors)
+%         avg_errors(i) = sum(good_segm_errors{i})/numel(good_segm_errors{i});
+%     end
+%     prop_to_min_error = zeros(1,numel(good_segm_errors));
+%     parfor i=1:numel(good_segm_errors)
+%         prop_to_min_error(i) = avg_errors(i)/MIN_SEGM_ERROR;
+%     end
+    % choose best according to the one with fewer segments
+    [~, best_pcl_ix] = min(good_segm_n_segms);   
+    disp(['Best segmentation is point cloud: ' good_segm_names{best_pcl_ix}]);
 end
