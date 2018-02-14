@@ -3,12 +3,11 @@
     <param.appname>get_tool_info</param.appname>
     <param.icon />
     <param.icons />
-    <param.version>4.0</param.version>
+    <param.version>5.0</param.version>
     <param.authnamewatermark>Paulo Abelha Ferreira</param.authnamewatermark>
     <param.email>pauloabelha@gmail.com</param.email>
     <param.company />
-    <param.summary>Tool info module for IROS 2018 paper
-(now with tool heel)</param.summary>
+    <param.summary>Tool info module for IROS 2018 paper</param.summary>
     <param.description>See --help</param.description>
     <param.screenshot />
     <param.guid />

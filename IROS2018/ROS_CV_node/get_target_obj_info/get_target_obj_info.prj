@@ -1,9 +1,9 @@
 <deployment-project plugin="plugin.ezdeploy" plugin-version="1.0">
-  <configuration file="/home/paulo/enzymes/IROS2018/ROS_CV_node/get_target_obj_info.prj" location="/home/paulo/enzymes/IROS2018/ROS_CV_node" name="get_target_obj_info" target="target.ezdeploy.standalone" target-name="Application Compiler">
+  <configuration build-checksum="1523339333" file="/home/paulo/enzymes/IROS2018/ROS_CV_node/get_target_obj_info/get_target_obj_info.prj" location="/home/paulo/enzymes/IROS2018/ROS_CV_node/get_target_obj_info" name="get_target_obj_info" preferred-package-location="/home/paulo/enzymes/IROS2018/ROS_CV_node/get_target_obj_info/get_target_obj_info/for_redistribution" preferred-package-type="package.type.install" target="target.ezdeploy.standalone" target-name="Application Compiler">
     <param.appname>get_target_obj_info</param.appname>
     <param.icon />
     <param.icons />
-    <param.version>1.0</param.version>
+    <param.version>2.0</param.version>
     <param.authnamewatermark>Paulo Abelha</param.authnamewatermark>
     <param.email>pauloabelha@gmail.com</param.email>
     <param.company />
@@ -53,7 +53,6 @@ ${LD_LIBRARY_PATH}:MR/v93/runtime/glnxa64:MR/v93/bin/glnxa64:MR/v93/sys/os/glnxa
     <unset>
       <param.icon />
       <param.icons />
-      <param.version />
       <param.company />
       <param.screenshot />
       <param.guid />
@@ -147,10 +146,10 @@ ${LD_LIBRARY_PATH}:MR/v93/runtime/glnxa64:MR/v93/bin/glnxa64:MR/v93/sys/os/glnxa
       <file>/home/paulo/enzymes/superquadrics/SQToroidFunction.m</file>
     </fileset.depfun>
     <build-deliverables>
-      <file location="${PROJECT_ROOT}/get_target_obj_info/for_testing" name="get_target_obj_info" optional="false">/home/paulo/enzymes/IROS2018/ROS_CV_node/get_target_obj_info/for_testing/get_target_obj_info</file>
-      <file location="${PROJECT_ROOT}/get_target_obj_info/for_testing" name="run_get_target_obj_info.sh" optional="false">/home/paulo/enzymes/IROS2018/ROS_CV_node/get_target_obj_info/for_testing/run_get_target_obj_info.sh</file>
-      <file location="${PROJECT_ROOT}/get_target_obj_info/for_testing" name="readme.txt" optional="true">/home/paulo/enzymes/IROS2018/ROS_CV_node/get_target_obj_info/for_testing/readme.txt</file>
-      <file location="${PROJECT_ROOT}/get_target_obj_info/for_testing" name="splash.png" optional="false">/home/paulo/enzymes/IROS2018/ROS_CV_node/get_target_obj_info/for_testing/splash.png</file>
+      <file location="${PROJECT_ROOT}/get_target_obj_info/for_testing" name="get_target_obj_info" optional="false">/home/paulo/enzymes/IROS2018/ROS_CV_node/get_target_obj_info/get_target_obj_info/for_testing/get_target_obj_info</file>
+      <file location="${PROJECT_ROOT}/get_target_obj_info/for_testing" name="splash.png" optional="false">/home/paulo/enzymes/IROS2018/ROS_CV_node/get_target_obj_info/get_target_obj_info/for_testing/splash.png</file>
+      <file location="${PROJECT_ROOT}/get_target_obj_info/for_testing" name="readme.txt" optional="true">/home/paulo/enzymes/IROS2018/ROS_CV_node/get_target_obj_info/get_target_obj_info/for_testing/readme.txt</file>
+      <file location="${PROJECT_ROOT}/get_target_obj_info/for_testing" name="run_get_target_obj_info.sh" optional="false">/home/paulo/enzymes/IROS2018/ROS_CV_node/get_target_obj_info/get_target_obj_info/for_testing/run_get_target_obj_info.sh</file>
     </build-deliverables>
     <workflow />
     <matlab>
