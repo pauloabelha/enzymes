@@ -182,7 +182,6 @@ end
 
 function U = GetSegmLabelsFromColour(colours)
     U = zeros(size(colours,1),1);
-    segm_ix = 0;
     colour_set = [];
     for i=1:size(colours,1)
         curr_colour = colours(i,:);
@@ -190,12 +189,13 @@ function U = GetSegmLabelsFromColour(colours)
         for j=1:size(colour_set,1)
             if all(colour_set(j,:) == curr_colour)
                 colour_exists = 1;
+                segm_ix = j;
                 break;
             end
         end   
         if ~colour_exists
             colour_set(end+1,:) = curr_colour;
-            segm_ix = segm_ix + 1;
+            segm_ix = size(colour_set,1);
         end
         U(i) = segm_ix;
     end

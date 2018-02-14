@@ -28,7 +28,7 @@ function quat = rotm2quat_( R )
 
 %#codegen
 
-robotics.internal.validation.validateRotationMatrix(R, 'rotm2quat', 'R');
+%robotics.internal.validation.validateRotationMatrix(R, 'rotm2quat', 'R');
 
 % Pre-allocate output
 quat = zeros(size(R,3), 4, 'like', R);

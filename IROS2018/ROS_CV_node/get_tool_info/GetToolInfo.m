@@ -1,7 +1,7 @@
-function [ P, SQs, ptools, ptool_maps, grasp_centre, action_centre, tool_tip, tool_quaternion ] = GetToolInfo( P, pcl_mass, target_obj_align_vec, target_obj_contact_point, task, gpr_task_path, verbose, parallel )
+function [ P, SQs, ptools, ptool_maps, grasp_centre, action_centre, tool_tip, tool_heel, tool_quaternion ] = GetToolInfo( P, pcl_mass, target_obj_align_vec, target_obj_contact_point, task, gpr_task_path, verbose, parallel )
     SEGMENTATION_MANDATORY = 1;
     % set default outputs
-    SQs=[];ptools=[];ptool_maps=[];grasp_centre=[];action_centre=[];tool_tip=[];complete_transf=[];
+    SQs=[];ptools=[];ptool_maps=[];grasp_centre=[];action_centre=[];tool_tip=[];tool_heel=[];tool_quaternion=[];
     % print help
     if ischar(P) && P == "--help"
         disp('Function GetToolInfo');        
@@ -108,9 +108,43 @@ function [ P, SQs, ptools, ptool_maps, grasp_centre, action_centre, tool_tip, to
         disp('Parallel:');
         disp(parallel);
     end
-    %% load GPR for task
+    %% preprocess pcl to see if there are problematic segms
     if verbose
         disp('begin_log');
+        disp('Preprocessing point cloud to check for problematic (small) segments.');
+        disp(['Point cloud has ' num2str(numel(P.segms)) ' segments']);
+    end
+    MIN_N_PTS_IN_SEGM = 100;
+    new_segms = {};
+    n_problematic_segms = 0;
+    for i=1:numel(P.segms)
+        num_pts_in_segm = size(P.segms{i}.v,1);
+        if num_pts_in_segm < MIN_N_PTS_IN_SEGM
+            n_problematic_segms = n_problematic_segms + 1;
+            if verbose
+                disp(['Found problematic segment with only ' num2str(num_pts_in_segm) ' point(s): #' num2str(i)]);
+                disp('This segment will not be considered');
+            end            
+        else
+           new_segms{end+1} = P.segms{i}; 
+        end
+    end
+    if numel(new_segms) < 2
+        if verbose
+            disp('Point cloud was left with only one segment; Aborting...');
+            disp('end_log');
+            return;
+        end
+    end
+    if verbose
+       if n_problematic_segms  == 0
+           disp('Point cloud ok!');
+       end
+       toc;
+    end
+    P.segms = new_segms;
+    %% load GPR for task
+    if verbose        
         disp('Loading Gaussian Process Regression object for task...');
     end
     try
@@ -157,32 +191,75 @@ function [ P, SQs, ptools, ptool_maps, grasp_centre, action_centre, tool_tip, to
     end    
     %% print tool info
     disp('begin_tool_info');
+    disp('begin_input_params');
+    disp('point_cloud');
+    disp(P);
+    disp('mass');
+    disp(pcl_mass);
+    disp('target_obj_align_vec');
+    disp(target_obj_align_vec');
+    disp('target_obj_contact_pt');
+    disp(target_obj_contact_point);
+    disp('task');
+    disp(task);
+    disp('task_function_data_file');
+    disp(gpr_task_path);
+    disp('verbose');
+    disp(verbose);
+    disp('parallel');
+    disp(parallel);
+    disp('end_input_params');
+    disp('tool_filepath');
+    disp(P.filepath);
     % get affordance score
     disp('affordance_score');
     disp(num2str(best_categ_score));
-    % get grasp part centre
+    %% get grasp and action segm ix
+    min_dist_grasp = 1e10;
+    min_dist_action = 1e10;
+    grasp_segm_ix = -1;
+    action_segm_ix = -1;
+    for i=1:numel(P.segms)
+        dist_grasp = pdist([SQ_grasp(end-2:end);mean(P.segms{i}.v)]);
+        if dist_grasp < min_dist_grasp
+            min_dist_grasp = dist_grasp;
+            grasp_segm_ix = i;
+        end
+    end
+    for i=1:numel(P.segms)
+        if i == grasp_segm_ix
+            continue;
+        end
+        dist_action = pdist([SQ_action(end-2:end);mean(P.segms{i}.v)]);
+        if dist_action < min_dist_action
+            min_dist_action = dist_action;
+            action_segm_ix = i;
+        end
+    end
+    %% get grasp part centre
     grasp_centre = SQ_grasp(end-2:end);
     disp('grasp_center');
     disp(num2str(grasp_centre));
-    % get action part centre
+    %% get action part centre
     action_centre = SQ_action(end-2:end);
     disp('action_center');
     disp(num2str(action_centre));
-    % get tool tip
-    if best_SQs(2,end-2) > best_SQs(1,end-2)
-        [~,tool_tip_ix] = max(P.v(:,1));
-    else
-        [~,tool_tip_ix] = min(P.v(:,1));
-    end    
-    % get tool tip
-    tool_tip = P.v(tool_tip_ix,:);
+    %% get tool tip
+    N_dist = pdist2(P.segms{action_segm_ix}.v,mean(P.segms{grasp_segm_ix}.v));
+    [~, tool_tip_ix] = max(N_dist);
+    tool_tip = P.segms{action_segm_ix}.v(tool_tip_ix,:);
     disp('tool_tip');
     disp([num2str(tool_tip)]);
-    % get tool tip vector (grasp centre to tool tip)
+    %% get tool tip vector (grasp centre to tool tip)
     disp('tool_tip_vector');
     tool_tip_vector = [tool_tip - grasp_centre]';
     disp([num2str(tool_tip_vector')]);
-    % get complete transformation
+    %% get tool heel (e.g. in a knife, for scraping butter)    
+    [~, tool_heel_ix] = min(N_dist);
+    tool_heel = P.segms{action_segm_ix}.v(tool_heel_ix,:);
+    disp('tool_heel');
+    disp([num2str(tool_heel)]);
+    %% get tool quaternion
     tool_rot = vrrotvec2mat_(vrrotvec_(tool_tip_vector, target_obj_align_vec));
     disp('tool_quaternion');
     tool_tip_rot = [tool_rot*tool_tip']';
@@ -190,35 +267,44 @@ function [ P, SQs, ptools, ptool_maps, grasp_centre, action_centre, tool_tip, to
     tool_transf = GetTransfFromRotAndTransl(tool_rot, tool_transl_vec);
     tool_quaternion = rotm2quat_(tool_rot);
     disp(tool_quaternion);
-    % finish writing tool info
+    %% finish writing tool info
     disp('end_tool_info'); 
-    % finish log
+    %% finish log
     if verbose
         toc;
     end
+    %% plot
     if verbose
         sphere_plot_size = 5000;
         disp('Plotting tool info...');
         PlotPCLSegments(P,-1,0,{'.k','.k','.k','.k','.k','.k','.k'});   
         disp('Original point cloud is in black');        
         %PlotPtools(best_SQs,-1,-1,{'.b', '.y'});
-        disp('Superquadrics fitted to the original point cloud are:');
-        disp([char(9) 'Grasp part in blue']);
-        disp([char(9) 'Action part in yellow']);
+%         disp('Superquadrics fitted to the original point cloud are:');
+%         disp([char(9) 'Grasp part in blue']);
+%         disp([char(9) 'Action part in yellow']);
         Q = Apply3DTransfPCL({P},{tool_transf});
         PlotPCLSegments(Q,-1,0);
         disp('Transformed point cloud''s segments are coloured (red, green, blue, yellow, ...)');
-        hold on;
-        scatter3(grasp_centre(1),grasp_centre(2),grasp_centre(3),sphere_plot_size,'.g');
-        disp('Original grasp centre point as a green sphere');
-        scatter3(tool_tip(1,1),tool_tip(1,2),tool_tip(1,3),sphere_plot_size,'.b');
-        disp('Original tool tip point as a blue sphere');
+        hold on;        
+        %% plot tool itip
+        scatter3(tool_tip(1,1),tool_tip(1,2),tool_tip(1,3),sphere_plot_size,'.m');
+        disp('Original tool tip point as a magenta sphere');
         transf_tool_tip = TransformPoints(tool_transf, tool_tip);
-        scatter3(transf_tool_tip(1,1),transf_tool_tip(1,2),transf_tool_tip(1,3),sphere_plot_size,'.c');
-        disp('Transformed tool tip point as a cyan sphere');
+        scatter3(transf_tool_tip(1,1),transf_tool_tip(1,2),transf_tool_tip(1,3),sphere_plot_size,'.m');
+        disp('Transformed tool tip point as a magenta sphere');
+        %% plot tool heel (original and transformed)
+        scatter3(tool_heel(1,1),tool_heel(1,2),tool_heel(1,3),sphere_plot_size,'.y');
+        disp('Original tool heel point as a yellow sphere');
+        transf_tool_heel = TransformPoints(tool_transf, tool_heel);
+        scatter3(transf_tool_heel(1,1),transf_tool_heel(1,2),transf_tool_heel(1,3),sphere_plot_size,'.y');        
+        disp('Transformed tool heel point as a yellow sphere');
+        %% plot grasp centre (original and transformed)
+        scatter3(grasp_centre(1),grasp_centre(2),grasp_centre(3),sphere_plot_size,'.c');
+        disp('Original grasp centre point as a cyan sphere');
         transf_grasp_centre = TransformPoints(tool_transf, grasp_centre);
-        scatter3(transf_grasp_centre(1,1),transf_grasp_centre(1,2),transf_grasp_centre(1,3),sphere_plot_size,'.m');
-        disp('Transformed grasp centre point as a magenta sphere');
+        scatter3(transf_grasp_centre(1,1),transf_grasp_centre(1,2),transf_grasp_centre(1,3),sphere_plot_size,'.c');
+        disp('Transformed grasp centre point as a cyan sphere');
     end
 end
 
