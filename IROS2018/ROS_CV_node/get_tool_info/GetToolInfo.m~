@@ -248,6 +248,7 @@ function [ P, SQs, ptools, ptool_maps, grasp_centre, action_centre, tool_tip, to
     tool_tip_vector = [tool_tip - grasp_centre]';
     %% get tool rotation
     tool_rot = vrrotvec2mat_(vrrotvec_(tool_tip_vector, target_obj_align_vec));
+    disp('tool_quaternion');
     tool_tip_rot = [tool_rot*tool_tip']';
     tool_transl_vec = [target_obj_contact_point - tool_tip_rot]';
     tool_transf = GetTransfFromRotAndTransl(tool_rot, tool_transl_vec);    
@@ -288,13 +289,13 @@ function [ P, SQs, ptools, ptool_maps, grasp_centre, action_centre, tool_tip, to
     disp('begin_tool_info');
     disp('begin_input_params');
     disp('point_cloud');
-    disp(P.filepath);
+    disp(P);
     disp('mass');
     disp(num2str(pcl_mass));
     disp('target_obj_align_vec');
-    disp([num2str(target_obj_align_vec')]);
+    disp([num2str(target_obj_align_vec)]);
     disp('target_obj_contact_pt');
-    disp([num2str(target_obj_contact_point)]);
+    disp(target_obj_contact_point);
     disp('task');
     disp(task);
     disp('task_function_data_file');
