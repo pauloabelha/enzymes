@@ -8,7 +8,7 @@ function [ I ] = MomentInertiaSQ( lambda )
     epsilon=lambda(4:5);
     %calculate Ixx
     Ixx_fisrt_part = 0.5*a(1)*a(2)*a(3)*epsilon(1)*epsilon(2);
-    Ixx_second_part = (a(2)^2)*beta((3*epsilon(1))/2,epsilon(2)/2)*beta(epsilon(1)/2,(2*epsilon(1)+1));
+    Ixx_second_part = (a(2)^2)*beta((3*epsilon(2))/2,epsilon(2)/2)*beta(epsilon(1)/2,(2*epsilon(1)+1));
     Ixx_third_part = (4*(a(3)^2))*beta(epsilon(2)/2,(epsilon(2)/2)+1)*beta((3*epsilon(1))/2,epsilon(1)+1);
     I(1,1) = Ixx_fisrt_part*(Ixx_second_part+Ixx_third_part);
     %calculate Iyy

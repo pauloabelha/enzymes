@@ -1,0 +1,10 @@
+function tests = MOITest
+    tests = functiontests(localfunctions);
+end
+
+# test M
+function testSphere(testCase)
+    actSolution = CalcCompositeMomentInertia( [2 2 2 1 1 0 0 0 0 0 0 0 0 0 0], 2);
+    expSolution = [2 1];
+    verifyEqual(testCase,actSolution,expSolution)
+end

@@ -32,11 +32,13 @@ function [ centre_mass, I, inertial ] = CalcCompositeMomentInertia( Param1, mass
         mass = mass(25);
     end
     
-%     % inflate SQ to avoid small radii leading to bad numeric calc
-%     VOL_INFLATION_FACTOR = 1e3;
-%     for i=1:numel(SQs)
-%         SQs{i}(1:3) = SQs{i}(1:3) .* VOL_INFLATION_FACTOR;
-%     end
+    % inflate SQ to avoid small radii leading to bad numeric calc
+    VOL_INFLATION_FACTOR = 1e3;
+    for i=1:numel(SQs)
+        SQs{i}(1) = SQs{i}(1) * VOL_INFLATION_FACTOR;
+        SQs{i}(1) = SQs{i}(1) * VOL_INFLATION_FACTOR;
+        SQs{i}(1) = SQs{i}(1) * VOL_INFLATION_FACTOR;
+    end
     
     % initialise moment of inertia
     I=zeros(3,3);
@@ -88,6 +90,5 @@ function [ centre_mass, I, inertial ] = CalcCompositeMomentInertia( Param1, mass
         end
         I(proj_axis,proj_axis) = sum;
     end
-    %I = I ./ VOL_INFLATION_FACTOR^2;
     inertial = [centre_mass diag(I)'];
 end
