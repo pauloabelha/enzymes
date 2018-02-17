@@ -13,13 +13,14 @@
 % bending, tpaering nor superparaboloids. In the future I hope I have time 
 % to add these :(
 %
+% Thanks to Benjamin Nougier who contribute to the code
 %% By Paulo Abelha
-function [ centre_mass, I, inertial ] = CalcCompositeMomentInertia( Param1, mass)
+function [ I, centre_mass, total_volume, SQs ] = CalcCompositeMomentInertia(Param1, masses, flag_density)
     %% deal with first argument being a PCL
     try
         CheckIsPointCloudStruct(Param1);
         SQs = PCL2SQ(Param1);
-    catch E
+    catch 
         %% deal with SQs param
         SQs = Param1;
         % deal with when param is a single SQ
@@ -27,35 +28,41 @@ function [ centre_mass, I, inertial ] = CalcCompositeMomentInertia( Param1, mass
             SQs = {SQs};
         end
     end
-
-    if size(mass,2) == 25
-        mass = mass(25);
+    %% deal with density flag
+    if ~exist('flag_density','var')
+        flag_density = 0;
     end
-    
-    % inflate SQ to avoid small radii leading to bad numeric calc
-    VOL_INFLATION_FACTOR = 1e3;
+    %% calcualte volume of SQs
+    vol_SQs = zeros(1,numel(SQs));
     for i=1:numel(SQs)
-        SQs{i}(1) = SQs{i}(1) * VOL_INFLATION_FACTOR;
-        SQs{i}(1) = SQs{i}(1) * VOL_INFLATION_FACTOR;
-        SQs{i}(1) = SQs{i}(1) * VOL_INFLATION_FACTOR;
+        vol_SQs(i) = VolumeSQ(SQs{1});
     end
-    
-    % initialise moment of inertia
-    I=zeros(3,3);
-
+    %% deal with a possible list of masses
+    if ~exist('masses','var')
+        warning('No mass provided. Assuming density of water: 1 kg / m^3');
+        flag_density = 1;
+        masses = 
+    if numel(masses) > 1
+       if numel(masses) ~= numel(SQs)
+          error('List of masses must have same elements as number of segments in point cloud or superquadrics given'); 
+       end
+    end
+    %% get centre of mass
     centre_mass = CentreOfMass( SQs );
-    
-    % calculate the individual moments of inertia for each SQ part
-    Iparts = zeros(size(SQs,2),3,3);
-    for i=1:size(SQs,2)
-        density = mass/VolumeSQ(SQs{1});
+    %% start MOI calculation
+    %% calculate the individual moments of inertia for each SQ
+    Iparts = zeros(numel(SQs),3,3);
+    for i=1:numel(SQs)
+        if flag_density
+            density = masses(i);
+        else
+            density = masses(i)/vol_SQs(
+        end
         Iparts(i,:,:)=MomentInertiaSQ(SQs{i})*density;
-    end
-
-    
-    % Get projection distances of SQs centers on axis passing by center of mass
+    end    
+    %% Get projection distances of SQs centers on axis passing by center of mass
     d = zeros(size(SQs,2),3);
-    for i=1:size(SQs,2) % == length(SQs)
+    for i=1:numel(SQs) % == length(SQs)
         SQ_center_coord = SQs{i}(end-2:end);
         for proj_axis=1:3 
             % ( if 1 = "x axis" for example, then 2 = y axis, and 3 = z axis)
@@ -75,20 +82,21 @@ function [ centre_mass, I, inertial ] = CalcCompositeMomentInertia( Param1, mass
             d(i, axis_1) = sqrt( (SQ_center_coord(axis_2)^2) + (SQ_center_coord(axis_3)^2) );
         end
     end
-
-    % For each axis, sum moment of inertia of each SQ projected on this axis
+    %% Get total volume
     total_volume = 0;
-    for  i=1:size(SQs,2)
+    for  i=1:numel(SQs)
         total_volume = total_volume + VolumeSQ(SQs{i});
     end
+    %% Get MOI
+    % For each axis, sum moment of inertia of each SQ projected on this axis
+    I=zeros(3,3);
     for proj_axis=1:3
         sum=0; 
-        for i=1:size(SQs,2)
+        for i=1:numel(SQs)
             SQ_volume = VolumeSQ(SQs{i});
             SQ_vol_contribution = (SQ_volume/total_volume);
             sum=sum+Iparts(i,proj_axis,proj_axis)+(SQ_vol_contribution*(d(i,proj_axis)^2));
         end
         I(proj_axis,proj_axis) = sum;
     end
-    inertial = [centre_mass diag(I)'];
 end
