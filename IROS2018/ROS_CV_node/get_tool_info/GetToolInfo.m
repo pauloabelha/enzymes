@@ -17,7 +17,7 @@ function [ P, SQs, ptools, ptool_maps, grasp_centre, action_centre, tool_tip, to
         disp([char(9) 'Sixth param: path to the trained Task Function file']);
         disp([char(9) 'Seventh param: flag for verbose and logging (default is 0)']);
         disp([char(9) 'Eighth param: flag for running in parallel (default is 0)']);
-        disp('Written by Paulo Abelha'); 
+        disp('Written by Paulo Abelha Ferreira'); 
         return;
     end
     %% deal with inputs

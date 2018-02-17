@@ -16,6 +16,27 @@
 % Thanks to Benjamin Nougier who contribute to the code
 %% By Paulo Abelha
 function [ I, centre_mass, total_volume, SQs, vol_SQs, masses ] = CalcCompositeMomentInertia(Param1, masses, flag_density)
+    %% try to parse masses as strings
+    if exist('masses','var') && ischar(masses)            
+        % try to parse target object contact point
+        masses_split = strsplit(masses,' ');
+        if numel(masses_split) == 1
+            masses = str2double(masses);
+        else
+            masses = zeros(1,numel(masses_split));
+            for i=1:numel(masses_split)
+                masses(i) = str2double(masses_split{i});
+            end
+        end
+    end    
+    %% deal with density flag
+    if exist('flag_density','var') && ischar(flag_density)
+        flag_density_num = str2double(flag_density);
+        if flag_density_num ~= 0 || flag_density_num ~= 1
+            error(['Flag density must be either 0 or 1; got ''' flag_density ''' instead']);
+        end
+        flag_density = flag_density_num;
+    end
     %% deal with first argument being a PCL
     try
         CheckIsPointCloudStruct(Param1);
@@ -44,12 +65,10 @@ function [ I, centre_mass, total_volume, SQs, vol_SQs, masses ] = CalcCompositeM
         masses = zeros(1,numel(SQs));
         for i=1:numel(SQs)
             masses(i) = vol_SQs(i)*1e3;
-        end
-    end
-    if numel(masses) > 1
-       if numel(masses) ~= numel(SQs)
-          error('List of masses must have same elements as number of segments in point cloud or superquadrics given'); 
-       end
+        end    
+    end 
+    if numel(masses) ~= numel(SQs)
+        error('List of masses must have same elements as number of segments in point cloud or superquadrics given'); 
     end
     %% get centre of mass
     centre_mass = CentreOfMass( SQs );
@@ -89,7 +108,7 @@ function [ I, centre_mass, total_volume, SQs, vol_SQs, masses ] = CalcCompositeM
     %% Get total volume
     total_volume = 0;
     for  i=1:numel(SQs)
-        total_volume = total_volume + VolumeSQ(SQs{i});
+        total_volume = total_volume + vol_SQs(i);
     end
     %% Get MOI
     % For each axis, sum moment of inertia of each SQ projected on this axis
@@ -97,10 +116,31 @@ function [ I, centre_mass, total_volume, SQs, vol_SQs, masses ] = CalcCompositeM
     for proj_axis=1:3
         sum=0; 
         for i=1:numel(SQs)
-            SQ_volume = VolumeSQ(SQs{i});
+            SQ_volume = vol_SQs(i);
             SQ_vol_contribution = (SQ_volume/total_volume);
             sum=sum+Iparts(i,proj_axis,proj_axis)+(SQ_vol_contribution*(d(i,proj_axis)^2));
         end
         I(proj_axis,proj_axis) = sum;
     end
+    disp('begin_inertia_info');
+    disp('# moment of inertia in L * M^2');
+    disp('inertia')
+    disp(I);
+    disp('centre_mass');
+    disp(centre_mass);
+    disp('tot_vol');
+    disp(total_volume);
+    disp('vol_per_sq');
+    str_ = '';
+    for i=1:numel(SQs)        
+        str_ = [str_ num2str(vol_SQs(i)) ' '];
+    end
+    disp(str_);
+    disp('sqs');
+    for i=1:numel(SQs)
+        disp(SQs{i});
+    end
+    disp('masses');
+    disp(masses);
+    disp('end_inertia_info');
 end

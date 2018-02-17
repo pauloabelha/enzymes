@@ -1,10 +1,40 @@
-function [I] = FiniteElemMOI(pcl, density)
-    CheckNumericArraySize(pcl,[Inf 3]);
-    if size(pcl,1) > 10000
-        error('Can only deal with point clouds with at most 1e4 points');
+function [I, min_D] = FiniteElemMOI(P, mass)
+    if ischar(P) && P == "--help"
+        disp('Function get_inertia_finite_elem');        
+        disp('This function will output the MOI'); 
+        disp('It will consider each point in the point cloud as a small sphere of radius equal to the mean dist accross all points.');
+        disp('Then it will calculate the MOI by summing them all taking into account their positions');
+        disp('Maximum total number of points in point cloud is 1e4 (de to memoty issues of N^2 point-distance calculation');
+        disp('This function does not tae segments into account');
+        disp('Params:'); 
+        disp([char(9) 'First param: filepath to the point cloud']);
+        disp([char(9) 'Second param: mass of point cloud']);
+        disp('Written by Paulo Abelha Ferreira'); 
+        I=[]; min_D=[];
+        return;
     end
-    if ~exist('density','var')
-        density = 1;
+    if ~exist('P','var')
+        error('Please define point cloud as first param');
+    end
+    if ~exist('mass','var')
+        error('Please define the mass as second param');
+    end
+    if ischar(mass)
+        mass = str2double(mass);
+    end
+    try
+        CheckIsPointCloudStruct(P);
+        pcl = P.v;
+    catch
+        if ischar(P)
+            P = ReadPointCloud(P);
+            pcl = P.v;
+        else
+            pcl = P;
+        end
+    end
+    if size(pcl,1) > 1e4
+        error('Can only deal with point clouds with at most 1e4 points');
     end
     I = zeros(3,3);
     
@@ -16,10 +46,9 @@ function [I] = FiniteElemMOI(pcl, density)
     clear D;            
     
     elem_radius = mean(min_D)/2;
-    elem_vol = (4/3)*pi*elem_radius^2;
-    total_volume = num_elems * elem_vol;
-    elem_vol_contribution = (elem_vol/total_volume);
-	elem_inertia = (8*pi/15)*elem_radius^5*density;
+    elem_mass = mass / num_elems;
+    elem_vol_contribution = (1/num_elems);
+	elem_inertia = (2/5)*elem_mass*elem_radius^2;
     
     % calculate the individual moments of inertia for each SQ part
     Iparts = zeros(num_elems,3,3);
@@ -58,5 +87,7 @@ function [I] = FiniteElemMOI(pcl, density)
         end
         I(proj_axis,proj_axis) = sum;
     end  
+    disp('inertia');
+    disp(I);
 end
 

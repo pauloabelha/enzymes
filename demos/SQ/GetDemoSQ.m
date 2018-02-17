@@ -5,7 +5,7 @@ function [ SQ, SQ_types ] = GetDemoSQ( SQ_type )
                 'Cube','Sphere','Double_Tetrahedron',...
                 'Cuboid','Cylinder','Cone','Double_Cone',...
                 'Pyramid',...
-                'Round_Bowl', 'Square_Bowl'};
+                'Round_Bowl', 'Square_Bowl', 'Small_Bowl'};
     if ~exist('SQ_type','var')
         SQ = SQ_types;
         return;
@@ -33,6 +33,8 @@ function [ SQ, SQ_types ] = GetDemoSQ( SQ_type )
             SQ = [2 2 1 1 1 0 0 0  0 0 0 -1 0 0 0];
         case SQ_types{11}
             SQ = [2 2 1 .1 .1 0 0 0  0 0 0 -1 0 0 0];
+        case SQ_types{12}
+            SQ = [0.075 0.075 0.02 1 1 0 0 0  0 0 0 -1 0 0 0];
         otherwise
             error(['SQ type unkown. Available types: ' PrettyCellArrayString( SQ_types )]);
     end
