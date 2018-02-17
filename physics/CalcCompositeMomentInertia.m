@@ -13,13 +13,14 @@
 % bending, tpaering nor superparaboloids. In the future I hope I have time 
 % to add these :(
 %
+% Thanks to Benjamin Nougier who contribute to the code
 %% By Paulo Abelha
-function [ centre_mass, I, inertial ] = CalcCompositeMomentInertia( Param1, mass)
+function [ I, centre_mass, volume ] = CalcCompositeMomentInertia( Param1, mass)
     %% deal with first argument being a PCL
     try
         CheckIsPointCloudStruct(Param1);
         SQs = PCL2SQ(Param1);
-    catch E
+    catch 
         %% deal with SQs param
         SQs = Param1;
         % deal with when param is a single SQ
@@ -27,33 +28,18 @@ function [ centre_mass, I, inertial ] = CalcCompositeMomentInertia( Param1, mass
             SQs = {SQs};
         end
     end
-
-    if size(mass,2) == 25
-        mass = mass(25);
-    end
-    
-%     % inflate SQ to avoid small radii leading to bad numeric calc
-%     VOL_INFLATION_FACTOR = 1e3;
-%     for i=1:numel(SQs)
-%         SQs{i}(1:3) = SQs{i}(1:3) .* VOL_INFLATION_FACTOR;
-%     end
-    
-    % initialise moment of inertia
-    I=zeros(3,3);
-
+    %% get centre of mass
     centre_mass = CentreOfMass( SQs );
-    
-    % calculate the individual moments of inertia for each SQ part
-    Iparts = zeros(size(SQs,2),3,3);
-    for i=1:size(SQs,2)
+    %% start MOI calculation
+    %% calculate the individual moments of inertia for each SQ
+    Iparts = zeros(numel(SQs),3,3);
+    for i=1:numel(SQs)
         density = mass/VolumeSQ(SQs{1});
         Iparts(i,:,:)=MomentInertiaSQ(SQs{i})*density;
-    end
-
-    
-    % Get projection distances of SQs centers on axis passing by center of mass
+    end    
+    %% Get projection distances of SQs centers on axis passing by center of mass
     d = zeros(size(SQs,2),3);
-    for i=1:size(SQs,2) % == length(SQs)
+    for i=1:numel(SQs) % == length(SQs)
         SQ_center_coord = SQs{i}(end-2:end);
         for proj_axis=1:3 
             % ( if 1 = "x axis" for example, then 2 = y axis, and 3 = z axis)
@@ -73,21 +59,21 @@ function [ centre_mass, I, inertial ] = CalcCompositeMomentInertia( Param1, mass
             d(i, axis_1) = sqrt( (SQ_center_coord(axis_2)^2) + (SQ_center_coord(axis_3)^2) );
         end
     end
-
-    % For each axis, sum moment of inertia of each SQ projected on this axis
+    %% Get total volume
     total_volume = 0;
-    for  i=1:size(SQs,2)
+    for  i=1:numel(SQs)
         total_volume = total_volume + VolumeSQ(SQs{i});
     end
+    %% Get MOI
+    % For each axis, sum moment of inertia of each SQ projected on this axis
+    I=zeros(3,3);
     for proj_axis=1:3
         sum=0; 
-        for i=1:size(SQs,2)
+        for i=1:numel(SQs)
             SQ_volume = VolumeSQ(SQs{i});
             SQ_vol_contribution = (SQ_volume/total_volume);
             sum=sum+Iparts(i,proj_axis,proj_axis)+(SQ_vol_contribution*(d(i,proj_axis)^2));
         end
         I(proj_axis,proj_axis) = sum;
     end
-    %I = I ./ VOL_INFLATION_FACTOR^2;
-    inertial = [centre_mass diag(I)'];
 end
