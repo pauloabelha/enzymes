@@ -34,7 +34,7 @@ function [I, min_D] = FiniteElemMOI(P, mass)
         end
     end
     if size(pcl,1) > 1e4
-        error('Can only deal with point clouds with at most 1e4 points');
+        error(['Can only deal with point clouds with at most 10000 points; this one has ' num2str(size(pcl,1))]);
     end
     I = zeros(3,3);
     
@@ -51,10 +51,7 @@ function [I, min_D] = FiniteElemMOI(P, mass)
 	elem_inertia = (2/5)*elem_mass*elem_radius^2;
     
     % calculate the individual moments of inertia for each SQ part
-    Iparts = zeros(num_elems,3,3);
-    for i=1:num_elems
-        Iparts(i,:,:) = elem_inertia;
-    end
+    Iparts = zeros(num_elems,3,3) + elem_inertia;
     
      % Get projection distances of elems' centers on axis passing by center of mass
     d = zeros(num_elems,3);
@@ -80,12 +77,14 @@ function [I, min_D] = FiniteElemMOI(P, mass)
     end
 
     % For each axis, sum moment of inertia of each SQ projected on this axis
-    for proj_axis=1:3
-        sum=0; 
-        for i=1:num_elems            
-            sum=sum+Iparts(i,proj_axis,proj_axis)+(elem_vol_contribution*(d(i,proj_axis)^2));
+    for proj_axis1=1:3
+        for proj_axis2=1:3
+            sum=0; 
+            for i=1:num_elems            
+                sum=sum+Iparts(i,proj_axis1,proj_axis2)+(elem_vol_contribution*(d(i,proj_axis1)^2));
+            end
+            I(proj_axis1,proj_axis2) = sum;
         end
-        I(proj_axis,proj_axis) = sum;
     end  
     disp('inertia');
     disp(I);

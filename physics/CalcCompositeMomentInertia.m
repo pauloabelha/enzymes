@@ -42,11 +42,16 @@ function [ I, centre_mass, total_volume, SQs, vol_SQs, masses ] = CalcCompositeM
         CheckIsPointCloudStruct(Param1);
         SQs = PCL2SQ(Param1);
     catch 
-        %% deal with SQs param
-        SQs = Param1;
-        % deal with when param is a single SQ
-        if ~iscell(SQs) && size(SQs,1) == 1
-            SQs = {SQs};
+        if ischar(Param1)
+            P = ReadPointCloud(Param1);
+            SQs = PCL2SQ(P);
+        else
+            %% deal with SQs param
+            SQs = Param1;
+            % deal with when param is a single SQ
+            if ~iscell(SQs) && size(SQs,1) == 1
+                SQs = {SQs};
+            end
         end
     end
     %% deal with density flag
@@ -113,17 +118,22 @@ function [ I, centre_mass, total_volume, SQs, vol_SQs, masses ] = CalcCompositeM
     %% Get MOI
     % For each axis, sum moment of inertia of each SQ projected on this axis
     I=zeros(3,3);
-    for proj_axis=1:3
-        sum=0; 
-        for i=1:numel(SQs)
-            SQ_volume = vol_SQs(i);
-            SQ_vol_contribution = (SQ_volume/total_volume);
-            sum=sum+Iparts(i,proj_axis,proj_axis)+(SQ_vol_contribution*(d(i,proj_axis)^2));
+    %% Get MOI
+    % For each axis, sum moment of inertia of each SQ projected on this axis
+    I=zeros(3,3);
+    for proj_axis1=1:3
+        for proj_axis2=1:3
+            sum=0; 
+            for i=1:numel(SQs)          
+                SQ_volume = vol_SQs(i);
+                SQ_vol_contribution = (SQ_volume/total_volume);
+                sum=sum+Iparts(i,proj_axis1,proj_axis2)+(SQ_vol_contribution*(d(i,proj_axis1)^2));
+            end
+            I(proj_axis1,proj_axis2) = sum;
         end
-        I(proj_axis,proj_axis) = sum;
-    end
+    end 
     disp('begin_inertia_info');
-    disp('# moment of inertia in L * M^2');
+    disp('# moment of inertia in M * L^2');
     disp('inertia')
     disp(I);
     disp('centre_mass');
