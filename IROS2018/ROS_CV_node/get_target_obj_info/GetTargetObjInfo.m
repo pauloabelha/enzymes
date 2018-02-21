@@ -1,5 +1,5 @@
 % Return the closest edge of P from point
-function [ edges, target_obj_align_vecs, min_dists, SQ ] = GetTargetObjInfo( P, points,task, verbose, parallel)
+function [ edges, target_obj_align_vecs, min_dists, SQ ] = GetTargetObjInfo( P, points, task, verbose, pcl_downsampling, parallel)
     % print help
     if ischar(P) && P == "--help"
        disp('Function for geting target object info');        
@@ -11,8 +11,10 @@ function [ edges, target_obj_align_vecs, min_dists, SQ ] = GetTargetObjInfo( P, 
        disp([char(9) char(9) 'Two points: "[0.1 0.1 0.1;0.2 0.2 0.2]"']);
        disp([char(9) char(9) 'Three points: "[0.1 0.1 0.1;0.2 0.2 0.2;0.3 0.3 0.3]"']);
        disp([char(9) char(9) 'The double quote around the list of points is required']);
-       disp([char(9) 'Third param: 1 or 0 for whether to log the module''s behaviour and plot results']);
-       disp([char(9) 'Fourth param: 1 or 0 for whether to run the superquadric fitting in parallel (default is 0)']);
+       disp([char(9) 'Third param: task name (cutting, scooping or scraping)']);
+       disp([char(9) 'Fourth param: 1 or 0 for whether to log the module''s behaviour and plot results']);
+       disp([char(9) 'Fifth param: number of points to which downsample point cloud (defaults is 500). This gives a trade-off between efficiency and quality of superquadric fit.']);
+       disp([char(9) 'Sixth param: 1 or 0 for whether to run the superquadric fitting in parallel (default is 0)']);
        disp([char(9) char(9) 'Setting the parallel param to 1 may incur in a long waiting time to create a parallel pool of cores']);
        disp('')
        disp('Example calls:');
@@ -73,6 +75,17 @@ function [ edges, target_obj_align_vecs, min_dists, SQ ] = GetTargetObjInfo( P, 
     end
     if verbose
         toc;
+    end    
+    if ~exist('task','var')
+        error('Please define a task name as third param');
+    end
+    if ~strcmp(task,'cutting') && ~strcmp(task,'scooping') && ~strcmp(task,'scraping')
+        error(['Unknown task: ' task '. Acceptable tasks names are: cutting, scooping and scraping']);
+    end
+    if ~exist('pcl_downsampling','var')
+        pcl_downsampling = 500;
+    else
+        pcl_downsampling = str2double(pcl_downsampling);
     end
     if ~exist('parallel','var')
         parallel = 0;
@@ -86,6 +99,8 @@ function [ edges, target_obj_align_vecs, min_dists, SQ ] = GetTargetObjInfo( P, 
         disp('Points:');
         disp(points);
         disp('Verbose:');
+        disp(verbose);
+        disp('Point cloud downsampling to:');
         disp(verbose);
         disp('Parallel:');
         disp(parallel);
@@ -103,18 +118,40 @@ function [ edges, target_obj_align_vecs, min_dists, SQ ] = GetTargetObjInfo( P, 
             toc;
         end
     end
+    if verbose
+        disp(['Point cloud downsampled to ' num2str(pcl_downsampling) ' points']);
+    end
     % fit superquadric
     if verbose
         disp('Fitting superquadric...');
     end
-	SQ = PCL2SQ(P,4,verbose,0,parallel);
+    SQs = cell(1,4);
+    Es = zeros(1, 4);
+    pca_pcl = pca(P.v);    
+    R = DownsamplePCL(P, pcl_downsampling, 1);
+    pcl = R.v*pca_pcl;
+    inv_pca_pcl = inv(pca_pcl);
+    [~, pcl_scale] = PCLBoundingBoxVolume( pcl );
+    opt_options = optimset('Display','off','TolX',1e-10,'TolFun',1e-10,'MaxIter',1000,'MaxFunEvals',1000); 
+    if parallel
+        parfor i=1:4    
+            [SQs{i}, ~, Es(i)] = FitSQToPCL_Paraboloid(pcl,pcl_scale,i,opt_options,[0 0 0 0 1],'');  
+        end
+    else
+        for i=1:4    
+            [SQs{i}, ~, Es(i)] = FitSQToPCL_Paraboloid(pcl,pcl_scale,i,opt_options,[0 0 0 0 1],''); 
+            SQs{i}(end-2:end) = SQs{i}(end-2:end)*inv_pca_pcl;  
+            SQs{i} = RotateSQWithRotMtx(SQs{i}, inv_pca_pcl');
+        end
+    end
+    [~, b] = min(Es);
+    SQ = SQs{b};
     if verbose
         toc;
     end
     if verbose 
         hold on;        
     end
-    SQ = SQ{1};
     %% get superellipse pcl 
     pcl_superellipse = superellipse( SQ(1), SQ(2), SQ(5) );
     pcl_superellipse = [pcl_superellipse repmat(SQ(3),size(pcl_superellipse,1),1)];
@@ -144,18 +181,18 @@ function [ edges, target_obj_align_vecs, min_dists, SQ ] = GetTargetObjInfo( P, 
     target_obj_align_vecs = [repmat(target_obj_lid_point,size(edges,1),1) - edges]';
     disp('begin_target_obj_info');
        
-    if (task == 'scraping')
-    disp('target_obj_contact_points');
-    disp(edges); 
-    disp('target_obj_align_vecs');
-    disp(target_obj_align_vecs');
+    if strcmp(task, 'scraping')
+        disp('target_obj_contact_points');
+        disp(edges); 
+        disp('target_obj_align_vecs');
+        disp(target_obj_align_vecs');
     end
     
-    if (task == 'scooping')
-    disp('target_obj_contact_points');
-    disp(target_obj_lid_point); 
-    disp('target_obj_align_vecs');
-    disp(GetSQVector(SQ)');
+    if strcmp(task, 'scooping')
+        disp('target_obj_contact_points');
+        disp(target_obj_lid_point); 
+        disp('target_obj_align_vecs');
+        disp(GetSQVector(SQ)');
     end
     disp('end_target_obj_info');
 

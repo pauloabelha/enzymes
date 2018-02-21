@@ -1,13 +1,14 @@
 <deployment-project plugin="plugin.ezdeploy" plugin-version="1.0">
-  <configuration build-checksum="1523339333" file="/home/paulo/enzymes/IROS2018/ROS_CV_node/get_target_obj_info/get_target_obj_info.prj" location="/home/paulo/enzymes/IROS2018/ROS_CV_node/get_target_obj_info" name="get_target_obj_info" preferred-package-location="/home/paulo/enzymes/IROS2018/ROS_CV_node/get_target_obj_info/get_target_obj_info/for_redistribution" preferred-package-type="package.type.install" target="target.ezdeploy.standalone" target-name="Application Compiler">
+  <configuration build-checksum="3460987260" file="/home/paulo/enzymes/IROS2018/ROS_CV_node/get_target_obj_info/get_target_obj_info.prj" location="/home/paulo/enzymes/IROS2018/ROS_CV_node/get_target_obj_info" name="get_target_obj_info" preferred-package-location="/home/paulo/enzymes/IROS2018/ROS_CV_node/get_target_obj_info/get_target_obj_info/for_redistribution" preferred-package-type="package.type.install" target="target.ezdeploy.standalone" target-name="Application Compiler">
     <param.appname>get_target_obj_info</param.appname>
     <param.icon />
     <param.icons />
-    <param.version>2.0</param.version>
-    <param.authnamewatermark>Paulo Abelha</param.authnamewatermark>
+    <param.version>3.0</param.version>
+    <param.authnamewatermark>Paulo A. Ferreira and ChaoZheng Wang</param.authnamewatermark>
     <param.email>pauloabelha@gmail.com</param.email>
     <param.company />
-    <param.summary>CV module for IROS 2018</param.summary>
+    <param.summary>CV module for IROS 2018
+Now it will only fit superparaboloids and it is possible to pass the desired downsapling of the point cloud</param.summary>
     <param.description>See --help</param.description>
     <param.screenshot />
     <param.guid />
@@ -111,39 +112,21 @@ ${LD_LIBRARY_PATH}:MR/v93/runtime/glnxa64:MR/v93/bin/glnxa64:MR/v93/sys/os/glnxa
       <file>/home/paulo/enzymes/list/CheckIsScalar.m</file>
       <file>/home/paulo/enzymes/list/CheckNumericArraySize.m</file>
       <file>/home/paulo/enzymes/list/GetPermGrid.m</file>
-      <file>/home/paulo/enzymes/list/concatcellarrayofmatrices.m</file>
-      <file>/home/paulo/enzymes/list/flatten_cell.m</file>
       <file>/home/paulo/enzymes/plot/PlotPCLS.m</file>
-      <file>/home/paulo/enzymes/plot/PlotPCLSegments.m</file>
-      <file>/home/paulo/enzymes/plot/PlotSQs.m</file>
       <file>/home/paulo/enzymes/pointclouds/AddColourToSegms.m</file>
       <file>/home/paulo/enzymes/pointclouds/CheckIsPointCloudStruct.m</file>
       <file>/home/paulo/enzymes/pointclouds/DownsamplePCL.m</file>
       <file>/home/paulo/enzymes/pointclouds/GetMeanMinDistPCL.m</file>
-      <file>/home/paulo/enzymes/pointclouds/GetMedianRangeBySlicingPcl.m</file>
       <file>/home/paulo/enzymes/pointclouds/PCLBoundingBoxVolume.m</file>
       <file>/home/paulo/enzymes/pointclouds/PCLDist.m</file>
       <file>/home/paulo/enzymes/pointclouds/PointCloud.m</file>
       <file>/home/paulo/enzymes/pointclouds/ReadPointCloud.m</file>
-      <file>/home/paulo/enzymes/pointclouds/calculatePCLSegScale.m</file>
       <file>/home/paulo/enzymes/segmentation/GetEquivalentSegmLabels.m</file>
-      <file>/home/paulo/enzymes/segmentation/RemovePCLRangePeaks.m</file>
-      <file>/home/paulo/enzymes/segmentation/SlicePointCloud.m</file>
       <file>/home/paulo/enzymes/superquadrics/FitSQToPCL_Paraboloid.m</file>
-      <file>/home/paulo/enzymes/superquadrics/FitSQtoPCL.m</file>
-      <file>/home/paulo/enzymes/superquadrics/FitSQtoPCL_Bending.m</file>
-      <file>/home/paulo/enzymes/superquadrics/FitSQtoPCL_Tapering.m</file>
-      <file>/home/paulo/enzymes/superquadrics/FitSQtoPCL_normal.m</file>
       <file>/home/paulo/enzymes/superquadrics/GetSQVector.m</file>
-      <file>/home/paulo/enzymes/superquadrics/GetToroid.m</file>
       <file>/home/paulo/enzymes/superquadrics/IsThinSQ.m</file>
-      <file>/home/paulo/enzymes/superquadrics/PCL2SQ.m</file>
-      <file>/home/paulo/enzymes/superquadrics/RankSQ.m</file>
       <file>/home/paulo/enzymes/superquadrics/RotateSQWithRotMtx.m</file>
       <file>/home/paulo/enzymes/superquadrics/SQ2PCL.m</file>
-      <file>/home/paulo/enzymes/superquadrics/SQFunction.m</file>
-      <file>/home/paulo/enzymes/superquadrics/SQFunctionNormalised.m</file>
-      <file>/home/paulo/enzymes/superquadrics/SQToroidFunction.m</file>
     </fileset.depfun>
     <build-deliverables>
       <file location="${PROJECT_ROOT}/get_target_obj_info/for_testing" name="get_target_obj_info" optional="false">/home/paulo/enzymes/IROS2018/ROS_CV_node/get_target_obj_info/get_target_obj_info/for_testing/get_target_obj_info</file>
