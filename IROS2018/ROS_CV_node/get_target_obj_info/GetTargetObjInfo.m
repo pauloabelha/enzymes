@@ -101,7 +101,7 @@ function [ edges, target_obj_align_vecs, min_dists, SQ ] = GetTargetObjInfo( P, 
         disp('Verbose:');
         disp(verbose);
         disp('Point cloud downsampling to:');
-        disp(verbose);
+        disp(pcl_downsampling);
         disp('Parallel:');
         disp(parallel);
     end  
@@ -192,7 +192,7 @@ function [ edges, target_obj_align_vecs, min_dists, SQ ] = GetTargetObjInfo( P, 
         disp('target_obj_contact_points');
         disp(target_obj_lid_point); 
         disp('target_obj_align_vecs');
-        disp(GetSQVector(SQ)');
+        disp(-GetSQVector(SQ)');
     end
     disp('end_target_obj_info');
 
