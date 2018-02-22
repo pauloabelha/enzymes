@@ -28,7 +28,7 @@ function [SQs,SQs_errors,seeds_pcls] = FitConstrainedSQsSeededPCL(seeds_pcls,ver
         if verbose
             tic;
         end
-        [SQs{i}, ~, SQ_errors(i)] = PCL2SQ( seeds_pcls{i}, 1, 0, 0, parallel );
+        [SQs{i}, ~, SQ_errors(i)] = PCL2SQ( seeds_pcls{i}, 0, 1, 0, parallel );
         SQs{i} = SQs{i}{1};
         Ps{i} = PointCloud(seeds_pcls{i});
      
