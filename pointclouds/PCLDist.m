@@ -7,11 +7,14 @@ function [ E, E1, E2 ] = PCLDist( pcl1,pcl2 )
     end    
     % get errors
     E1 = get_error(pcl1, pcl2);
-    E2 = get_error(pcl1, pcl2);
+    E2 = get_error(pcl2, pcl1);
     E = (E1 + E2)/2;
 end
 
-function E = get_error(pcl1, pcl2)
+function E = get_error(pcl1, pcl2, base)
+    if ~exist('base','var')
+        base = 1.5;
+    end
     % get dist (punishing - here power 1) between point pairs from each pcl
     DIST=pdist2(pcl1,pcl2);
     % get min dist between each point from pcl1 and its closest in pcl2
@@ -21,6 +24,6 @@ function E = get_error(pcl1, pcl2)
     else    
         [P_mass, P_bins] = GetProbDistExpResults( min_dists, 0.001, [0 0.1]);
         a=1:numel(P_bins);
-        E = sum(P_mass .* 1.1 .^ a);
+        E = sum(P_mass .* base .^ a);
     end
 end

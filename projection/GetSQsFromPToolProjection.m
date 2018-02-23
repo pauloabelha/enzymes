@@ -1,4 +1,4 @@
-function [ SQs, SQs_errors, seeds_pcls] = GetSQsFromPToolProjection( P, n_seeds, n_seeds_radii, add_segms, only_segms, verbose, parallel )   
+function [ SQs, SQs_errors, seeds_pcls,SQs_orig] = GetSQsFromPToolProjection( P, n_seeds, n_seeds_radii, add_segms, only_segms, verbose, parallel )   
     if ~exist('verbose','var')
         verbose = 0;
     end
@@ -29,6 +29,6 @@ function [ SQs, SQs_errors, seeds_pcls] = GetSQsFromPToolProjection( P, n_seeds,
         [ ~, ~, seeds_pcls ] = PlantSeedsPCL( P, n_seeds, seeds_radii );
         seeds_pcls = [seeds_pcls segm_pcls];
     end
-    [SQs,SQs_errors,seeds_pcls] = FitConstrainedSQsSeededPCL(seeds_pcls,verbose,parallel);
+    [SQs,SQs_errors,seeds_pcls,SQs_orig] = FitConstrainedSQsSeededPCL(seeds_pcls,verbose,parallel);
 end
 

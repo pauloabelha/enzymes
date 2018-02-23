@@ -1,4 +1,4 @@
-function [ ptools, ptools_map, ptools_errors, ERRORS_SQs_alt, SQs_ptools, ERRORS_SQS] = ExtractPToolsAltSQs(SQs, mass, ERRORS_SQs_alt, grasp_alt, parallel)
+function [ ptools, ptools_map, ptools_errors, ERRORS_SQs_alt, SQs_ptools, ERRORS_SQS, ptool_SQs_ixs] = ExtractPToolsAltSQs(SQs, mass, ERRORS_SQs_alt, grasp_alt, parallel)
     if ~exist('ERRORS_SQs_alt','var')
         ERRORS_SQs_alt = zeros(size(SQs,1),size(SQs,2)) + Inf;
     end
@@ -14,6 +14,7 @@ function [ ptools, ptools_map, ptools_errors, ERRORS_SQs_alt, SQs_ptools, ERRORS
     SQs_1 = [];
     SQs_2 = [];
     ERRORS = [];
+    ptool_SQs_ixs = [];
     for sq1_ix=1:size(SQs,2)
         n_grasp_alt = size(SQs,1);
         if ~grasp_alt
@@ -33,6 +34,7 @@ function [ ptools, ptools_map, ptools_errors, ERRORS_SQs_alt, SQs_ptools, ERRORS
                     if isempty(SQ2)
                         continue;
                     end 
+                    ptool_SQs_ixs(end+1, :) = [sq1_alt_ix sq1_ix sq2_alt_ix sq2_ix];
                     SQs_1(end+1,:) = SQ1;
                     SQs_2(end+1,:) = SQ2;
                     SQs_ptools{end+1} = [SQ1; SQ2];

@@ -1,4 +1,4 @@
-function [ P, SQs, ptools, ptool_maps, grasp_centre, action_centre, tool_tip, tool_heel, tool_quaternion ] = GetToolInfo( P, pcl_mass, target_obj_align_vec, target_obj_contact_point, task, gpr_task_path, verbose, parallel )
+function [ P, best_SQs, best_ptool, ptool_maps, grasp_centre, action_centre, tool_tip, tool_heel, tool_quaternion, SQs_orig ] = GetToolInfo( P, pcl_mass, target_obj_align_vec, target_obj_contact_point, task, gpr_task_path, verbose, parallel )
     SEGMENTATION_MANDATORY = 1;
     % set default outputs
     SQs=[];ptools=[];ptool_maps=[];grasp_centre=[];action_centre=[];tool_tip=[];tool_heel=[];tool_quaternion=[];
@@ -180,13 +180,17 @@ function [ P, SQs, ptools, ptool_maps, grasp_centre, action_centre, tool_tip, to
     if verbose
         disp('Performing projection...');
     end
-    [ best_scores, best_categ_scores, best_ptools, best_ptool_maps, best_ixs, SQs_ptools, ERRORS_SQs_ptools ] = SeedProjection( P, pcl_mass, task, @TaskFunctionGPR, {gprs{end}, dims_ixs{end}}, 0, 0, 1, verbose, 0, parallel );  
+    [ best_scores, best_categ_scores, best_ptools, best_ptool_maps, best_ixs, SQs_ptools, ERRORS_SQs_ptools, best_ptool_SQs_ixs, SQs_orig ] = SeedProjection( P, pcl_mass, task, @TaskFunctionGPR, {gprs{end}, dims_ixs{end}}, 0, 0, 1, verbose, 0, parallel );  
     best_score = best_scores(best_weight_ix);
+    disp(best_score);
     best_categ_score = best_categ_scores(best_weight_ix);
+    disp(best_categ_score);
     best_ptool = best_ptools(best_weight_ix,:);
+    disp(best_ptool(10:18));
     best_ptool_map = best_ptool_maps(best_weight_ix,:);
     best_SQs = SQs_ptools{best_ixs(best_weight_ix)};    
     best_ERRORS_SQs_ptools = ERRORS_SQs_ptools{best_ixs(best_weight_ix)};
+    best_ptool_SQs_ixs = best_ptool_SQs_ixs(best_weight_ix,:);
     if verbose
         toc;
     end
@@ -207,8 +211,7 @@ function [ P, SQs, ptools, ptool_maps, grasp_centre, action_centre, tool_tip, to
     %% finish log writing
     if verbose
         disp('end_log');
-    end    
-    
+    end        
     %% finish log
     if verbose
         toc;
@@ -216,27 +219,9 @@ function [ P, SQs, ptools, ptool_maps, grasp_centre, action_centre, tool_tip, to
     %% get grasp part centre
     grasp_centre = SQ_grasp(end-2:end);
     %% get grasp and action segm ix
-    min_dist_grasp = 1e10;
-    min_dist_action = 1e10;
-    grasp_segm_ix = -1;
-    action_segm_ix = -1;
-    for i=1:numel(P.segms)
-        dist_grasp = pdist([SQ_grasp(end-2:end);mean(P.segms{i}.v)]);
-        if dist_grasp < min_dist_grasp
-            min_dist_grasp = dist_grasp;
-            grasp_segm_ix = i;
-        end
-    end
-    for i=1:numel(P.segms)
-        if i == grasp_segm_ix
-            continue;
-        end
-        dist_action = pdist([SQ_action(end-2:end);mean(P.segms{i}.v)]);
-        if dist_action < min_dist_action
-            min_dist_action = dist_action;
-            action_segm_ix = i;
-        end
-    end
+    grasp_segm_ix = best_ptool_SQs_ixs(2);
+    action_segm_ix = best_ptool_SQs_ixs(4);
+    %% get tool tip
     N_dist = pdist2(P.segms{action_segm_ix}.v,mean(P.segms{grasp_segm_ix}.v));
     [~, tool_tip_ix] = max(N_dist);
     %% get tool heel (e.g. in a knife, for scraping butter)    
@@ -253,7 +238,7 @@ function [ P, SQs, ptools, ptool_maps, grasp_centre, action_centre, tool_tip, to
     tool_transf = GetTransfFromRotAndTransl(tool_rot, tool_transl_vec);    
     %% plot
     if verbose
-        PlotSQs(best_SQs);
+        PlotSQs(best_SQs);best_ptool_SQs_ixs(4)
         sphere_plot_size = 5000;
         disp('Plotting tool info...');
         PlotPCLSegments(P,-1,0,{'.k','.k','.k','.k','.k','.k','.k'});   
@@ -306,8 +291,12 @@ function [ P, SQs, ptools, ptool_maps, grasp_centre, action_centre, tool_tip, to
     disp(num2str(parallel));
     disp('end_input_params');
     % get affordance score
-    disp('affordance_score');
+    disp(['affordance_score' num2str(best_categ_score)]);
     disp(num2str(best_categ_score));    
+    disp('grasp_segm');
+    disp(num2str(grasp_segm_ix));
+    disp('action_segm');
+    disp(num2str(action_segm_ix));
     %% display grasp centre
     disp('grasp_center');
     disp(num2str(grasp_centre));

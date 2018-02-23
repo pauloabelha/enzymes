@@ -1,6 +1,6 @@
 
 
-function [ best_scores, best_categ_scores, best_ptools, best_ptool_maps, best_ixs, SQs_ptools, ERRORS_SQs_ptools ] = SeedProjection( P, tool_mass, task_name, task_function, task_function_params, n_seeds, add_segms, only_segms, verbose, plot_fig, parallel )  
+function [ best_scores, best_categ_scores, best_ptools, best_ptool_maps, best_ixs, SQs_ptools, ERRORS_SQs_ptools, best_ptool_SQs_ixs, SQs_orig ] = SeedProjection( P, tool_mass, task_name, task_function, task_function_params, n_seeds, add_segms, only_segms, verbose, plot_fig, parallel )  
     %% default is not verbose
     if ~exist('verbose','var')
         verbose = 0;
@@ -22,12 +22,12 @@ function [ best_scores, best_categ_scores, best_ptools, best_ptool_maps, best_ix
         n_seeds = n_seeds_hyper;
     end
     %% get SQs from planting seeds and fitting constrained by the ideal ptool scale
-    [ SQs_proj, fit_scores_proj ] = GetSQsFromPToolProjection( P, n_seeds, n_seeds_radii, add_segms, only_segms, verbose, parallel );
+    [ SQs_proj, fit_scores_proj, ~, SQs_orig ] = GetSQsFromPToolProjection( P, n_seeds, n_seeds_radii, add_segms, only_segms, verbose, parallel );
     if verbose 
         n_valid_SQs = sum(~cellfun(@isempty,SQs_proj(:)));
         disp([char(9) 'Extracting p-tools from the ' num2str(n_valid_SQs) ' valid SQs (fitted with good rotations)']);
     end 
-    [ ptools_proj, ptools_map_proj, ptools_errors_proj, ~, SQs_ptools, ERRORS_SQs_ptools] = ExtractPToolsAltSQs(SQs_proj, tool_mass, fit_scores_proj, -1, parallel);  
+    [ ptools_proj, ptools_map_proj, ptools_errors_proj, ~, SQs_ptools, ERRORS_SQs_ptools, ptool_SQs_ixs] = ExtractPToolsAltSQs(SQs_proj, tool_mass, fit_scores_proj, -1, parallel);  
     % any ptool with some error in its fitting score receives max (worse)
     % minimum fit score will never be 0
     % So, inverse of niminimum will never be Inf
@@ -39,7 +39,9 @@ function [ best_scores, best_categ_scores, best_ptools, best_ptool_maps, best_ix
     if verbose 
         disp([char(9) 'Evaluating task function on ' num2str(size(ptools_proj,1)) ' p-tools...']);
     end
-    task_scores = feval(task_function, task_function_params, ptools_proj);   
+    task_scores = feval(task_function, task_function_params, ptools_proj);
+    ixs_example = ptool_SQs_ixs(:, 3) == 1 & ptool_SQs_ixs(:, 4);
+    %task_scores(312) = max(task_scores)+0.01;
     %% get weight voting
     % get voting matrix (higher the value the better)
     voting_matrix = [1./ptools_errors_proj; task_scores'];     
@@ -69,6 +71,7 @@ function [ best_scores, best_categ_scores, best_ptools, best_ptool_maps, best_ix
     final_mtx = a + repmat(rank_fit_score,n_weights,1);   
     [~,best_ixs] = max(final_mtx,[],2);
     % get the best ptool to return
+    best_ptool_SQs_ixs = ptool_SQs_ixs(best_ixs, :);
     best_ptools = ptools_proj(best_ixs,:);
     best_ptool_maps = ptools_map_proj(best_ixs,:);
     best_fit_scores = ptools_errors_proj(best_ixs);

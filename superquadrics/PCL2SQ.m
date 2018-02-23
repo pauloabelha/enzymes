@@ -26,7 +26,7 @@
 %   SQs_pcls - uniformly sampled pcls of the SQs
 %
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-function [ SQs, TOT_ERROR, SEGM_ERRORS, SEGM_ERRORS_PCL_SQ, SEGM_ERRORS_SQ_PCL, SQ_pcls ] = PCL2SQ( P, plot_fig, n_attempts, verbose, parallel, try_to_clean_segm )
+function [ SQs, TOT_ERROR, SEGM_ERRORS, SEGM_ERRORS_PCL_SQ, SEGM_ERRORS_SQ_PCL, SQ_pcls, Es, E_pcl_SQs, E_SQ_pcls ] = PCL2SQ( P, plot_fig, n_attempts, verbose, parallel, try_to_clean_segm )
     %% constants
     % max number of points (pcls with more than this will be downsampled)
     % increase this too much at your own risk of freezing the machine :)
