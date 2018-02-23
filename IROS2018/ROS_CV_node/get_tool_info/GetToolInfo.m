@@ -99,11 +99,11 @@ function [ P, SQs, ptools, ptool_maps, grasp_centre, action_centre, tool_tip, to
         if verbose
             disp('Deleting previous parallel pool...');
         end
-        delete(gcp('nocreate'));
+        %delete(gcp('nocreate'));
         if verbose
             toc;
         end
-        parpool;
+        %parpool;
         if verbose
             toc;
         end
@@ -115,7 +115,7 @@ function [ P, SQs, ptools, ptool_maps, grasp_centre, action_centre, tool_tip, to
         disp(P);
         disp('Mass:');
         disp(pcl_mass);
-        disp('Target Object Alinment Vector:');
+        disp('Target Object Alignment Vector:');
         disp(target_obj_align_vec');
         disp('Target Object Contact Point:');
         disp(target_obj_contact_point);
@@ -185,7 +185,7 @@ function [ P, SQs, ptools, ptool_maps, grasp_centre, action_centre, tool_tip, to
     best_categ_score = best_categ_scores(best_weight_ix);
     best_ptool = best_ptools(best_weight_ix,:);
     best_ptool_map = best_ptool_maps(best_weight_ix,:);
-    best_SQs = SQs_ptools{best_ixs(best_weight_ix)};
+    best_SQs = SQs_ptools{best_ixs(best_weight_ix)};    
     best_ERRORS_SQs_ptools = ERRORS_SQs_ptools{best_ixs(best_weight_ix)};
     if verbose
         toc;
@@ -253,6 +253,7 @@ function [ P, SQs, ptools, ptool_maps, grasp_centre, action_centre, tool_tip, to
     tool_transf = GetTransfFromRotAndTransl(tool_rot, tool_transl_vec);    
     %% plot
     if verbose
+        PlotSQs(best_SQs);
         sphere_plot_size = 5000;
         disp('Plotting tool info...');
         PlotPCLSegments(P,-1,0,{'.k','.k','.k','.k','.k','.k','.k'});   
