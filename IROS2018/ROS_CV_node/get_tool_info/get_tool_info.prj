@@ -1,5 +1,5 @@
 <deployment-project plugin="plugin.ezdeploy" plugin-version="1.0">
-  <configuration build-checksum="1006184444" file="/home/paulo/enzymes/IROS2018/ROS_CV_node/get_tool_info/get_tool_info.prj" location="/home/paulo/enzymes/IROS2018/ROS_CV_node/get_tool_info" name="get_tool_info" preferred-package-location="/home/paulo/enzymes/IROS2018/ROS_CV_node/get_tool_info/get_tool_info/for_redistribution" preferred-package-type="package.type.install" target="target.ezdeploy.standalone" target-name="Application Compiler">
+  <configuration build-checksum="4054789033" file="/home/paulo/enzymes/IROS2018/ROS_CV_node/get_tool_info/get_tool_info.prj" location="/home/paulo/enzymes/IROS2018/ROS_CV_node/get_tool_info" name="get_tool_info" preferred-package-location="/home/paulo/enzymes/IROS2018/ROS_CV_node/get_tool_info/get_tool_info/for_redistribution" preferred-package-type="package.type.install" target="target.ezdeploy.standalone" target-name="Application Compiler">
     <param.appname>get_tool_info</param.appname>
     <param.icon />
     <param.icons />
@@ -86,105 +86,7 @@ ${LD_LIBRARY_PATH}:MR/v93/runtime/glnxa64:MR/v93/bin/glnxa64:MR/v93/sys/os/glnxa
     </fileset.main>
     <fileset.resources />
     <fileset.package />
-    <fileset.depfun>
-      <file>/home/paulo/enzymes/file_IO/read_obj.m</file>
-      <file>/home/paulo/enzymes/file_IO/read_off.m</file>
-      <file>/home/paulo/enzymes/file_IO/read_pcd.m</file>
-      <file>/home/paulo/enzymes/file_IO/read_ply.m</file>
-      <file>/home/paulo/enzymes/file_IO/read_ply2.m</file>
-      <file>/home/paulo/enzymes/file_IO/read_png_as_pcl.m</file>
-      <file>/home/paulo/enzymes/geometry/GetEulRotMtx.m</file>
-      <file>/home/paulo/enzymes/geometry/GetTransfFromRotAndTransl.m</file>
-      <file>/home/paulo/enzymes/geometry/GetVolMult.m</file>
-      <file>/home/paulo/enzymes/geometry/ParaboloidFaces.m</file>
-      <file>/home/paulo/enzymes/geometry/RotateAndTranslatePoints.m</file>
-      <file>/home/paulo/enzymes/geometry/SuperParaboloidFunction.m</file>
-      <file>/home/paulo/enzymes/geometry/TransformPoints.m</file>
-      <file>/home/paulo/enzymes/geometry/superellipse.m</file>
-      <file>/home/paulo/enzymes/geometry/superellipsoid.m</file>
-      <file>/home/paulo/enzymes/geometry/superparabola.m</file>
-      <file>/home/paulo/enzymes/geometry/superparaboloid.m</file>
-      <file>/home/paulo/enzymes/geometry/unif_sample_theta.m</file>
-      <file>/home/paulo/enzymes/geometry/update_theta.m</file>
-      <file>/home/paulo/enzymes/linear_algebra/Apply3DTransformations.m</file>
-      <file>/home/paulo/enzymes/linear_algebra/Get2DRotMtx.m</file>
-      <file>/home/paulo/enzymes/linear_algebra/GetRotMtx.m</file>
-      <file>/home/paulo/enzymes/linear_algebra/UnitVector.m</file>
-      <file>/home/paulo/enzymes/linear_algebra/eul2rotm_.m</file>
-      <file>/home/paulo/enzymes/linear_algebra/rotm2eul_.m</file>
-      <file>/home/paulo/enzymes/linear_algebra/rotm2quat_.m</file>
-      <file>/home/paulo/enzymes/linear_algebra/signedpow.m</file>
-      <file>/home/paulo/enzymes/linear_algebra/sl3dnormalize_.m</file>
-      <file>/home/paulo/enzymes/linear_algebra/vrrotvec2mat_.m</file>
-      <file>/home/paulo/enzymes/linear_algebra/vrrotvec_.m</file>
-      <file>/home/paulo/enzymes/list/CheckIsScalar.m</file>
-      <file>/home/paulo/enzymes/list/CheckNumericArraySize.m</file>
-      <file>/home/paulo/enzymes/list/CheckScalarInRange.m</file>
-      <file>/home/paulo/enzymes/list/GetPermGrid.m</file>
-      <file>/home/paulo/enzymes/list/concatcellarrayofmatrices.m</file>
-      <file>/home/paulo/enzymes/list/flatten_cell.m</file>
-      <file>/home/paulo/enzymes/machine_learning/GetProbDistExpResults.m</file>
-      <file>/home/paulo/enzymes/machine_learning/HistogramCustom.m</file>
-      <file>/home/paulo/enzymes/machine_learning/NormaliseData.m</file>
-      <file>/home/paulo/enzymes/plot/PlotPCLS.m</file>
-      <file>/home/paulo/enzymes/plot/PlotPCLSegments.m</file>
-      <file>/home/paulo/enzymes/plot/PlotSQs.m</file>
-      <file>/home/paulo/enzymes/pointclouds/AddColourToSegms.m</file>
-      <file>/home/paulo/enzymes/pointclouds/Apply3DTransfPCL.m</file>
-      <file>/home/paulo/enzymes/pointclouds/CheckIsPointCloudStruct.m</file>
-      <file>/home/paulo/enzymes/pointclouds/DownsamplePCL.m</file>
-      <file>/home/paulo/enzymes/pointclouds/GetMedianRangeBySlicingPcl.m</file>
-      <file>/home/paulo/enzymes/pointclouds/PCLBoundingBoxVolume.m</file>
-      <file>/home/paulo/enzymes/pointclouds/PCLDist.m</file>
-      <file>/home/paulo/enzymes/pointclouds/PointCloud.m</file>
-      <file>/home/paulo/enzymes/pointclouds/ReadPointCloud.m</file>
-      <file>/home/paulo/enzymes/pointclouds/calculatePCLSegScale.m</file>
-      <file>/home/paulo/enzymes/projection/FitConstrainedSQsSeededPCL.m</file>
-      <file>/home/paulo/enzymes/projection/GetSQsFromPToolProjection.m</file>
-      <file>/home/paulo/enzymes/projection/PlantSeedsPCL.m</file>
-      <file>/home/paulo/enzymes/projection/ProjectionHyperParams.m</file>
-      <file>/home/paulo/enzymes/projection/SeedProjection.m</file>
-      <file>/home/paulo/enzymes/projection/TaskFunctionGPR.m</file>
-      <file>/home/paulo/enzymes/ptools/AdjustMinimaPToolSQ.m</file>
-      <file>/home/paulo/enzymes/ptools/AlignPToolWithPCL.m</file>
-      <file>/home/paulo/enzymes/ptools/ExtractPTool.m</file>
-      <file>/home/paulo/enzymes/ptools/ExtractPToolsAltSQs.m</file>
-      <file>/home/paulo/enzymes/ptools/GetPToolsSQs.m</file>
-      <file>/home/paulo/enzymes/ptools/GetTrasnfsSQsTask.m</file>
-      <file>/home/paulo/enzymes/ptools/PTool2Matrix.m</file>
-      <file>/home/paulo/enzymes/ptools/PTool2PCL.m</file>
-      <file>/home/paulo/enzymes/ptools/PlotPtools.m</file>
-      <file>/home/paulo/enzymes/ptools/PtoolsTaskTranfs.m</file>
-      <file>/home/paulo/enzymes/ptools/RotatePCLsWithPtoolsForTask.m</file>
-      <file>/home/paulo/enzymes/segmentation/GetEquivalentSegmLabels.m</file>
-      <file>/home/paulo/enzymes/segmentation/RemovePCLRangePeaks.m</file>
-      <file>/home/paulo/enzymes/segmentation/SlicePointCloud.m</file>
-      <file>/home/paulo/enzymes/simulation/TaskCategorisation.m</file>
-      <file>/home/paulo/enzymes/simulation/TaskCategorisationCuttingLasagna.m</file>
-      <file>/home/paulo/enzymes/simulation/TaskCategorisationHammeringNail.m</file>
-      <file>/home/paulo/enzymes/simulation/TaskCategorisationLiftingPancake.m</file>
-      <file>/home/paulo/enzymes/simulation/TaskCategorisationRollingDough.m</file>
-      <file>/home/paulo/enzymes/simulation/TaskCategorisationScoopingGrains.m</file>
-      <file>/home/paulo/enzymes/simulation/task_positioning/getTaskOrientationParams.m</file>
-      <file>/home/paulo/enzymes/superquadrics/AlignSQWithVector.m</file>
-      <file>/home/paulo/enzymes/superquadrics/ApplyTransfSQs.m</file>
-      <file>/home/paulo/enzymes/superquadrics/FitSQToPCL_Paraboloid.m</file>
-      <file>/home/paulo/enzymes/superquadrics/FitSQtoPCL.m</file>
-      <file>/home/paulo/enzymes/superquadrics/FitSQtoPCL_Bending.m</file>
-      <file>/home/paulo/enzymes/superquadrics/FitSQtoPCL_Tapering.m</file>
-      <file>/home/paulo/enzymes/superquadrics/FitSQtoPCL_normal.m</file>
-      <file>/home/paulo/enzymes/superquadrics/GetRotationSQFits.m</file>
-      <file>/home/paulo/enzymes/superquadrics/GetSQVector.m</file>
-      <file>/home/paulo/enzymes/superquadrics/GetToroid.m</file>
-      <file>/home/paulo/enzymes/superquadrics/IsThinSQ.m</file>
-      <file>/home/paulo/enzymes/superquadrics/PCL2SQ.m</file>
-      <file>/home/paulo/enzymes/superquadrics/RankSQ.m</file>
-      <file>/home/paulo/enzymes/superquadrics/RotateSQWithRotMtx.m</file>
-      <file>/home/paulo/enzymes/superquadrics/SQ2PCL.m</file>
-      <file>/home/paulo/enzymes/superquadrics/SQFunction.m</file>
-      <file>/home/paulo/enzymes/superquadrics/SQFunctionNormalised.m</file>
-      <file>/home/paulo/enzymes/superquadrics/SQToroidFunction.m</file>
-    </fileset.depfun>
+    <fileset.depfun />
     <build-deliverables>
       <file location="${PROJECT_ROOT}/get_tool_info/for_testing" name="readme.txt" optional="true">/home/paulo/enzymes/IROS2018/ROS_CV_node/get_tool_info/get_tool_info/for_testing/readme.txt</file>
       <file location="${PROJECT_ROOT}/get_tool_info/for_testing" name="run_get_tool_info.sh" optional="false">/home/paulo/enzymes/IROS2018/ROS_CV_node/get_tool_info/get_tool_info/for_testing/run_get_tool_info.sh</file>
