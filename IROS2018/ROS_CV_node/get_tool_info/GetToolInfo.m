@@ -176,17 +176,14 @@ function [ P, best_SQs, best_ptool, ptool_maps, grasp_centre, action_centre, too
     end    
     [~, ~, weights ] = ProjectionHyperParams;
     n_weight_tries = size(weights,1);
-    best_weight_ix = round(n_weight_tries/2)+1;
+    best_weight_ix = round(n_weight_tries/2)+10;
     if verbose
         disp('Performing projection...');
     end
     [ best_scores, best_categ_scores, best_ptools, best_ptool_maps, best_ixs, SQs_ptools, ERRORS_SQs_ptools, best_ptool_SQs_ixs, SQs_orig ] = SeedProjection( P, pcl_mass, task, @TaskFunctionGPR, {gprs{end}, dims_ixs{end}}, 0, 0, 1, verbose, 0, parallel );  
     best_score = best_scores(best_weight_ix);
-    disp(best_score);
     best_categ_score = best_categ_scores(best_weight_ix);
-    disp(best_categ_score);
     best_ptool = best_ptools(best_weight_ix,:);
-    disp(best_ptool(10:18));
     best_ptool_map = best_ptool_maps(best_weight_ix,:);
     best_SQs = SQs_ptools{best_ixs(best_weight_ix)};    
     best_ERRORS_SQs_ptools = ERRORS_SQs_ptools{best_ixs(best_weight_ix)};
@@ -238,7 +235,10 @@ function [ P, best_SQs, best_ptool, ptool_maps, grasp_centre, action_centre, too
     tool_transf = GetTransfFromRotAndTransl(tool_rot, tool_transl_vec);    
     %% plot
     if verbose
-        PlotSQs(best_SQs);best_ptool_SQs_ixs(4)
+        figure;
+        PlotPCLSegments(P,-1,0,{'.k','.k','.k','.k','.k','.k','.k'});
+        PlotSQs(SQs_orig);
+        figure;
         sphere_plot_size = 5000;
         disp('Plotting tool info...');
         PlotPCLSegments(P,-1,0,{'.k','.k','.k','.k','.k','.k','.k'});   

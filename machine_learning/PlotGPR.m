@@ -42,6 +42,13 @@ function Y_pred = PlotGPR( gpr, X_proj_pt, ranges, dims, axis_ranges )
     %% prepare figure
     figure;
     hold on;
+    if ~exist('axis_ranges','var')
+        axis_ranges = zeros(1, size(ranges,1)*size(ranges,2));
+        axis_ranges(1:2) = ranges(1, :);
+        if size(ranges,2) > 1
+            axis_ranges(3:4) = ranges(2, :);
+        end
+    end
     axis(axis_ranges);
     dim_1 = dims(1);
     %% plot the gpr in 1 dimension

@@ -1,9 +1,9 @@
 <deployment-project plugin="plugin.ezdeploy" plugin-version="1.0">
-  <configuration build-checksum="1209728838" file="/home/paulo/enzymes/IROS2018/ROS_CV_node/get_tool_info/get_tool_info.prj" location="/home/paulo/enzymes/IROS2018/ROS_CV_node/get_tool_info" name="get_tool_info" preferred-package-location="/home/paulo/enzymes/IROS2018/ROS_CV_node/get_tool_info/for_redistribution" preferred-package-type="package.type.install" target="target.ezdeploy.standalone" target-name="Application Compiler">
+  <configuration build-checksum="1006184444" file="/home/paulo/enzymes/IROS2018/ROS_CV_node/get_tool_info/get_tool_info.prj" location="/home/paulo/enzymes/IROS2018/ROS_CV_node/get_tool_info" name="get_tool_info" preferred-package-location="/home/paulo/enzymes/IROS2018/ROS_CV_node/get_tool_info/get_tool_info/for_redistribution" preferred-package-type="package.type.install" target="target.ezdeploy.standalone" target-name="Application Compiler">
     <param.appname>get_tool_info</param.appname>
     <param.icon />
     <param.icons />
-    <param.version>5.0</param.version>
+    <param.version>6.0</param.version>
     <param.authnamewatermark>Paulo Abelha Ferreira</param.authnamewatermark>
     <param.email>pauloabelha@gmail.com</param.email>
     <param.company />
@@ -119,9 +119,12 @@ ${LD_LIBRARY_PATH}:MR/v93/runtime/glnxa64:MR/v93/bin/glnxa64:MR/v93/sys/os/glnxa
       <file>/home/paulo/enzymes/linear_algebra/vrrotvec_.m</file>
       <file>/home/paulo/enzymes/list/CheckIsScalar.m</file>
       <file>/home/paulo/enzymes/list/CheckNumericArraySize.m</file>
+      <file>/home/paulo/enzymes/list/CheckScalarInRange.m</file>
       <file>/home/paulo/enzymes/list/GetPermGrid.m</file>
       <file>/home/paulo/enzymes/list/concatcellarrayofmatrices.m</file>
       <file>/home/paulo/enzymes/list/flatten_cell.m</file>
+      <file>/home/paulo/enzymes/machine_learning/GetProbDistExpResults.m</file>
+      <file>/home/paulo/enzymes/machine_learning/HistogramCustom.m</file>
       <file>/home/paulo/enzymes/machine_learning/NormaliseData.m</file>
       <file>/home/paulo/enzymes/plot/PlotPCLS.m</file>
       <file>/home/paulo/enzymes/plot/PlotPCLSegments.m</file>
@@ -130,7 +133,6 @@ ${LD_LIBRARY_PATH}:MR/v93/runtime/glnxa64:MR/v93/bin/glnxa64:MR/v93/sys/os/glnxa
       <file>/home/paulo/enzymes/pointclouds/Apply3DTransfPCL.m</file>
       <file>/home/paulo/enzymes/pointclouds/CheckIsPointCloudStruct.m</file>
       <file>/home/paulo/enzymes/pointclouds/DownsamplePCL.m</file>
-      <file>/home/paulo/enzymes/pointclouds/GetMeanMinDistPCL.m</file>
       <file>/home/paulo/enzymes/pointclouds/GetMedianRangeBySlicingPcl.m</file>
       <file>/home/paulo/enzymes/pointclouds/PCLBoundingBoxVolume.m</file>
       <file>/home/paulo/enzymes/pointclouds/PCLDist.m</file>

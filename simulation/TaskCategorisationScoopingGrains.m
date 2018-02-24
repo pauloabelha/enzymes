@@ -3,9 +3,9 @@ function [ category, a, b, c, d ] = TaskCategorisationScoopingGrains( simulation
         eps = 0.001;
     end    
     a = 1;
-    b = 2;
+    b = 3;
     c = 4;
-    d = 7;
+    d = 5;
     category = zeros(size(simulation_scores));
     for i=1:length(simulation_scores)
         if isnan(simulation_scores(i))

@@ -57,7 +57,7 @@ function [ best_scores, best_categ_scores, best_ptools, best_ptool_maps, best_ix
     end
     %% get ranking for task score
     [~,task_score_sort_ix] = sort(voting_matrix_normalised(2,:)+randi(10,1,size(voting_matrix_normalised(2,:),1))/10^6,'ascend');
-    rank_task_score = rank_fit_score;
+    rank_task_score = task_score_sort_ix;
     for i=1:numel(rank_task_score)
         rank_task_score(task_score_sort_ix(i)) = i;
     end
