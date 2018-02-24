@@ -1,7 +1,7 @@
-function [ P, best_SQs, best_ptool, ptool_maps, grasp_centre, action_centre, tool_tip, tool_heel, tool_quaternion, SQs_orig ] = GetToolInfo( P, pcl_mass, target_obj_align_vec, target_obj_contact_point, task, gpr_task_path, verbose, parallel )
+function [ P, SQs_orig, best_ptool, grasp_centre, action_centre, tool_tip, tool_heel, tool_quaternion, affordance_score ] = GetToolInfo( P, pcl_mass, target_obj_align_vec, target_obj_contact_point, task, gpr_task_path, verbose, parallel )
     SEGMENTATION_MANDATORY = 1;
     % set default outputs
-    SQs=[];ptools=[];ptool_maps=[];grasp_centre=[];action_centre=[];tool_tip=[];tool_heel=[];tool_quaternion=[];
+    SQs_orig=[];best_ptool=[];ptool_maps=[];grasp_centre=[];action_centre=[];tool_tip=[];tool_heel=[];tool_quaternion=[];affordance_score=[];
     % print help
     if ischar(P) && P == "--help"
         disp('Function GetToolInfo');        
@@ -24,7 +24,9 @@ function [ P, best_SQs, best_ptool, ptool_maps, grasp_centre, action_centre, too
     if ~exist('verbose','var')
         verbose = 0;
     else
-        verbose = str2double(verbose);
+        if ischar(verbose)
+            verbose = str2double(verbose);
+        end
     end
     if verbose
         tic;
@@ -47,34 +49,40 @@ function [ P, best_SQs, best_ptool, ptool_maps, grasp_centre, action_centre, too
         toc;
     end
     if SEGMENTATION_MANDATORY && numel(P.segms) < 2
-        disp(P);
-        disp('ERROR: point cloud has less than two segments. Module requires segmented point cloud.');
-        return;
+        error('ERROR: point cloud has less than two segments. Module requires segmented point cloud.');
     end
     if ~exist('pcl_mass','var')
         disp('Warning! No mass provided; default of 0.1 will be used');
         pcl_mass = 0.1;
     else
-        pcl_mass = str2double(pcl_mass);
+        if ischar(pcl_mass)
+            pcl_mass = str2double(pcl_mass);
+        end
     end
     % try to parse target object alignment vector
-    points_spilt = strsplit(target_obj_align_vec(2:end-1),';');
-    target_obj_align_vec = zeros(3,1);
-    for i=1:3
-        point_str = strsplit(points_spilt{i},' ');
-        target_obj_align_vec(i) = str2double(point_str);
-    end   
+    if ischar(target_obj_align_vec)
+        points_spilt = strsplit(target_obj_align_vec(2:end-1),';');
+        target_obj_align_vec = zeros(3,1);
+        for i=1:3
+            point_str = strsplit(points_spilt{i},' ');
+            target_obj_align_vec(i) = str2double(point_str);
+        end 
+    end
     % try to parse target object contact point
-    points_spilt = strsplit(target_obj_contact_point(2:end-1),' ');
-    target_obj_contact_point = zeros(1,3);
-    for i=1:3
-        point_str = strsplit(points_spilt{i},' ');
-        target_obj_contact_point(i) = str2double(point_str);
-    end 
+    if ischar(target_obj_contact_point)
+        points_spilt = strsplit(target_obj_contact_point(2:end-1),' ');
+        target_obj_contact_point = zeros(1,3);
+        for i=1:3
+            point_str = strsplit(points_spilt{i},' ');
+            target_obj_contact_point(i) = str2double(point_str);
+        end 
+    end
     if ~exist('parallel','var')
         parallel = 0;
     else
-        parallel = str2double(parallel);
+        if ischar(parallel)
+            parallel = str2double(parallel);
+        end
     end
     if verbose
         disp('Inputs:');
@@ -233,91 +241,92 @@ function [ P, best_SQs, best_ptool, ptool_maps, grasp_centre, action_centre, too
     tool_tip_rot = [tool_rot*tool_tip']';
     tool_transl_vec = [target_obj_contact_point - tool_tip_rot]';
     tool_transf = GetTransfFromRotAndTransl(tool_rot, tool_transl_vec);    
+    affordance_score = best_categ_score;
     %% plot
-    if verbose
-        figure;
-        PlotPCLSegments(P,-1,0,{'.k','.k','.k','.k','.k','.k','.k'});
-        PlotSQs(SQs_orig);
-        figure;
-        sphere_plot_size = 5000;
-        disp('Plotting tool info...');
-        PlotPCLSegments(P,-1,0,{'.k','.k','.k','.k','.k','.k','.k'});   
-        disp('Original point cloud is in black');        
-        %PlotPtools(best_SQs,-1,-1,{'.b', '.y'});
-%         disp('Superquadrics fitted to the original point cloud are:');
-%         disp([char(9) 'Grasp part in blue']);
-%         disp([char(9) 'Action part in yellow']);
-        Q = Apply3DTransfPCL({P},{tool_transf});
-        PlotPCLSegments(Q,-1,0);
-        disp('Transformed point cloud''s segments are coloured (red, green, blue, yellow, ...)');
-        hold on;        
-        %% plot tool itip
-        scatter3(tool_tip(1,1),tool_tip(1,2),tool_tip(1,3),sphere_plot_size,'.m');
-        disp('Original tool tip point as a magenta sphere');
-        transf_tool_tip = TransformPoints(tool_transf, tool_tip);
-        scatter3(transf_tool_tip(1,1),transf_tool_tip(1,2),transf_tool_tip(1,3),sphere_plot_size,'.m');
-        disp('Transformed tool tip point as a magenta sphere');
-        %% plot tool heel (original and transformed)
-        scatter3(tool_heel(1,1),tool_heel(1,2),tool_heel(1,3),sphere_plot_size,'.y');
-        disp('Original tool heel point as a yellow sphere');
-        transf_tool_heel = TransformPoints(tool_transf, tool_heel);
-        scatter3(transf_tool_heel(1,1),transf_tool_heel(1,2),transf_tool_heel(1,3),sphere_plot_size,'.y');        
-        disp('Transformed tool heel point as a yellow sphere');
-        %% plot grasp centre (original and transformed)
-        scatter3(grasp_centre(1),grasp_centre(2),grasp_centre(3),sphere_plot_size,'.c');
-        disp('Original grasp centre point as a cyan sphere');
-        transf_grasp_centre = TransformPoints(tool_transf, grasp_centre);
-        scatter3(transf_grasp_centre(1,1),transf_grasp_centre(1,2),transf_grasp_centre(1,3),sphere_plot_size,'.c');
-        disp('Transformed grasp centre point as a cyan sphere');
-    end
+%     if verbose
+%         figure;
+%         PlotPCLSegments(P,-1,0,{'.k','.k','.k','.k','.k','.k','.k'});
+%         PlotSQs(SQs_orig);
+%         figure;
+%         sphere_plot_size = 5000;
+%         disp('Plotting tool info...');
+%         PlotPCLSegments(P,-1,0,{'.k','.k','.k','.k','.k','.k','.k'});   
+%         disp('Original point cloud is in black');        
+%         %PlotPtools(best_SQs,-1,-1,{'.b', '.y'});
+% %         disp('Superquadrics fitted to the original point cloud are:');
+% %         disp([char(9) 'Grasp part in blue']);
+% %         disp([char(9) 'Action part in yellow']);
+%         Q = Apply3DTransfPCL({P},{tool_transf});
+%         PlotPCLSegments(Q,-1,0);
+%         disp('Transformed point cloud''s segments are coloured (red, green, blue, yellow, ...)');
+%         hold on;        
+%         %% plot tool itip
+%         scatter3(tool_tip(1,1),tool_tip(1,2),tool_tip(1,3),sphere_plot_size,'.m');
+%         disp('Original tool tip point as a magenta sphere');
+%         transf_tool_tip = TransformPoints(tool_transf, tool_tip);
+%         scatter3(transf_tool_tip(1,1),transf_tool_tip(1,2),transf_tool_tip(1,3),sphere_plot_size,'.m');
+%         disp('Transformed tool tip point as a magenta sphere');
+%         %% plot tool heel (original and transformed)
+%         scatter3(tool_heel(1,1),tool_heel(1,2),tool_heel(1,3),sphere_plot_size,'.y');
+%         disp('Original tool heel point as a yellow sphere');
+%         transf_tool_heel = TransformPoints(tool_transf, tool_heel);
+%         scatter3(transf_tool_heel(1,1),transf_tool_heel(1,2),transf_tool_heel(1,3),sphere_plot_size,'.y');        
+%         disp('Transformed tool heel point as a yellow sphere');
+%         %% plot grasp centre (original and transformed)
+%         scatter3(grasp_centre(1),grasp_centre(2),grasp_centre(3),sphere_plot_size,'.c');
+%         disp('Original grasp centre point as a cyan sphere');
+%         transf_grasp_centre = TransformPoints(tool_transf, grasp_centre);
+%         scatter3(transf_grasp_centre(1,1),transf_grasp_centre(1,2),transf_grasp_centre(1,3),sphere_plot_size,'.c');
+%         disp('Transformed grasp centre point as a cyan sphere');
+%     end
     %% print tool info
-    disp('begin_tool_info');
-    disp('begin_input_params');
-    disp('point_cloud');
-    disp(P.filepath);
-    disp('mass');
-    disp(num2str(pcl_mass));
-    disp('target_obj_align_vec');
-    disp([num2str(target_obj_align_vec')]);
-    disp('target_obj_contact_pt');
-    disp([num2str(target_obj_contact_point)]);
-    disp('task');
-    disp(task);
-    disp('task_function_data_file');
-    disp(gpr_task_path);
-    disp('verbose');
-    disp(num2str(verbose));
-    disp('parallel');
-    disp(num2str(parallel));
-    disp('end_input_params');
-    % get affordance score
-    disp(['affordance_score' num2str(best_categ_score)]);
-    disp(num2str(best_categ_score));    
-    disp('grasp_segm');
-    disp(num2str(grasp_segm_ix));
-    disp('action_segm');
-    disp(num2str(action_segm_ix));
-    %% display grasp centre
-    disp('grasp_center');
-    disp(num2str(grasp_centre));
-    %% get action part centre
-    action_centre = SQ_action(end-2:end);
-    disp('action_center');
-    disp(num2str(action_centre));
-    %% display tool tip
-    disp('tool_tip');
-    disp([num2str(tool_tip)]);
-    %% dispay tool tip vector (grasp centre to tool tip)
-    disp('tool_tip_vector');    
-    disp([num2str(tool_tip_vector')]);
-    %% display tool heel
-    disp('tool_heel');
-    disp([num2str(tool_heel)]);
-    %% get tool quaternion    
-    disp('tool_quaternion');
-    tool_quaternion = rotm2quat_(tool_rot);
-    disp([num2str(tool_quaternion)]);
-    %% finish writing tool info
-    disp('end_tool_info'); 
+%     disp('begin_tool_info');
+%     disp('begin_input_params');
+%     disp('point_cloud');
+%     disp(P.filepath);
+%     disp('mass');
+%     disp(num2str(pcl_mass));
+%     disp('target_obj_align_vec');
+%     disp([num2str(target_obj_align_vec')]);
+%     disp('target_obj_contact_pt');
+%     disp([num2str(target_obj_contact_point)]);
+%     disp('task');
+%     disp(task);
+%     disp('task_function_data_file');
+%     disp(gpr_task_path);
+%     disp('verbose');
+%     disp(num2str(verbose));
+%     disp('parallel');
+%     disp(num2str(parallel));
+%     disp('end_input_params');
+%     % get affordance score
+%     disp(['affordance_score' num2str(best_categ_score)]);%     
+%     disp(num2str(best_categ_score));    
+%     disp('grasp_segm');
+%     disp(num2str(grasp_segm_ix));
+%     disp('action_segm');
+%     disp(num2str(action_segm_ix));
+%     %% display grasp centre
+%     disp('grasp_center');
+%     disp(num2str(grasp_centre));
+%     %% get action part centre
+     action_centre = SQ_action(end-2:end);
+%     disp('action_center');
+%     disp(num2str(action_centre));
+%     %% display tool tip
+%     disp('tool_tip');
+%     disp([num2str(tool_tip)]);
+%     %% dispay tool tip vector (grasp centre to tool tip)
+%     disp('tool_tip_vector');    
+%     disp([num2str(tool_tip_vector')]);
+%     %% display tool heel
+%     disp('tool_heel');
+%     disp([num2str(tool_heel)]);
+%     %% get tool quaternion    
+%     disp('tool_quaternion');
+     tool_quaternion = rotm2quat_(tool_rot);
+%     disp([num2str(tool_quaternion)]);
+%     %% finish writing tool info
+%     disp('end_tool_info'); 
 end
 

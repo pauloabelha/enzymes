@@ -47,15 +47,6 @@ function [ SQ,F,E,E_pcl_SQ, E_SQ_pcl,type ] = FitSQtoPCL_type(pcl,pcl_scale,ix_a
         otherwise
             error('Please define the type of fitting as 1-4');
     end
-    if E > 1e2
-            E = Inf;
-    end
-    if E_pcl_SQ > 1e2
-        E_pcl_SQ = Inf;
-    end
-    if E_SQ_pcl > 1e2
-        E_SQ_pcl = Inf;
-    end
     %% perform the inverse transformation of the pca to get SQ to the original pcl' coordinate frame
     SQ(end-2:end) = SQ(end-2:end)*inv_pca_pcl;  
     SQ = RotateSQWithRotMtx(SQ, inv_pca_pcl');

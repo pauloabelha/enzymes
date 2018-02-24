@@ -1,0 +1,27 @@
+function [affordance_scores, problematic_pcls] = CollectToolInfo(pcl_root_folder, task_function_root_folder, task)
+    masses = ReadCSVGeneric([pcl_root_folder 'masses']);
+    pcl_filenames = FindAllFilesOfType({'ply'}, pcl_root_folder);
+    tot_toc = 0;
+    gpr_task_path = [task_function_root_folder 'IROS2018_TaskFunction_' task '.mat'];
+    N_TRIES = 10;
+    problematic_pcls = {};
+    affordance_scores = zeros(size(pcl_filenames,1), N_TRIES);
+    for i=1:size(pcl_filenames,1)
+        tic;
+        P = ReadPointCloud([pcl_root_folder pcl_filenames{i}]);
+        pcl_mass = str2double(masses{i,2});
+        target_obj_align_vec = [0;0;1];
+        target_obj_contact_point = [0 0 0];
+        try
+            for j=1:N_TRIES
+                [ ~, ~, ~, ~, ~, ~, ~, ~, ~, affordance_scores(i, j) ] = GetToolInfo( P, pcl_mass, target_obj_align_vec, target_obj_contact_point, task, gpr_task_path, 0, 1 );
+            end
+        catch E
+            affordance_scores(i, j
+            disp(E.message);
+            problematic_pcls{end+1} = P.filepath;
+        end
+        tot_toc = DisplayEstimatedTimeOfLoop(tot_toc+toc,i,size(pcl_filenames,1));        
+    end
+end
+
