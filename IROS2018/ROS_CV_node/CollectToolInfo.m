@@ -1,4 +1,5 @@
 function [affordance_scores, problematic_pcls] = CollectToolInfo(pcl_root_folder, task_function_root_folder, task)
+    starting_time = datetime('now');
     masses = ReadCSVGeneric([pcl_root_folder 'masses']);
     pcl_filenames = FindAllFilesOfType({'ply'}, pcl_root_folder);
     tot_toc_i = 0;
@@ -41,6 +42,7 @@ function [affordance_scores, problematic_pcls] = CollectToolInfo(pcl_root_folder
         end
         tot_toc_i = DisplayEstimatedTimeOfLoop(tot_toc_i+toc(tic_i),i,size(pcl_filenames,1),'Point clouds loop: ');        
     end
-    save([pcl_root_folder 'all_tools_info_' GetFileSuffixCurrentTime() '.mat']);
+    ending_time = datetime('now');
+    save([pcl_root_folder 'all_tools_info_' task '_' GetFileSuffixCurrentTime() '.mat']);
 end
 
