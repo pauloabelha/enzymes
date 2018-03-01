@@ -251,8 +251,7 @@ function [ P, SQs_orig, best_ptool, grasp_centre, action_centre, tool_tip, tool_
         rot_mtx_quat1 = vrrotvec2mat_(vrrotvec_(cz_vector, target_obj_align_vec));
         scooping_quat1 = rotm2quat_(rot_mtx_quat1);
         % get second rotation
-        SQ_action_rot = RotateSQWithRotMtx(SQ_action, rot_mtx_quat1);
-        action_vec = GetSQVector(SQ_action_rot);
+        action_vec = GetSQVector(SQ_action);
         rot_mtx_quat2 = vrrotvec2mat_(vrrotvec_(action_vec, -target_obj_align_vec));
         scooping_quat2 = rotm2quat_(rot_mtx_quat2);
     end   
@@ -278,7 +277,7 @@ function [ P, SQs_orig, best_ptool, grasp_centre, action_centre, tool_tip, tool_
         PlotPCLSegments(Q,-1,0);
         disp('Transformed point cloud''s segments are coloured (red, green, blue, yellow, ...)');
         hold on;        
-        %% plot tool tip
+        %% plot tool itip
         scatter3(tool_tip(1,1),tool_tip(1,2),tool_tip(1,3),sphere_plot_size,'.m');
         disp('Original tool tip point as a magenta sphere');
         transf_tool_tip = TransformPoints(tool_transf, tool_tip);
@@ -344,8 +343,7 @@ function [ P, SQs_orig, best_ptool, grasp_centre, action_centre, tool_tip, tool_
     if strcmp(task, 'scooping_grains')
         disp('scooping_quat1');
         disp(num2str(scooping_quat1));
-        disp('scooping_quat2');
-        disp(num2str(scooping_quat2));
+        
     else
         disp('tool_quaternion');
         tool_quaternion = rotm2quat_(tool_rot);
