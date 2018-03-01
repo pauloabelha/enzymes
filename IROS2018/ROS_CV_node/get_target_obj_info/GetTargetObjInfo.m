@@ -1,5 +1,6 @@
 % Return the closest edge of P from point
 function [ edges, target_obj_align_vecs, min_dists, SQ ] = GetTargetObjInfo( P, points, task, verbose, pcl_downsampling, parallel)
+    KNOWN_TASKS = {'cutting', 'scooping', 'scraping'};
     % print help
     if ischar(P) && P == "--help"
        disp('Function for geting target object info');        
@@ -34,6 +35,26 @@ function [ edges, target_obj_align_vecs, min_dists, SQ ] = GetTargetObjInfo( P, 
         verbose = 0;
     else
         verbose = str2double(verbose);
+    end
+    if ~exist('task','var')
+        error('Please define a task name as third param');
+    end
+    %% check task name
+    found_task_name = 0;
+    for i=1:numel(KNOWN_TASKS)
+        if strcmp(task, KNOWN_TASKS{i})
+            found_task_name = 1;
+            break;
+        end
+    end    
+    if ~found_task_name
+        disp(['Task name not recognized: ' task]); 
+        task_names = KNOWN_TASKS{i};
+        for i=2:numel(KNOWN_TASKS)
+            task_names = [task_names ' ' KNOWN_TASKS{i}];
+        end
+        disp(['Recognized names are: ' task_names]);                
+        error('Could not recognize task name');
     end
     % print inputs
     if verbose
@@ -76,9 +97,7 @@ function [ edges, target_obj_align_vecs, min_dists, SQ ] = GetTargetObjInfo( P, 
     if verbose
         toc;
     end    
-    if ~exist('task','var')
-        error('Please define a task name as third param');
-    end
+    
     if ~strcmp(task,'cutting') && ~strcmp(task,'scooping') && ~strcmp(task,'scraping')
         error(['Unknown task: ' task '. Acceptable tasks names are: cutting, scooping and scraping']);
     end
@@ -105,6 +124,7 @@ function [ edges, target_obj_align_vecs, min_dists, SQ ] = GetTargetObjInfo( P, 
         disp('Parallel:');
         disp(parallel);
     end  
+    
     if parallel
         if verbose
             disp('Deleting previous parallel pool...');
@@ -179,20 +199,19 @@ function [ edges, target_obj_align_vecs, min_dists, SQ ] = GetTargetObjInfo( P, 
     end
     target_obj_lid_point = SQ(end-2:end) + (GetSQVector(SQ)'.*SQ(3));
     target_obj_align_vecs = [repmat(target_obj_lid_point,size(edges,1),1) - edges]';
+
     disp('begin_target_obj_info');
-       
-    if strcmp(task, 'scraping')
-        disp('target_obj_contact_points');
-        disp(edges); 
-        disp('target_obj_align_vecs');
-        disp(target_obj_align_vecs');
-    end
     
+    % default is for scraping    
+    target_obj_contact_points = edges;    
     if strcmp(task, 'scooping')
-        disp('target_obj_contact_points');
-        disp(target_obj_lid_point); 
-        disp('target_obj_align_vecs');
-        disp(GetSQVector(SQ)');
-    end
+        target_obj_contact_points = target_obj_lid_point;
+        target_obj_align_vecs = -GetSQVector(SQ)';
+    end        
+    disp('target_obj_contact_points');
+    disp(target_obj_contact_points); 
+    disp('target_obj_align_vecs');
+    disp(target_obj_align_vecs);
     disp('end_target_obj_info');
+end
 
