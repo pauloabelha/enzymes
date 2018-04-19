@@ -18,12 +18,9 @@ disp('Running demo for SQ fitting:');
 script_fullpath = mfilename('fullpath');
 root_folder = script_fullpath(1:end-size(mfilename,2));
 %% get pcl filenames
-pcl_filenames = {...
-    'bowl_2_3dwh.ply', ...
-    'tableknife_s_3dwh_1.ply','rollingpin_w_3dwh_2.ply', ...
+pcl_filenames = {'tableknife_s_3dwh_1.ply','rollingpin_w_3dwh_2.ply', ...
     'breadknife_w5s_3dwh_3.ply', ...
-    'fryingpan_p2a_3dwh_2.ply', ...
-    'mallet_w_3dwh_1.ply'};
+    'fryingpan_p2a_3dwh_2.ply', 'mallet_w_3dwh_1.ply'};
 pcl_masses = [0.1022 0.487 0.2759 0.7785 0.9183];
 %% fit SQs to each pcl
 tot_toc = 0;
@@ -33,8 +30,8 @@ for i=1:numel(pcl_filenames)
     disp([char(9) 'Reading pointcloud: ' pcl_filepath])
     P = ReadPointCloud(pcl_filepath);
     figure;
-    disp([char(9) 'Point cloud has ' num2str(numel(P.segms)) ' segment(s)'])
-    disp([char(9) 'Fitting superquadric(s)...'])
+    disp([char(9) 'Point cloud has ' num2str(numel(P.segms)) ' segments'])
+    disp([char(9) 'Fitting superquadrics...'])
     [ SQs, TOT_ERROR, SEGM_ERRORS, SEGM_ERRORS_PCL_SQ, SEGM_ERRORS_SQ_PCL ] = PCL2SQ( P, 2, 1, 0, [1 1 1 0 1] );   
     title('SQs fitted to the pcl');
     figure;
