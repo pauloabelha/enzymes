@@ -15,7 +15,7 @@ function [ ptools, ptools_map, ptools_errors, ERRORS_SQs_alt, SQs_ptools, ERRORS
     SQs_2 = [];
     ERRORS = [];
     ptool_SQs_ixs = [];
-    for sq1_ix=1:size(SQs,2)
+    for sq1_ix=1:numel(SQs,2)
         n_grasp_alt = size(SQs,1);
         if ~grasp_alt
             n_grasp_alt=1;

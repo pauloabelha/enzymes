@@ -3,7 +3,7 @@ function [best_scores_mtx, best_categ_scores_mtx, best_ptools, best_ptool_maps, 
     if exist('n_seeds','var')
         backup_suffix = [backup_suffix '_' num2str(n_seeds) '_seeds'];
     else
-        n_seeds = -1;
+        n_seeds = 0;
     end
     if ~exist('gpr_dim_ixs','var') || (numel(gpr_dim_ixs)==1 && gpr_dim_ixs == -1)
         gpr_dim_ixs = 1:size(gpr.ActiveSetVectors,2);
@@ -30,6 +30,13 @@ function [best_scores_mtx, best_categ_scores_mtx, best_ptools, best_ptool_maps, 
            error(['could not find groundtruth for tool: ' test_pcls_filenames{j}]);
         end
     end
+    % consider only segments without planting seeds if n_seeds = 0
+    if n_seeds == 0
+        disp('Considering only segms since number of seeds was not given or it is 0');
+        add_segms = 1;
+    else
+        add_segms = 0;
+    end
     tools_gt = tools_gt_new';
     gpr_scores = zeros(1,numel(test_pcls_filenames));
     tot_toc = 0;
@@ -47,7 +54,7 @@ function [best_scores_mtx, best_categ_scores_mtx, best_ptools, best_ptool_maps, 
     disp(['Name' char(9) char(9) char(9) char(9) 'Raw score' char(9) 'Categ Score' char(9) 'Categ Groundtruth' char(9) 'Accuracy' char(9) 'Metric 1' char(9) 'Expected time']);
     seed_project_verbose = 1;
     backup_file_path = [test_folder 'projection_result_' task backup_suffix '.mat'];
-    add_segms = 1;
+    
     for i=1:numel(test_pcls_filenames)
         tic; 
         best_score = -1;

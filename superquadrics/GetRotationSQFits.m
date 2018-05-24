@@ -4,7 +4,7 @@
 function [ SQs_alt, ERRORS_SQs_alt, ERRORS, ORIG_ERRORS ] = GetRotationSQFits( SQs, Ps, fit_threshold, rmv_empty, parallel )
     %% check if should remove empty alt SQs (bad fits) - default is 0
     if ~exist('rmv_empty','var')
-        rmv_empty = 0;
+        rmv_empty = 1;
     end
     if ~exist('parallel','var')
         parallel = 1;

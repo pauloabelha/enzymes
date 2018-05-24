@@ -4,19 +4,26 @@ function [ SQs, SQs_errors, seeds_pcls,SQs_orig] = GetSQsFromPToolProjection( P,
     end
     CheckIsPointCloudStruct(P);
     if verbose
-        disp([char(9) 'Planting ' num2str(n_seeds) ' seeds, with ' num2str(n_seeds_radii) ' different radii on pcl...']);
+        if add_segms
+            disp([char(9) 'Not planting seeds because we are considering pointcloud segment(s) instead'])
+        else
+            disp([char(9) 'Planting ' num2str(n_seeds) ' seeds, with ' num2str(n_seeds_radii) ' different radii on pcl...']);
+        end
     end
     if add_segms || only_segms
+        % deal with pcls with only one segm (e.g. bowl)   
+        if numel(P.segms) == 1
+            if verbose
+               disp([char(9) 'Pcl has only one segm: splitting it into two segments being the same pcl']) 
+            end
+            P.segms{end+1} = P.segms{end};
+        end
         segm_pcls = cell(1,size(P.segms,2));
         if parallel
             parfor i=1:size(P.segms,2)
                 segm_pcls{i} = P.segms{i}.v;
             end
-        else
-            % deal with pcls with only one segm (e.g. bowl)
-            if numel(P.segms) == 1
-                P.segms{end+1} = P.segms{end};
-            end
+        else                     
             for i=1:size(P.segms,2)
                 segm_pcls{i} = P.segms{i}.v;
             end

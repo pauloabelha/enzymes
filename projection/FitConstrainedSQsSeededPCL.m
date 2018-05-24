@@ -22,9 +22,9 @@ function [SQs,SQs_errors,seeds_pcls,SQs_orig] = FitConstrainedSQsSeededPCL(seeds
     Ps = cell(1,size(seeds_pcls,2));
     tot_toc = 0;
     if verbose
-       disp([char(9) 'Fitting SQs to ' num2str(size(seeds_pcls,2)) ' seeded pcls... ']);
+       disp([char(9) 'Fitting superquadric(s) to ' num2str(size(seeds_pcls,2)) ' pointcloud(s)... ']);
     end
-    for i=1:size(seeds_pcls,2)    
+    for i=1:numel(seeds_pcls)    
         if verbose
             tic;
         end
@@ -37,7 +37,7 @@ function [SQs,SQs_errors,seeds_pcls,SQs_orig] = FitConstrainedSQsSeededPCL(seeds
 %         end
     end
     if verbose
-        disp([char(9)  'Getting rotation options for ' num2str(size(seeds_pcls,2)  ) ' SQs...']);
+        disp([char(9)  'Getting rotation options for ' num2str(size(seeds_pcls,2)  ) ' superquadric(s)...']);
     end
     SQs_orig=SQs;
     [SQs,SQs_errors] = GetRotationSQFits( SQs, Ps, 0.5, 0, parallel );    

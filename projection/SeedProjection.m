@@ -3,7 +3,7 @@
 function [ best_scores, best_categ_scores, best_ptools, best_ptool_maps, best_ixs, SQs_ptools, ERRORS_SQs_ptools, best_ptool_SQs_ixs, SQs_orig ] = SeedProjection( P, tool_mass, task_name, task_function, task_function_params, n_seeds, add_segms, only_segms, verbose, plot_fig, parallel )  
     %% default is not verbose
     if ~exist('verbose','var')
-        verbose = 0;
+        verbose = 1;
     end 
     %% default is not plotting
     if ~exist('plot_fig','var')
@@ -13,6 +13,10 @@ function [ best_scores, best_categ_scores, best_ptools, best_ptool_maps, best_ix
     if ~exist('tool_mass','var')  || isnan(tool_mass)
         error('Tool mass has a NaN value. Throwing error and saving Universe from dark matter singularity...');
     end
+    %% default is not plotting
+    if ~exist('parallel','var')
+        parallel = 1;
+    end 
     %% get the hyper params
     [ n_seeds_hyper, n_seeds_radii, weights ] = ProjectionHyperParams();
     n_weights = size(weights,1);
