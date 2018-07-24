@@ -1,5 +1,5 @@
 % Return the closest edge of P from point
-function [ edges, target_obj_align_vecs, min_dists, SQ ] = GetTargetObjInfo( P, points, task, verbose, pcl_downsampling, parallel)
+function [ edges, target_obj_align_vecs, min_dists, SQ ] = GetTargetObjInfo( P, points, task, verbose, pcl_downsampling, parallel, suffix)
     KNOWN_TASKS = {'cutting', 'scooping', 'scraping'};
     % print help
     if ischar(P) && P == "--help"
@@ -31,6 +31,9 @@ function [ edges, target_obj_align_vecs, min_dists, SQ ] = GetTargetObjInfo( P, 
        return;
     end
     %% check inputs
+    if ~exist('suffix','var')
+        suffix = '';
+    end
     if ~exist('verbose','var')
         verbose = 0;
     else
@@ -173,6 +176,7 @@ function [ edges, target_obj_align_vecs, min_dists, SQ ] = GetTargetObjInfo( P, 
         toc;
     end
     if verbose 
+        h=figure;
         hold on;        
     end
     %% get superellipse pcl 
@@ -183,7 +187,7 @@ function [ edges, target_obj_align_vecs, min_dists, SQ ] = GetTargetObjInfo( P, 
     pcl_superellipse = [rot_mtx*pcl_superellipse']';
     pcl_superellipse = pcl_superellipse + SQ(end-2:end);
     if verbose
-        scatter3(pcl_superellipse(:,1),pcl_superellipse(:,2),pcl_superellipse(:,3),100,'.m');
+        %scatter3(pcl_superellipse(:,1),pcl_superellipse(:,2),pcl_superellipse(:,3),100,'.m');
     end
     %% calculate closest point
     dists = pdist2(pcl_superellipse,points);
@@ -197,7 +201,7 @@ function [ edges, target_obj_align_vecs, min_dists, SQ ] = GetTargetObjInfo( P, 
         colours_edges = {'.c', '.y', '.b'};
         PlotPCLSegments(P);
         hold on;
-        PlotSQs(SQ, 1000, 0, {'.g'});
+        %PlotSQs(SQ, 1000, 0, {'.g'});
         hold on;
         title(P.filepath);
         for i=1:size(points,1)                
@@ -225,5 +229,9 @@ function [ edges, target_obj_align_vecs, min_dists, SQ ] = GetTargetObjInfo( P, 
     disp('target_obj_align_vecs');
     disp(target_obj_align_vecs);
     disp('end_target_obj_info');
+    split_str = strsplit(P.filepath, '/');
+    split_str = strsplit(split_str{end}, '.');        
+    saveas(h,['/home/paulo/' split_str{1} suffix],'jpg');
+    close all;
 end
 
