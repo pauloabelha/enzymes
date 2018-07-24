@@ -105,6 +105,9 @@ function [ edges, target_obj_align_vecs, min_dists, SQ ] = GetTargetObjInfo( P, 
         pcl_downsampling = 500;
     else
         pcl_downsampling = str2double(pcl_downsampling);
+        if pcl_downsampling < 500
+           error(['PCL downsampling factor is too low: ' num2str(pcl_downsampling) '. It should be at least 500']);  
+        end
     end
     if ~exist('parallel','var')
         parallel = 0;
@@ -184,12 +187,21 @@ function [ edges, target_obj_align_vecs, min_dists, SQ ] = GetTargetObjInfo( P, 
     end
     %% calculate closest point
     dists = pdist2(pcl_superellipse,points);
-    [min_dists,min_dist_ixs] = min(dists,[],1);    
+    [~, min_dist_ixs] = min(dists,[],1);    
     edges = pcl_superellipse(min_dist_ixs,:);
+    dists = pdist2(edges,P.v);
+    [min_dists,min_dist_ixs] = min(dists,[],2);    
+    edges = P.v(min_dist_ixs,:);
     if verbose
-        colours = {'.g', '.b', '.y', '.c'};
+        colours = {'.b', '.y', '.c'};
+        colours_edges = {'.c', '.y', '.b'};
+        PlotPCLSegments(P);
+        hold on;
+        PlotSQs(SQ, 1000, 0, {'.g'});
+        hold on;
+        title(P.filepath);
         for i=1:size(points,1)                
-            scatter3(edges(i,1),edges(i,2),edges(i,3),2000,colours{min(i,numel(colours))});
+            scatter3(edges(i,1),edges(i,2),edges(i,3),2000,colours_edges{min(i,numel(colours_edges))});
             scatter3(points(i,1),points(i,2),points(i,3),2000,colours{min(i,numel(colours))});
         end
         hold off;
