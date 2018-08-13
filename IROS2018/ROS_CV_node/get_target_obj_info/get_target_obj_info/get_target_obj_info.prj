@@ -1,0 +1,163 @@
+<deployment-project plugin="plugin.ezdeploy" plugin-version="1.0">
+  <configuration build-checksum="3374189234" file="/home/paulo/enzymes/IROS2018/ROS_CV_node/get_target_obj_info/get_target_obj_info.prj" location="/home/paulo/enzymes/IROS2018/ROS_CV_node/get_target_obj_info" name="get_target_obj_info" preferred-package-location="/home/paulo/enzymes/IROS2018/ROS_CV_node/get_target_obj_info/get_target_obj_info/for_redistribution" preferred-package-type="package.type.install" target="target.ezdeploy.standalone" target-name="Application Compiler">
+    <param.appname>get_target_obj_info</param.appname>
+    <param.icon />
+    <param.icons />
+    <param.version>1.0</param.version>
+    <param.authnamewatermark>Paulo Ferreira</param.authnamewatermark>
+    <param.email />
+    <param.company />
+    <param.summary />
+    <param.description />
+    <param.screenshot />
+    <param.guid />
+    <param.installpath.string>/get_target_obj_info/</param.installpath.string>
+    <param.installpath.combo>option.installpath.user</param.installpath.combo>
+    <param.logo />
+    <param.install.notes />
+    <param.target.install.notes>In the following directions, replace MR/v94 by the directory on the target machine where MATLAB is installed, or MR by the directory where the MATLAB Runtime is installed.
+
+(1) Set the environment variable XAPPLRESDIR to this value:
+
+MR/v94/X11/app-defaults
+
+
+(2) If the environment variable LD_LIBRARY_PATH is undefined, set it to the following:
+
+MR/v94/runtime/glnxa64:MR/v94/bin/glnxa64:MR/v94/sys/os/glnxa64:MR/v94/sys/opengl/lib/glnxa64
+
+If it is defined, set it to the following:
+
+${LD_LIBRARY_PATH}:MR/v94/runtime/glnxa64:MR/v94/bin/glnxa64:MR/v94/sys/os/glnxa64:MR/v94/sys/opengl/lib/glnxa64</param.target.install.notes>
+    <param.intermediate>${PROJECT_ROOT}/get_target_obj_info/for_testing</param.intermediate>
+    <param.files.only>${PROJECT_ROOT}/get_target_obj_info/for_redistribution_files_only</param.files.only>
+    <param.output>${PROJECT_ROOT}/get_target_obj_info/for_redistribution</param.output>
+    <param.logdir>${PROJECT_ROOT}/get_target_obj_info</param.logdir>
+    <param.enable.clean.build>false</param.enable.clean.build>
+    <param.user.defined.mcr.options />
+    <param.target.type>subtarget.standalone</param.target.type>
+    <param.support.packages />
+    <param.web.mcr>true</param.web.mcr>
+    <param.package.mcr>false</param.package.mcr>
+    <param.no.mcr>false</param.no.mcr>
+    <param.web.mcr.name>get_target_obj_info</param.web.mcr.name>
+    <param.package.mcr.name>MyAppInstaller_mcr</param.package.mcr.name>
+    <param.no.mcr.name>MyAppInstaller_app</param.no.mcr.name>
+    <param.windows.command.prompt>false</param.windows.command.prompt>
+    <param.create.log>false</param.create.log>
+    <param.log.file />
+    <param.native.matlab>false</param.native.matlab>
+    <param.checkbox>false</param.checkbox>
+    <param.example />
+    <param.help.text />
+    <unset>
+      <param.icon />
+      <param.icons />
+      <param.version />
+      <param.email />
+      <param.company />
+      <param.summary />
+      <param.description />
+      <param.screenshot />
+      <param.guid />
+      <param.installpath.string />
+      <param.installpath.combo />
+      <param.logo />
+      <param.install.notes />
+      <param.intermediate />
+      <param.files.only />
+      <param.output />
+      <param.logdir />
+      <param.enable.clean.build />
+      <param.user.defined.mcr.options />
+      <param.target.type />
+      <param.support.packages />
+      <param.web.mcr />
+      <param.package.mcr />
+      <param.no.mcr />
+      <param.package.mcr.name />
+      <param.no.mcr.name />
+      <param.windows.command.prompt />
+      <param.create.log />
+      <param.log.file />
+      <param.native.matlab />
+      <param.checkbox />
+      <param.example />
+      <param.help.text />
+    </unset>
+    <fileset.main>
+      <file>${PROJECT_ROOT}/GetTargetObjInfo.m</file>
+    </fileset.main>
+    <fileset.resources />
+    <fileset.package />
+    <fileset.depfun>
+      <file>/home/paulo/enzymes/file_IO/read_obj.m</file>
+      <file>/home/paulo/enzymes/file_IO/read_off.m</file>
+      <file>/home/paulo/enzymes/file_IO/read_pcd.m</file>
+      <file>/home/paulo/enzymes/file_IO/read_ply.m</file>
+      <file>/home/paulo/enzymes/file_IO/read_ply2.m</file>
+      <file>/home/paulo/enzymes/file_IO/read_png_as_pcl.m</file>
+      <file>/home/paulo/enzymes/geometry/GetEulRotMtx.m</file>
+      <file>/home/paulo/enzymes/geometry/GetVolMult.m</file>
+      <file>/home/paulo/enzymes/geometry/RotateAndTranslatePoints.m</file>
+      <file>/home/paulo/enzymes/geometry/SuperParaboloidFunction.m</file>
+      <file>/home/paulo/enzymes/geometry/superellipse.m</file>
+      <file>/home/paulo/enzymes/geometry/superellipsoid.m</file>
+      <file>/home/paulo/enzymes/geometry/superparabola.m</file>
+      <file>/home/paulo/enzymes/geometry/superparaboloid.m</file>
+      <file>/home/paulo/enzymes/geometry/unif_sample_theta.m</file>
+      <file>/home/paulo/enzymes/geometry/update_theta.m</file>
+      <file>/home/paulo/enzymes/linear_algebra/Get2DRotMtx.m</file>
+      <file>/home/paulo/enzymes/linear_algebra/GetRotMtx.m</file>
+      <file>/home/paulo/enzymes/linear_algebra/eul2rotm_.m</file>
+      <file>/home/paulo/enzymes/linear_algebra/rotm2eul_.m</file>
+      <file>/home/paulo/enzymes/linear_algebra/signedpow.m</file>
+      <file>/home/paulo/enzymes/list/CheckIsScalar.m</file>
+      <file>/home/paulo/enzymes/list/CheckNumericArraySize.m</file>
+      <file>/home/paulo/enzymes/list/CheckScalarInRange.m</file>
+      <file>/home/paulo/enzymes/list/GetPermGrid.m</file>
+      <file>/home/paulo/enzymes/machine_learning/GetProbDistExpResults.m</file>
+      <file>/home/paulo/enzymes/machine_learning/HistogramCustom.m</file>
+      <file>/home/paulo/enzymes/plot/PlotPCLS.m</file>
+      <file>/home/paulo/enzymes/plot/PlotPCLSegments.m</file>
+      <file>/home/paulo/enzymes/pointclouds/AddColourToSegms.m</file>
+      <file>/home/paulo/enzymes/pointclouds/CheckIsPointCloudStruct.m</file>
+      <file>/home/paulo/enzymes/pointclouds/DownsamplePCL.m</file>
+      <file>/home/paulo/enzymes/pointclouds/PCLBoundingBoxVolume.m</file>
+      <file>/home/paulo/enzymes/pointclouds/PCLDist.m</file>
+      <file>/home/paulo/enzymes/pointclouds/PointCloud.m</file>
+      <file>/home/paulo/enzymes/pointclouds/ReadPointCloud.m</file>
+      <file>/home/paulo/enzymes/segmentation/GetEquivalentSegmLabels.m</file>
+      <file>/home/paulo/enzymes/superquadrics/FitSQToPCL_Paraboloid.m</file>
+      <file>/home/paulo/enzymes/superquadrics/IsThinSQ.m</file>
+      <file>/home/paulo/enzymes/superquadrics/RotateSQWithRotMtx.m</file>
+      <file>/home/paulo/enzymes/superquadrics/SQ2PCL.m</file>
+    </fileset.depfun>
+    <build-deliverables>
+      <file location="${PROJECT_ROOT}/get_target_obj_info/for_testing" name="get_target_obj_info" optional="false">/home/paulo/enzymes/IROS2018/ROS_CV_node/get_target_obj_info/get_target_obj_info/for_testing/get_target_obj_info</file>
+      <file location="${PROJECT_ROOT}/get_target_obj_info/for_testing" name="splash.png" optional="false">/home/paulo/enzymes/IROS2018/ROS_CV_node/get_target_obj_info/get_target_obj_info/for_testing/splash.png</file>
+      <file location="${PROJECT_ROOT}/get_target_obj_info/for_testing" name="readme.txt" optional="true">/home/paulo/enzymes/IROS2018/ROS_CV_node/get_target_obj_info/get_target_obj_info/for_testing/readme.txt</file>
+      <file location="${PROJECT_ROOT}/get_target_obj_info/for_testing" name="run_get_target_obj_info.sh" optional="false">/home/paulo/enzymes/IROS2018/ROS_CV_node/get_target_obj_info/get_target_obj_info/for_testing/run_get_target_obj_info.sh</file>
+    </build-deliverables>
+    <workflow />
+    <matlab>
+      <root>/usr/local/MATLAB/R2018a</root>
+      <toolboxes />
+    </matlab>
+    <platform>
+      <unix>true</unix>
+      <mac>false</mac>
+      <windows>false</windows>
+      <win2k>false</win2k>
+      <winxp>false</winxp>
+      <vista>false</vista>
+      <linux>true</linux>
+      <solaris>false</solaris>
+      <osver>4.15.0-29-generic</osver>
+      <os32>false</os32>
+      <os64>true</os64>
+      <arch>glnxa64</arch>
+      <matlab>true</matlab>
+    </platform>
+  </configuration>
+</deployment-project>
