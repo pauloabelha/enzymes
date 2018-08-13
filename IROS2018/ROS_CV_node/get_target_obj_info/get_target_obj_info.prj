@@ -1,35 +1,34 @@
 <deployment-project plugin="plugin.ezdeploy" plugin-version="1.0">
-  <configuration build-checksum="3460987260" file="/home/paulo/enzymes/IROS2018/ROS_CV_node/get_target_obj_info/get_target_obj_info.prj" location="/home/paulo/enzymes/IROS2018/ROS_CV_node/get_target_obj_info" name="get_target_obj_info" preferred-package-location="/home/paulo/enzymes/IROS2018/ROS_CV_node/get_target_obj_info/get_target_obj_info/for_redistribution" preferred-package-type="package.type.install" target="target.ezdeploy.standalone" target-name="Application Compiler">
+  <configuration build-checksum="3374189234" file="/home/paulo/enzymes/IROS2018/ROS_CV_node/get_target_obj_info/get_target_obj_info.prj" location="/home/paulo/enzymes/IROS2018/ROS_CV_node/get_target_obj_info" name="get_target_obj_info" preferred-package-location="/home/paulo/enzymes/IROS2018/ROS_CV_node/get_target_obj_info/get_target_obj_info/for_redistribution" preferred-package-type="package.type.install" target="target.ezdeploy.standalone" target-name="Application Compiler">
     <param.appname>get_target_obj_info</param.appname>
     <param.icon />
     <param.icons />
-    <param.version>3.0</param.version>
-    <param.authnamewatermark>Paulo A. Ferreira and ChaoZheng Wang</param.authnamewatermark>
-    <param.email>pauloabelha@gmail.com</param.email>
+    <param.version>1.0</param.version>
+    <param.authnamewatermark>Paulo Ferreira</param.authnamewatermark>
+    <param.email />
     <param.company />
-    <param.summary>CV module for IROS 2018
-Now it will only fit superparaboloids and it is possible to pass the desired downsapling of the point cloud</param.summary>
-    <param.description>See --help</param.description>
+    <param.summary />
+    <param.description />
     <param.screenshot />
     <param.guid />
     <param.installpath.string>/get_target_obj_info/</param.installpath.string>
     <param.installpath.combo>option.installpath.user</param.installpath.combo>
     <param.logo />
-    <param.install.notes>In the following directions, replace MR by the directory where MATLAB or the MATLAB Runtime is installed on the target machine.
+    <param.install.notes />
+    <param.target.install.notes>In the following directions, replace MR/v94 by the directory on the target machine where MATLAB is installed, or MR by the directory where the MATLAB Runtime is installed.
 
 (1) Set the environment variable XAPPLRESDIR to this value:
 
-MR/v93/X11/app-defaults
+MR/v94/X11/app-defaults
 
 
 (2) If the environment variable LD_LIBRARY_PATH is undefined, set it to the following:
 
-MR/v93/runtime/glnxa64:MR/v93/bin/glnxa64:MR/v93/sys/os/glnxa64:MR/v93/sys/opengl/lib/glnxa64
+MR/v94/runtime/glnxa64:MR/v94/bin/glnxa64:MR/v94/sys/os/glnxa64:MR/v94/sys/opengl/lib/glnxa64
 
 If it is defined, set it to the following:
 
-${LD_LIBRARY_PATH}:MR/v93/runtime/glnxa64:MR/v93/bin/glnxa64:MR/v93/sys/os/glnxa64:MR/v93/sys/opengl/lib/glnxa64</param.install.notes>
-    <param.target.install.notes />
+${LD_LIBRARY_PATH}:MR/v94/runtime/glnxa64:MR/v94/bin/glnxa64:MR/v94/sys/os/glnxa64:MR/v94/sys/opengl/lib/glnxa64</param.target.install.notes>
     <param.intermediate>${PROJECT_ROOT}/get_target_obj_info/for_testing</param.intermediate>
     <param.files.only>${PROJECT_ROOT}/get_target_obj_info/for_redistribution_files_only</param.files.only>
     <param.output>${PROJECT_ROOT}/get_target_obj_info/for_redistribution</param.output>
@@ -54,13 +53,17 @@ ${LD_LIBRARY_PATH}:MR/v93/runtime/glnxa64:MR/v93/bin/glnxa64:MR/v93/sys/os/glnxa
     <unset>
       <param.icon />
       <param.icons />
+      <param.version />
+      <param.email />
       <param.company />
+      <param.summary />
+      <param.description />
       <param.screenshot />
       <param.guid />
       <param.installpath.string />
       <param.installpath.combo />
       <param.logo />
-      <param.target.install.notes />
+      <param.install.notes />
       <param.intermediate />
       <param.files.only />
       <param.output />
@@ -111,19 +114,21 @@ ${LD_LIBRARY_PATH}:MR/v93/runtime/glnxa64:MR/v93/bin/glnxa64:MR/v93/sys/os/glnxa
       <file>/home/paulo/enzymes/linear_algebra/signedpow.m</file>
       <file>/home/paulo/enzymes/list/CheckIsScalar.m</file>
       <file>/home/paulo/enzymes/list/CheckNumericArraySize.m</file>
+      <file>/home/paulo/enzymes/list/CheckScalarInRange.m</file>
       <file>/home/paulo/enzymes/list/GetPermGrid.m</file>
+      <file>/home/paulo/enzymes/machine_learning/GetProbDistExpResults.m</file>
+      <file>/home/paulo/enzymes/machine_learning/HistogramCustom.m</file>
       <file>/home/paulo/enzymes/plot/PlotPCLS.m</file>
+      <file>/home/paulo/enzymes/plot/PlotPCLSegments.m</file>
       <file>/home/paulo/enzymes/pointclouds/AddColourToSegms.m</file>
       <file>/home/paulo/enzymes/pointclouds/CheckIsPointCloudStruct.m</file>
       <file>/home/paulo/enzymes/pointclouds/DownsamplePCL.m</file>
-      <file>/home/paulo/enzymes/pointclouds/GetMeanMinDistPCL.m</file>
       <file>/home/paulo/enzymes/pointclouds/PCLBoundingBoxVolume.m</file>
       <file>/home/paulo/enzymes/pointclouds/PCLDist.m</file>
       <file>/home/paulo/enzymes/pointclouds/PointCloud.m</file>
       <file>/home/paulo/enzymes/pointclouds/ReadPointCloud.m</file>
       <file>/home/paulo/enzymes/segmentation/GetEquivalentSegmLabels.m</file>
       <file>/home/paulo/enzymes/superquadrics/FitSQToPCL_Paraboloid.m</file>
-      <file>/home/paulo/enzymes/superquadrics/GetSQVector.m</file>
       <file>/home/paulo/enzymes/superquadrics/IsThinSQ.m</file>
       <file>/home/paulo/enzymes/superquadrics/RotateSQWithRotMtx.m</file>
       <file>/home/paulo/enzymes/superquadrics/SQ2PCL.m</file>
@@ -136,7 +141,7 @@ ${LD_LIBRARY_PATH}:MR/v93/runtime/glnxa64:MR/v93/bin/glnxa64:MR/v93/sys/os/glnxa
     </build-deliverables>
     <workflow />
     <matlab>
-      <root>/usr/local/MATLAB/R2017b</root>
+      <root>/usr/local/MATLAB/R2018a</root>
       <toolboxes />
     </matlab>
     <platform>
@@ -148,7 +153,7 @@ ${LD_LIBRARY_PATH}:MR/v93/runtime/glnxa64:MR/v93/bin/glnxa64:MR/v93/sys/os/glnxa
       <vista>false</vista>
       <linux>true</linux>
       <solaris>false</solaris>
-      <osver>4.13.0-32-generic</osver>
+      <osver>4.15.0-29-generic</osver>
       <os32>false</os32>
       <os64>true</os64>
       <arch>glnxa64</arch>

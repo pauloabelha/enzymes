@@ -100,10 +100,6 @@ function [ edges, target_obj_align_vecs, min_dists, SQ ] = GetTargetObjInfo( P, 
     if verbose
         toc;
     end    
-    
-    if ~strcmp(task,'cutting') && ~strcmp(task,'scooping') && ~strcmp(task,'scraping')
-        error(['Unknown task: ' task '. Acceptable tasks names are: cutting, scooping and scraping']);
-    end
     if ~exist('pcl_downsampling','var')
         pcl_downsampling = 500;
     else
@@ -213,25 +209,21 @@ function [ edges, target_obj_align_vecs, min_dists, SQ ] = GetTargetObjInfo( P, 
     if verbose
         hold off;
     end
-    target_obj_lid_point = SQ(end-2:end) + (GetSQVector(SQ)'.*SQ(3));
-    target_obj_align_vecs = [repmat(target_obj_lid_point,size(edges,1),1) - edges]';
-
+    target_obj_align_vecs = (mean(pcl_superellipse) - edges)';
+    for i=1:size(target_obj_align_vecs,2)
+        target_obj_align_vecs(:,i) = target_obj_align_vecs(:,i) / norm(target_obj_align_vecs(:,i));
+    end
     disp('begin_target_obj_info');
-    
-    % default is for scraping    
-    target_obj_contact_points = edges;    
-    if strcmp(task, 'scooping')
-        target_obj_contact_points = target_obj_lid_point;
-        target_obj_align_vecs = -GetSQVector(SQ)';
-    end        
+    target_obj_contact_points = edges;   
     disp('target_obj_contact_points');
     disp(target_obj_contact_points); 
     disp('target_obj_align_vecs');
     disp(target_obj_align_vecs);
-    disp('end_target_obj_info');
-    split_str = strsplit(P.filepath, '/');
-    split_str = strsplit(split_str{end}, '.');        
-    saveas(h,['/home/paulo/' split_str{1} suffix],'jpg');
-    close all;
+    disp('end_target_obj_info');    
+    if verbose
+        split_str = strsplit(P.filepath, '/');
+        split_str = strsplit(split_str{end}, '.'); 
+        saveas(h,['/home/paulo/' split_str{1} suffix],'jpg');
+    end
 end
 
